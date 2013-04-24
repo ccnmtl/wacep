@@ -9,85 +9,84 @@
   <meta name="author" content="CCNMTL">
 
 {% compress css %}
-    <link href="/site_media/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/site_media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/site_media/css/main.css" rel="stylesheet">
+    <link href="/site_media/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 {% endcompress %}
+    <link href="/site_media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"> 
+
+{% compress css %}
+    <link href="/site_media/css/main.less" rel="stylesheet" type="text/less">
+{% endcompress %}
+
 	<link rel="shortcut icon" href="/site_media/img/favicon.ico" type="image/x-icon" />
 	{% block css %}{% endblock %}
   <script src="/site_media/js/jquery-1.7.2.min.js"></script>
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
 	{% block feeds %}{% endblock %}
 </head>
 <body>
-
 {% block topnavbar %}
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <ul class="nav">
-          <li><a class="brand" href="/">wacep</a></li>
-          {% block topnavbarleftitems %}{% endblock %}
-        </ul>
-
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <ul class="nav">
+        <li>
+          <a class="brand" href="/">wacep</a>
+        </li>
+      {% block topnavbarleftitems %}{% endblock %}
+      </ul>
+      {% block topnavbarrightitems %}{% endblock %}
+      {% block usernav %}
+      {% if request.user.is_anonymous %}
+        <a href="/accounts/login/?next=/" class="btn btn-success pull-right">login</a>
+      {% else %}		  
+        <a href="/accounts/logout/" class="btn btn-inverse pull-right">logout</a>
         <p class="navbar-text pull-right">
-          {% block topnavbarrightitems %}{% endblock %}
-{% block usernav %}
-          {% if request.user.is_anonymous %}
-          <a href="/accounts/login/?next=/" class="btn btn-success">login</a>
-          {% else %}
           logged in as {{request.user.first_name}} {{request.user.last_name}}
-{% if request.user.is_superuser %}
-          <a href="{% url impersonate-list %}">[impersonate]</a>
-{% endif %}
-          <a href="/logout/" class="btn btn-inverse">logout</a>
-          {% endif %}
-{% endblock %}
-       </p>
-
-       </div>
-     </div>
+        </p>
+      {% endif %}
+      {% endblock %}
+    </div>
   </div>
+</div>
 {% endblock %}
 
   <div class="container" id="outer-container">
 {% block masthead %}
-    <header class="subhead hidden-phone" id="masthead">
-      <h1><a href="./" title="wacep">wacep</a></h1>
-      <h4 id="logo-ccnmtl">
-        <a href="http://ccnmtl.columbia.edu" target="_blank"
-          title="Columbia Center for New Media Teaching and Learning">
-          <span>Produced by the Columbia Center for New Media Teaching
-          and Learning</span>
-        </a>
-      </h4>
-    </header>
-
+  
 {% block primarynav %}
-    <div class="navbar" id="primarynav">
-      <div class="navbar-inner">
-        <div class="container">
-          <ul class="nav">
-          {% block primarynavtabs %}
-            <li class="active"><a href="/one/">One</a></li>
-						<li><a href="/two/">Two</a></li>
-          {% endblock %}
-					{% block primarynavtabsextra %}{% endblock %}
-          </ul>
+<div class="navbar" id="primarynav">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+        
+      <div class="nav-collapse collapse">
+        <ul class="nav">   
+        {% block primarynavtabs %}
+        {% for section in modules %}
+          <li{% ifequal section.id module.id %} class="active"{% endifequal %}><a href="{{section.get_absolute_url}}">{{section.label}}</a></li>
+        {% endfor %}
+        {% endblock %}
+				{% block primarynavtabsextra %}{% endblock %}
+        </ul>
 
-          <ul class="nav pull-right">
-            {% block primarynavrightextra %}{% endblock %}
-						<li><a href="/three/">Three</a></li>
-						<li><a href="/four/">Four</a></li>
-          </ul>
-        </div>
-      </div>
+        <ul class="nav pull-right">
+        {% block primarynavrightextra %}{% endblock %}
+          <li><a href="{{section.get_absolute_url}}">View Page</a></li>
+          <li><a href="/edit{{section.get_absolute_url}}">Edit</a></li>
+        </ul>
+      </div>          
     </div>
+  </div>
+</div>
 {% endblock %}
 
 {% endblock %}
@@ -95,11 +94,12 @@
     <div class="container-fluid" id="content">
       <div class="row-fluid">
         <div class="span2" id="sidebar">
-{% block sidebar %}{% endblock %}
+{% block sidenav %}{% endblock %}
         </div>
         <div class="span10" id="right-content">
 {% block pagetitle %}{% endblock %}
 {% block content %}{% endblock %}
+{% block content-nav %}{% endblock %}
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
   </footer>
 {% endblock %}
 
-<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
 {% compress js %}
 <script src="/site_media/bootstrap/js/bootstrap.js"></script>
@@ -121,17 +121,10 @@
 {% block js %}{% endblock %}
 
 {% if STAGING_ENV %}
-<div class="alert alert-error" style="position: fixed; bottom: 0px;">
+<div class="alert alert-error" style="position: fixed; right: 0px; bottom: 0px;">
 <h4>Warning: Staging Site</h4>
 <p>You are viewing a staging version of this site, not the production site.</p>
 <p>This site was last updated on: <b>{{STAGING_DEPLOY_TIME}}</b></p>
-</div>
-{% endif %}
-
-{% if request.user.is_impersonate %}
-<div class="alert alert-error" style="position: fixed; left: 0px; top: 75px">
-You are impersonating.<br />
-<a class="btn" href="{% url impersonate-stop %}">stop</a>
 </div>
 {% endif %}
 </body>

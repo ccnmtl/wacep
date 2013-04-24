@@ -120,6 +120,18 @@ INSTALLED_APPS = [
     'django_extensions',
     'impersonate',
     'wacep.main',
+    'pagetree',
+    'pageblocks',
+    'quizblock',
+]
+
+PAGEBLOCKS = [
+    'pageblocks.TextBlock',
+    'pageblocks.HTMLBlock',
+    'pageblocks.PullQuoteBlock',
+    'pageblocks.ImageBlock',
+    'pageblocks.ImagePullQuoteBlock',
+    'quizblock.Quiz',
 ]
 
 LETTUCE_APPS = (
@@ -158,6 +170,11 @@ STATICMEDIA_MOUNTS = (
 
 COMPRESS_URL = "/site_media/"
 COMPRESS_ROOT = "media/"
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
 
 # WIND settings
 

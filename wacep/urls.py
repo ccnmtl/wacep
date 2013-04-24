@@ -25,7 +25,8 @@ urlpatterns = patterns(
     '',
     auth_urls,
     logout_page,
-    (r'^$', 'wacep.main.views.index'),
+    (r'^_pagetree/', include('pagetree.urls')),
+    (r'^_quiz/', include('quizblock.urls')),
     (r'^admin/', include(admin.site.urls)),
     url(r'^_impersonate/', include('impersonate.urls')),
     (r'^munin/', include('munin.urls')),
@@ -35,4 +36,10 @@ urlpatterns = patterns(
      'django.views.static.serve', {'document_root': site_media_root}),
     (r'^uploads/(?P<path>.*)$',
      'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+      # these need to be last
+    (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
+     {}, 'edit-page'),
+    (r'^instructor/(?P<path>.*)$',
+     'wacep.main.views.instructor_page'),
+    (r'^(?P<path>.*)$', 'wacep.main.views.page'),
 ) + staticmedia.serve()
