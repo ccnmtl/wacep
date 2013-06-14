@@ -1,13 +1,31 @@
 from annoying.decorators import render_to
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from pagetree.helpers import get_section_from_path
 from pagetree.helpers import get_module, needs_submit, submitted
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext, loader
 
 
 @render_to('main/index.html')
 def index(request):
     return dict()
+
+def splash(request):
+    """ show the splash page."""
+    #file_names = {
+    #    'about'   : 'about.html',
+    #    'credits' : 'credits.html',
+    #    'contact' : 'contact.html',
+    #    'help'    : 'help.html',
+    #} 
+    splash_path = 'splash.html'
+
+    #if content_to_show not in file_names.keys():
+    #    return HttpResponseRedirect('/accounts/login/?next=%s' % request.path)
+    file_name = splash_path
+    t = loader.get_template(file_name)
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))  
 
 
 @render_to('main/page.html')
