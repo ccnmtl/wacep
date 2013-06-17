@@ -29,6 +29,7 @@ TEMPLATE_DEBUG = DEBUG
 SENTRY_SITE = 'wacep'
 SENTRY_SERVERS = ['http://sentry.ccnmtl.columbia.edu/sentry/store/']
 ALLOWED_HOSTS = ['waceponline.org']
+SHOW_SPLASH = True
 
 if 'migrate' not in sys.argv:
     INSTALLED_APPS.append('raven.contrib.django')
