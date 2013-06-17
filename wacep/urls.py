@@ -28,6 +28,11 @@ urlpatterns = patterns(
     (r'^_pagetree/', include('pagetree.urls')),
     (r'^_quiz/', include('quizblock.urls')),
     (r'^admin/', include(admin.site.urls)),
+
+    (r'^login/$', 'django.views.generic.simple.redirect_to', {'url': '/accounts/login/'}),
+    (r'^login$',  'django.views.generic.simple.redirect_to', {'url': '/accounts/login/'}),
+
+
     url(r'^_impersonate/', include('impersonate.urls')),
     (r'^munin/', include('munin.urls')),
     (r'^stats/', direct_to_template, {'template': 'stats.html'}),
@@ -36,11 +41,15 @@ urlpatterns = patterns(
      'django.views.static.serve', {'document_root': site_media_root}),
     (r'^uploads/(?P<path>.*)$',
      'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-    (r'^splash/$', 'wacep.main.views.splash'),
       # these need to be last
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
     (r'^instructor/(?P<path>.*)$',
      'wacep.main.views.instructor_page'),
-    (r'^(?P<path>.*)$', 'wacep.main.views.page'),
+    #(r'^splash/$', 'wacep.main.views.splash'),
+    
+    (r'^(?P<path>.*)$', 'wacep.main.views.splash_or_page'),
+
+    #(r'^/$', 'wacep.main.views.splash'),
+    #(r'^$', 'wacep.main.views.splash'),
 ) + staticmedia.serve()
