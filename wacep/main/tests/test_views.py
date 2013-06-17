@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.client import Client
+from django.conf import settings
 
 
 class BasicTest(TestCase):
@@ -8,8 +9,18 @@ class BasicTest(TestCase):
 
     def test_root(self):
         response = self.c.get("/")
-        self.assertEquals(response.status_code, 200)
+        #import pdb
+        #pdb.set_trace()
+        try:
+            if settings.SHOW_SPLASH:
+                self.assertEquals(response.status_code, 200)
+            else:
+                self.assertEquals(response.status_code, 302)
 
+        except AttributeError:
+            print "not found"
+            self.assertEquals(response.status_code, 302)
+        
     def test_smoketest(self):
         response = self.c.get("/smoketest/")
         self.assertEquals(response.status_code, 200)
