@@ -8,3 +8,5 @@ reports
 media/CACHE
 local_settings.py
 uploads
+x
+.DS_Store
