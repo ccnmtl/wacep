@@ -1,6 +1,6 @@
 <ul>
-{% for s in module.get_descendants %}
-{% ifequal s.id module.id %}
+{% for s in submodule.get_descendants %}
+{% ifequal s.id submodule.id %}
 {% else %}
 <li class="menu-{{s.depth}}">
   {% ifnotequal s.id section.id %}

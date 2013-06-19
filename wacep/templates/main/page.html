@@ -17,10 +17,20 @@
 {% block title %}{{section.label}}{% endblock %}
 
 {% block pagetitle %}<h1>{{section.label}}</h1>{% endblock %}
+    {%block wacep_top_nav %}
+        {% for section in modules %}
+			{% ifequal section.id module.id %}
+          		{% for wacep_module in section.get_children %}
+	          		<li {%ifequal wacep_module submodule%}class="active"{%endifequal%}><a href="{{wacep_module.get_absolute_url}}">{{wacep_module.label}}</a></li>
+          		{%endfor%}
+          	{% endifequal %}
+        {% endfor %}
+    {%endblock wacep_top_nav%}
+
 
 {% block sidenav %}
         <!-- ###### Secondary Navigation ###### -->
-        {% if module.get_children %}
+        {% if submodule.get_children %}
         <h3>Sections</h3>
         {% include "main/menu.html" %}
         {% endif %}

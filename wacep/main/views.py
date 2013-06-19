@@ -39,6 +39,26 @@ def splash(request):
     return HttpResponse(t.render(c))  
 
 
+@login_required
+def courses(request):
+    """ show the splash page."""
+    the_courses = get_section_from_path('/').get_children()
+    file_name = 'main/courses.html'
+    t = loader.get_template(file_name)
+    c = RequestContext(request, {'the_courses': the_courses})
+    return HttpResponse(t.render(c))  
+
+def get_submodule(section):
+    """ get the top level module that the section is in"""
+    if section.is_root():
+        return None
+    if section.depth == 2:
+        return None
+    if section.depth == 3:
+        return section
+    return section.get_ancestors()[2]
+
+
 
 @login_required
 @render_to('main/page.html')
@@ -46,6 +66,11 @@ def page(request, path):
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
     module = get_module(section)
+    submodule = get_submodule(section)
+    #print 'submodule is', submodule
+
+
+
     if section.id == root.id:
         # trying to visit the root page
         if section.get_next():
@@ -66,6 +91,7 @@ def page(request, path):
     else:
         return dict(section=section,
                     module=module,
+                    submodule=submodule,
                     needs_submit=needs_submit(section),
                     is_submitted=submitted(section, request.user),
                     modules=root.get_children(),

@@ -46,6 +46,10 @@ urlpatterns = patterns(
      {}, 'edit-page'),
     (r'^instructor/(?P<path>.*)$',
      'wacep.main.views.instructor_page'),
+
+
+    (r'^courses/$',     'wacep.main.views.courses'),
+
     #(r'^splash/$', 'wacep.main.views.splash'),
     
     (r'^(?P<path>.*)$', 'wacep.main.views.splash_or_page'),

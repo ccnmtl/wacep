@@ -44,6 +44,8 @@
       {% if request.user.is_anonymous %}
         <a href="/accounts/login/?next=/" class="btn btn-success pull-right">login</a>
       {% else %}		  
+
+        <a href ="/courses/" class="btn btn-inverse"> Courses</a>
         <a href="/accounts/logout/" class="btn btn-inverse pull-right">logout</a>
         <p class="navbar-text pull-right">
           logged in as {{request.user.first_name}} {{request.user.last_name}}
@@ -71,10 +73,21 @@
       <div class="nav-collapse collapse">
         <ul class="nav">   
         {% block primarynavtabs %}
+        {%comment %}
         {% for section in modules %}
           <li{% ifequal section.id module.id %} class="active"{% endifequal %}><a href="{{section.get_absolute_url}}">{{section.label}}</a></li>
         {% endfor %}
+        {%endcomment %}
+
+
+
         {% endblock %}
+
+
+        <!-- NEW TOP NAV GOES HERE -->
+        {%block wacep_top_nav %}
+        {%endblock wacep_top_nav%}
+
 				{% block primarynavtabsextra %}{% endblock %}
         </ul>
 
