@@ -7,8 +7,6 @@ from django.template import RequestContext, loader
 from django.conf import settings
 
 
-
-
 @render_to('main/index.html')
 def index(request):
     return dict()
@@ -30,13 +28,14 @@ def splash_or_page(request, path):
     else:
         return page(request, path)
 
+
 def splash(request):
     """ show the splash page."""
     splash_path = 'splash.html'
     file_name = splash_path
     t = loader.get_template(file_name)
     c = RequestContext(request, {})
-    return HttpResponse(t.render(c))  
+    return HttpResponse(t.render(c))
 
 
 @login_required
@@ -46,7 +45,8 @@ def courses(request):
     file_name = 'main/courses.html'
     t = loader.get_template(file_name)
     c = RequestContext(request, {'the_courses': the_courses})
-    return HttpResponse(t.render(c))  
+    return HttpResponse(t.render(c))
+
 
 def get_submodule(section):
     """ get the top level module that the section is in"""
@@ -59,7 +59,6 @@ def get_submodule(section):
     return section.get_ancestors()[2]
 
 
-
 @login_required
 @render_to('main/page.html')
 def page(request, path):
@@ -67,9 +66,6 @@ def page(request, path):
     root = section.hierarchy.get_root()
     module = get_module(section)
     submodule = get_submodule(section)
-    #print 'submodule is', submodule
-
-
 
     if section.id == root.id:
         # trying to visit the root page
