@@ -29,9 +29,12 @@ urlpatterns = patterns(
     (r'^_quiz/', include('quizblock.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    (r'^login/$', 'django.views.generic.simple.redirect_to', {'url': '/accounts/login/'}),
-    (r'^login$',  'django.views.generic.simple.redirect_to', {'url': '/accounts/login/'}),
-
+    (r'^login/$',
+     'django.views.generic.simple.redirect_to',
+     {'url': '/accounts/login/'}),
+    (r'^login$',
+     'django.views.generic.simple.redirect_to',
+     {'url': '/accounts/login/'}),
 
     url(r'^_impersonate/', include('impersonate.urls')),
     (r'^munin/', include('munin.urls')),
@@ -41,7 +44,7 @@ urlpatterns = patterns(
      'django.views.static.serve', {'document_root': site_media_root}),
     (r'^uploads/(?P<path>.*)$',
      'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-      # these need to be last
+    # these need to be last
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
     (r'^instructor/(?P<path>.*)$',
@@ -49,9 +52,6 @@ urlpatterns = patterns(
 
 
     (r'^courses/$',     'wacep.main.views.courses'),
-
-    #(r'^splash/$', 'wacep.main.views.splash'),
-    
     (r'^(?P<path>.*)$', 'wacep.main.views.splash_or_page'),
 
     #(r'^/$', 'wacep.main.views.splash'),

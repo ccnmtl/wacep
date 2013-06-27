@@ -9,8 +9,6 @@ class BasicTest(TestCase):
 
     def test_root(self):
         response = self.c.get("/")
-        #import pdb
-        #pdb.set_trace()
         try:
             if settings.SHOW_SPLASH:
                 self.assertEquals(response.status_code, 200)
@@ -20,7 +18,7 @@ class BasicTest(TestCase):
         except AttributeError:
             print "not found"
             self.assertEquals(response.status_code, 302)
-        
+
     def test_smoketest(self):
         response = self.c.get("/smoketest/")
         self.assertEquals(response.status_code, 200)
