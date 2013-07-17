@@ -1,24 +1,55 @@
 {% extends "base.html" %}
+
 {% block content %}
 
-<h2>Choose a Login Option...</h2>
+<h2>Log In to WACEP</h2>
 
-<form method="get" action="{{ wind_base }}login" class="well">
-<input type="hidden" name="service" value="{{ wind_service }}" />
-<input type="hidden" name="destination" value="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />
-<p>If you have a Columbia University Network ID
-        (UNI)... </p><input type="submit" value="LOG IN" class="btn btn-primary"/></p>
-</form>
+<div class="row-fluid">
 
-<form method="post" action="." class="well">
-<p>If you have a project account...</p>
+	<div class="span7">
+	
+		<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in turpis vitae augue ultricies semper. Nunc imperdiet purus nec ante elementum, in feugiat felis congue. Sed quis ultrices ipsum. Quisque dapibus nisi sem, a placerat est rhoncus a. Proin venenatis augue sagittis, tempus ante ut, scelerisque metus. Proin eleifend risus turpis, ac dictum quam tristique a. Vestibulum ornare vestibulum rhoncus. Proin at diam eget libero fermentum placerat. Fusce dictum nunc eget tortor pharetra, quis rhoncus ligula luctus.
+		</p>
+		
+		<p>
+		Sed pharetra nunc id neque viverra aliquam. Maecenas blandit condimentum elit. Nunc tincidunt augue ut dignissim feugiat. Ut porta mi eget mauris scelerisque rhoncus. Proin quis magna at ante tempor dignissim. Aenean mollis, leo eget convallis ornare, turpis odio aliquam erat, quis pretium leo leo vel eros. Fusce rutrum nisl ipsum, non viverra ipsum auctor ac. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras ac venenatis lorem.
+		</p>
+		
+		<p>
+		Sed nec massa arcu. Etiam aliquam lectus sit amet felis feugiat, eget congue mi tempor. Cras vitae lorem eleifend, imperdiet tellus ut, elementum metus. Ut semper ac nunc vitae scelerisque. Sed sodales ligula ut malesuada gravida. Aenean dui lorem, facilisis sed viverra nec, condimentum eget risus. Sed ornare fermentum sem in venenatis. Nulla et erat id lacus dictum elementum at nec urna. Aenean bibendum, orci a congue porta, urna mauris pulvinar leo, et laoreet ante massa quis urna. Sed quis bibendum purus. Morbi fringilla varius vestibulum. Fusce sollicitudin viverra rutrum.
+		</p>
+	
+	</div>
+	
+	<div class="span5">
+	
+		<form method="get" action="{{ wind_base }}login" class="well">
+		
+		<input type="hidden" name="service" value="{{ wind_service }}" />
+		<input type="hidden" name="destination" value="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />
+		
+		<p>I have a Columbia University Network ID (UNI).</p>
+		<input type="submit" value="LOG IN" class="btn btn-primary"/></p>
+		
+		</form>
+		
+		<form method="post" action="." class="well">
+		
+		<p>I have a project account.</p>
+		
+		<label for="id_username">User Name: {{ form.username }}</label>
+		<label for="id_password">Password: {{ form.password }}</label>
+		
+		<input type="submit" value="LOG IN" class="btn btn-primary" />
+		<input type="hidden" name="next" value="{{ next }}" />
+		
+		</form>
+	</div>
 
-<label for="id_username">Username: {{ form.username }}</label>
-<label for="id_password">Password: {{ form.password }}</label>
+</div>
 
-<input type="submit" value="LOG IN" class="btn btn-primary" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+
 {% endblock %}
 
 
