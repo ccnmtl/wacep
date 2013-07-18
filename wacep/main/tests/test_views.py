@@ -84,5 +84,5 @@ class LoggedInTest(TestCase):
 
     def test_courses_page(self):
         make_test_hierarchy()
-        response = self.c.get("/instructor/section-1/")
+        response = self.c.get("/courses/")
         self.assertEquals(response.status_code, 200)
