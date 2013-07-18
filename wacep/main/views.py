@@ -7,11 +7,6 @@ from django.template import RequestContext, loader
 from django.conf import settings
 
 
-@render_to('main/index.html')
-def index(request):
-    return dict()
-
-
 def splash_or_page(request, path):
     show_splash = False
     try:
