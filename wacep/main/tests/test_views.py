@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.test.client import Client
-from django.conf import settings
 from django.contrib.auth.models import User
 from pagetree.models import Hierarchy
 import factory
@@ -69,16 +68,16 @@ class LoggedInTest(TestCase):
             self.assertEquals(response.status_code, 200)
 
     def test_page(self):
-        h = make_test_hierarchy()
+        make_test_hierarchy()
         response = self.c.get("/section-1/")
         self.assertEquals(response.status_code, 200)
 
     def test_edit_page(self):
-        h = make_test_hierarchy()
+        make_test_hierarchy()
         response = self.c.get("/edit/section-1/")
         self.assertEquals(response.status_code, 200)
 
     def test_instructor_page(self):
-        h = make_test_hierarchy()
+        make_test_hierarchy()
         response = self.c.get("/instructor/section-1/")
         self.assertEquals(response.status_code, 200)
