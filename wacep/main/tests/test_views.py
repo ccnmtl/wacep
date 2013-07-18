@@ -7,16 +7,14 @@ class BasicTest(TestCase):
     def setUp(self):
         self.c = Client()
 
-    def test_root(self):
-        response = self.c.get("/")
-        try:
-            if settings.SHOW_SPLASH:
-                self.assertEquals(response.status_code, 200)
-            else:
-                self.assertEquals(response.status_code, 302)
-
-        except AttributeError:
-            print "not found"
+    def test_splash_enabled(self):
+        with self.settings(SHOW_SPLASH=True):
+            response = self.c.get("/")
+            self.assertEquals(response.status_code, 200)
+            
+    def test_splash_disabled(self):
+        with self.settings(SHOW_SPLASH=False):
+            response = self.c.get("/")
             self.assertEquals(response.status_code, 302)
 
     def test_smoketest(self):
