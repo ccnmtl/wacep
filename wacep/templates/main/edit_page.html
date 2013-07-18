@@ -243,13 +243,13 @@ class=""
 <div id="add-pageblock-tab" class="tab-pane">
 
 <ul>
-{% for blocktype in available_pageblocks %}
+{% for blocktype in section.available_pageblocks %}
 <li><a data-toggle="modal"
 			 href="#add-block-{{forloop.counter}}">Add {{blocktype.display_name}}</a></li>
 {% endfor %}
 </ul>
 
-{% for blocktype in available_pageblocks %}
+{% for blocktype in section.available_pageblocks %}
 {% if blocktype %}
 
 <div class="modal big-modal hide" id="add-block-{{forloop.counter}}">
