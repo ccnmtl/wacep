@@ -1,54 +1,70 @@
 {% extends "base.html" %}
 
+{% block title %}Log In{% endblock %}
+
 {% block content %}
 
-<h2>Welcome to WACEP</h2>
+<h2>Log In</h2>
 
 <div class="row-fluid">
 
 	<div class="span7">
 	
-		<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in turpis vitae augue ultricies semper. Nunc imperdiet purus nec ante elementum, in feugiat felis congue. Sed quis ultrices ipsum. Quisque dapibus nisi sem, a placerat est rhoncus a. Proin venenatis augue sagittis, tempus ante ut, scelerisque metus. Proin eleifend risus turpis, ac dictum quam tristique a. Vestibulum ornare vestibulum rhoncus. Proin at diam eget libero fermentum placerat. Fusce dictum nunc eget tortor pharetra, quis rhoncus ligula luctus.
-		</p>
+		<div class="pageblock">
 		
-		<p>
-		Sed pharetra nunc id neque viverra aliquam. Maecenas blandit condimentum elit. Nunc tincidunt augue ut dignissim feugiat. Ut porta mi eget mauris scelerisque rhoncus. Proin quis magna at ante tempor dignissim. Aenean mollis, leo eget convallis ornare, turpis odio aliquam erat, quis pretium leo leo vel eros. Fusce rutrum nisl ipsum, non viverra ipsum auctor ac. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras ac venenatis lorem.
-		</p>
+		<h3>Welcome to the Water and Climate Education Program (WACEP)</h3>
 		
-		<p>
-		Sed nec massa arcu. Etiam aliquam lectus sit amet felis feugiat, eget congue mi tempor. Cras vitae lorem eleifend, imperdiet tellus ut, elementum metus. Ut semper ac nunc vitae scelerisque. Sed sodales ligula ut malesuada gravida. Aenean dui lorem, facilisis sed viverra nec, condimentum eget risus. Sed ornare fermentum sem in venenatis. Nulla et erat id lacus dictum elementum at nec urna. Aenean bibendum, orci a congue porta, urna mauris pulvinar leo, et laoreet ante massa quis urna. Sed quis bibendum purus. Morbi fringilla varius vestibulum. Fusce sollicitudin viverra rutrum.
-		</p>
+		<p>Caribbean islands have limited water resources, and increasing pressure on those resources from population pressure, urbanization, economic development, and tourism. Climatic variability is magnifying existing pressures. Adaptation to climate is essential, but there are few people in the region trained in how to identify and implement effective strategies to manage climate and water-related risks. </p>
+		
+		<p>The project team (collaborators listed below) will improve capacity to manage water resources and climate-related risk by increasing the ability of the UWI CERMES and IRI to educate professional and upper-level students in the scientific, technical and policy considerations around these issues.</p>
+		
+		<ul>
+		<li>International Research Institute for Climate Prediction and Society (IRI at Earth Institute)</li>
+		<li>Columbia Water Center (CWC)</li>
+		<li>Center for Resource Management and Environmental Studies (CERMES) at the University of West Indies (UWI)</li>
+		<li>Caribbean Institute of Meteorology and Hydrology of Barbados (CIMH)</li>
+		</ul>
+		
+		
+		<p>These are the four courses in this program: </p>
+		
+		<ol>
+		<li>Climate Information and Predictions from Seasons to Decades</li>
+		<li>Introduction to Water Sustainability and Climate</li>
+		<li>Climate Information for Improved Water Management</li>
+		<li>Water Planning and Policy for Climate Variability and Change</li>
+		</ol>
+
+	</div>	
 	
 	</div>
 	
 	<div class="span5">
-	
+
+		<form method="post" action="." class="well">
+		
+		<p>I have a special WACEP project account.</p>
+		
+		<label for="id_username">User Name: {{ form.username }}</label>
+		<label for="id_password">Password: {{ form.password }}</label>
+		
+		<input type="submit" value="Log In" class="btn btn-primary" />
+		<input type="submit" value="I Forgot My Password" class="btn btn-warning" />
+		<input type="hidden" name="next" value="{{ next }}" />
+		
+		</form>
 		<form method="get" action="{{ wind_base }}login" class="well">
 		
 		<input type="hidden" name="service" value="{{ wind_service }}" />
 		<input type="hidden" name="destination" value="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />
 		
 		<p>I have a Columbia University Network ID (UNI).</p>
-		<input type="submit" value="LOG IN" class="btn btn-primary"/></p>
-		
-		</form>
-		
-		<form method="post" action="." class="well">
-		
-		<p>I have a project account.</p>
-		
-		<label for="id_username">User Name: {{ form.username }}</label>
-		<label for="id_password">Password: {{ form.password }}</label>
-		
-		<input type="submit" value="LOG IN" class="btn btn-primary" />
-		<input type="hidden" name="next" value="{{ next }}" />
+		<input type="submit" value="Log In" class="btn btn-primary"/></p>
 		
 		</form>
 	</div>
 
 </div>
-
 
 {% endblock %}
 
