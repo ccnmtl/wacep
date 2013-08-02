@@ -63,7 +63,7 @@
 				{% block usernav %}
 				{% if request.user.is_anonymous %}
 			
-				<li><a href="/accounts/login/?next=/" class="">Log In</a></li>
+				<li><a href="/accounts/login/?next=/">Log In</a></li>
 			
 				{% else %}		  
 				
@@ -72,7 +72,7 @@
 				{%endif %}
 				<li><a href ="/courses/">Courses</a></li>
 				<li><a href="#">Certificates for {{request.user.first_name}}</a></li>
-				<li><a href="/accounts/logout/" >Log Out</a>
+				<li><a href="/accounts/logout/">Log Out</a>
 
 				{% endif %}
 				{% endblock %}
