@@ -1,5 +1,5 @@
 from django.contrib import admin
-from phtc.logic_model.models import Column, Scenario, GamePhase, ActivePhase, BoxColor
+from  wacep.timescale.models import Column, Scenario, GamePhase, ActivePhase, BoxColor
 
 class ColumnAdmin(admin.ModelAdmin):
     list_display = ('__unicode__',

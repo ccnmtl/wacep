@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
-from phtc.logic_model.models import Column, Scenario, GamePhase, ActivePhase, BoxColor
+from wacep.timescale.models import Column, Scenario, GamePhase, ActivePhase, BoxColor
 import simplejson
 
 @login_required

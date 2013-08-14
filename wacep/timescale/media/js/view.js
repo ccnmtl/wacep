@@ -155,7 +155,7 @@ LogicModel.LogicModelView = Backbone.View.extend({
         var self = this;
         jQuery.ajax({
             type: 'POST',
-            url: '/_logic_model/settings/',
+            url: '/_timescale/settings/',
             data: {
             },
             dataType: 'json',

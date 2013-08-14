@@ -104,12 +104,12 @@ class Column (models.Model):
             'flavor': self.flavor
         }
 
-class LogicModelBlock(models.Model):
+class TimescaleBlock(models.Model):
     pageblocks = generic.GenericRelation(PageBlock)
-    template_file = "logic_model/logic_model.html"
-    js_template_file = "logic_model/block_js.html"
-    css_template_file = "logic_model/block_css.html"
-    display_name = "Logic Model Activity"
+    template_file = "timescale/timescale.html"
+    js_template_file = "timescale/block_js.html"
+    css_template_file = "timescale/block_css.html"
+    display_name = "Timescale Maproom Activity"
 
     def pageblock(self):
         return self.pageblocks.all()[0]
@@ -122,18 +122,18 @@ class LogicModelBlock(models.Model):
 
     @classmethod
     def add_form(self):
-        return LogicModelBlockForm()
+        return TimescaleBlockForm()
 
     def edit_form(self):
-        return LogicModelBlockForm(instance=self)
+        return TimescaleBlockForm(instance=self)
 
     @classmethod
     def create(self, request):
-        form = LogicModelBlockForm(request.POST)
+        form = TimescaleBlockForm(request.POST)
         return form.save()
 
     def edit(self, vals, files):
-        form = LogicModelBlockForm(data=vals,
+        form = TimescaleBlockForm(data=vals,
                                           files=files,
                                           instance=self)
         if form.is_valid():
@@ -142,53 +142,8 @@ class LogicModelBlock(models.Model):
     def unlocked(self, user):
         return True
 
-    def treatment_paths(self):
-        return TreatmentPath.objects.all()
 
-
-class LogicModelBlockForm(forms.ModelForm):
+class TimescaleBlockForm(forms.ModelForm):
     class Meta:
-        model = LogicModelBlock
-
-
-if 1 == 0:
-    class TreatmentNode(MP_Node):
-        name = models.CharField(max_length=256)
-        type = models.CharField(max_length=2, choices=NODE_CHOICES)
-        text = models.TextField(null=True, blank=True)
-        help = models.TextField(null=True, blank=True)
-        duration = models.IntegerField(default=0)
-        value = models.IntegerField(default=0)
-
-        def __unicode__(self):
-            if self.type == 'DP':
-                return "  Decision Point: " + self.name
-            elif self.duration:
-                return "  %s weeks: %s" % (self.duration, self.name)
-            else:
-                return "  %s" % self.name
-
-        def to_json(self):
-            return {
-                'id': self.id,
-                'name': self.name,
-                'type': self.type,
-                'text': self.text,
-                'help': self.help,
-                'duration': self.duration,
-                'value': self.value, 
-                'children_list': [{'name': c.name, 'id': c.id, 'value': c.value} for c in self.get_children()]
-            }
-
-
-    class TreatmentPath(models.Model):
-        name = models.CharField(max_length=512)
-        tree = models.ForeignKey(TreatmentNode)
-        cirrhosis = models.BooleanField()
-        treatment_status = models.IntegerField(choices=STATUS_CHOICES)
-        drug_choice = models.CharField(max_length=12, choices=DRUG_CHOICES)
-
-        def __unicode__(self):
-            return self.name
-
+        model = TimescaleBlock
 
