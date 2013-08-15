@@ -232,6 +232,7 @@ LogicModel.LogicModelView = Backbone.View.extend({
 
     paintPhase: function() {
         "use strict";
+        return;
         var self = this;
         var phase_info = self.currentPhaseInfo();
         if (phase_info.hasOwnProperty ('already_seen'))  {

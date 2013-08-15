@@ -1,29 +1,28 @@
 from django.contrib import admin
-from  wacep.timescale.models import Column, Scenario, GamePhase, ActivePhase, BoxColor
+from  wacep.timescale.models import YearInput, GraphingModeInput, SeasonInput, InputCombination, ActivityState
 
-class ColumnAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__',
-    				'order_rank',
-                    'flavor')
-admin.site.register(Column, ColumnAdmin)
-
-class ScenarioAdmin(admin.ModelAdmin):
+class YearInputAdmin(admin.ModelAdmin):
     list_display = ('__unicode__',
     				'order_rank')
-admin.site.register(Scenario, ScenarioAdmin)
+admin.site.register(YearInput, YearInputAdmin)
 
-class GamePhaseAdmin(admin.ModelAdmin):
+class GraphingModeInputAdmin(admin.ModelAdmin):
     list_display = ('__unicode__',
     				'order_rank')
-admin.site.register(GamePhase, GamePhaseAdmin)
+admin.site.register(GraphingModeInput, GraphingModeInputAdmin)
 
-class ActivePhaseAdmin(admin.ModelAdmin):
+class SeasonInputAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__',
+    				'order_rank')
+admin.site.register(SeasonInput, SeasonInputAdmin)
+
+class ActivityStateAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__',
+    				'order_rank')
+admin.site.register(ActivityState, ActivityStateAdmin)
+
+class InputCombinationAdmin(admin.ModelAdmin):
     list_display = ('__unicode__',)
-admin.site.register(ActivePhase, ActivePhaseAdmin)
-
-
-class BoxColorAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__',)
-admin.site.register(BoxColor, BoxColorAdmin)
+admin.site.register(InputCombination, InputCombinationAdmin)
 
 

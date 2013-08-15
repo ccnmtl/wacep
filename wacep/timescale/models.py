@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.contenttypes import generic
 from pagetree.models import PageBlock
+from django.db.models import FilePathField
 from django import forms
 
-
-class BoxColor (models.Model):
+class YearInput (models.Model):
     name  = models.CharField(max_length=256, default = '')
-    color = models.CharField(max_length=6, default = 'FFFFFF')
     order_rank = models.IntegerField(default=0, null=True, blank=True, )
     
     def __unicode__(self):
@@ -17,92 +16,86 @@ class BoxColor (models.Model):
 
     def to_json(self):
         return {
-            'color': self.color
+            'id': self.id,
+            'name': self.name
         }
 
-class GamePhase (models.Model):
-    name = models.CharField(max_length=256, default = '')
-    instructions = models.TextField(null=True, blank=True, default = '')
+class GraphingModeInput (models.Model):
+    name  = models.CharField(max_length=256, default = '')
     order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    css_classes = models.CharField(max_length=256, null=True, blank=True, default = '')
+    
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class SeasonInput (models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+    
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class InputCombination (models.Model):
+    """A combination of inputs that that puts the activity in a certain state."""
+
+    season_input        = models.ForeignKey ('SeasonInput', null=True, blank=True)
+    graphing_mode_input = models.ForeignKey ('GraphingModeInput', null=True, blank=True)
+    year_input          = models.ForeignKey ('YearInput', null=True, blank=True)
+    activity_state      = models.ForeignKey ('ActivityState', unique="True")
+
+    def __unicode__(self):
+        return "Inputs resulting in state %s " % self.activity_state
+
+    class Meta:
+        ordering = ['activity_state']
+        unique_together = ("season_input", "graphing_mode_input", "year_input")
+
+    def to_json(self):
+        return {
+            'season_input_id'           : self.season_input.id,
+            'graphing_mode_input_id'    : self.graphing_mode_input.id,
+            'year_input_id'             : self.year_input.id,
+            'activity_state_id'         : self.activity_state.id,
+            'id'    : self.id
+        }
+
+
+class ActivityState (models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    image_path = FilePathField(path="/var/www/images_for_timescale_tool", null=True, blank=True)
+    css_classes = models.TextField(null=True, blank=True, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
 
     def __unicode__(self):
         return self.name
 
-    def to_json(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'instructions': self.instructions,
-            'css_classes': self.css_classes
-        }
-
-
-class ActivePhase (models.Model):
-    """ Indicates that a particular column is active (editable) during a particular phase"""
-
-    def __unicode__(self):
-        return "Column \"%s\" is active during game phase \"%s\"" % (self.column, self.game_phase)
-
-    game_phase = models.ForeignKey('GamePhase')
-    column     = models.ForeignKey('Column')
-
-    class Meta:
-        ordering = ['game_phase','column']
-        unique_together = ("game_phase", "column")
-
-    def to_json(self):
-        return {
-            'game_phase_id': self.game_phase.id,
-            'column_id'    : self.column.id
-        }
-
-class Scenario  (models.Model):
-    title = models.CharField(max_length=256, default = '')
-    difficulty = models.CharField(max_length=256, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    instructions = models.TextField(null=True, blank=True, default = '')
-
     class Meta:
         ordering = ['order_rank']
 
-    def __unicode__(self):
-        return self.title
-
     def to_json(self):
         return {
-            'id': self.id,
-            'title': self.title,
-            'instructions': self.instructions,
-            'difficulty': self.difficulty
+            'id'                        : self.id,
+            'image_path'                : self.image_path,
+            'css_classes'               : self.css_classes
         }
 
-class Column (models.Model):
-    name = models.CharField(max_length=256, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    css_classes = models.CharField(max_length=256, null=True, blank=True, default = '')
-    help_definition  = models.TextField(null=True, blank=True, default = '')
-    help_examples  = models.TextField(null=True, blank=True, default = '')
-    flavor = models.CharField(max_length=256, default = '')
-    class Meta:
-        ordering = ['order_rank']
-
-
-    def __unicode__(self):
-        return self.name
-
-    def to_json(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'css_classes': self.css_classes,
-            'help_definition': self.help_definition,
-            'help_examples': self.help_examples,
-            'flavor': self.flavor
-        }
 
 class TimescaleBlock(models.Model):
     pageblocks = generic.GenericRelation(PageBlock)
