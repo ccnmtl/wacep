@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-    var view = new LogicModel.LogicModelView({
+    var view = new Timescale.TimescaleView({
         el: 'div.logic-model-container'
     });
 });

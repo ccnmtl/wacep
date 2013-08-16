@@ -1,6 +1,9 @@
-LogicModel.LogicModelView = Backbone.View.extend({
+Timescale.TimescaleView = Backbone.View.extend({
+    
     events: {
-        "click .next_phase": "goToNextPhase",
+        "change .timescale_select": "menuChanged",
+
+        /*
         "click .done-button": "goToNextPhase",
         "click .previous_phase": "goToPreviousPhase",
         "click .change_scenario": "goToFirstPhase",
@@ -10,16 +13,23 @@ LogicModel.LogicModelView = Backbone.View.extend({
         "click .wipe-table-button": "showWipeTableWarning",
         "click .wipe-table-confirm-button": "wipeTable",
         "click .wipe-table-cancel-button": "cancelWipeTable"
+        */
     },
+    /*
     phases: null,
     current_phase : null,
-
+    */
     initialize: function(options) {
         "use strict";
         var self = this;
-
         _.bindAll(this ,
-            "render" ,
+            "render",
+            "getSettings",
+            "finishInitialize",
+            "setUpMenus",
+            "menuChanged"
+
+            /*,
             "onAddColumn",
             "onAddScenario",
             "goToNextPhase",
@@ -31,9 +41,10 @@ LogicModel.LogicModelView = Backbone.View.extend({
             "showWipeTableWarning",
             "wipeTable",
             "cancelWipeTable"
+            */
         );
         self.getSettings();
-        
+        /*
 
         self.current_number_of_rows = LogicModel.NUMBER_OF_ROWS_INITIALLY_VISIBLE;
         
@@ -43,8 +54,107 @@ LogicModel.LogicModelView = Backbone.View.extend({
 
         self.scenarios = new LogicModel.ScenarioCollection();
         self.scenarios.bind("add", this.onAddScenario);
+        */
     },
 
+
+    getSettings: function() {
+        "use strict";
+        // Fetch the list of columns and scenarios from the back end.
+        var self = this;
+        jQuery.ajax({
+            type: 'POST',
+            url: '/_timescale/settings/',
+            data: {
+            },
+            dataType: 'json',
+            error: function () {
+                alert('There was an error.');
+            },
+            success: function (json, textStatus, xhr) {
+                self.settings = json;
+                /*
+                self.columns.add(json.columns);
+                self.setUpColors (json.colors);
+                self.phases = json.game_phases;
+                self.scenarios.add (json.scenarios);
+                self.columns_in_each_phase = json.columns_in_each_phase;
+                self.setUpPhases();
+                self.adjustRows();
+                */
+                self.finishInitialize();
+            }
+        });
+    },
+
+    finishInitialize: function () {
+        var self = this;
+        self.setUpMenus();
+    },
+
+
+    setUpMenus: function () {
+        var self = this;
+        var the_dropdown;
+        the_dropdown = jQuery(".timescale_select.season");
+        for (var i=0; i < self.settings.season_inputs.length; i++)  {
+            var the_item = self.settings.season_inputs[i];
+            the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
+        }
+        the_dropdown = jQuery(".timescale_select.graphing_mode");
+        for (var i=0; i < self.settings.graphing_mode_inputs.length; i++)  {
+            var the_item = self.settings.graphing_mode_inputs[i];
+            the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
+        }
+        the_dropdown = jQuery(".timescale_select.year");
+        for (var i=0; i < self.settings.year_inputs.length; i++)  {
+            var the_item = self.settings.year_inputs[i];
+            the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
+        }
+    },
+
+    findCurrentState: function () {
+        var self = this;
+        var theSeason       = parseInt(jQuery ('.timescale_select.season').val());
+        var theGraphingMode = parseInt(jQuery ('.timescale_select.graphing_mode').val());
+        var theYear         = parseInt(jQuery ('.timescale_select.year').val());
+
+        // do we know how to deal with this particular combination of inputs?
+        var inputFinder = function (inputCombination) { 
+            return (
+                (inputCombination.season_input_id                    ==  theSeason       ) &&
+                (inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
+                (inputCombination.year_input_id                      ==  theYear         )
+            );
+        }
+        var inputCombination = _.find (self.settings.input_combinations, inputFinder);
+        if (typeof (inputCombination) === "undefined") {
+            alert ("ERROR: That input combination was not found.");
+            return;
+        }
+
+        // yes we do.
+        var stateId = inputCombination.activity_state_id;
+        var theState = _.find (self.settings.activity_states, function (st) { return st.id = stateId});
+        if (typeof (theState) === "undefined") {
+            alert ("ERROR: That input combination was not found.");
+            return;
+        }
+        // theState has everything we need to know about decorating the page accordingly.
+        self.currentState = theState;
+    },
+
+    menuChanged: function () {
+        var self = this;
+        current_state = self.findCurrentState();
+        console.log (self.currentState);
+        //activity_states
+
+
+    },
+
+
+    /*
     showGamePhaseHelpBox: function () {
         "use strict";
         var self = this;
@@ -148,33 +258,8 @@ LogicModel.LogicModelView = Backbone.View.extend({
         }
     },
 
-
-    getSettings: function() {
-        "use strict";
-        // Fetch the list of columns and scenarios from the back end.
-        var self = this;
-        jQuery.ajax({
-            type: 'POST',
-            url: '/_timescale/settings/',
-            data: {
-            },
-            dataType: 'json',
-            error: function () {
-                alert('There was an error.');
-            },
-            success: function (json, textStatus, xhr) {
-                self.columns.add(json.columns);
-                self.setUpColors (json.colors);
-                self.phases = json.game_phases;
-                self.scenarios.add (json.scenarios);
-                self.columns_in_each_phase = json.columns_in_each_phase;
-                self.setUpPhases();
-                self.adjustRows();
-                self.render();
-            }
-        });
-    },
-
+    */
+    /*
     setUpColors : function (colors) {
         "use strict";
         var self = this;
@@ -278,11 +363,7 @@ LogicModel.LogicModelView = Backbone.View.extend({
         
         // unhide the last active donebutton on the page:
         jQuery('.done-button').removeClass ('visible');
-        /*
-        if (self.current_phase != self.phases.length - 1) {
-            jQuery('.active_column').last().find ('.done-button').addClass('visible');
-        }
-        */
+
 
         // unhide the last active donebutton on the page:
         jQuery('.add_a_row_button').removeClass ('visible');
@@ -317,13 +398,18 @@ LogicModel.LogicModelView = Backbone.View.extend({
         self.current_phase = self.current_phase - 1;
         self.paintPhase();
     },
-
+    */
     render: function() {
         "use strict";
         var self = this;
-        self.paintPhase();
+        console.log ("rendering.");
+
+        //self.paintPhase();
     },
 
+
+
+    /*
     onAddColumn: function(column) {
         "use strict";
         var self = this;
@@ -345,5 +431,5 @@ LogicModel.LogicModelView = Backbone.View.extend({
         view.LogicModelView = self;
         jQuery("div.logic-model-initial-scenario-list").append(view.el);
     }
-
+*/
 });

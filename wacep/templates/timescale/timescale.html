@@ -1,19 +1,15 @@
 <div class="logic-model-container">
-asdasdasd
+	<div class = "inputs_div well">
+		<h3>inputs</h3>
+		Season: <select name ="season_input_select" class="timescale_select season"></select><br/>
+		Graphing mode: <select name ="graphing_mode_input_select" class="timescale_select graphing_mode"></select><br/>
+		Year: <select name ="year_input_select" class="timescale_select year"></select><br/>
+	</div>
 
-	<div id="phase_container">
-		<div class ="well">
-			<div class="logic-model-game-phase-name">Name of this phase of the game.</div>
-			<div class="game-phase-help-button-div">
-				<i class="game-phase-help-button icon-large icon-question-sign"></i>
-	    	</div>
-			<div class="btn btn-info previous_phase">&larr; Go back</div>
+	<div class = "outputs_div well">
+		<h3>outputs</h3>
+		<div id = "graph_div">
+			Graph goes here.
 		</div>
-		<!-- choose scenario -->
-		{%include "timescale/subtemplates/initial_scenario_choice.html" %}
-		<!-- all subsequent phases of the game -->
-		{%include "timescale/subtemplates/table.html" %}
-		<!-- the help box -->
-		{%include "timescale/subtemplates/help_box.html" %}
 	</div>
 </div>
