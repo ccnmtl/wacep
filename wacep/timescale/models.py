@@ -55,10 +55,10 @@ class SeasonInput (models.Model):
 class InputCombination (models.Model):
     """A combination of inputs that that puts the activity in a certain state."""
 
-    season_input        = models.ForeignKey ('SeasonInput', null=True, blank=True)
+    season_input        = models.ForeignKey ('SeasonInput',       null=True, blank=True)
     graphing_mode_input = models.ForeignKey ('GraphingModeInput', null=True, blank=True)
-    year_input          = models.ForeignKey ('YearInput', null=True, blank=True)
-    activity_state      = models.ForeignKey ('ActivityState', unique="True")
+    year_input          = models.ForeignKey ('YearInput',         null=True, blank=True)
+    activity_state      = models.ForeignKey ('ActivityState')
 
     def __unicode__(self):
         return "Inputs resulting in state %s " % self.activity_state
@@ -79,9 +79,8 @@ class InputCombination (models.Model):
 
 class ActivityState (models.Model):
     name  = models.CharField(max_length=256, default = '')
-    image_path = FilePathField(path="/var/www/images_for_timescale_tool", null=True, blank=True)
-    css_classes = models.TextField(null=True, blank=True, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+    image_filename = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -92,7 +91,7 @@ class ActivityState (models.Model):
     def to_json(self):
         return {
             'id'                        : self.id,
-            'image_path'                : self.image_path,
+            'image_path'                : '%s/%s' % ('/_timescale/media/img/timescale_images', self.image_filename),
             'css_classes'               : self.css_classes
         }
 

@@ -1,10 +1,10 @@
-pg_dump -U pusher \
+pg_dump -U eddie \
 --column-inserts \
 --data-only \
 --no-owner \
---table=logic_model_scenario \
---table=logic_model_gamephase  \
---table=logic_model_column  \
---table=logic_model_activephase \
---table=logic_model_boxcolor \
-phtc
+--table=timescale_yearinput \
+--table=timescale_graphingmodeinput \
+--table=timescale_seasoninput \
+--table=timescale_activitystate  \
+--table=timescale_inputcombination \
+wacep

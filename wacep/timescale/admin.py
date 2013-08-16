@@ -17,12 +17,11 @@ class SeasonInputAdmin(admin.ModelAdmin):
 admin.site.register(SeasonInput, SeasonInputAdmin)
 
 class ActivityStateAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__',
-    				'order_rank')
+    list_display = ('__unicode__', 'image_filename', 'order_rank')
 admin.site.register(ActivityState, ActivityStateAdmin)
 
 class InputCombinationAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__',)
+    list_display = ('season_input', 'graphing_mode_input', 'year_input', '__unicode__',)
 admin.site.register(InputCombination, InputCombinationAdmin)
 
 
