@@ -28,21 +28,9 @@ Timescale.TimescaleView = Backbone.View.extend({
             "finishInitialize",
             "setUpMenus",
             "menuChanged"
-
-            /*,
-            "onAddColumn",
-            "onAddScenario",
-            "goToNextPhase",
-            "goToPreviousPhase",
-            "showGamePhaseHelpBox",
-            "addARow",
-            "adjustRows",
-            "checkEmptyBoxes",
-            "showWipeTableWarning",
-            "wipeTable",
-            "cancelWipeTable"
-            */
         );
+
+        jQuery ('#right-content').removeClass ('span9');
         self.getSettings();
         /*
 

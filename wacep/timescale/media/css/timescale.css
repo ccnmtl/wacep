@@ -1,4 +1,4 @@
-#sidebarleft, li.next, li.previous, h1.section-label-header{
+#sidebarleft, li.next, li.previous, h1.section-label-header, #sidebar{
     display:none;
 }
 
@@ -6,6 +6,110 @@ header#masthead {
   height:60px !important;
 }
 
+.timescale_container {
+  border: 5px solid green;
+  position: relative;
+  height: 693px;
+}
+
+.timescale_subcontainer {
+  border: 5px solid;
+  position: absolute;
+  left: 100px;
+  top: 200px;
+  width: 100px;
+  height: 100px;
+
+}
+.timescale_subcontainer.color_key {
+  border:  solid red;
+  left: 5px;
+  top: 5px;
+  width: 600px;
+  height: 100px;
+}
+
+.timescale_subcontainer.inputs {
+  border:  solid blue;
+  left: 620px;
+  top: 5px;
+  width: 350px;
+  height: 200px;
+}
+
+.timescale_subcontainer.graph {
+  border:  solid purple;
+  left: 5px;
+  top: 115px;
+  width: 600px;
+  height: 400px;
+}
+
+.timescale_subcontainer.explanation {
+  border:  solid orange;
+  left: 620px;
+  top: 220px;
+  width: 350px;
+  height: 460px;
+}
+.timescale_subcontainer.variance {
+  border:  solid blue;
+  left: 5px;
+  top: 530px;
+  width: 200px;
+  height: 150px;
+}
+
+.timescale_subcontainer.year_data {
+  border:  solid yellow;
+  left: 220px;
+  top: 530px;
+  width: 390px;
+  height: 80px;
+}
+
+.timescale_subcontainer.impact_background {
+  border:  solid purple;
+  left: 220px;
+  top: 625px;
+  width: 390px;
+  height: 55px;
+}
+.timescale_subcontainer.impact_bubble {
+  border:  solid black;
+  left: 360px;
+  top: 630px;
+  width: 100px;
+  height: 43px;
+}
+
+/*
+.test1 {
+  border: solid red;
+  left: 100px;
+  top: 200px;
+  width: 100px;
+  height: 100px;
+}
+.test2 {
+  border: solid orange;
+  left: 200px;
+  top: 300px;
+  width: 100px;
+  height: 100px;
+}
+.test3 {
+  border: solid blue;
+  left: 300px;
+  top: 400px;
+  width: 100px;
+  height: 100px;
+}
+*/
+
+
+
+/*
 .row {
   padding-top: 0px;
 }
@@ -26,11 +130,6 @@ textarea#reflections {
 
 .logic-model-columns {
     width: 840px;
-    /*
-    height: 500px;
-    border: 1px solid #ccc;
-    */
-}
 
 .centered {
   margin: auto;
@@ -257,3 +356,4 @@ div.add_a_row_button.visible {
 #phase_container.conclusion div.logic-model-initial-scenario_choice {
     display:none;
 }
+*/
