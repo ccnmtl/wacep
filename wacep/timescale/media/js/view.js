@@ -135,7 +135,7 @@ Timescale.TimescaleView = Backbone.View.extend({
 
         // yes we do.
         var stateId = inputCombination.activity_state_id;
-        var theState = _.find (self.settings.activity_states, function (st) { return st.id = stateId});
+        var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
         if (typeof (theState) === "undefined") {
             alert ("ERROR: That input combination was not found.");
             return;
@@ -148,7 +148,11 @@ Timescale.TimescaleView = Backbone.View.extend({
         var self = this;
         current_state = self.findCurrentState();
         console.log (self.currentState);
+
+        //jQuery ('timescale_graph' )
         //activity_states
+
+        jQuery ('.timescale_graph' )[0].src  = self.currentState.image_path;
 
 
     },

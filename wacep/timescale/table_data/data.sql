@@ -23,22 +23,22 @@ INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUE
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (5, 'Annual components and totals 1912', 5, 'annual_components_total.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (8, 'Annual components and totals 1990', 8, 'annual_components_total.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (11, 'Annual components and totals 1998', 11, 'annual_components_total.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (13, 'MJJ percentile noyear', 13, 'annual_components.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (18, 'MJJ components 1912', 18, 'annual_components.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (21, 'MJJ components 1990', 21, 'annual_components.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (24, 'MJJ components 1998', 24, 'annual_components.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (14, 'MJJ components and totals noyear', 14, 'annual_components_total.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (17, 'MJJ components and totals 1912', 17, 'annual_components_total.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (20, 'MJJ components and totals 1990', 20, 'annual_components_total.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (23, 'MJJ components and totals 1998', 23, 'annual_components_total.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (13, 'MJJ percentile noyear', 13, 'MJJ_percentile.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (16, 'MJJ percentile 1912', 16, 'MJJ_percentile.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (19, 'MJJ percentile 1990', 19, 'MJJ_percentile.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (22, 'MJJ percentile 1998', 22, 'MJJ_percentile.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (14, 'MJJ components and totals noyear', 14, 'MJJ_components_total.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (17, 'MJJ components and totals 1912', 17, 'MJJ_components_total.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (20, 'MJJ components and totals 1990', 20, 'MJJ_components_total.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (23, 'MJJ components and totals 1998', 23, 'MJJ_components_total.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (18, 'MJJ components 1912', 18, 'MJJ_components.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (21, 'MJJ components 1990', 21, 'MJJ_components.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (24, 'MJJ components 1998', 24, 'MJJ_components.png');
+INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (15, 'MJJ components noyear', 15, 'MJJ_components.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (3, 'Annual components noyear', 3, 'annual_percentile.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (4, 'Annual percentile 1912', 4, 'annual_percentile.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (7, 'Annual percentile 1990', 7, 'annual_percentile.png');
 INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (10, 'Annual percentile 1998', 10, 'annual_percentile.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (15, 'MJJ components noyear', 15, 'annual_percentile.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (16, 'MJJ percentile 1912', 16, 'annual_percentile.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (19, 'MJJ percentile 1990', 19, 'annual_percentile.png');
-INSERT INTO timescale_activitystate (id, name, order_rank, image_filename) VALUES (22, 'MJJ percentile 1998', 22, 'annual_percentile.png');
 
 
 --
