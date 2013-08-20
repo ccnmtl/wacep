@@ -31,6 +31,7 @@ Timescale.TimescaleView = Backbone.View.extend({
         );
 
         jQuery ('#right-content').removeClass ('span9');
+
         self.getSettings();
         /*
 
@@ -48,6 +49,7 @@ Timescale.TimescaleView = Backbone.View.extend({
 
     getSettings: function() {
         "use strict";
+
         // Fetch the list of columns and scenarios from the back end.
         var self = this;
         jQuery.ajax({
@@ -134,6 +136,7 @@ Timescale.TimescaleView = Backbone.View.extend({
 
     menuChanged: function () {
         var self = this;
+        console.log ("menuchanged")
         current_state = self.findCurrentState();
         console.log (self.currentState);
 

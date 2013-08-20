@@ -25,15 +25,15 @@ header#masthead {
   border:  solid red;
   left: 5px;
   top: 5px;
-  width: 600px;
+  width: 820px;
   height: 100px;
 }
 
 .timescale_subcontainer.inputs {
   border:  solid blue;
-  left: 620px;
+  left: 836px;
   top: 5px;
-  width: 350px;
+  width: 275px;
   height: 200px;
 }
 
@@ -41,15 +41,15 @@ header#masthead {
   border:  solid purple;
   left: 5px;
   top: 115px;
-  width: 600px;
+  width: 820px;
   height: 400px;
 }
 
 .timescale_subcontainer.explanation {
   border:  solid orange;
-  left: 620px;
+  left: 836px;
   top: 220px;
-  width: 350px;
+  width: 275px;
   height: 460px;
 }
 .timescale_subcontainer.variance {
@@ -64,7 +64,7 @@ header#masthead {
   border:  solid yellow;
   left: 220px;
   top: 530px;
-  width: 390px;
+  width: 605px;
   height: 80px;
 }
 
@@ -72,7 +72,7 @@ header#masthead {
   border:  solid purple;
   left: 220px;
   top: 625px;
-  width: 390px;
+  width: 605px;
   height: 55px;
 }
 .timescale_subcontainer.impact_bubble {
