@@ -68,13 +68,15 @@ class InputCombination (models.Model):
         unique_together = ("season_input", "graphing_mode_input", "year_input")
 
     def to_json(self):
-        return {
-            'season_input_id'           : self.season_input.id,
-            'graphing_mode_input_id'    : self.graphing_mode_input.id,
-            'year_input_id'             : self.year_input.id,
+        result = {
+            'season_input_id'           : self.season_input.id if self.season_input        else None,
+            'graphing_mode_input_id'    : self.graphing_mode_input.id if self.graphing_mode_input else None,
+            'year_input_id'             : self.year_input.id          if self.year_input          else None,
             'activity_state_id'         : self.activity_state.id,
-            'id'    : self.id
+            'id'                        : self.id
         }
+        
+        return result
 
 
 class ActivityState (models.Model):
@@ -91,8 +93,7 @@ class ActivityState (models.Model):
     def to_json(self):
         return {
             'id'                        : self.id,
-            'image_path'                : '%s/%s' % ('/_timescale/media/img/timescale_images', self.image_filename),
-            'css_classes'               : self.css_classes
+            'image_path'                : '%s/%s' % ('/_timescale/media/img', self.image_filename)
         }
 
 
