@@ -48,9 +48,9 @@ header#masthead {
 .timescale_subcontainer.explanation {
   border:  solid orange;
   left: 836px;
-  top: 220px;
+  top: 215px;
   width: 275px;
-  height: 460px;
+  height: 465px;
 }
 .timescale_subcontainer.variance {
   border:  solid blue;

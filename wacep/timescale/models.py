@@ -91,9 +91,13 @@ class ActivityState (models.Model):
         ordering = ['order_rank']
 
     def to_json(self):
+        fn = self.image_filename
+        where = '/_timescale/media/img'
+        path = '%s/%s' % (where, fn) if (fn != '') else ''
         return {
-            'id'                        : self.id,
-            'image_path'                : '%s/%s' % ('/_timescale/media/img', self.image_filename)
+            'name'       : self.name,
+            'id'         : self.id,
+            'image_path' : path
         }
 
 

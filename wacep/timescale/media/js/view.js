@@ -31,19 +31,8 @@ Timescale.TimescaleView = Backbone.View.extend({
         );
 
         jQuery ('#right-content').removeClass ('span9');
-
+        // makes the div go back to its default (wider) width.
         self.getSettings();
-        /*
-
-        self.current_number_of_rows = LogicModel.NUMBER_OF_ROWS_INITIALLY_VISIBLE;
-        
-        // Paint the columns:
-        self.columns = new LogicModel.ColumnCollection();
-        self.columns.bind("add", this.onAddColumn);
-
-        self.scenarios = new LogicModel.ScenarioCollection();
-        self.scenarios.bind("add", this.onAddScenario);
-        */
     },
 
 
@@ -63,15 +52,6 @@ Timescale.TimescaleView = Backbone.View.extend({
             },
             success: function (json, textStatus, xhr) {
                 self.settings = json;
-                /*
-                self.columns.add(json.columns);
-                self.setUpColors (json.colors);
-                self.phases = json.game_phases;
-                self.scenarios.add (json.scenarios);
-                self.columns_in_each_phase = json.columns_in_each_phase;
-                self.setUpPhases();
-                self.adjustRows();
-                */
                 self.finishInitialize();
             }
         });
@@ -105,9 +85,9 @@ Timescale.TimescaleView = Backbone.View.extend({
 
     findCurrentState: function () {
         var self = this;
-        var theSeason       = parseInt(jQuery ('.timescale_select.season').val());
-        var theGraphingMode = parseInt(jQuery ('.timescale_select.graphing_mode').val());
-        var theYear         = parseInt(jQuery ('.timescale_select.year').val());
+        var theSeason       = parseInt(jQuery ('.timescale_select.season').val())        || null;
+        var theGraphingMode = parseInt(jQuery ('.timescale_select.graphing_mode').val()) || null;
+        var theYear         = parseInt(jQuery ('.timescale_select.year').val())          || null;
 
         // do we know how to deal with this particular combination of inputs?
         var inputFinder = function (inputCombination) { 
@@ -130,6 +110,7 @@ Timescale.TimescaleView = Backbone.View.extend({
             alert ("ERROR: That input combination was not found.");
             return;
         }
+        console.log (theState.name);
         // theState has everything we need to know about decorating the page accordingly.
         self.currentState = theState;
     },
