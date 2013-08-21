@@ -112,21 +112,22 @@ Timescale.TimescaleView = Backbone.View.extend({
             alert ("ERROR: That input combination was not found.");
             return;
         }
-        console.log (theState.name);
         // theState has everything we need to know about decorating the page accordingly.
         self.currentState = theState;
+        return theState;
     },
 
     menuChanged: function () {
         var self = this;
-        current_state = self.findCurrentState();
-        console.log ('>>>' +self.currentState.image_path + '<<<')
-        if (self.currentState.image_path === '') {
+        var theState = self.findCurrentState();
+        console.log (JSON.stringify (theState));
+        if (theState.image_path === '') {
             jQuery ('.timescale_graph' ).replaceWith('<img class="timescale_graph">');
         }
         else {
-            jQuery ('.timescale_graph' ).attr("src", self.currentState.image_path);
+            jQuery ('.timescale_graph' ).attr("src", theState.image_path);
         }
+        jQuery ('.explanation_copy').html (theState.text);
     },
 
     resetButtonPushed: function () {

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.contenttypes import generic
 from pagetree.models import PageBlock
-from django.db.models import FilePathField
 from django import forms
 
 class YearInput (models.Model):
@@ -83,6 +82,22 @@ class ActivityState (models.Model):
     name  = models.CharField(max_length=256, default = '')
     image_filename = models.CharField(max_length=256, default = '')
     order_rank = models.IntegerField(default=0, null=True, blank=True)
+    text = models.TextField(blank=True, default = '')
+
+    climate_impact       = models.CharField(max_length=256, blank=True, default = '')
+    graph_title          = models.CharField(max_length=256, blank=True, default = '')
+    y_scale_title        = models.CharField(max_length=256, blank=True, default = '')
+    percent_interannual  = models.CharField(max_length=256, blank=True, default = '')
+    percent_interdecadal = models.CharField(max_length=256, blank=True, default = '')
+    percent_trend        = models.CharField(max_length=256, blank=True, default = '')
+
+    year                 = models.CharField(max_length=256, blank=True, default = '')
+    year_decadal         = models.CharField(max_length=256, blank=True, default = '')
+    year_interannual     = models.CharField(max_length=256, blank=True, default = '')
+
+
+    overall_sum          = models.CharField(max_length=256, blank=True, default = '')
+    overall_percentile   = models.CharField(max_length=256, blank=True, default = '')
 
     def __unicode__(self):
         return self.name
@@ -97,7 +112,26 @@ class ActivityState (models.Model):
         return {
             'name'       : self.name,
             'id'         : self.id,
-            'image_path' : path
+            'image_path' : path,
+
+            'graph_title'         : self.graph_title,
+            'y_scale_title'       : self.y_scale_title,
+
+            'percent_interannual' : self.percent_interannual,
+            'percent_interdecadal': self.percent_interdecadal,
+            'percent_trend'       : self.percent_trend,
+
+            'year'                : self.year,
+            'year_interannual'    : self.year_interannual,
+            'year_decadal'        : self.year_decadal,
+
+            'overall_sum'         : self.overall_sum,
+            'overall_percentile'  : self.overall_percentile,
+            'text'                : self.text,
+
+
+            'climate_impact' : self.climate_impact
+
         }
 
 
