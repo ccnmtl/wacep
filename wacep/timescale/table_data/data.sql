@@ -79,16 +79,12 @@ INSERT INTO timescale_seasoninput (id, name, order_rank) VALUES (2, 'Annual', 1)
 INSERT INTO timescale_yearinput (id, name, order_rank) VALUES (1, '1912', 1000);
 INSERT INTO timescale_yearinput (id, name, order_rank) VALUES (3, '1998', 1002);
 INSERT INTO timescale_yearinput (id, name, order_rank) VALUES (2, '1990', 1001);
-INSERT INTO timescale_yearinput (id, name, order_rank) VALUES (4, 'All', 0);
 
 
 --
 -- Data for Name: timescale_inputcombination; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (3, 2, 2, 4, 2);
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (4, 2, 3, 4, 1);
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (5, 2, 1, 4, 3);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (6, 2, 3, 1, 4);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (7, 2, 2, 1, 5);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (8, 2, 1, 1, 6);
@@ -100,9 +96,6 @@ INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (20, 1, 1, 1, 18);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (19, 1, 2, 1, 17);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (18, 1, 3, 1, 16);
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (17, 1, 1, 4, 15);
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (16, 1, 3, 4, 13);
-INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (15, 1, 2, 4, 14);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (21, 1, 3, 2, 19);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (12, NULL, NULL, NULL, 25);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (13, 1, 1, 3, 24);
@@ -111,13 +104,42 @@ INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (302, 2, 1, 3, 12);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (303, 2, 2, 3, 11);
 INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (304, 2, 3, 3, 10);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (3, 2, 2, NULL, 2);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (4, 2, 3, NULL, 1);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (5, 2, 1, NULL, 3);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (17, 1, 1, NULL, 15);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (16, 1, 3, NULL, 13);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (15, 1, 2, NULL, 14);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (305, 1, NULL, NULL, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (306, 2, NULL, NULL, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (307, NULL, 2, NULL, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (308, NULL, 3, NULL, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (309, NULL, 1, NULL, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (310, 2, NULL, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (311, 2, NULL, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (312, 2, NULL, 3, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (313, 1, NULL, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (314, 1, NULL, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (315, 1, NULL, 3, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (316, NULL, NULL, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (317, NULL, NULL, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (318, NULL, NULL, 3, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (319, NULL, 2, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (320, NULL, 2, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (321, NULL, 2, 3, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (323, NULL, 3, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (324, NULL, 3, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (325, NULL, 3, 3, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (326, NULL, 1, 1, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (328, NULL, 1, 2, 25);
+INSERT INTO timescale_inputcombination (id, season_input_id, graphing_mode_input_id, year_input_id, activity_state_id) VALUES (329, NULL, 1, 3, 25);
 
 
 --
 -- Name: timescale_inputcombination_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('timescale_inputcombination_id_seq', 304, true);
+SELECT pg_catalog.setval('timescale_inputcombination_id_seq', 329, true);
 
 
 --

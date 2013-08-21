@@ -2,6 +2,7 @@ Timescale.TimescaleView = Backbone.View.extend({
     
     events: {
         "change .timescale_select": "menuChanged",
+        "click .reset_button" : "resetButtonPushed"
 
         /*
         "click .done-button": "goToNextPhase",
@@ -27,7 +28,8 @@ Timescale.TimescaleView = Backbone.View.extend({
             "getSettings",
             "finishInitialize",
             "setUpMenus",
-            "menuChanged"
+            "menuChanged",
+            "resetButtonPushed"
         );
 
         jQuery ('#right-content').removeClass ('span9');
@@ -117,18 +119,23 @@ Timescale.TimescaleView = Backbone.View.extend({
 
     menuChanged: function () {
         var self = this;
-        console.log ("menuchanged")
         current_state = self.findCurrentState();
-        console.log (self.currentState);
-
-        //jQuery ('timescale_graph' )
-        //activity_states
-
-        jQuery ('.timescale_graph' )[0].src  = self.currentState.image_path;
-
-
+        console.log ('>>>' +self.currentState.image_path + '<<<')
+        if (self.currentState.image_path === '') {
+            jQuery ('.timescale_graph' ).replaceWith('<img class="timescale_graph">');
+        }
+        else {
+            jQuery ('.timescale_graph' ).attr("src", self.currentState.image_path);
+        }
     },
 
+    resetButtonPushed: function () {
+        var self = this;
+        jQuery('.timescale_select.season').val(0)
+        jQuery('.timescale_select.graphing_mode').val(0)
+        jQuery('.timescale_select.year').val(0)
+        self.menuChanged();
+    },
 
     /*
     showGamePhaseHelpBox: function () {
