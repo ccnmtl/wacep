@@ -128,6 +128,20 @@ Timescale.TimescaleView = Backbone.View.extend({
             jQuery ('.timescale_graph' ).attr("src", theState.image_path);
         }
         jQuery ('.explanation_copy').html (theState.text);
+
+
+        jQuery ('.variance .percent_trend')       .html (theState.percent_trend        );
+        jQuery ('.variance .percent_interdecadal').html (theState.percent_interdecadal );
+        jQuery ('.variance .percent_interannual') .html (theState.percent_interannual  );
+        jQuery ('.year_data .year')               .html (theState.year                 );
+
+
+        jQuery ('.year_data .trend')              .html (theState.year                 );
+        jQuery ('.year_data .decadal')            .html (theState.year_decadal         );
+        jQuery ('.year_data .interannual')        .html (theState.year_interannual     );
+
+
+
     },
 
     resetButtonPushed: function () {
