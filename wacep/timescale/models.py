@@ -80,10 +80,16 @@ class InputCombination (models.Model):
 
 class ActivityState (models.Model):
     name  = models.CharField(max_length=256, default = '')
-    image_filename = models.CharField(max_length=256, default = '', blank=True)
+
+    image_filename  = models.CharField(max_length=256, default = '', blank=True)
+    legend_filename = models.CharField(max_length=256, default = '', blank=True)
+    show_left_side       = models.BooleanField()
+    show_year_details    = models.BooleanField()
+
     order_rank = models.IntegerField(default=0, null=True, blank=True)
     text = models.TextField(blank=True, default = '')
 
+    # a bunch of numbers:
     climate_impact       = models.CharField(max_length=256, blank=True, default = '')
     graph_title          = models.CharField(max_length=256, blank=True, default = '')
     y_scale_title        = models.CharField(max_length=256, blank=True, default = '')
@@ -92,15 +98,15 @@ class ActivityState (models.Model):
     percent_trend        = models.CharField(max_length=256, blank=True, default = '')
 
     year                 = models.CharField(max_length=256, blank=True, default = '')
+    year_trend           = models.CharField(max_length=256, blank=True, default = '')
     year_decadal         = models.CharField(max_length=256, blank=True, default = '')
     year_interannual     = models.CharField(max_length=256, blank=True, default = '')
+    year_sum             = models.CharField(max_length=256, blank=True, default = '')
+    year_percentile      = models.CharField(max_length=256, blank=True, default = '')
 
-    overall_sum          = models.CharField(max_length=256, blank=True, default = '')
-    overall_percentile   = models.CharField(max_length=256, blank=True, default = '')
 
-    show_left_side       = models.BooleanField()
-    show_year_details    = models.BooleanField()
-
+    def get_absolute_url(self):
+        return "/admin/timescale/activitystate/%i/" % self.id
 
     def __unicode__(self):
         return self.name
@@ -109,13 +115,20 @@ class ActivityState (models.Model):
         ordering = ['order_rank']
 
     def to_json(self):
-        fn = self.image_filename
+
         where = '/_timescale/media/img'
-        path = '%s/%s' % (where, fn) if (fn != '') else ''
+        fn = self.image_filename
+        image_path = '%s/%s' % (where, fn) if (fn != '') else ''
+        fn = self.legend_filename
+        legend_path = '%s/%s' % (where, fn) if (fn != '') else ''
+
         return {
             'name'       : self.name,
             'id'         : self.id,
-            'image_path' : path,
+            'image_path'  : image_path,
+            'legend_path' : legend_path,
+
+            'absolute_url'        : self.get_absolute_url(),
 
             'text'                : self.text,
 
@@ -127,11 +140,13 @@ class ActivityState (models.Model):
             'percent_trend'       : self.percent_trend,
 
             'year'                : self.year,
+            'year_trend'          : self.year_trend,
             'year_interannual'    : self.year_interannual,
             'year_decadal'        : self.year_decadal,
+            'year_sum'            : self.year_sum,
+            'year_percentile'     : self.year_percentile,
 
-            'overall_sum'         : self.overall_sum,
-            'overall_percentile'  : self.overall_percentile,
+
             'climate_impact'      : self.climate_impact,
 
             'show_left_side'      : self.show_left_side,

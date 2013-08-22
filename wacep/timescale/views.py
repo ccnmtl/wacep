@@ -14,7 +14,7 @@ def settings(request):
         'graphing_mode_inputs':   [g.to_json() for g in GraphingModeInput  .objects.all()],
         'season_inputs':          [s.to_json() for s in SeasonInput        .objects.all()],
         'input_combinations':     [i.to_json() for i in InputCombination   .objects.all()],
-        'activity_states':        [a.to_json() for a in ActivityState       .objects.all()]
+        'activity_states':        [a.to_json() for a in ActivityState      .objects.all()]
     }
 
     return HttpResponse(simplejson.dumps(the_settings, indent=2),  mimetype="application/json")

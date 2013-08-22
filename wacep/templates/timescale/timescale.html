@@ -2,24 +2,34 @@
 
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
-		<div class = "timescale_subcontainer color_key">Graph Legend</div>
+		<div class = "timescale_subcontainer color_key">
+			<img class="timescale_color_key" />
+		</div>
 		<div class = "timescale_subcontainer graph">
 			<img class="timescale_graph" />
 		</div>
 
 		<div class = "timescale_subcontainer variance">
-			<div >% Variance Explained</div>
-			<div >Trend: <span class= "percent_trend"></span></div>
-			<div >Decadal: <span class = "percent_interdecadal"></span></div>
-			<div >Interannual: <span class = "percent_interannual"></span></div>
+			<div class="percent_data_header">% Variance Explained</div>
+			<div >Trend: <span class= "percent_data_value percent_trend"></span></div>
+			<div >Decadal: <span class = "percent_data_value percent_interdecadal"></span></div>
+			<div >Interannual: <span class = "percent_data_value percent_interannual"></span></div>
 		</div>
 
 		<div class="show_hide_div year_details">
 			<div class = "timescale_subcontainer year_data">
-				<div >For t       = <span class="year"></span></div>
-				<div >Trend       = <span class="trend"></span></div>
-				<div >Decadal     = <span class="decadal"></span></div>
-				<div >Interannual = <span class="interannual"></span></div>
+				<div class="left_box">
+					<div class="year_data_header">For t       = <span class="year_data_value year"></span>:</div>
+					<div >Trend       = <span class="year_data_value trend"></span></div>
+					<div >Decadal     = <span class="year_data_value decadal"></span></div>
+					<div >Interannual = <span class="year_data_value interannual"></span></div>
+				</div>
+				<div class="right_box">
+					<br/>
+					<br/>
+					<div >Sum         = <span class="year_data_value sum"></span></div>
+					<div >S.D.        = <span class="year_data_value standard_dev"></span></div>
+				</div>
 			</div>
 			<div class = "timescale_subcontainer impact_background">
 				<span id ="impact_level">
@@ -46,6 +56,9 @@
 	</div>
 	<div class="timescale_subcontainer explanation">
 		<div class="explanation_copy"></div>
+		{% if user.is_staff %}
+			<a class="btn btn-info edit_this_state">Edit this state</a>
+		{%endif %}
 	</div>
 
 </div>

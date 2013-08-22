@@ -73,6 +73,14 @@ header#masthead {
   height: 85px;
 }
 
+.year_data .left_box, .year_data .right_box {
+    margin-left: 50px;
+    display: inline-table;
+}
+.percent_data_header, .year_data_header {
+  font-weight: bold;
+}
+
 .timescale_subcontainer.impact_background {
   left: 220px;
   top: 625px;
@@ -81,9 +89,15 @@ header#masthead {
 }
 .timescale_subcontainer.impact_bubble {
   top:   6px;
+  text-align: center;
   width: 100px;
   height: 43px;
   color: white;
+}
+
+.impact_bubble_title {
+  position: relative;
+  top: 12px;
 }
 
 #impact_level.wet .impact_bubble{

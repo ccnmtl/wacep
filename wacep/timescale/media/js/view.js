@@ -127,17 +127,30 @@ Timescale.TimescaleView = Backbone.View.extend({
         else {
             jQuery ('.timescale_graph' ).attr("src", theState.image_path);
         }
+
+        if (theState.image_path === '') {
+            jQuery ('.timescale_color_key' ).replaceWith('<img class="timescale_color_key">');
+        }
+        else {
+            jQuery ('.timescale_color_key' ).attr("src", theState.legend_path);
+        }
+
+        
+
         jQuery ('.explanation_copy').html (theState.text);
 
 
         jQuery ('.variance .percent_trend')       .html (theState.percent_trend        );
         jQuery ('.variance .percent_interdecadal').html (theState.percent_interdecadal );
         jQuery ('.variance .percent_interannual') .html (theState.percent_interannual  );
-        jQuery ('.year_data .year')               .html (theState.year                 );
 
-        jQuery ('.year_data .trend')              .html (theState.year                 );
+
+        jQuery ('.year_data .year')               .html (theState.year                 );
+        jQuery ('.year_data .trend')              .html (theState.year_trend           );
         jQuery ('.year_data .decadal')            .html (theState.year_decadal         );
         jQuery ('.year_data .interannual')        .html (theState.year_interannual     );
+        jQuery ('.year_data .sum')                .html (theState.year_sum             );
+        jQuery ('.year_data .standard_dev')       .html (theState.year_percentile      );
 
         if (theState.show_year_details == false) {
             jQuery ('.show_hide_div.year_details')      .hide ();
@@ -151,6 +164,10 @@ Timescale.TimescaleView = Backbone.View.extend({
             jQuery ('.show_hide_div.left_side')      .show ();
         }
 
+        if (jQuery('.edit_this_state').length > 0 ) {
+            jQuery('.edit_this_state')[0].href = theState.absolute_url
+        }
+
         if (theState.climate_impact) {
             climateImpactLabels = {
                 wet          : 'Wet',
@@ -162,6 +179,7 @@ Timescale.TimescaleView = Backbone.View.extend({
 
             jQuery ("#impact_level")       .attr("class", theState.climate_impact);
             jQuery ('.impact_bubble_title').html (climateImpactLabels[theState.climate_impact])
+
         }
 
     },
