@@ -10,81 +10,100 @@ header#masthead {
   display: none;
 }
 
+.timescale_select, .reset_button {
+  margin-left: 10px;
+  margin-top: 10px;
+
+}
+
 .timescale_container {
-  border: 5px solid green;
+  background-color: black;
   position: relative;
   height: 693px;
 }
 
 .timescale_subcontainer {
-  border: 5px solid;
+  /*margin: 10px; */
+  background-color: white;
   position: absolute;
   left: 100px;
   top: 200px;
   width: 100px;
   height: 100px;
-
 }
+
 .timescale_subcontainer.color_key {
-  border:  solid red;
-  left: 5px;
-  top: 5px;
+  left: 8px;
+  top: 8px;
   width: 820px;
   height: 100px;
 }
 
 .timescale_subcontainer.inputs {
-  border:  solid blue;
   left: 836px;
-  top: 5px;
-  width: 275px;
-  height: 200px;
+  top: 8px;
+  width: 285px;
+  height: 203px;
 }
 
 .timescale_subcontainer.graph {
-  border:  solid purple;
-  left: 5px;
+  left: 8px;
   top: 115px;
   width: 820px;
   height: 400px;
 }
 
 .timescale_subcontainer.explanation {
-  border:  solid orange;
   left: 836px;
-  top: 215px;
-  width: 275px;
-  height: 465px;
+  top: 219px;
+  width: 285px;
+  height: 464px;
 }
 .timescale_subcontainer.variance {
-  border:  solid blue;
-  left: 5px;
+  left: 8px;
   top: 530px;
-  width: 200px;
-  height: 150px;
+  width: 202px;
+  height: 153px;
 }
 
 .timescale_subcontainer.year_data {
-  border:  solid yellow;
   left: 220px;
   top: 530px;
-  width: 605px;
-  height: 80px;
+  width: 608px;
+  height: 85px;
 }
 
 .timescale_subcontainer.impact_background {
-  border:  solid purple;
   left: 220px;
   top: 625px;
-  width: 605px;
-  height: 55px;
+  width: 608px;
+  height: 58px;
 }
 .timescale_subcontainer.impact_bubble {
-  border:  solid black;
-  left: 360px;
-  top: 630px;
+  top:   6px;
   width: 100px;
   height: 43px;
+  color: white;
+}
+
+#impact_level.wet .impact_bubble{
+  background-color: blue;
+  left: 100px;
+}
+
+#impact_level.normal .impact_bubble{
+  background-color: green;
+  left: 200px;
+}
+
+#impact_level.dry .impact_bubble{
+  background-color: orange;
+  left: 300px;
+}
+
+#impact_level.extremely_dry .impact_bubble{
+  background-color: red;
+  left: 400px;
 }
 
 /*
