@@ -13,7 +13,30 @@ header#masthead {
 .timescale_select, .reset_button {
   margin-left: 10px;
   margin-top: 10px;
+}
 
+.timescale_year_highlight_rectangle {
+  position: absolute;
+  top: 146px;
+  width: 2px;
+  height: 330px;
+  z-index: 100;
+  background-color: red;
+  border: solid red 3px;
+  opacity:0.5;
+  filter:alpha(opacity=0.5);
+}
+
+#year_for_highlight_rectangle.year_1912 .timescale_year_highlight_rectangle{
+  left: 128px;
+}
+
+#year_for_highlight_rectangle.year_1990 .timescale_year_highlight_rectangle{
+  left: 630px;
+}
+
+#year_for_highlight_rectangle.year_1998 .timescale_year_highlight_rectangle{
+  left: 687px;
 }
 
 .timescale_container {

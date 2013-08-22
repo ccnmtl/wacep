@@ -2,6 +2,9 @@
 
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
+		<span id ="year_for_highlight_rectangle">
+			<div class ="timescale_year_highlight_rectangle"></div>
+		</span>
 		<div class = "timescale_subcontainer color_key">
 			<img class="timescale_color_key" />
 		</div>
@@ -57,7 +60,7 @@
 	<div class="timescale_subcontainer explanation">
 		<div class="explanation_copy"></div>
 		{% if user.is_staff %}
-			<a class="btn btn-info edit_this_state">Edit this state</a>
+			<a class="btn btn-info edit_this_state">edit</a>
 		{%endif %}
 	</div>
 
