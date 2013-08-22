@@ -80,7 +80,7 @@ class InputCombination (models.Model):
 
 class ActivityState (models.Model):
     name  = models.CharField(max_length=256, default = '')
-    image_filename = models.CharField(max_length=256, default = '')
+    image_filename = models.CharField(max_length=256, default = '', blank=True)
     order_rank = models.IntegerField(default=0, null=True, blank=True)
     text = models.TextField(blank=True, default = '')
 
@@ -95,9 +95,12 @@ class ActivityState (models.Model):
     year_decadal         = models.CharField(max_length=256, blank=True, default = '')
     year_interannual     = models.CharField(max_length=256, blank=True, default = '')
 
-
     overall_sum          = models.CharField(max_length=256, blank=True, default = '')
     overall_percentile   = models.CharField(max_length=256, blank=True, default = '')
+
+    show_left_side       = models.BooleanField()
+    show_year_details    = models.BooleanField()
+
 
     def __unicode__(self):
         return self.name
@@ -114,6 +117,8 @@ class ActivityState (models.Model):
             'id'         : self.id,
             'image_path' : path,
 
+            'text'                : self.text,
+
             'graph_title'         : self.graph_title,
             'y_scale_title'       : self.y_scale_title,
 
@@ -127,10 +132,10 @@ class ActivityState (models.Model):
 
             'overall_sum'         : self.overall_sum,
             'overall_percentile'  : self.overall_percentile,
-            'text'                : self.text,
+            'climate_impact'      : self.climate_impact,
 
-
-            'climate_impact' : self.climate_impact
+            'show_left_side'      : self.show_left_side,
+            'show_year_details'   : self.show_year_details
 
         }
 

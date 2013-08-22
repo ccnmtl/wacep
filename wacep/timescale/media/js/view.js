@@ -62,8 +62,8 @@ Timescale.TimescaleView = Backbone.View.extend({
     finishInitialize: function () {
         var self = this;
         self.setUpMenus();
+        self.menuChanged();
     },
-
 
     setUpMenus: function () {
         var self = this;
@@ -120,7 +120,7 @@ Timescale.TimescaleView = Backbone.View.extend({
     menuChanged: function () {
         var self = this;
         var theState = self.findCurrentState();
-        console.log (JSON.stringify (theState));
+        console.log (theState.image_path);
         if (theState.image_path === '') {
             jQuery ('.timescale_graph' ).replaceWith('<img class="timescale_graph">');
         }
@@ -135,10 +135,21 @@ Timescale.TimescaleView = Backbone.View.extend({
         jQuery ('.variance .percent_interannual') .html (theState.percent_interannual  );
         jQuery ('.year_data .year')               .html (theState.year                 );
 
-
         jQuery ('.year_data .trend')              .html (theState.year                 );
         jQuery ('.year_data .decadal')            .html (theState.year_decadal         );
         jQuery ('.year_data .interannual')        .html (theState.year_interannual     );
+
+        if (theState.show_year_details == false) {
+            jQuery ('.show_hide_div.year_details')      .hide ();
+        } else {
+            jQuery ('.show_hide_div.year_details')      .show ();
+        }
+
+        if (theState.show_left_side == false) {
+            jQuery ('.show_hide_div.left_side')      .hide ();
+        } else {
+            jQuery ('.show_hide_div.left_side')      .show ();
+        }
 
 
 

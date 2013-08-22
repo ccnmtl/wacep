@@ -6,6 +6,10 @@ header#masthead {
   height:60px !important;
 }
 
+.show_hide_div {
+  display: none;
+}
+
 .timescale_container {
   border: 5px solid green;
   position: relative;
