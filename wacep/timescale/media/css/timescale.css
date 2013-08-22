@@ -10,6 +10,25 @@ header#masthead {
   display: none;
 }
 
+
+.timescale_graph_title {
+  position: absolute;
+  left: 200px;
+  top: 10px;
+
+}
+.timescale_graph_y_axis {
+  position: absolute;
+  left: -87px;
+  top: 190px;
+  -moz-transform:    rotate(270deg);  /* FF3.5+ */
+  -o-transform:      rotate(270deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
+  filter:      progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; /* IE8 */
+}
+
+
 .timescale_select, .reset_button {
   margin-left: 10px;
   margin-top: 10px;

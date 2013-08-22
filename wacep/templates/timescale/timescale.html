@@ -2,13 +2,17 @@
 
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
-		<span id ="year_for_highlight_rectangle">
-			<div class ="timescale_year_highlight_rectangle"></div>
-		</span>
 		<div class = "timescale_subcontainer color_key">
 			<img class="timescale_color_key" />
 		</div>
+
+		<span id ="year_for_highlight_rectangle">
+			<div class ="timescale_year_highlight_rectangle"></div>
+		</span>
+
 		<div class = "timescale_subcontainer graph">
+			<div class="timescale_graph_title" >title</div>
+			<div class="timescale_graph_y_axis">y axis</div>
 			<img class="timescale_graph" />
 		</div>
 
@@ -35,6 +39,7 @@
 				</div>
 			</div>
 			<div class = "timescale_subcontainer impact_background">
+				Climate impact
 				<span id ="impact_level">
 					<div class = "timescale_subcontainer impact_bubble">
 						<span class="impact_bubble_title"></span>
@@ -58,6 +63,7 @@
         <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
 	</div>
 	<div class="timescale_subcontainer explanation">
+		<h3>Notes:</h3>
 		<div class="explanation_copy"></div>
 		{% if user.is_staff %}
 			<a class="btn btn-info edit_this_state">edit</a>

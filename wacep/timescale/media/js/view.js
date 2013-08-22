@@ -135,9 +135,11 @@ Timescale.TimescaleView = Backbone.View.extend({
             jQuery ('.timescale_color_key' ).attr("src", theState.legend_path);
         }
 
-        
 
-        jQuery ('.explanation_copy').html (theState.text);
+            
+        jQuery ('.timescale_graph_title')         .html (theState.graph_title);
+        jQuery ('.timescale_graph_y_axis')        .html (theState.y_scale_title);
+        jQuery ('.explanation_copy')              .html (theState.text);
 
 
         jQuery ('.variance .percent_trend')       .html (theState.percent_trend        );
