@@ -1,13 +1,11 @@
 Timescale.TimescaleView = Backbone.View.extend({
-    
+
     events: {
         "change .timescale_select": "menuChanged",
-        "click .reset_button" : "resetButtonPushed"
+        "click .reset_button"     : "resetButtonPushed",
+        "click .help_icon"        : "showHelp",
+        "click .help_ok_button"   : "hideHelp",
     },
-    /*
-    phases: null,
-    current_phase : null,
-    */
     initialize: function(options) {
         "use strict";
         var self = this;
@@ -16,14 +14,15 @@ Timescale.TimescaleView = Backbone.View.extend({
             "getSettings",
             "setUpMenus",
             "menuChanged",
-            "resetButtonPushed"
+            "resetButtonPushed",
+            "showHelp",
+            "hideHelp"
         );
 
         jQuery ('#right-content').removeClass ('span9');
         // makes the div go back to its default (wider) width.
         self.getSettings();
     },
-
 
     getSettings: function() {
         "use strict";
@@ -100,9 +99,9 @@ Timescale.TimescaleView = Backbone.View.extend({
     },
 
     menuChanged: function () {
+        "use strict";
         var self = this;
         var theState = self.findCurrentState();
-        console.log (theState.image_path);
         if (theState.image_path === '') {
             jQuery ('.timescale_graph' ).replaceWith('<img class="timescale_graph">');
         }
@@ -149,7 +148,7 @@ Timescale.TimescaleView = Backbone.View.extend({
         }
 
         if (theState.climate_impact) {
-            climateImpactLabels = {
+            var climateImpactLabels = {
                 wet          : 'Wet',
                 normal       : 'Normal',
                 dry          : 'Dry',
@@ -164,7 +163,21 @@ Timescale.TimescaleView = Backbone.View.extend({
 
     },
 
+    showHelp: function() {
+        "use strict";
+        var self = this;
+        jQuery('.help_box').show();
+    },
+
+
+    hideHelp: function() {
+        "use strict";
+        var self = this;
+        jQuery('.help_box').hide();
+    },
+
     resetButtonPushed: function () {
+        "use strict";
         var self = this;
         jQuery('.timescale_select.season').val(0)
         jQuery('.timescale_select.graphing_mode').val(0)
@@ -178,4 +191,6 @@ Timescale.TimescaleView = Backbone.View.extend({
         self.setUpMenus();
         self.menuChanged();
     },
+
+
 });

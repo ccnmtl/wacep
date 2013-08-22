@@ -6,10 +6,25 @@ header#masthead {
   height:60px !important;
 }
 
+
+.timescale_container {
+  background-color: black;
+  position: relative;
+  height: 693px;
+}
+
+.timescale_subcontainer {
+  background-color: white;
+  position: absolute;
+  left: 100px;
+  top: 200px;
+  width: 100px;
+  height: 100px;
+}
+
 .show_hide_div {
   display: none;
 }
-
 
 .timescale_graph_title {
   position: absolute;
@@ -66,21 +81,28 @@ header#masthead {
   margin-left: 10px;
 }
 
-.timescale_container {
-  background-color: black;
-  position: relative;
-  height: 693px;
+.timescale_subcontainer.help_icon {
+  cursor: pointer;
+  left: 1100px;
+  top: -30px;
+  width: 30px;
+  height: 30px;
 }
 
-.timescale_subcontainer {
-  /*margin: 10px; */
+
+.timescale_subcontainer.help_box {
+  display:none;
   background-color: white;
-  position: absolute;
-  left: 100px;
-  top: 200px;
-  width: 100px;
-  height: 100px;
+  width: 500px;
+  height: 300px;
+  z-index:500;
+  border:solid lightblue 3px;
 }
+.help_copy_container_div {
+  margin : 30px;
+
+}
+
 
 .timescale_subcontainer.color_key {
   left: 8px;
