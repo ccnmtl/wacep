@@ -1,0 +1,197 @@
+#sidebarleft, li.next, li.previous, h1.section-label-header, #sidebar{
+    display:none;
+}
+
+header#masthead {
+  height:60px !important;
+}
+
+
+.timescale_container {
+  background-color: black;
+  position: relative;
+  height: 693px;
+}
+
+.timescale_subcontainer {
+  background-color: white;
+  position: absolute;
+  left: 100px;
+  top: 200px;
+  width: 100px;
+  height: 100px;
+}
+
+.show_hide_div {
+  display: none;
+}
+
+.timescale_graph_title {
+  position: absolute;
+  left: 200px;
+  top: 10px;
+
+}
+.timescale_graph_y_axis {
+  position: absolute;
+  left: -87px;
+  top: 190px;
+  -moz-transform:    rotate(270deg);  /* FF3.5+ */
+  -o-transform:      rotate(270deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
+  filter:      progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; /* IE8 */
+}
+
+
+.timescale_select, .reset_button {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.timescale_year_highlight_rectangle {
+  position: absolute;
+  top: 146px;
+  width: 2px;
+  height: 330px;
+  z-index: 100;
+  background-color: red;
+  border: solid red 3px;
+  opacity:0.5;
+  filter:alpha(opacity=0.5);
+}
+
+#year_for_highlight_rectangle.year_1912 .timescale_year_highlight_rectangle{
+  left: 128px;
+}
+
+#year_for_highlight_rectangle.year_1990 .timescale_year_highlight_rectangle{
+  left: 630px;
+}
+
+#year_for_highlight_rectangle.year_1998 .timescale_year_highlight_rectangle{
+  left: 687px;
+}
+
+.explanation_copy {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.edit_this_state {
+  margin-left: 10px;
+}
+
+.timescale_subcontainer.help_icon {
+  cursor: pointer;
+  left: 1100px;
+  top: -30px;
+  width: 30px;
+  height: 30px;
+}
+
+
+.timescale_subcontainer.help_box {
+  display:none;
+  background-color: white;
+  width: 500px;
+  height: 300px;
+  z-index:500;
+  border:solid lightblue 3px;
+}
+.help_copy_container_div {
+  margin : 30px;
+
+}
+
+
+.timescale_subcontainer.color_key {
+  left: 8px;
+  top: 8px;
+  width: 820px;
+  height: 100px;
+}
+
+.timescale_subcontainer.inputs {
+  left: 836px;
+  top: 8px;
+  width: 285px;
+  height: 203px;
+}
+
+.timescale_subcontainer.graph {
+  left: 8px;
+  top: 115px;
+  width: 820px;
+  height: 400px;
+}
+
+.timescale_subcontainer.explanation {
+  left: 836px;
+  top: 219px;
+  width: 285px;
+  height: 464px;
+}
+.timescale_subcontainer.variance {
+  left: 8px;
+  top: 530px;
+  width: 202px;
+  height: 153px;
+}
+.timescale_subcontainer.variance div {
+  margin-left: 10px
+
+}
+
+.timescale_subcontainer.year_data {
+  left: 220px;
+  top: 530px;
+  width: 608px;
+  height: 85px;
+}
+
+.year_data .left_box, .year_data .right_box {
+    margin-left: 50px;
+    display: inline-table;
+}
+.percent_data_header, .year_data_header {
+  font-weight: bold;
+}
+
+.timescale_subcontainer.impact_background {
+  left: 220px;
+  top: 625px;
+  width: 608px;
+  height: 58px;
+}
+.timescale_subcontainer.impact_bubble {
+  top:   6px;
+  text-align: center;
+  width: 100px;
+  height: 43px;
+  color: white;
+}
+
+.impact_bubble_title {
+  position: relative;
+  top: 12px;
+}
+
+#impact_level.wet .impact_bubble{
+  background-color: blue;
+  left: 100px;
+}
+
+#impact_level.normal .impact_bubble{
+  background-color: green;
+  left: 200px;
+}
+
+#impact_level.dry .impact_bubble{
+  background-color: orange;
+  left: 300px;
+}
+
+#impact_level.extremely_dry .impact_bubble{
+  background-color: red;
+  left: 400px;
+}

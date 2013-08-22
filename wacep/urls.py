@@ -50,6 +50,8 @@ urlpatterns = patterns(
     (r'^instructor/(?P<path>.*)$',
      'wacep.main.views.instructor_page'),
 
+    (r'^_timescale/', include('wacep.timescale.urls')),
+
 
     (r'^courses/$',     'wacep.main.views.courses'),
     (r'^(?P<path>.*)$', 'wacep.main.views.splash_or_page'),

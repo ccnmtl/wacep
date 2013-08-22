@@ -49,10 +49,16 @@
 		<label for="id_password">Password: {{ form.password }}</label>
 		
 		<input type="submit" value="Log In" class="btn btn-primary" />
+		{% comment%}
+		<!-- don't have a pmt for this yet, so I'm commenting it out. -->
 		<input type="submit" value="I Forgot My Password" class="btn btn-warning" />
+		{% endcomment%}
+		
 		<input type="hidden" name="next" value="{{ next }}" />
 		
 		</form>
+		
+		{% comment%}
 		<form method="get" action="{{ wind_base }}login" class="well">
 		
 		<input type="hidden" name="service" value="{{ wind_service }}" />
@@ -62,6 +68,7 @@
 		<input type="submit" value="Log In" class="btn btn-primary"/></p>
 		
 		</form>
+		{% endcomment%}
 	</div>
 
 </div>
