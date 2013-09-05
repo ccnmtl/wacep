@@ -17,15 +17,7 @@
 {% block title %}{{section.label}}{% endblock %}
 
 {% block pagetitle %}<h1>{{section.label}}</h1>{% endblock %}
-    {%block wacep_top_nav %}
-        {% for section in modules %}
-			{% ifequal section.id module.id %}
-          		{% for wacep_module in section.get_children %}
-	          		<li {%ifequal wacep_module submodule%}class="active"{%endifequal%}><a href="{{wacep_module.get_absolute_url}}">{{wacep_module.label}}</a></li>
-          		{%endfor%}
-          	{% endifequal %}
-        {% endfor %}
-    {%endblock wacep_top_nav%}
+
 
 
 {% block sidenav %}
@@ -57,6 +49,16 @@
     {% block primarynavtabsextra %}{% endblock %}
     </ul>
 
+    <ul class="nav pull-left">
+      {% for section in modules %}
+        {% ifequal section.id module.id %}
+          {% for wacep_module in section.get_children %}
+            <li {%ifequal wacep_module submodule%}class="active"{%endifequal%}><a href="{{wacep_module.get_absolute_url}}">{{wacep_module.label}}</a></li>
+          {%endfor%}
+        {% endifequal %}
+      {% endfor %}
+    </ul>
+    
     <ul class="nav pull-right">
     {% if user.is_staff %}
         <li><a href="/edit{{section.get_absolute_url|default:"/"}}">Edit</a></li>
