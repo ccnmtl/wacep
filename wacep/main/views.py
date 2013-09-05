@@ -23,6 +23,7 @@ def splash_or_page(request, path):
     else:
         return page(request, path)
 
+
 def splash(request):
     """ show the splash page."""
     splash_path = 'splash.html'
@@ -35,12 +36,9 @@ def splash(request):
 @login_required
 def courses(request):
     """ courses page."""
-
     the_courses = get_section_from_path('/').get_children()
     file_name = 'main/courses.html'
     course_info = []
-    #import pdb
-    #pdb.set_trace()
     for c in the_courses:
         next_course = {}
         next_course['course'] = c
@@ -126,8 +124,3 @@ def edit_page(request, path):
                 module=get_module(section),
                 modules=root.get_children(),
                 root=section.hierarchy.get_root())
-
-
-@render_to('main/instructor_page.html')
-def instructor_page(request, path):
-    return dict()
