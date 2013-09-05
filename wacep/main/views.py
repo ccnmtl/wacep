@@ -1,5 +1,5 @@
 from annoying.decorators import render_to
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from pagetree.helpers import get_section_from_path
 from pagetree.helpers import get_module, needs_submit, submitted
 from django.contrib.auth.decorators import login_required
@@ -23,7 +23,6 @@ def splash_or_page(request, path):
     else:
         return page(request, path)
 
-
 def splash(request):
     """ show the splash page."""
     splash_path = 'splash.html'
@@ -35,11 +34,25 @@ def splash(request):
 
 @login_required
 def courses(request):
-    """ show the splash page."""
+    """ courses page."""
+
     the_courses = get_section_from_path('/').get_children()
     file_name = 'main/courses.html'
+    course_info = []
+    #import pdb
+    #pdb.set_trace()
+    for c in the_courses:
+        next_course = {}
+        next_course['course'] = c
+        next_course['blurb'] = None
+        if len (c.pageblock_set.all()) > 0:
+            b = c.pageblock_set.all()[0].block()
+            if b.display_name == 'Text Block':
+                next_course['blurb'] = b.body 
+        course_info.append (next_course)
+
     t = loader.get_template(file_name)
-    c = RequestContext(request, {'the_courses': the_courses})
+    c = RequestContext(request, {'the_courses': the_courses, 'course_info': course_info})
     return HttpResponse(t.render(c))
 
 
@@ -54,9 +67,22 @@ def get_submodule(section):
     return section.get_ancestors()[2]
 
 
+def page (request, path):
+    """ if there is a flatpage with this URL,
+    throw a 404 so the flatpage middleware
+    can take over and display the page.
+    Otherwise proceed as usual.
+    """
+    from django.contrib.flatpages.models import FlatPage
+    for f in FlatPage.objects.all():
+        if ('/%s' % path)  == f.url:
+            raise Http404
+    return pagetree_page(request, path)
+
+
 @login_required
 @render_to('main/page.html')
-def page(request, path):
+def pagetree_page(request, path):
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
     module = get_module(section)

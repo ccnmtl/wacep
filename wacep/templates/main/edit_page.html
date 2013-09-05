@@ -110,6 +110,47 @@ $(function() {
 <li><a href="{{section.get_absolute_url}}" class="btn-success">view page</a></li>
 {% endblock %}
 
+
+
+{% block primarynav %}
+
+<div class="navbar" id="primarynav">
+
+  <div class="navbar-inner">
+  
+    <div class="container">
+    
+  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  </a>
+        
+      <div class="nav-collapse collapse">
+      
+    <ul class="nav">   
+    {% block primarynavtabs %}
+    {% endblock %}
+    {% block primarynavtabsextra %}{% endblock %}
+    </ul>
+
+    <ul class="nav pull-right">
+    {% if user.is_staff %}
+      {% if section %}
+        <li><a href="{{section.get_absolute_url}}">View Page</a></li>
+      {% endif %}
+    {%endif %}
+    </ul>
+    
+      </div>  
+      
+    </div>
+    
+  </div>
+  
+</div>
+{% endblock %}
+
 {% block content %}
 <h1>{{ section.label }}</h1>
 
