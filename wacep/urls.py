@@ -25,6 +25,7 @@ urlpatterns = patterns(
     (r'^admin/', include(admin.site.urls)),
     #(r'^$',     'wacep.main.views.courses'),
     url(r'^$', RedirectView.as_view(url='/welcome/')),
+    (r'^splash/$',     'wacep.main.views.splash'),
     (r'^courses/$',     'wacep.main.views.courses'),
     (r'^munin/', include('munin.urls')),
     (r'^stats/', direct_to_template, {'template': 'stats.html'}),
@@ -36,6 +37,6 @@ urlpatterns = patterns(
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
     (r'^_timescale/', include('wacep.timescale.urls')),
-    (r'^(?P<path>.*)$', 'wacep.main.views.splash_or_page'),
+    (r'^(?P<path>.*)$', 'wacep.main.views.page'),
 
 ) + staticmedia.serve()

@@ -4,10 +4,12 @@ from pagetree.helpers import get_section_from_path
 from pagetree.helpers import get_module, needs_submit, submitted
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader
+from django.shortcuts import redirect
 from django.conf import settings
 
 
 def splash_or_page(request, path):
+    """ Discontinung this, but keeping for future reference. """
     show_splash = False
     try:
         if settings.SHOW_SPLASH:
@@ -31,7 +33,6 @@ def splash(request):
     t = loader.get_template(file_name)
     c = RequestContext(request, {})
     return HttpResponse(t.render(c))
-
 
 @login_required
 def courses(request):
