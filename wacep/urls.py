@@ -36,7 +36,8 @@ urlpatterns = patterns(
      'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
-    (r'^_timescale/', include('wacep.timescale.urls')),
+    (r'^_timescale/',    include('wacep.timescale.urls')),
+    (r'^_certificates/', include('wacep.certificates.urls')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page'),
 
 ) + staticmedia.serve()

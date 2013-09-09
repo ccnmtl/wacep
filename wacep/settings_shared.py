@@ -126,6 +126,7 @@ INSTALLED_APPS = [
     'pageblocks',
     'quizblock',
     'wacep.timescale',
+    'wacep.certificates',
 ]
 
 PAGEBLOCKS = [
