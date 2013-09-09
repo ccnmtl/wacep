@@ -74,7 +74,12 @@
 				<li><a href="/admin/">Administrate</a></li>
 				{%endif %}
 				<li><a href ="/courses/">Courses</a></li>
-				<li><a href="javascript:alert ('Coming soon');">Certificates for {{request.user.first_name}}</a></li>
+				
+				{%if user.is_staff%}
+					<li><a href="/_certificates/certificates_admin/">Certificates</a></li>
+				{%else %}
+					<li><a href="/_certificates/student_certificates/">Certificates for {{request.user.first_name}}</a></li>
+				{%endif%}
 				<li><a href="/logout/" >Log Out</a>
 
 				{% endif %}
@@ -96,11 +101,12 @@
 <div class="container-fluid" id="content">
 
 	<div class="row-fluid">
-	
-		<div class="span3" id="sidebar">
-		{% block sidenav %}{% endblock %}
-		</div>
 		
+		{% block sidebar %}
+			<div class="span3" id="sidebar">
+			{% block sidenav %}{% endblock %}
+			</div>
+		{% endblock sidebar%}
 		<div class="span9" id="right-content">
 		{% block pagetitle %}{% endblock %}
 		{% block content %}{% endblock %}

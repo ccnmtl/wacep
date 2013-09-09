@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block sidebar %}{%endblock sidebar%}
+
+{% block content %}
+    <form action ="/_certificates/update_certificates_admin/" method ="post" id = "certificates_form">                     
+        {% csrf_token %}
+        <div class = "row well">
+	        <h1>Certificates</h1>
+		</div>
+		<div class="row well">
+			<div class="span3">
+				Name
+			</div>
+			{% for course in the_courses %}				
+				<div class="span2">
+					{{course}}
+				</div>
+			{%endfor%}
+		</div>
+
+	{%for st in the_students%}
+		<div class="row well">
+			<div class="span3">
+				{{st.first_name}} {{st.last_name}}
+			</div>
+			{% for course in the_courses %}				
+				<div class="span2">
+					{% if st.id in course.cached_graduate_user_ids %}
+						<input type="checkbox" checked = "checked" name="{{st.id}}:{{course.id}}" title="{{course}}"></input>
+					{%else %}
+						<input type="checkbox"                     name="{{st.id}}:{{course.id}}"  title="{{course}}"></input>
+					{%endif %}
+				</div>
+			{%endfor%}
+		</div>
+	{%endfor%}
+
+<div class="row">
+	<div class="span2">
+		<div class="btn btn-large" onclick="javascript:jQuery('#certificates_form').submit()">Save</div>
+	</div>
+</div>
+
+</form>
+{%endblock content %}
