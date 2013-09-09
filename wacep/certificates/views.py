@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from  wacep.certificates.models import Certificate, CertificateCourse
 from datetime import datetime
+from django.utils.timezone import utc
 
 
 
@@ -20,7 +21,6 @@ def certificates_admin(request):
     the_courses = CertificateCourse.objects.all()
     for c in the_courses:
         c.cached_graduate_user_ids = c.graduate_user_ids()
-
     return {'the_students' : the_students, 'the_courses': the_courses}
 
 
@@ -37,27 +37,23 @@ def update_certificates_admin(request):
         the_user   = User.objects.get(pk=int(user_id_str))
         the_certificate, new_graduate = Certificate.objects.get_or_create(user=the_user, course=the_course)
         if new_graduate:
-            the_certificate.date = datetime.now()
-            the_certificate.save()
+            the_certificate.date = datetime.utcnow().replace(tzinfo=utc)
+            the_certificate.save() # mazel tov!
         certificates_to_keep.append (the_certificate.id)
     for deleted_cert in Certificate.objects.exclude(id__in=certificates_to_keep):
         deleted_cert.delete()
-
-
-
-
-
     return HttpResponseRedirect('/_certificates/certificates_admin/')
 
 @login_required
 @render_to('certificates/student_certificates.html')
 def student_certificates(request):
     """ A list of all the certificates earned by a student."""
-    return {}
+    the_courses = CertificateCourse.objects.all()
+    print request.user.certificates_earned.all()
+    return { 'the_courses': the_courses}
 
 @login_required
 @render_to('certificates/certificate.html')
-def certificate(request, certificate):
-    """ Show a nice certificate for the student.
-    If they haven't earned it, redirect them to /."""
-    return {}
+def certificate(request, certificate_id):
+    """ Show a nice certificate for the student."""
+    return { 'certificate':Certificate.objects.get(pk=certificate_id)}

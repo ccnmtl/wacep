@@ -3,6 +3,7 @@ from django.contrib.contenttypes import generic
 from pagetree.models import Section
 from django import forms
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 
 class CertificateCourse (models.Model):
@@ -22,16 +23,19 @@ class CertificateCourse (models.Model):
         }
 
     def graduate_user_ids (self):
-    	return [c.user.id for c in self.certificate_set.all()]
+        return [c.user.id for c in self.certificate_set.all()]
 
 class Certificate (models.Model):
     """A course for which we offer a certificate"""
     user        = models.ForeignKey(User, related_name = 'certificates_earned')
     course      = models.ForeignKey ('CertificateCourse')
-    date 		= models.DateTimeField(null=True)
+    date        = models.DateTimeField(null=True)
 
     def __unicode__(self):
         return '%s took %s' % (self.user, self.course)
+
+    def get_absolute_url(self):
+        return reverse('wacep.certificates.views.certificate', args=[str(self.id)])
 
     class Meta:
         ordering = ['date']
