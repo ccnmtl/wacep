@@ -2,6 +2,7 @@
 
 {% block title %}Log In{% endblock %}
 
+{%block loginlink %}{%endblock loginlink %}
 {% block content %}
 
 <h2>Log In</h2>
@@ -46,11 +47,27 @@
 		<label for="id_password">Password: {{ form.password }}</label>
 		
 		<input type="submit" value="Log In" class="btn btn-primary" />
+		{% comment%}
+		<!-- don't have a pmt for this yet, so I'm commenting it out. -->
 		<input type="submit" value="I Forgot My Password" class="btn btn-warning" />
+		{% endcomment%}
+		
 		<input type="hidden" name="next" value="{{ next }}" />
 		
 		</form>
+
+		{% comment%}
+		<form method="get" action="{{ wind_base }}login" class="well">
 		
+		<input type="hidden" name="service" value="{{ wind_service }}" />
+		<input type="hidden" name="destination" value="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />
+		
+		<p>I have a Columbia University Network ID (UNI).</p>
+		<input type="submit" value="Log In" class="btn btn-primary"/></p>
+		
+		</form>
+		{% endcomment%}
+
 	</div>
 
 </div>

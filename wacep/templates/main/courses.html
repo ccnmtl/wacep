@@ -5,36 +5,43 @@
 {% block pagetitle %}<h1>Courses</h1>{% endblock %}
 
 {% block content %}
-		
 <p>Caribbean islands have limited water resources, and increasing pressure on those resources from population pressure, urbanization, economic development, and tourism. Climatic variability is magnifying existing pressures. Adaptation to climate is essential, but there are few people in the region trained in how to identify and implement effective strategies to manage climate and water-related risks. </p>
 		
 <div id="content">
-
-		{% for course in the_courses %}
+		{% for c in course_info %}
 		<div class="wacep_course_block well">
 		<div class="row-fluid">
 		<div class="span12">
-		
 		    <div class="span10">
-		    
-				<h3>{{course }}</h3> <!-- (id == {{course.id}}) -->
+				<h3>{{c.course }}</h3> <!-- (id == {{course.id}}) -->
+				{%if c.blurb%}
+					<p>
+						{{c.blurb|safe}}
+						{% if user.is_staff%}
+							<a target="_blank" href= "/edit/{{c.course.slug}}"><i class="icon-large icon-edit"></i></a>
+						{%endif %}
+
+					</p>
+				{%else %}
+					<p>
+						{% if user.is_staff%}
+							(Add a text block here <a target="_blank" href= "/edit/{{c.course.slug}}"><i class="icon-large icon-edit"></i></a>, and it will be displayed in this space.)
+						{%endif %}
+					</p>
+				{%endif%}
 				
-				<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices placerat lorem, et volutpat felis pulvinar aliquam. Vivamus rhoncus, sem non sollicitudin porttitor, nisi lacus molestie risus, at cursus quam odio et metus. Proin scelerisque risus quis hendrerit dictum. Donec ac est vel justo blandit aliquet eu non erat. Nulla bibendum laoreet nulla, vitae semper arcu accumsan nec. Vivamus vel convallis tellus. Donec dapibus enim et nibh egestas, sit amet condimentum nulla accumsan. Praesent scelerisque nisi odio. Phasellus eros eros, congue non arcu nec, elementum fermentum nunc. Aenean interdum tortor nec neque tincidunt tempor. Ut lacinia ullamcorper eros, sed pretium urna consectetur non. Nunc orci purus, euismod eget est in, aliquam pharetra nulla. Aenean sagittis hendrerit nunc, non malesuada urna elementum nec.		    
-				</p>
-				
-				<a href ="{{course.get_absolute_url}}" class="btn">Begin Course</a>
+				<a href ="{{c.course.get_absolute_url}}" class="btn">Begin Course</a>
 			
 			</div>
 			
 		    <div class="span2">
 		    
-				{%ifequal course.id 62 %}
-				<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
+				{%ifequal c.course.id 62 %}
+					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
 				{%endifequal%}
 				
-				{%ifequal course.id 78 %}
-				<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
+				{%ifequal c.course.id 78 %}
+					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
 				{%endifequal%}
 		
 			</div>

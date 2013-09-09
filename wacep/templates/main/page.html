@@ -17,15 +17,7 @@
 {% block title %}{{section.label}}{% endblock %}
 
 {% block pagetitle %}<h1>{{section.label}}</h1>{% endblock %}
-    {%block wacep_top_nav %}
-        {% for section in modules %}
-			{% ifequal section.id module.id %}
-          		{% for wacep_module in section.get_children %}
-	          		<li {%ifequal wacep_module submodule%}class="active"{%endifequal%}><a href="{{wacep_module.get_absolute_url}}">{{wacep_module.label}}</a></li>
-          		{%endfor%}
-          	{% endifequal %}
-        {% endfor %}
-    {%endblock wacep_top_nav%}
+
 
 
 {% block sidenav %}
@@ -34,6 +26,54 @@
         {% include "main/menu.html" %}
         {% endif %}
 {% endblock %}
+
+{% block primarynav %}
+
+<div class="navbar" id="primarynav">
+
+  <div class="navbar-inner">
+  
+    <div class="container">
+    
+  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  </a>
+        
+      <div class="nav-collapse collapse">
+      
+    <ul class="nav">   
+    {% block primarynavtabs %}
+    {% endblock %}
+    {% block primarynavtabsextra %}{% endblock %}
+    </ul>
+
+    <ul class="nav pull-left">
+      {% for section in modules %}
+        {% ifequal section.id module.id %}
+          {% for wacep_module in section.get_children %}
+            <li {%ifequal wacep_module submodule%}class="active"{%endifequal%}><a href="{{wacep_module.get_absolute_url}}">{{wacep_module.label}}</a></li>
+          {%endfor%}
+        {% endifequal %}
+      {% endfor %}
+    </ul>
+    
+    <ul class="nav pull-right">
+    {% if user.is_staff %}
+        <li><a href="/edit{{section.get_absolute_url|default:"/"}}">Edit</a></li>
+    {%endif %}
+    </ul>
+    
+      </div>  
+      
+    </div>
+    
+  </div>
+  
+</div>
+{% endblock %}
+
 
 {% block content %}
 <div id="content">

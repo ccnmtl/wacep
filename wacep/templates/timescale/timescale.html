@@ -1,0 +1,84 @@
+<div class="timescale_container">
+	<div class = "timescale_subcontainer help_icon">
+		<button class = "btn btn-info">?</button>
+	</div>
+	<div class = "timescale_subcontainer help_box">
+		<div class= "help_copy_container_div">
+			Help copy goes here. Lorem ipsum caveat emptor in loco parentis.
+			<br />
+			<br />
+			<br />
+			<button class = "btn btn-info help_ok_button">OK</button>
+		</div>
+	</div>
+	<!-- Left side -->
+	<div class="show_hide_div left_side">
+		<div class = "timescale_subcontainer color_key">
+			<img class="timescale_color_key" />
+		</div>
+
+		<span id ="year_for_highlight_rectangle">
+			<div class ="timescale_year_highlight_rectangle"></div>
+		</span>
+
+		<div class = "timescale_subcontainer graph">
+			<div class="timescale_graph_title" >title</div>
+			<div class="timescale_graph_y_axis">y axis</div>
+			<img class="timescale_graph" />
+		</div>
+
+		<div class = "timescale_subcontainer variance">
+			<div class="percent_data_header">% Variance Explained</div>
+			<div >Trend: <span class= "percent_data_value percent_trend"></span></div>
+			<div >Decadal: <span class = "percent_data_value percent_interdecadal"></span></div>
+			<div >Interannual: <span class = "percent_data_value percent_interannual"></span></div>
+		</div>
+
+		<div class="show_hide_div year_details">
+			<div class = "timescale_subcontainer year_data">
+				<div class="left_box">
+					<div class="year_data_header">For t       = <span class="year_data_value year"></span>:</div>
+					<div >Trend       = <span class="year_data_value trend"></span></div>
+					<div >Decadal     = <span class="year_data_value decadal"></span></div>
+					<div >Interannual = <span class="year_data_value interannual"></span></div>
+				</div>
+				<div class="right_box">
+					<br/>
+					<br/>
+					<div >Sum         = <span class="year_data_value sum"></span></div>
+					<div >S.D.        = <span class="year_data_value standard_dev"></span></div>
+				</div>
+			</div>
+			<div class = "timescale_subcontainer impact_background">
+				Climate impact
+				<span id ="impact_level">
+					<div class = "timescale_subcontainer impact_bubble">
+						<span class="impact_bubble_title"></span>
+					</div>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Right side -->
+	<div class = "timescale_subcontainer inputs">
+		<select name ="season_input_select" class="timescale_select season">
+			<option value = "">Season</option>
+		</select><br/>
+		<select name ="graphing_mode_input_select" class="timescale_select graphing_mode">
+			<option value = "">Graphing Mode</option>
+		</select><br/>
+		<select name ="year_input_select" class="timescale_select year">
+			<option value = "">Year</option>
+		</select><br/>
+        <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
+	</div>
+	<div class="timescale_subcontainer explanation">
+		<h3>Notes:</h3>
+		<div class="explanation_copy"></div>
+		{% if user.is_staff %}
+			<a class="btn btn-info edit_this_state">edit</a>
+		{%endif %}
+	</div>
+
+</div>

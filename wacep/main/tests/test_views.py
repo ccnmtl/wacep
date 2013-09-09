@@ -11,14 +11,20 @@ class BasicAnonTest(TestCase):
     def setUp(self):
         self.c = Client()
 
+    #splash page is being removed.
     def test_splash_enabled(self):
         with self.settings(SHOW_SPLASH=True):
             response = self.c.get("/")
-            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response.status_code, 301)
 
     def test_splash_disabled(self):
         with self.settings(SHOW_SPLASH=False):
             response = self.c.get("/")
+            self.assertEquals(response.status_code, 301)
+
+    def test_welcome(self):
+        with self.settings(SHOW_SPLASH=False):
+            response = self.c.get("/welcome/")
             self.assertEquals(response.status_code, 302)
 
     def test_smoketest(self):
@@ -65,7 +71,13 @@ class LoggedInTest(TestCase):
     def test_splash_enabled(self):
         with self.settings(SHOW_SPLASH=True):
             response = self.c.get("/")
-            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response.status_code, 301)
+
+    def test_welcome(self):
+        make_test_hierarchy()
+        response = self.c.get("/welcome/")
+        self.assertEquals(response.status_code, 404)
+        #this is caught by the flatpages middleware
 
     def test_page(self):
         make_test_hierarchy()
@@ -75,11 +87,6 @@ class LoggedInTest(TestCase):
     def test_edit_page(self):
         make_test_hierarchy()
         response = self.c.get("/edit/section-1/")
-        self.assertEquals(response.status_code, 200)
-
-    def test_instructor_page(self):
-        make_test_hierarchy()
-        response = self.c.get("/instructor/section-1/")
         self.assertEquals(response.status_code, 200)
 
     def test_courses_page(self):
