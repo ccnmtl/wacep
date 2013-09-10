@@ -79,9 +79,9 @@
 					<li><a href="/_certificates/roster/">Roster</a></li>
 					<li><a href="/_certificates/certificates_admin/">Certificates</a></li>
 				{%else %}
-					<li><a href="/_certificates/student_certificates/">Certificates for {{request.user.first_name}}</a></li>
+					<li><a href="/_certificates/student_certificates/">Certificates for {{user}}</a></li>
 				{%endif%}
-				<li><a href="/logout/" >Log Out</a>
+				<li><a href="/logout/" >Log Out {{user}}</a>
 
 				{% endif %}
 				{% endblock %}

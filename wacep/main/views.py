@@ -40,6 +40,11 @@ def courses(request):
     the_courses = get_section_from_path('/').get_children()
     file_name = 'main/courses.html'
     course_info = []
+
+    if not request.user.is_staff:
+       the_courses =  [c.course.section for c in request.user.courses_i_take.all()]
+    
+
     for c in the_courses:
         next_course = {}
         next_course['course'] = c
@@ -79,11 +84,33 @@ def page (request, path):
     return pagetree_page(request, path)
 
 
+
+def check_course_enrollment(user, section):
+    if user.is_staff:
+        return True
+    
+    root = section.hierarchy.get_root()
+    ancestors = section.get_ancestors()
+    ancestors_excluding_root = [section ] + [a for a in ancestors if a != root]
+    course_sections = [c.course.section for c in user.courses_i_take.all()]
+
+    for a in ancestors_excluding_root:
+        if a in course_sections:
+            return True
+
+    return False
+
+
+
 @login_required
 @render_to('main/page.html')
 def pagetree_page(request, path):
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
+
+    if not check_course_enrollment (request.user, section):
+        return HttpResponseRedirect('/courses/')
+
     module = get_module(section)
     submodule = get_submodule(section)
 
