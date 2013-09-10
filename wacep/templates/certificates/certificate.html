@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
+
+
+{% block css %}
+	<link href="/_certificates/media/css/certificates.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
-        <div class = "well">
+    <div class = "well certificate-div">
+	Omnibus et singulis has litteras lecturis, salutem. <br/>
+	Notum sit, quod nobis placet <strong>{{certificate.user.first_name}} {{certificate.user.last_name}}</strong>
 
-				Omnibus et singulis has litteras lecturis, salutem. <br/>
-				Notum sit, quod nobis placet <strong>{{certificate.user.first_name}} {{certificate.user.last_name}}</strong>
+	pro meritis ejus titulo graduque <strong>{{certificate.course}}</strong> 				
+	placuit nobis adornare, eique concessimus honores, dignitates, insignia, jura, et privilegia omnia, quae hic et ubique ad gradum pertinent.
 
-				pro meritis ejus titulo graduque <strong>{{certificate.course}}</strong> 				
-				placuit nobis adornare, eique concessimus honores, dignitates, insignia, jura, et privilegia omnia, quae hic et ubique ad gradum pertinent.
+	Cujus sint testimonio Collegii Sigillum Publicum atque Chirographum Praesidis litteris hisce apposite, 
 
-				Cujus sint testimonio Collegii Sigillum Publicum atque Chirographum Praesidis litteris hisce apposite, 
+	Collegium Columbiae, Novi Eboraci<br/>
 
-				Collegium Columbiae, Novi Eboraci<br/>
+	Die <strong>{{certificate.date}}</strong> <br/>
+	<img src="/site_media/splash/img/wacep_logo_horizontal.png"></image>
 
-				Die <strong>{{certificate.date}}</strong> <br/>
-				<img src="/site_media/splash/img/wacep_logo_horizontal.png"></image>
-
-				Curatorem Scriba <br/>
-				Praeses <br/>
-
-		</div>
-
-
+	Curatorem Scriba <br/>
+	Praeses <br/>
+	</div>
 {%endblock content %}

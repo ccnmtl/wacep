@@ -1,0 +1,15 @@
+.certificate-div  {
+  margin-top: 35%;
+  -webkit-transform: rotate(-90deg); 
+  -moz-transform:rotate(-90deg);
+  text-align: center;
+  border-style:double;
+  border-width:10px;   
+  border-color: black; 
+  padding: 4em;
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.navbar {
+  display:none;
+}

@@ -6,6 +6,19 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 
+from django.contrib.auth.admin import UserAdmin
+
+
+#import pdb
+#pdb.set_trace()
+
+
+
+#UserAdmin.list_display += ('certificates_earned',)
+#UserAdmin.list_filter  += ('certificates_earned',)
+#UserAdmin.fieldsets    += ('certificates_earned',)
+
+
 class CertificateCourse (models.Model):
     """A course for which we offer a certificate"""    
     name  = models.CharField(max_length=256, default = '')
