@@ -8,17 +8,6 @@ from django.core.urlresolvers import reverse
 
 from django.contrib.auth.admin import UserAdmin
 
-
-#import pdb
-#pdb.set_trace()
-
-
-
-#UserAdmin.list_display += ('certificates_earned',)
-#UserAdmin.list_filter  += ('certificates_earned',)
-#UserAdmin.fieldsets    += ('certificates_earned',)
-
-
 class CertificateCourse (models.Model):
     """A course for which we offer a certificate"""    
     name  = models.CharField(max_length=256, default = '')
@@ -35,11 +24,37 @@ class CertificateCourse (models.Model):
             'name': self.name
         }
 
+
+    def student_user_ids (self):
+        return [c.user.id for c in self.courseaccess_set.all()]
+
     def graduate_user_ids (self):
         return [c.user.id for c in self.certificate_set.all()]
 
+
+class CourseAccess (models.Model):
+    """A way to keep track of which users have access to which course."""
+    user        = models.ForeignKey(User, related_name = 'courses_i_take')
+    course      = models.ForeignKey ('CertificateCourse')
+    date        = models.DateTimeField(null=True)
+
+    def __unicode__(self):
+        return '%s has access to %s' % (self.user, self.course)
+
+    class Meta:
+        ordering = ['course']
+        unique_together = ("user", "course")
+
+    def to_json(self):
+        return {
+            'user': self.user,
+            'course': self.course,
+            'date' : self.date
+        }
+
+
 class Certificate (models.Model):
-    """A course for which we offer a certificate"""
+    """A way to keep track of which users "graduated" from which course."""
     user        = models.ForeignKey(User, related_name = 'certificates_earned')
     course      = models.ForeignKey ('CertificateCourse')
     date        = models.DateTimeField(null=True)
@@ -51,7 +66,7 @@ class Certificate (models.Model):
         return reverse('wacep.certificates.views.certificate', args=[str(self.id)])
 
     class Meta:
-        ordering = ['date']
+        ordering = ['course']
         unique_together = ("user", "course")
 
     def to_json(self):

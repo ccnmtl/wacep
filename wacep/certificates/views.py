@@ -11,8 +11,6 @@ from  wacep.certificates.models import Certificate, CertificateCourse
 from datetime import datetime
 from django.utils.timezone import utc
 
-
-
 @login_required
 @render_to('certificates/certificates_admin.html')
 def certificates_admin(request):
@@ -22,8 +20,6 @@ def certificates_admin(request):
     for c in the_courses:
         c.cached_graduate_user_ids = c.graduate_user_ids()
     return {'the_students' : the_students, 'the_courses': the_courses}
-
-
 
 @login_required
 @render_to('certificates/certificates_admin.html')
@@ -43,6 +39,36 @@ def update_certificates_admin(request):
     for deleted_cert in Certificate.objects.exclude(id__in=certificates_to_keep):
         deleted_cert.delete()
     return HttpResponseRedirect('/_certificates/certificates_admin/')
+
+
+@login_required
+@render_to('certificates/roster.html')
+def roster(request):
+    """ Where the staff go to award certificates to students. """
+    the_students = User.objects.filter (is_staff = False)
+    the_courses = CertificateCourse.objects.all()
+    for c in the_courses:
+        c.cached_student_user_ids = c.student_user_ids()
+    return {'the_students' : the_students, 'the_courses': the_courses}
+
+@login_required
+@render_to('certificates/roster.html')
+def update_roster(request):
+    """ Where the staff go to award certificates to students. """
+    courses_by_id = dict((c.id, c) for c in CertificateCourse.objects.all())
+    accesses_to_keep = []
+    for key in request.POST.keys():
+        user_id_str, course_id_str = key.split(':')
+        the_course = courses_by_id [int(course_id_str)]
+        the_user   = User.objects.get(pk=int(user_id_str))
+        the_access, new_student = CourseAccess.objects.get_or_create(user=the_user, course=the_course)
+        if new_student:
+            the_access.date = datetime.utcnow().replace(tzinfo=utc)
+            the_access.save() # mazel tov!
+        accesses_to_keep.append (the_certificate.id)
+    for deleted_accesses in CourseAccess.objects.exclude(id__in=accesses_to_keep):
+        deleted_accesses.delete()
+    return HttpResponseRedirect('/_certificates/roster/')
 
 @login_required
 @render_to('certificates/student_certificates.html')
