@@ -5,14 +5,16 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-
-
 from django.contrib.auth.admin import UserAdmin
+from pagetree.models import Section
 
 class CertificateCourse (models.Model):
     """A course for which we offer a certificate"""    
     name  = models.CharField(max_length=256, default = '')
     order_rank = models.IntegerField(default=0, null=True, blank=True)
+#    limit_choices_to = { 'parent__path': '/' }
+    section = models.ForeignKey(Section, null=True, blank=True, help_text= "The section corresponding to this course.", 
+        unique=True, limit_choices_to = {'depth': 2} )
 
     def __unicode__(self):
         return self.name
@@ -26,7 +28,6 @@ class CertificateCourse (models.Model):
             'id': self.id,
             'name': self.name
         }
-
 
     def student_user_ids (self):
         return [c.user.id for c in self.courseaccess_set.all()]

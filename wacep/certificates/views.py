@@ -90,4 +90,7 @@ def student_certificates(request):
 @render_to('certificates/certificate.html')
 def certificate(request, certificate_id):
     """ Show a nice certificate for the student."""
-    return { 'certificate':Certificate.objects.get(pk=certificate_id)}
+    try:
+        return { 'certificate':Certificate.objects.get(pk=certificate_id)}
+    except Certificate.DoesNotExist:
+        raise Http404
