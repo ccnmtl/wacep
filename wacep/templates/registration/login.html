@@ -21,7 +21,6 @@
 		
 		<ul>
 		<li>International Research Institute for Climate Prediction and Society (IRI at Earth Institute)</li>
-		<li>Columbia Water Center (CWC)</li>
 		<li>Center for Resource Management and Environmental Studies (CERMES) at the University of West Indies (UWI)</li>
 		<li>Caribbean Institute of Meteorology and Hydrology of Barbados (CIMH)</li>
 		</ul>
@@ -44,8 +43,6 @@
 
 		<form method="post" action="." class="well">
 		
-		<p>I have a special WACEP project account.</p>
-		
 		<label for="id_username">User Name: {{ form.username }}</label>
 		<label for="id_password">Password: {{ form.password }}</label>
 		
@@ -58,7 +55,7 @@
 		<input type="hidden" name="next" value="{{ next }}" />
 		
 		</form>
-		
+
 		{% comment%}
 		<form method="get" action="{{ wind_base }}login" class="well">
 		
@@ -70,6 +67,7 @@
 		
 		</form>
 		{% endcomment%}
+
 	</div>
 
 </div>
