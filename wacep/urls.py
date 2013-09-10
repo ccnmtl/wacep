@@ -24,7 +24,8 @@ urlpatterns = patterns(
     (r'/admin/login/',   RedirectView.as_view(url='/admin/')),
     (r'^admin/', include(admin.site.urls)),
     #(r'^$',     'wacep.main.views.courses'),
-    url(r'^$', RedirectView.as_view(url='/welcome/')),
+    url(r'^$', RedirectView.as_view(url='/welcome/')  ,
+        name='welcome'),
     (r'^splash/$',     'wacep.main.views.splash'),
     (r'^courses/$',     'wacep.main.views.courses'),
     (r'^munin/', include('munin.urls')),
@@ -37,7 +38,7 @@ urlpatterns = patterns(
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
     (r'^_timescale/',    include('wacep.timescale.urls')),
-    (r'^_certificates/', include('wacep.certificates.urls')),
+    (r'^_certificates/', include('wacep.certificates.urls', namespace='certificates')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page'),
 
 ) + staticmedia.serve()

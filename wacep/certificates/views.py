@@ -7,7 +7,7 @@ from django.template import RequestContext, loader
 from django.shortcuts import redirect
 from django.conf import settings
 from django.contrib.auth.models import User
-from  wacep.certificates.models import Certificate, CertificateCourse
+from  wacep.certificates.models import Certificate, CertificateCourse, CourseAccess
 from datetime import datetime
 from django.utils.timezone import utc
 
@@ -15,16 +15,20 @@ from django.utils.timezone import utc
 @render_to('certificates/certificates_admin.html')
 def certificates_admin(request):
     """ Where the staff go to award certificates to students. """
-    the_students = User.objects.filter (is_staff = False)
+    all_students = User.objects.filter (is_staff = False)
+    the_students = [student for student in all_students if len (student.courses_i_take.all()) > 0]
+
+
     the_courses = CertificateCourse.objects.all()
     for c in the_courses:
+        c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
+
     return {'the_students' : the_students, 'the_courses': the_courses}
 
 @login_required
 @render_to('certificates/certificates_admin.html')
 def update_certificates_admin(request):
-    """ Where the staff go to award certificates to students. """
     courses_by_id = dict((c.id, c) for c in CertificateCourse.objects.all())
     certificates_to_keep = []
     for key in request.POST.keys():
@@ -44,19 +48,21 @@ def update_certificates_admin(request):
 @login_required
 @render_to('certificates/roster.html')
 def roster(request):
-    """ Where the staff go to award certificates to students. """
+    """ Where the staff go to grant course access to students. """
     the_students = User.objects.filter (is_staff = False)
     the_courses = CertificateCourse.objects.all()
     for c in the_courses:
         c.cached_student_user_ids = c.student_user_ids()
+        c.cached_graduate_user_ids = c.graduate_user_ids()
     return {'the_students' : the_students, 'the_courses': the_courses}
 
 @login_required
 @render_to('certificates/roster.html')
 def update_roster(request):
-    """ Where the staff go to award certificates to students. """
+    """ update the roster of each course. """
     courses_by_id = dict((c.id, c) for c in CertificateCourse.objects.all())
     accesses_to_keep = []
+
     for key in request.POST.keys():
         user_id_str, course_id_str = key.split(':')
         the_course = courses_by_id [int(course_id_str)]
@@ -65,7 +71,9 @@ def update_roster(request):
         if new_student:
             the_access.date = datetime.utcnow().replace(tzinfo=utc)
             the_access.save() # mazel tov!
-        accesses_to_keep.append (the_certificate.id)
+        accesses_to_keep.append (the_access.id)
+
+
     for deleted_accesses in CourseAccess.objects.exclude(id__in=accesses_to_keep):
         deleted_accesses.delete()
     return HttpResponseRedirect('/_certificates/roster/')

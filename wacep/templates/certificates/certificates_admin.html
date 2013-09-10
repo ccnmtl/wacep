@@ -7,6 +7,12 @@
         <div class = "row well">
 	        <h1>Certificates</h1>
 		</div>
+		<div class = "row well">
+	    	Check the boxes next to each student to certify that they have graduated from a course.
+	    	If you do not see a student's name, make sure they are enrolled for the class in the
+	    	<a href ="/_certificates/roster/">roster</a> page.
+	    	
+	    </div>
 		<div class="row well">
 			<div class="span3">
 				Name
@@ -25,10 +31,12 @@
 			</div>
 			{% for course in the_courses %}				
 				<div class="span2">
-					{% if st.id in course.cached_graduate_user_ids %}
-						<input type="checkbox" checked = "checked" name="{{st.id}}:{{course.id}}" title="{{course}}"></input>
-					{%else %}
-						<input type="checkbox"                     name="{{st.id}}:{{course.id}}"  title="{{course}}"></input>
+					{% if st.id in course.cached_student_user_ids %}
+						{% if st.id in course.cached_graduate_user_ids %}
+							<input type="checkbox" checked = "checked" name="{{st.id}}:{{course.id}}" title="Uncheck if {{user}} has not graduated from {{course}}"></input>
+						{%else %}
+							<input type="checkbox"                     name="{{st.id}}:{{course.id}}"  title="Check to graduate {{st}} from {{course}}"></input>
+						{%endif %}
 					{%endif %}
 				</div>
 			{%endfor%}
