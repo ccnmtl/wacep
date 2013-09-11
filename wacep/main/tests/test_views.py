@@ -82,7 +82,7 @@ class LoggedInTest(TestCase):
     def test_page(self):
         make_test_hierarchy()
         response = self.c.get("/section-1/")
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
 
     def test_edit_page(self):
         make_test_hierarchy()
