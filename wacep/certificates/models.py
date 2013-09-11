@@ -75,7 +75,7 @@ class Certificate (models.Model):
         return '%s took %s' % (self.user, self.course)
 
     def get_absolute_url(self):
-        return reverse('wacep.certificates.views.certificate', args=[str(self.id)])
+        return '/_certificates/certificate/%d' % self.id
 
     def corresponding_course_access(self):
         """ a certificate with the same user and course"""

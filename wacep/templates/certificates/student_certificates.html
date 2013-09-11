@@ -5,7 +5,6 @@
         <div class = "row well">
 	        <h1>Certificates for {{user.first_name}} {{user.last_name}}</h1>
 		</div>
-
 		{% for cert in user.certificates_earned.all %}
 			<div class="well">
 					<a href = "{{cert.get_absolute_url}}" target='_blank' ">Certificate for {{cert.course}}</a>
