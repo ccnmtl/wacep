@@ -5,7 +5,6 @@
 <html lang="en">
 
 <head>
-
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="wacep">
@@ -40,54 +39,7 @@
 <body>
 
 {% block topnavbar %}
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-		
-			<ul class="nav">
-				<li>
-			{% if request.user.is_anonymous %}
-				<a class="brand" href="/"><img src="http://waceponline.org/site_media/splash/img/wacep_logo_horizontal.png" /></a>
-			{%else %}
-				<a class="brand" href="/welcome/"><img src="http://waceponline.org/site_media/splash/img/wacep_logo_horizontal.png" /></a>
-			{%endif%}
-				</li>
-				{% block topnavbarleftitems %}{% endblock %}
-			</ul>
-			
-			<ul class="nav pull-right">
-				<li><a href="/about/">About</a></li>
-				<li><a href="/help/">Help</a></li>
-				<li><a href="/contact/">Contact</a></li>
-				<li><a href="/credits/">Credits</a></li>
-				<li class="divider-vertical"></li>
-				
-				{% block topnavbarrightitems %}{% endblock %}
-				{% block usernav %}
-				{% if request.user.is_anonymous %}
-					{%block loginlink %}
-					<li><a href="/accounts/login/" class="">Log In</a></li>
-					{%endblock loginlink %}
-				{% else %}	  
-				
-				
-				<li><a href ="/courses/">Courses</a></li>
-				{% if user.is_staff %}
-				<li><a href="/admin/auth/user/?is_staff__exact=0">Administer</a></li>
-				{%endif %}
-				{%if user.is_staff%}
-					<li><a href="/_certificates/roster/">Roster</a></li>
-					<li><a href="/_certificates/certificates_admin/">Certificates</a></li>
-				{%else %}
-					<li><a href="/_certificates/student_certificates/">Certificates for {{user}}</a></li>
-				{%endif%}
-				<li><a href="/logout/" >Log Out {{user}}</a>
-				{% endif %}
-				{% endblock %}
-			</ul>
-		</div>
-	</div>
-</div>
+	{% include 'nav.html' %}
 {% endblock %}
 
 <div class="container" id="outer-container">
