@@ -149,10 +149,12 @@ Timescale.TimescaleView = Backbone.View.extend({
 
         if (theState.climate_impact) {
             var climateImpactLabels = {
-                wet          : 'Wet',
-                normal       : 'Normal',
-                dry          : 'Dry',
-                extremely_dry: 'Extremely Dry',
+
+                extremely_wet : 'Extremely Wet',
+                wet           : 'Wet',
+                normal        : 'Normal',
+                dry           : 'Dry',
+                extremely_dry : 'Extremely Dry',
             }
             
             jQuery ("#year_for_highlight_rectangle") .attr("class", 'year_' + theState.year);
@@ -190,6 +192,7 @@ Timescale.TimescaleView = Backbone.View.extend({
         var self = this;
         self.setUpMenus();
         self.menuChanged();
+        self.showHelp();
     },
 
 

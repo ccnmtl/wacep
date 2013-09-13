@@ -1,4 +1,4 @@
-#sidebarleft, li.next, li.previous, h1.section-label-header, #sidebar{
+#sidebarleft, h1.section-label-header, #sidebar{
     display:none;
 }
 
@@ -61,15 +61,15 @@ header#masthead {
   filter:alpha(opacity=0.5);
 }
 
-#year_for_highlight_rectangle.year_1912 .timescale_year_highlight_rectangle{
+#year_for_highlight_rectangle.year_1921 .timescale_year_highlight_rectangle{
   left: 128px;
 }
 
-#year_for_highlight_rectangle.year_1990 .timescale_year_highlight_rectangle{
+#year_for_highlight_rectangle.year_2000 .timescale_year_highlight_rectangle{
   left: 630px;
 }
 
-#year_for_highlight_rectangle.year_1998 .timescale_year_highlight_rectangle{
+#year_for_highlight_rectangle.year_2005 .timescale_year_highlight_rectangle{
   left: 687px;
 }
 
@@ -176,22 +176,28 @@ header#masthead {
   top: 12px;
 }
 
-#impact_level.wet .impact_bubble{
-  background-color: blue;
+
+#impact_level.extremely_wet  .impact_bubble{
+  background-color: darkblue;
   left: 100px;
 }
 
-#impact_level.normal .impact_bubble{
-  background-color: green;
+#impact_level.wet            .impact_bubble{
+  background-color: lightblue;
   left: 200px;
 }
 
-#impact_level.dry .impact_bubble{
-  background-color: orange;
+#impact_level.normal         .impact_bubble{
+  background-color: green;
   left: 300px;
 }
 
-#impact_level.extremely_dry .impact_bubble{
-  background-color: red;
+#impact_level.dry            .impact_bubble{
+  background-color: orange;
   left: 400px;
+}
+
+#impact_level.extremely_dry  .impact_bubble{
+  background-color: red;
+  left: 500px;
 }
