@@ -4,6 +4,8 @@
 
 {% block pagetitle %}<h1>Courses</h1>{% endblock %}
 
+{% block sidebar %}{%endblock sidebar%}
+
 {% block content %}
 <p>Caribbean islands have limited water resources, and increasing pressure on those resources from population pressure, urbanization, economic development, and tourism. Climatic variability is magnifying existing pressures. Adaptation to climate is essential, but there are few people in the region trained in how to identify and implement effective strategies to manage climate and water-related risks. </p>
 		
@@ -13,36 +15,39 @@
 		<div class="row-fluid">
 		<div class="span12">
 		    <div class="span10">
-				<h3>{{c.course }}</h3> <!-- (id == {{course.id}}) -->
-				{%if c.blurb%}
+				<h3>{{c.course.section }}</h3> <!-- (id == {{course.id}}) -->
+				{%if c.course.description%}
 					<p>
-						{{c.blurb|safe}}
+						{{c.course.description|safe}}
 						{% if user.is_staff%}
-							<a target="_blank" href= "/edit/{{c.course.slug}}"><i class="icon-large icon-edit"></i></a>
+							<a target="_blank" href= "{{c.course.get_absolute_url}}"><i class="icon-large icon-edit"></i></a>
 						{%endif %}
 
 					</p>
 				{%else %}
 					<p>
 						{% if user.is_staff%}
-							(Add a text block here <a target="_blank" href= "/edit/{{c.course.slug}}"><i class="icon-large icon-edit"></i></a>, and it will be displayed in this space.)
+							Add a course description here <a target="_blank" href= "{{c.course.get_absolute_url}}"><i class="icon-large icon-edit"></i>.</a>
 						{%endif %}
 					</p>
 				{%endif%}
 				
-				<a href ="{{c.course.get_absolute_url}}" class="btn">Begin Course</a>
+				<a href ="{{c.course.section.get_absolute_url}}" class="btn">Begin Course</a>
 			
 			</div>
 			
 		    <div class="span2">
-				{%ifequal c.course.id 62 %}
+				{%if c.course.section.id == 211 %}
 					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
-				{%endifequal%}
-				
-				{%ifequal c.course.id 78 %}
+				{%elif  c.course.section.id  == 78 %}
 					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
-				{%endifequal%}
-		
+				{%elif c.course.section.id == 141 %}
+					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
+				{%elif  c.course.section.id  == 142 %}
+					<img class ="course_thumbnail" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bc/81/9f/tahaa-vahine-island-thumbnail.jpg" width ="100" height="60"></img>
+				{% else %}
+					<em>No image associated with course id {{c.course.section.id }}</em>
+				{%endif%}
 			</div>
 			</div>
 			</div>

@@ -5,6 +5,8 @@ from pagetree.helpers import get_module, needs_submit, submitted
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader
 from django.shortcuts import redirect
+from wacep.certificates.models import CertificateCourse
+
 from django.conf import settings
 
 
@@ -37,23 +39,17 @@ def splash(request):
 @login_required
 def courses(request):
     """ courses page."""
-    the_courses = get_section_from_path('/').get_children()
     file_name = 'main/courses.html'
-    course_info = []
-
-    if not request.user.is_staff:
-       the_courses =  [c.course.section for c in request.user.courses_i_take.all()]
     
-
+    if request.user.is_staff:
+        the_courses = CertificateCourse.objects.all()
+        #the_courses = get_section_from_path('/').get_children()
+    else:
+        the_courses =  [c.course for c in request.user.courses_i_take.all()]
+    
+    course_info = []
     for c in the_courses:
-        next_course = {}
-        next_course['course'] = c
-        next_course['blurb'] = None
-        if len (c.pageblock_set.all()) > 0:
-            b = c.pageblock_set.all()[0].block()
-            if b.display_name == 'Text Block':
-                next_course['blurb'] = b.body 
-        course_info.append (next_course)
+        course_info.append ({'course': c })
 
     t = loader.get_template(file_name)
     c = RequestContext(request, {'the_courses': the_courses, 'course_info': course_info})

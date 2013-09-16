@@ -12,9 +12,14 @@ class CertificateCourse (models.Model):
     """A course for which we offer a certificate"""    
     name  = models.CharField(max_length=256, default = '')
     order_rank = models.IntegerField(default=0, null=True, blank=True)
-#    limit_choices_to = { 'parent__path': '/' }
+
     section = models.ForeignKey(Section, null=True, blank=True, help_text= "The section corresponding to this course.", 
         unique=True, limit_choices_to = {'depth': 2} )
+
+    description = models.TextField(blank=True, default = '', help_text= "A description of this course, to appear on the Courses page.", )
+
+    def get_absolute_url(self):
+        return '/admin/certificates/certificatecourse/%d/' % self.id
 
     def __unicode__(self):
         return self.name
