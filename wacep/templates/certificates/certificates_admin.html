@@ -4,13 +4,15 @@
 {% block content %}
     <form action ="/_certificates/update_certificates_admin/" method ="post" id = "certificates_form">                     
         {% csrf_token %}
-        <div class = "row well">
-	        <h1>Certificates</h1>
+        <div class = "row">
+	        <h1>Certification</h1>
 		</div>
-		<div class = "row well">
+		<div class = "row ">
+	    	<p>
 	    	Check the boxes next to each student to certify that they have graduated from a course.
 	    	If you do not see a student's name, make sure they are enrolled for the class in the
 	    	<a href ="/_certificates/roster/">roster</a> page.
+	    	</p>
 	    	
 	    </div>
 		<div class="row well">
@@ -35,7 +37,7 @@
 						{% if st.id in course.cached_graduate_user_ids %}
 							<input type="checkbox" checked = "checked" name="{{st.id}}:{{course.id}}" title="Uncheck if {{user}} has not graduated from {{course}}"></input>
 						{%else %}
-							<input type="checkbox"                     name="{{st.id}}:{{course.id}}"  title="Check to graduate {{st}} from {{course}}"></input>
+							<input type="checkbox" name="{{st.id}}:{{course.id}}"  title="Check to graduate {{st}} from {{course}}"></input>
 						{%endif %}
 					{%endif %}
 				</div>

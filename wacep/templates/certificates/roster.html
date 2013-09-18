@@ -4,11 +4,13 @@
 {% block content %}
     <form action ="/_certificates/update_roster/" method ="post" id = "roster_form">
         {% csrf_token %}
-        <div class = "row well">
+        <div class = "row ">
 	        <h1>Roster</h1>
 		</div>
-		<div class = "row well">
-	    	Check the boxes next to each student to give them access to a course. If you need to add students, remove them, change their passwords and so on, go to <a href= "/admin/auth/user/?is_staff__exact=0">Administer</a>. To certify that a student graduated from a class and unlock their certificate so they can print it, go to <a href="/_certificates/certificates_admin/">Certificates</a>.
+		<div class = "row ">
+	    <p>
+	    Check the boxes next to each student to give them access to a course. If you need to add students, remove them, change their passwords and so on, go to <a href= "/admin/auth/user/?is_staff__exact=0">Administer</a>. To certify that a student graduated from a class and unlock their certificate so they can print it, go to <a href="/_certificates/certificates_admin/">Certificates</a>.
+	    </p>
 	    </div>
 		<div class="row well">
 			<div class="span3">
