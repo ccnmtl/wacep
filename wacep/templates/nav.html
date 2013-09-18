@@ -13,12 +13,7 @@
 			</ul>
 			
 			<ul class="nav pull-right">
-				<li><a href="/about/">About</a></li>
-				<li><a href="/help/">Help</a></li>
-				<li><a href="/contact/">Contact</a></li>
-				<li><a href="/credits/">Credits</a></li>
-				<li class="divider-vertical"></li>
-				
+
 				{% block topnavbarrightitems %}{% endblock %}
 				{% block usernav %}
 				{% if request.user.is_anonymous %}
@@ -27,19 +22,23 @@
 					{%endblock loginlink %}
 				{% else %}	  
 				
+				<!--{{user}}-->
 				
 				<li><a href ="/courses/">Courses</a></li>
-				{% if user.is_staff %}
-				<li><a href="/admin/auth/user/?is_staff__exact=0">Administer</a></li>
-				{%endif %}
 				{%if user.is_staff%}
 					<li><a href="/_certificates/roster/">Roster</a></li>
-					<li><a href="/_certificates/certificates_admin/">Certificates</a></li>
-					<li><a href="/admin/password_change/">Change password</a> </li>
+					<li><a href="/_certificates/certificates_admin/">Certification</a></li>
 				{%else %}
-					<li><a href="/_certificates/student_certificates/">Certificates for {{user}}</a></li>
+					<li><a href="/_certificates/student_certificates/">Certification</a></li>
 				{%endif%}
-				<li><a href="/logout/" >Log Out {{user}}</a>
+				{% if user.is_staff %}
+				<li><a href="/admin/auth/user/?is_staff__exact=0">Administration</a></li>
+				{%endif %}
+				<li class="divider-vertical"></li>
+				{% if user.is_staff %}
+					<li><a href="/admin/password_change/">Change Password</a> </li>
+				{%endif %}
+				<li><a href="/logout/" >Log Out</a>
 				{% endif %}
 				{% endblock %}
 			</ul>
