@@ -19,13 +19,17 @@
 {% block pagetitle %}<h1>{{section.label}}</h1>{% endblock %}
 
 
+{% block sidebar %}
+      {% if submodule.get_children %}
+          <div class="span3" id="sidebar">
+              <!-- ###### Secondary Navigation ###### -->
+              {% include "main/menu.html" %}
+          </div>
+      {%endif %}
+{% endblock sidebar%}
 
-{% block sidenav %}
-        <!-- ###### Secondary Navigation ###### -->
-        {% if submodule.get_children %}
-        {% include "main/menu.html" %}
-        {% endif %}
-{% endblock %}
+
+
 
 {% block primarynav %}
 

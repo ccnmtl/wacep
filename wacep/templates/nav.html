@@ -35,8 +35,8 @@
 				<li><a href="/admin/auth/user/?is_staff__exact=0">Administration</a></li>
 				{%endif %}
 				<li class="divider-vertical"></li>
-				{% if user.is_staff %}
-					<li><a href="/admin/password_change/">Change Password</a> </li>
+				{% if not user.is_staff %}
+					<li><a href="/password_change/">Change Password</a> </li>
 				{%endif %}
 				<li><a href="/logout/" >Log Out</a>
 				{% endif %}
