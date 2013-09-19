@@ -26,15 +26,25 @@ header#masthead {
   display: none;
 }
 
+.timescale_graph_title, .timescale_graph_y_axis {
+  font-weight: bold;
+  padding: 0px 8px 0px 8px;
+  background-color: #000;
+  font-size: 10px;
+  color: white;
+
+}
+
 .timescale_graph_title {
   position: absolute;
-  left: 200px;
-  top: 10px;
+  left: 220px;
+  top: -7px;
 
 }
 .timescale_graph_y_axis {
+	z-index: 9999;
   position: absolute;
-  left: -87px;
+  left: -92px;
   top: 190px;
   -moz-transform:    rotate(270deg);  /* FF3.5+ */
   -o-transform:      rotate(270deg);  /* Opera 10.5 */
@@ -114,7 +124,6 @@ header#masthead {
   top: 8px;
   width: 820px;
   height: 100px;
-  border: 1px solid red;
 }
 
 .timescale_subcontainer.inputs {
@@ -168,6 +177,10 @@ header#masthead {
   top: 625px;
   width: 608px;
   height: 58px;
+  color: white;
+  font-weight: bold;
+background-image: -webkit-gradient(linear, left top, right top, color-stop(0.01, #ff0000), color-stop(0.08, #ff0088), color-stop(0.16, #ff00ff), color-stop(0.24, #8800ff), color-stop(0.32, #0000ff), color-stop(0.40, #0088ff), color-stop(0.48, #00ffff), color-stop(0.56, #00ff88), color-stop(0.64, #00ff00), color-stop(0.72, #88ff00), color-stop(0.80, #ffff00), color-stop(0.88, #ff8800), color-stop(0.99, #ff0000));
+background-image: -moz-linear-gradient(left center, #ff0000 1%, #ff0088 8%, #ff00ff 16%, #8800ff 24%, #0000ff 32%, #0088ff 40%, #00ffff 48%, #00ff88 56%, #00ff00 64%, #88ff00 72%, #ffff00 80%, #ff8800 88%, #ff0000 99%);
 }
 .timescale_subcontainer.impact_bubble {
   top:   6px;
