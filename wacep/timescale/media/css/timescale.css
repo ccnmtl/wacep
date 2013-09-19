@@ -16,7 +16,7 @@ header#masthead {
 .timescale_subcontainer {
   background-color: white;
   position: absolute;
-  left: 100px;
+  left: 160px;
   top: 200px;
   width: 100px;
   height: 100px;
@@ -183,16 +183,16 @@ background-image: -webkit-gradient(linear, left top, right top, color-stop(0.01,
 background-image: -moz-linear-gradient(left center, #ff0000 1%, #ff0088 8%, #ff00ff 16%, #8800ff 24%, #0000ff 32%, #0088ff 40%, #00ffff 48%, #00ff88 56%, #00ff00 64%, #88ff00 72%, #ffff00 80%, #ff8800 88%, #ff0000 99%);
 }
 .timescale_subcontainer.impact_bubble {
-  top:   6px;
+  top:   20px;
   text-align: center;
   width: 100px;
-  height: 43px;
+  height: 30px;
   color: white;
 }
 
 .impact_bubble_title {
   position: relative;
-  top: 12px;
+  top: 6px;
 }
 
 
