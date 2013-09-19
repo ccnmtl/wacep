@@ -76,6 +76,11 @@ header#masthead {
 .explanation_copy {
   margin-left: 10px;
   margin-right: 10px;
+  height: 350px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px 20px 10px 10px;
+  overflow: auto;
 }
 .edit_this_state {
   margin-left: 10px;
@@ -109,6 +114,7 @@ header#masthead {
   top: 8px;
   width: 820px;
   height: 100px;
+  border: 1px solid red;
 }
 
 .timescale_subcontainer.inputs {
