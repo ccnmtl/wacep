@@ -25,16 +25,17 @@
 				<!--{{user}}-->
 				
 				<li><a href ="/courses/">Courses</a></li>
+				{% if user.is_staff %}
+				<li><a href="/admin/auth/user/?is_staff__exact=0">Administration</a></li>
+				{%endif %}
 				{%if user.is_staff%}
 					<li><a href="/_certificates/roster/">Roster</a></li>
 					<li><a href="/_certificates/certificates_admin/">Certification</a></li>
 				{%else %}
 					<li><a href="/_certificates/student_certificates/">Certification</a></li>
 				{%endif%}
-				{% if user.is_staff %}
-				<li><a href="/admin/auth/user/?is_staff__exact=0">Administration</a></li>
-				{%endif %}
 				<li class="divider-vertical"></li>
+				<li><a href ="/">Hello, {{user}}!</a></li>
 				{% if not user.is_staff %}
 					<li><a href="/password_change/">Change Password</a> </li>
 				{%endif %}
