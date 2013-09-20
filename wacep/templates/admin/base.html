@@ -11,7 +11,16 @@
 {% endcompress %}
 
 <script src="/site_media/bootstrap/js/bootstrap.js"></script>
-{% block extrastyle %}{% endblock %}
+{% block extrastyle %}
+<style>
+    li, dt, dd {
+        font-size: 12px;
+        /*
+        line-height: 14px;
+        */
+    }
+</style>
+{% endblock %}
 <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
 <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
@@ -24,19 +33,17 @@
 
 <!-- Container -->
 <div id="container">
-
     {% if not is_popup %}
-
         {% include 'nav.html' %}
-
-
-    <!-- END Header -->
-    {% block breadcrumbs %}
-    <div class="breadcrumbs">
-    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-    {% if title %} &rsaquo; {{ title }}{% endif %}
-    </div>
-    {% endblock %}
+        <!-- END Header -->
+        {% if user.is_staff %}
+            {% block breadcrumbs %}
+                <div class="breadcrumbs">
+                <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+                    {% if title %} &rsaquo; {{ title }}{% endif %}
+                </div>
+            {% endblock %}
+        {% endif %}
     {% endif %}
 
     {% block messages %}

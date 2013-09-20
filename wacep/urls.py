@@ -26,6 +26,7 @@ urlpatterns = patterns(
     #(r'^$',     'wacep.main.views.courses'),
     url(r'^$', RedirectView.as_view(url='/welcome/')  ,
         name='welcome'),
+    (r'^password_change/$', 'django.contrib.auth.views.password_change'),
     (r'^splash/$',     'wacep.main.views.splash'),
     (r'^courses/$',     'wacep.main.views.courses'),
     (r'^munin/', include('munin.urls')),
