@@ -1,8 +1,19 @@
 {% extends "base.html" %}
-{%block content %}
+
+{% block title %}Log Out{% endblock %}
+
+{% block sidebar %}{% endblock sidebar%}
+
+{%block loginlink %}{%endblock loginlink %}
+
+{% block content %}
+
 <h1>Thank You</h1>
+
 	<p>Thanks for visiting waceponline.org.</p>
+	
 	<div>
-		<a href="/accounts/login/?next=/" class="btn">Log In Again</a>
+		<a href="/accounts/login/?next=/" class="btn">I want to log in again.</a>
 	</div>
+	
 {%endblock content%}

@@ -5,6 +5,7 @@
 <html lang="en">
 
 <head>
+
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="wacep">
@@ -34,7 +35,17 @@
 
 	{% block feeds %}{% endblock %}
 	
-</head>
+	<!-- menu collapse-->
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion({
+			heightStyle: "content"
+		});
+	});
+	</script>
+  
+ </head>
 
 <body>
 
