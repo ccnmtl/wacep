@@ -3,9 +3,9 @@ header#masthead { height: 60px !important; }
 
 .timescale_container
 {
-	background-color: black;
+	background-color: #eee;
 	position: relative;
-	height: 693px;
+	height: 653px;
 }
 
 .timescale_subcontainer
@@ -81,7 +81,7 @@ header#masthead { height: 60px !important; }
 {
 	margin-left: 10px;
 	margin-right: 10px;
-	height: 350px;
+	height: 310px;
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	padding: 10px 20px 10px 10px;
@@ -116,7 +116,7 @@ header#masthead { height: 60px !important; }
 	left: 8px;
 	top: 8px;
 	width: 820px;
-	height: 100px;
+	height: 60px;
 }
 
 .timescale_subcontainer.inputs
@@ -127,10 +127,16 @@ header#masthead { height: 60px !important; }
 	height: 203px;
 }
 
+.timescale_subcontainer.inputs select
+{
+	width: 265px;
+	font-weight: bold;
+}
+
 .timescale_subcontainer.graph
 {
 	left: 8px;
-	top: 115px;
+	top: 75px;
 	width: 820px;
 	height: 400px;
 }
@@ -140,13 +146,13 @@ header#masthead { height: 60px !important; }
 	left: 836px;
 	top: 219px;
 	width: 285px;
-	height: 464px;
+	height: 424px;
 }
 
 .timescale_subcontainer.variance
 {
 	left: 8px;
-	top: 530px;
+	top: 490px;
 	width: 202px;
 	height: 153px;
 }
@@ -156,7 +162,7 @@ header#masthead { height: 60px !important; }
 .timescale_subcontainer.year_data
 {
 	left: 220px;
-	top: 530px;
+	top: 490px;
 	width: 608px;
 	height: 85px;
 }
@@ -172,7 +178,7 @@ header#masthead { height: 60px !important; }
 .timescale_subcontainer.impact_background
 {
 	left: 220px;
-	top: 625px;
+	top: 585px;
 	width: 608px;
 	height: 58px;
 	color: white;
