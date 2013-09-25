@@ -8,57 +8,67 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'BoxColor'
-        db.create_table('timescale_boxcolor', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('color', self.gf('django.db.models.fields.CharField')(default='FFFFFF', max_length=6)),
-            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
-        ))
-        db.send_create_signal('timescale', ['BoxColor'])
-
-        # Adding model 'GamePhase'
-        db.create_table('timescale_gamephase', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('instructions', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
-            ('css_classes', self.gf('django.db.models.fields.CharField')(default='', max_length=256, null=True, blank=True)),
-        ))
-        db.send_create_signal('timescale', ['GamePhase'])
-
-        # Adding model 'ActivePhase'
-        db.create_table('timescale_activephase', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('game_phase', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.GamePhase'])),
-            ('column', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.Column'])),
-        ))
-        db.send_create_signal('timescale', ['ActivePhase'])
-
-        # Adding unique constraint on 'ActivePhase', fields ['game_phase', 'column']
-        db.create_unique('timescale_activephase', ['game_phase_id', 'column_id'])
-
-        # Adding model 'Scenario'
-        db.create_table('timescale_scenario', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('difficulty', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
-            ('instructions', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-        ))
-        db.send_create_signal('timescale', ['Scenario'])
-
-        # Adding model 'Column'
-        db.create_table('timescale_column', (
+        # Adding model 'YearInput'
+        db.create_table('timescale_yearinput', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
             ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
-            ('css_classes', self.gf('django.db.models.fields.CharField')(default='', max_length=256, null=True, blank=True)),
-            ('help_definition', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-            ('help_examples', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-            ('flavor', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
         ))
-        db.send_create_signal('timescale', ['Column'])
+        db.send_create_signal('timescale', ['YearInput'])
+
+        # Adding model 'GraphingModeInput'
+        db.create_table('timescale_graphingmodeinput', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
+            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
+        ))
+        db.send_create_signal('timescale', ['GraphingModeInput'])
+
+        # Adding model 'SeasonInput'
+        db.create_table('timescale_seasoninput', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
+            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
+        ))
+        db.send_create_signal('timescale', ['SeasonInput'])
+
+        # Adding model 'InputCombination'
+        db.create_table('timescale_inputcombination', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('season_input', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.SeasonInput'], null=True, blank=True)),
+            ('graphing_mode_input', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.GraphingModeInput'], null=True, blank=True)),
+            ('year_input', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.YearInput'], null=True, blank=True)),
+            ('activity_state', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timescale.ActivityState'])),
+        ))
+        db.send_create_signal('timescale', ['InputCombination'])
+
+        # Adding unique constraint on 'InputCombination', fields ['season_input', 'graphing_mode_input', 'year_input']
+        db.create_unique('timescale_inputcombination', ['season_input_id', 'graphing_mode_input_id', 'year_input_id'])
+
+        # Adding model 'ActivityState'
+        db.create_table('timescale_activitystate', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
+            ('image_filename', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('legend_filename', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('show_left_side', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('show_year_details', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('order_rank', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
+            ('text', self.gf('django.db.models.fields.TextField')(default='', blank=True)),
+            ('climate_impact', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('graph_title', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('y_scale_title', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('percent_interannual', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('percent_interdecadal', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('percent_trend', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year_trend', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year_decadal', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year_interannual', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year_sum', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+            ('year_percentile', self.gf('django.db.models.fields.CharField')(default='', max_length=256, blank=True)),
+        ))
+        db.send_create_signal('timescale', ['ActivityState'])
 
         # Adding model 'TimescaleBlock'
         db.create_table('timescale_timescaleblock', (
@@ -68,23 +78,23 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'ActivePhase', fields ['game_phase', 'column']
-        db.delete_unique('timescale_activephase', ['game_phase_id', 'column_id'])
+        # Removing unique constraint on 'InputCombination', fields ['season_input', 'graphing_mode_input', 'year_input']
+        db.delete_unique('timescale_inputcombination', ['season_input_id', 'graphing_mode_input_id', 'year_input_id'])
 
-        # Deleting model 'BoxColor'
-        db.delete_table('timescale_boxcolor')
+        # Deleting model 'YearInput'
+        db.delete_table('timescale_yearinput')
 
-        # Deleting model 'GamePhase'
-        db.delete_table('timescale_gamephase')
+        # Deleting model 'GraphingModeInput'
+        db.delete_table('timescale_graphingmodeinput')
 
-        # Deleting model 'ActivePhase'
-        db.delete_table('timescale_activephase')
+        # Deleting model 'SeasonInput'
+        db.delete_table('timescale_seasoninput')
 
-        # Deleting model 'Scenario'
-        db.delete_table('timescale_scenario')
+        # Deleting model 'InputCombination'
+        db.delete_table('timescale_inputcombination')
 
-        # Deleting model 'Column'
-        db.delete_table('timescale_column')
+        # Deleting model 'ActivityState'
+        db.delete_table('timescale_activitystate')
 
         # Deleting model 'TimescaleBlock'
         db.delete_table('timescale_timescaleblock')
@@ -124,48 +134,58 @@ class Migration(SchemaMigration):
             'path': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
-        'timescale.activephase': {
-            'Meta': {'ordering': "['game_phase', 'column']", 'unique_together': "(('game_phase', 'column'),)", 'object_name': 'ActivePhase'},
-            'column': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.Column']"}),
-            'game_phase': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.GamePhase']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'timescale.boxcolor': {
-            'Meta': {'ordering': "['order_rank']", 'object_name': 'BoxColor'},
-            'color': ('django.db.models.fields.CharField', [], {'default': "'FFFFFF'", 'max_length': '6'}),
+        'timescale.activitystate': {
+            'Meta': {'ordering': "['order_rank']", 'object_name': 'ActivityState'},
+            'climate_impact': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'graph_title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image_filename': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'legend_filename': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
-            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
-        },
-        'timescale.column': {
-            'Meta': {'ordering': "['order_rank']", 'object_name': 'Column'},
-            'css_classes': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'null': 'True', 'blank': 'True'}),
-            'flavor': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
-            'help_definition': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
-            'help_examples': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
-            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
-        },
-        'timescale.gamephase': {
-            'Meta': {'ordering': "['order_rank']", 'object_name': 'GamePhase'},
-            'css_classes': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'instructions': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
-            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
-        },
-        'timescale.scenario': {
-            'Meta': {'ordering': "['order_rank']", 'object_name': 'Scenario'},
-            'difficulty': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'instructions': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
             'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'})
+            'percent_interannual': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'percent_interdecadal': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'percent_trend': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'show_left_side': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'show_year_details': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'text': ('django.db.models.fields.TextField', [], {'default': "''", 'blank': 'True'}),
+            'y_scale_title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year_decadal': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year_interannual': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year_percentile': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year_sum': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'}),
+            'year_trend': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'blank': 'True'})
+        },
+        'timescale.graphingmodeinput': {
+            'Meta': {'ordering': "['order_rank']", 'object_name': 'GraphingModeInput'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
+            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
+        },
+        'timescale.inputcombination': {
+            'Meta': {'ordering': "['activity_state']", 'unique_together': "(('season_input', 'graphing_mode_input', 'year_input'),)", 'object_name': 'InputCombination'},
+            'activity_state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.ActivityState']"}),
+            'graphing_mode_input': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.GraphingModeInput']", 'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'season_input': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.SeasonInput']", 'null': 'True', 'blank': 'True'}),
+            'year_input': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['timescale.YearInput']", 'null': 'True', 'blank': 'True'})
+        },
+        'timescale.seasoninput': {
+            'Meta': {'ordering': "['order_rank']", 'object_name': 'SeasonInput'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
+            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
         },
         'timescale.timescaleblock': {
             'Meta': {'object_name': 'TimescaleBlock'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'timescale.yearinput': {
+            'Meta': {'ordering': "['order_rank']", 'object_name': 'YearInput'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
+            'order_rank': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
         }
     }
 
