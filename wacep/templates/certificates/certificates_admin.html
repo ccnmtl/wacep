@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
+
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
-    <form action ="/_certificates/update_certificates_admin/" method ="post" id = "certificates_form">                     
-        {% csrf_token %}
-        <div class = "row">
+
+    <form action ="/_certificates/update_certificates_admin/" method ="post" id = "certificates_form">        
+    
+	{% csrf_token %}
+        
+	<div class = "row">
+        
 	        <h1>Certification</h1>
+	        
 		</div>
-		<div class = "row ">
+		
+	<div class = "row">
+	
 	    	<p>
 	    	Check the boxes next to each student to certify that they have graduated from a course.
 	    	If you do not see a student's name, make sure they are enrolled for the class in the
@@ -15,7 +23,8 @@
 	    	</p>
 	    	
 	    </div>
-		<div class="row well">
+	    
+	<div class="row well" style="background-color: #efc831 !important; font-weight: bold;">
 			<div class="span3">
 				Name
 			</div>
@@ -27,7 +36,7 @@
 		</div>
 
 	{%for st in the_students%}
-		<div class="row well">
+	<div class="row well">
 			<div class="span3">
 				{{st.first_name}} {{st.last_name}}
 			</div>
@@ -44,12 +53,15 @@
 			{%endfor%}
 		</div>
 	{%endfor%}
-
-<div class="row">
-	<div class="span2">
-		<div class="btn btn-large" onclick="javascript:jQuery('#certificates_form').submit()">Save</div>
+	
+	<div class="row">
+	
+		<div class="span2">
+			<div class="btn btn-primary" onclick="javascript:jQuery('#certificates_form').submit()">Save</div>
+		</div>
+	
 	</div>
-</div>
 
 </form>
+
 {%endblock content %}
