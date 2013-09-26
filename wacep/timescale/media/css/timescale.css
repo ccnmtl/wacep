@@ -192,43 +192,102 @@ header#masthead { height: 60px !important; }
 	top: 20px;
 	text-align: center;
 	width: 100px;
-	height: 30px;
-	color: white;
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid black;
 }
 
 .impact_bubble_title
 {
 	position: relative;
-	top: 6px;
+	top: 3px;
+}
+
+#pointer {
+	width: 16px; 
+	height: 8px; 
+	background-image: url(../img/pointer.png); 
+	background-repeat: no-repeat; 
+	background-position: center top; 
+	position: absolute; 
+	left: 42px; 
+	bottom: -8px;
 }
 
 #impact_level.extremely_wet  .impact_bubble
 {
-	background-color: darkblue;
+	background-color: #0035fe;
+	color: white;
 	left: 100px;
 }
 
 #impact_level.wet .impact_bubble
 {
-	background-color: lightblue;
+	background-color: #8dfff7;
+	color: black;
 	left: 200px;
 }
 
 #impact_level.normal .impact_bubble
 {
-	background-color: green;
+	background-color: #8dff38;
+	color: black;
 	left: 300px;
 }
 
 #impact_level.dry .impact_bubble
 {
 	background-color: orange;
+	color: black;
 	left: 400px;
 }
 
 #impact_level.extremely_dry .impact_bubble
 {
 	background-color: red;
+	color: white;
 	left: 500px;
 }
+
+
+#wetlabel
+{
+	font-weight: normal;
+	z-index: 9999;
+	position: absolute;
+	left: 0px;
+	top: 20px;
+	-moz-transform: rotate(270deg);
+	/* FF3.5+ */
+	-o-transform: rotate(270deg);
+	/* Opera 10.5 */
+	-webkit-transform: rotate(270deg);
+	/* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	/* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+	/* IE8 */
+}
+
+#drylabel
+{
+	font-weight: normal;
+	z-index: 9999;
+	position: absolute;
+	right: 0px;
+	top: 20px;
+	-moz-transform: rotate(-270deg);
+	/* FF3.5+ */
+	-o-transform: rotate(-270deg);
+	/* Opera 10.5 */
+	-webkit-transform: rotate(-270deg);
+	/* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-3);
+	/* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=-3)";
+	/* IE8 */
+}
+
 
