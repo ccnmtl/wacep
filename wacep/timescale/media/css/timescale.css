@@ -183,8 +183,8 @@ header#masthead { height: 60px !important; }
 	height: 58px;
 	color: white;
 	font-weight: bold;
-	background-image: -webkit-gradient(linear, left top, right top, color-stop(0.1, #8800ff), color-stop(0.2, #0000ff), color-stop(0.3, #0088ff), color-stop(0.4, #00ffff), color-stop(0.5, #00ff88), color-stop(0.6, #00ff00), color-stop(0.7, #88ff00), color-stop(0.8, #ffff00), color-stop(0.9, #ff8800), color-stop(1, #ff0000));
-	background-image: -moz-linear-gradient(left center, #8800ff 10%, #0000ff 20%, #0088ff 30%, #00ffff 40%, #00ff88 50%, #00ff00 60%, #88ff00 70%, #ffff00 80%, #ff8800 90%, #ff0000 100%);
+	background-image: -webkit-gradient(linear, left top, right top, color-stop(0.11, #0000ff), color-stop(0.22, #0088ff), color-stop(0.33, #00ffff), color-stop(0.44, #00ff88), color-stop(0.55, #00ff00), color-stop(0.66, #88ff00), color-stop(0.77, #ffff00), color-stop(0.88, #ff8800), color-stop(0.99, #ff0000));
+	background-image: -moz-linear-gradient(left center, #0000ff 11%, #0088ff 22%, #00ffff 33%, #00ff88 44%, #00ff00 55%, #88ff00 66%, #ffff00 77%, #ff8800 88%, #ff0000 99%);
 }
 
 .timescale_subcontainer.impact_bubble
@@ -220,35 +220,35 @@ header#masthead { height: 60px !important; }
 {
 	background-color: #0035fe;
 	color: white;
-	left: 100px;
+	left: 40px;
 }
 
 #impact_level.wet .impact_bubble
 {
-	background-color: #8dfff7;
+	background-color: #7de8ff;
 	color: black;
-	left: 200px;
+	left: 140px;
 }
 
 #impact_level.normal .impact_bubble
 {
 	background-color: #8dff38;
 	color: black;
-	left: 300px;
+	left: 260px;
 }
 
 #impact_level.dry .impact_bubble
 {
 	background-color: orange;
 	color: black;
-	left: 400px;
+	left: 340px;
 }
 
 #impact_level.extremely_dry .impact_bubble
 {
 	background-color: red;
 	color: white;
-	left: 500px;
+	left: 440px;
 }
 
 
