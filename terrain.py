@@ -2,10 +2,12 @@
 from lettuce.django import django_url
 from lettuce import before, after, world, step
 from django.test import client
+from django.test.utils import teardown_test_environment
+from django.conf import settings
 import sys
 import os
-
 import time
+
 try:
     from lxml import html
     from selenium import webdriver
