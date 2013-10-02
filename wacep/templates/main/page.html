@@ -12,26 +12,16 @@ $(function() {
 	jQuery( "#accordion" ).accordion({
 		heightStyle: "content",
 		active: {{sub_submodule_index}},
-		activate: function( event, ui ) {
-			//console.log (ui.newHeader[0].href)
-			//window.location = ui.newHeader[0].href;
-			console.log ( ui.newHeader[0].href);
-		}
 	});
 	// 
 	jQuery ('a').click(function (the_link) {
 		window.location = the_link.target.href;
-		console.log (the_link.target.href);
 	});
-	console.log ("The sub sub module index is {{sub_submodule_index}}");
 });
-//console.log ('goat');
-//console.log (new Date());
 </script>  
 {% endblock %}
 
 {% block css %}
-
 {% for block in section.pageblock_set.all %}
 {% rendercss block %}
 {% endfor %}

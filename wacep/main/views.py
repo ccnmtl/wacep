@@ -43,7 +43,6 @@ def courses(request):
     
     if request.user.is_staff:
         the_courses = CertificateCourse.objects.all()
-        #the_courses = get_section_from_path('/').get_children()
     else:
         the_courses =  [c.course for c in request.user.courses_i_take.all()]
     
@@ -68,7 +67,6 @@ def get_submodule(section):
 
 def get_sub_submodule_index(section):
     """In which part of the submodule is this section?"""
-    #return None
     if section.depth < 4:
         return None
     if section.depth == 4:
@@ -114,8 +112,6 @@ def check_course_enrollment(user, section):
 @login_required
 @render_to('main/page.html')
 def pagetree_page(request, path):
-    #import pdb
-    #pdb.set_trace()
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
 
@@ -125,7 +121,6 @@ def pagetree_page(request, path):
     module = get_module(section)
     submodule = get_submodule(section)
     sub_submodule_index = get_sub_submodule_index(section)
-    #sub_submodule_index = 1
     #using this number in the accordion settings
     #for  the left nav.
 
