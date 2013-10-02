@@ -63,19 +63,20 @@ header#masthead { height: 60px !important; }
 .timescale_year_highlight_rectangle
 {
 	position: absolute;
-	top: 146px;
+	top: 89px;
 	width: 2px;
-	height: 330px;
+	height: 357px;
 	z-index: 100;
 	background-color: red;
 	border: solid red 3px;
 	opacity: 0.5;
 	filter: alpha(opacity=0.5);
+	left: -999px;
 }
 
-#year_for_highlight_rectangle.year_1921 .timescale_year_highlight_rectangle { left: 128px; }
-#year_for_highlight_rectangle.year_2000 .timescale_year_highlight_rectangle { left: 630px; }
-#year_for_highlight_rectangle.year_2005 .timescale_year_highlight_rectangle { left: 687px; }
+#year_for_highlight_rectangle.year_1921 .timescale_year_highlight_rectangle { left: 186px; }
+#year_for_highlight_rectangle.year_2000 .timescale_year_highlight_rectangle { left: 740px; }
+#year_for_highlight_rectangle.year_2005 .timescale_year_highlight_rectangle { left: 785px; }
 
 .explanation_copy
 {
