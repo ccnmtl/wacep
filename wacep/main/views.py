@@ -66,6 +66,19 @@ def get_submodule(section):
         return section
     return section.get_ancestors()[2]
 
+def get_sub_submodule_index(section):
+    """In which part of the submodule is this section?"""
+    #return None
+    if section.depth < 4:
+        return None
+    if section.depth == 4:
+        sub_submodule =  section
+    if section.depth > 4:
+        sub_submodule =  section.get_ancestors()[3]
+    sibs = [s for s in sub_submodule.get_siblings()]
+    result = sibs.index(sub_submodule)
+    return result
+
 
 def page (request, path):
     """ if there is a flatpage with this URL,
@@ -101,6 +114,8 @@ def check_course_enrollment(user, section):
 @login_required
 @render_to('main/page.html')
 def pagetree_page(request, path):
+    #import pdb
+    #pdb.set_trace()
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
 
@@ -109,6 +124,10 @@ def pagetree_page(request, path):
 
     module = get_module(section)
     submodule = get_submodule(section)
+    sub_submodule_index = get_sub_submodule_index(section)
+    #sub_submodule_index = 1
+    #using this number in the accordion settings
+    #for  the left nav.
 
     if section.id == root.id:
         # trying to visit the root page
@@ -131,6 +150,7 @@ def pagetree_page(request, path):
         return dict(section=section,
                     module=module,
                     submodule=submodule,
+                    sub_submodule_index=sub_submodule_index,
                     needs_submit=needs_submit(section),
                     is_submitted=submitted(section, request.user),
                     modules=root.get_children(),
