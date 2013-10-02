@@ -68,7 +68,7 @@ def get_submodule(section):
 def get_sub_submodule_index(section):
     """In which part of the submodule is this section?"""
     if section.depth < 4:
-        return None
+        return 0
     if section.depth == 4:
         sub_submodule =  section
     if section.depth > 4:
