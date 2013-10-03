@@ -33,39 +33,19 @@ def skip_selenium():
 
 @before.harvest
 def setup_browser(variables):
-    print '@before harvest!!'
-    import pdb
-    pdb.set_trace()
     world.using_selenium = False
-    if skip_selenium() == True:
+    if skip_selenium():
         world.browser = None
         world.skipping = False
     else:
-        world.using_selenium = True
         browser = getattr(settings, 'BROWSER', 'Chrome')
         if browser == 'Chrome':
-           
-            #chromedriver = "/usr/local/bin/chromedriver"
-            #os.environ["webdriver.chrome.driver"] = chromedriver
-            #import pdb
-            #pdb.set_trace()
-            #world.browser = webdriver.Chrome(chromedriver)
-            from selenium import webdriver
             world.browser = webdriver.Chrome()
-            
-            
         elif browser == 'Headless':
             world.browser = webdriver.PhantomJS()
         else:
             print "unknown browser: %s" % browser
             exit(1)
-        
-
-
-        #ff_profile = FirefoxProfile()
-        #ff_profile.set_preference("webdriver_enable_native_events", False)
-        #world.browser = webdriver.Firefox(ff_profile)
-        #world.using_selenium = False
     world.client = client.Client()
 
 
@@ -113,12 +93,10 @@ def clear_selenium(step):
 @step(r'I access the url "(.*)"')
 def access_url(step, url):
     if world.using_selenium == True:
-        import pdb
-        pdb.set_trace()
         world.browser.get(django_url(url))
     else:
-        response = world.browser.get(django_url(url))
-        #world.dom = html.fromstring(response.content)
+        response = world.client.get(django_url(url))
+        world.dom = html.fromstring(response.content)
 
 @step(u'I am not logged in')
 def i_am_not_logged_in(step):
@@ -205,16 +183,11 @@ def wait(step,seconds):
 
 @step(r'I see the header "(.*)"')
 def see_header(step, text):
-    import pdb
-    pdb.set_trace()
     if world.using_selenium == True:
-        print 'dasdasdasdasads'
-        
         assert text.strip() == world.browser.find_element_by_tag_name("h1").text.strip()
     else:
-        # header = world.dom.cssselect('h1')[0]
-        #header = world.dom.cssselect('.hero-unit>h1')[0]
-        assert True #text.strip() == header.text_content().strip()
+        header = world.dom.cssselect('h1')[0]
+        assert text.strip() == header.text_content().strip()
 
 @step(r'I see the page title "(.*)"')
 def see_title(step, text):
