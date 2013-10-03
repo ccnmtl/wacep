@@ -135,7 +135,7 @@ PAGEBLOCKS = [
     'pageblocks.PullQuoteBlock',
     'pageblocks.ImageBlock',
     'pageblocks.ImagePullQuoteBlock',
-    'quizblock.Quiz',    
+    'quizblock.Quiz',
     'timescale.TimescaleBlock'
 ]
 

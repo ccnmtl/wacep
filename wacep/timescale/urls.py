@@ -11,5 +11,4 @@ urlpatterns = patterns(
     url(r'^settings/$',
         'wacep.timescale.views.settings',
         name='settings'),
-
 )
