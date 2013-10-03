@@ -49,6 +49,8 @@ JENKINS_TASKS = (
 )
 PROJECT_APPS = [
     'wacep.main',
+    'wacep.certificates',
+    'wacep.timescale',
 ]
 
 ALLOWED_HOSTS = ['localhost', '.ccnmtl.columbia.edu']
