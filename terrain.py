@@ -155,13 +155,17 @@ def i_click_the_link(step, text):
                 world.browser.get_screenshot_as_file("/tmp/selenium.png")
                 assert False, link.location
 
-@step(u'I fill in "([^"]*)" in the "([^"]*)" form field')
-def i_fill_in_the_form_field(step, value, field_name):
+@step(u'I fill out the login form')
+def i_fill_in_the_form_field(step):
     # note: relies on input having id set, not just name
     if not world.using_selenium:
         assert False, "this step needs to be implemented for the django test client"
-
-    world.browser.find_element_by_id(field_name).send_keys(value)
+    form = world.browser.find_element_by_tag_name('form')
+    username = world.browser.find_element_by_id('id_username')
+    password = world.browser.find_element_by_id('id_password')
+    username.send_keys('student1')
+    password.send_keys('student1')
+    form.submit()
 
 @step(u'I submit the "([^"]*)" form')
 def i_submit_the_form(step, id):
