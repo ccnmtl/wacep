@@ -40,28 +40,12 @@ def setup_browser(variables):
     else:
         browser = getattr(settings, 'BROWSER', 'Chrome')
         if browser == 'Chrome':
-           
-            #chromedriver = "/usr/local/bin/chromedriver"
-            #os.environ["webdriver.chrome.driver"] = chromedriver
-            #import pdb
-            #pdb.set_trace()
-            #world.browser = webdriver.Chrome(chromedriver)
-            from selenium import webdriver
             world.browser = webdriver.Chrome()
-            
-            
         elif browser == 'Headless':
             world.browser = webdriver.PhantomJS()
         else:
             print "unknown browser: %s" % browser
             exit(1)
-        
-
-
-        #ff_profile = FirefoxProfile()
-        #ff_profile.set_preference("webdriver_enable_native_events", False)
-        #world.browser = webdriver.Firefox(ff_profile)
-        #world.using_selenium = False
     world.client = client.Client()
 
 
@@ -108,7 +92,7 @@ def clear_selenium(step):
 
 @step(r'I access the url "(.*)"')
 def access_url(step, url):
-    if world.using_selenium:
+    if world.using_selenium == True:
         world.browser.get(django_url(url))
     else:
         response = world.client.get(django_url(url))
@@ -116,7 +100,7 @@ def access_url(step, url):
 
 @step(u'I am not logged in')
 def i_am_not_logged_in(step):
-    if world.using_selenium:
+    if world.using_selenium == True:
         world.browser.get(django_url("/accounts/logout/"))
     else:
         world.client.logout()
@@ -171,13 +155,17 @@ def i_click_the_link(step, text):
                 world.browser.get_screenshot_as_file("/tmp/selenium.png")
                 assert False, link.location
 
-@step(u'I fill in "([^"]*)" in the "([^"]*)" form field')
-def i_fill_in_the_form_field(step, value, field_name):
+@step(u'I fill out the login form')
+def i_fill_in_the_form_field(step):
     # note: relies on input having id set, not just name
     if not world.using_selenium:
         assert False, "this step needs to be implemented for the django test client"
-
-    world.browser.find_element_by_id(field_name).send_keys(value)
+    form = world.browser.find_element_by_tag_name('form')
+    username = world.browser.find_element_by_id('id_username')
+    password = world.browser.find_element_by_id('id_password')
+    username.send_keys('student1')
+    password.send_keys('student1')
+    form.submit()
 
 @step(u'I submit the "([^"]*)" form')
 def i_submit_the_form(step, id):
@@ -199,13 +187,10 @@ def wait(step,seconds):
 
 @step(r'I see the header "(.*)"')
 def see_header(step, text):
-    if world.using_selenium:
-        import pdb
-        pdb.set_trace()
-        assert text.strip() == world.browser.find_element_by_css_selector(".pageheader>h1").text.strip()
+    if world.using_selenium == True:
+        assert text.strip() == world.browser.find_element_by_tag_name("h1").text.strip()
     else:
-        # header = world.dom.cssselect('h1')[0]
-        header = world.dom.cssselect('.hero-unit>h1')[0]
+        header = world.dom.cssselect('h1')[0]
         assert text.strip() == header.text_content().strip()
 
 @step(r'I see the page title "(.*)"')
