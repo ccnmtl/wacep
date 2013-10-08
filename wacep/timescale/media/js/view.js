@@ -5,6 +5,7 @@ Timescale.TimescaleView = Backbone.View.extend({
         "click .reset_button"     : "resetButtonPushed",
         "click .help_icon"        : "showHelp",
         "click .help_ok_button"   : "hideHelp",
+        "click .edit_this_state"  : "editCopy"
     },
     initialize: function(options) {
         "use strict";
@@ -16,7 +17,8 @@ Timescale.TimescaleView = Backbone.View.extend({
             "menuChanged",
             "resetButtonPushed",
             "showHelp",
-            "hideHelp"
+            "hideHelp",
+            "editCopy"
         );
 
         jQuery ('#right-content').removeClass ('span9');
@@ -143,10 +145,6 @@ Timescale.TimescaleView = Backbone.View.extend({
             jQuery ('.show_hide_div.left_side')      .show ();
         }
 
-        if (jQuery('.edit_this_state').length > 0 ) {
-            jQuery('.edit_this_state')[0].href = theState.absolute_url
-        }
-
         if (theState.climate_impact) {
             var climateImpactLabels = {
 
@@ -169,6 +167,13 @@ Timescale.TimescaleView = Backbone.View.extend({
         "use strict";
         var self = this;
         jQuery('.help_box').show();
+    },
+
+
+    editCopy: function() {
+        "use strict";
+        var self = this;
+        window.open(self.currentState.absolute_url, 'times', 'times 2');
     },
 
 
