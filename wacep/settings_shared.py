@@ -49,6 +49,8 @@ JENKINS_TASKS = (
 )
 PROJECT_APPS = [
     'wacep.main',
+    'wacep.certificates',
+    'wacep.timescale',
 ]
 
 ALLOWED_HOSTS = ['localhost', '.ccnmtl.columbia.edu']
@@ -135,7 +137,7 @@ PAGEBLOCKS = [
     'pageblocks.PullQuoteBlock',
     'pageblocks.ImageBlock',
     'pageblocks.ImagePullQuoteBlock',
-    'quizblock.Quiz',    
+    'quizblock.Quiz',
     'timescale.TimescaleBlock'
 ]
 
