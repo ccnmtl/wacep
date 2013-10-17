@@ -5,6 +5,20 @@
 {% for block in section.pageblock_set.all %}
 {% renderjs block %}
 {% endfor %}
+<!-- menu collapse-->
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+$(function() {
+	jQuery( "#accordion" ).accordion({
+		heightStyle: "content",
+		active: {{sub_submodule_index}},
+	});
+	// 
+	jQuery ('a').click(function (the_link) {
+		window.location = the_link.target.href;
+	});
+});
+</script>  
 {% endblock %}
 
 {% block css %}

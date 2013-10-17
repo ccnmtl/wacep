@@ -11,12 +11,19 @@ import time
 try:
     from lxml import html
     from selenium import webdriver
-    from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
-    from selenium.common.exceptions import NoSuchElementException
-    from selenium.webdriver.common.keys import Keys
-    import selenium
+    #from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+    #from selenium.common.exceptions import NoSuchElementException
+    #from selenium.webdriver.common.keys import Keys
+    #import selenium
 except:
     pass
+
+def robust_string_compare(a, b):
+    """ compare two strings but be a little flexible about it.
+
+    try to handle case and whitespace variations without blowing up.
+    this makes tests more robust in the face of template changes"""
+    return a.strip().lower() == b.strip().lower()
 
 def skip_selenium():
     return (os.environ.get('LETTUCE_SKIP_SELENIUM', False)
@@ -31,17 +38,21 @@ def setup_browser(variables):
         world.browser = None
         world.skipping = False
     else:
-        ff_profile = FirefoxProfile()
-        ff_profile.set_preference("webdriver_enable_native_events", False)
-        world.firefox = webdriver.Firefox(ff_profile)
-        world.using_selenium = False
+        browser = getattr(settings, 'BROWSER', 'Chrome')
+        if browser == 'Chrome':
+            world.browser = webdriver.Chrome()
+        elif browser == 'Headless':
+            world.browser = webdriver.PhantomJS()
+        else:
+            print "unknown browser: %s" % browser
+            exit(1)
     world.client = client.Client()
 
 
 @after.harvest
 def teardown_browser(total):
     if not skip_selenium():
-        world.firefox.quit()
+        world.browser.quit()
 
 
 @before.harvest
@@ -81,16 +92,16 @@ def clear_selenium(step):
 
 @step(r'I access the url "(.*)"')
 def access_url(step, url):
-    if world.using_selenium:
-        world.firefox.get(django_url(url))
+    if world.using_selenium == True:
+        world.browser.get(django_url(url))
     else:
         response = world.client.get(django_url(url))
         world.dom = html.fromstring(response.content)
 
 @step(u'I am not logged in')
 def i_am_not_logged_in(step):
-    if world.using_selenium:
-        world.firefox.get(django_url("/accounts/logout/"))
+    if world.using_selenium == True:
+        world.browser.get(django_url("/accounts/logout/"))
     else:
         world.client.logout()
 
@@ -131,40 +142,44 @@ def i_click_the_link(step, text):
         assert False, "could not find the '%s' link" % text
     else:
         try:
-            link = world.firefox.find_element_by_partial_link_text(text)
+            link = world.browser.find_element_by_partial_link_text(text)
             assert link.is_displayed()
             link.click()
         except:
             try:
                 time.sleep(1)
-                link = world.firefox.find_element_by_partial_link_text(text)
+                link = world.browser.find_element_by_partial_link_text(text)
                 assert link.is_displayed()
                 link.click()
             except:
-                world.firefox.get_screenshot_as_file("/tmp/selenium.png")
+                world.browser.get_screenshot_as_file("/tmp/selenium.png")
                 assert False, link.location
 
-@step(u'I fill in "([^"]*)" in the "([^"]*)" form field')
-def i_fill_in_the_form_field(step, value, field_name):
+@step(u'I fill out the login form')
+def i_fill_in_the_form_field(step):
     # note: relies on input having id set, not just name
     if not world.using_selenium:
         assert False, "this step needs to be implemented for the django test client"
-
-    world.firefox.find_element_by_id(field_name).send_keys(value)
+    form = world.browser.find_element_by_tag_name('form')
+    username = world.browser.find_element_by_id('id_username')
+    password = world.browser.find_element_by_id('id_password')
+    username.send_keys('student1')
+    password.send_keys('student1')
+    form.submit()
 
 @step(u'I submit the "([^"]*)" form')
 def i_submit_the_form(step, id):
     if not world.using_selenium:
         assert False, "this step needs to be implemented for the django test client"
 
-    world.firefox.find_element_by_id(id).submit()
+    world.browser.find_element_by_id(id).submit()
 
 @step('I go back')
 def i_go_back(self):
     """ need to back out of games currently"""
     if not world.using_selenium:
         assert False, "this step needs to be implemented for the django test client"
-    world.firefox.back()
+    world.browser.back()
 
 @step(u'I wait for (\d+) seconds')
 def wait(step,seconds):
@@ -172,16 +187,15 @@ def wait(step,seconds):
 
 @step(r'I see the header "(.*)"')
 def see_header(step, text):
-    if world.using_selenium:
-        assert text.strip() == world.firefox.find_element_by_css_selector(".hero-unit>h1").text.strip()
+    if world.using_selenium == True:
+        assert text.strip() == world.browser.find_element_by_tag_name("h1").text.strip()
     else:
-        # header = world.dom.cssselect('h1')[0]
-        header = world.dom.cssselect('.hero-unit>h1')[0]
+        header = world.dom.cssselect('h1')[0]
         assert text.strip() == header.text_content().strip()
 
 @step(r'I see the page title "(.*)"')
 def see_title(step, text):
     if world.using_selenium:
-        assert text == world.firefox.title
+        assert text == world.browser.title
     else:
         assert text == world.dom.find(".//title").text

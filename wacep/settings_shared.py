@@ -49,6 +49,8 @@ JENKINS_TASKS = (
 )
 PROJECT_APPS = [
     'wacep.main',
+    'wacep.certificates',
+    'wacep.timescale',
 ]
 
 ALLOWED_HOSTS = ['localhost', '.ccnmtl.columbia.edu']
@@ -135,15 +137,28 @@ PAGEBLOCKS = [
     'pageblocks.PullQuoteBlock',
     'pageblocks.ImageBlock',
     'pageblocks.ImagePullQuoteBlock',
-    'quizblock.Quiz',    
+    'quizblock.Quiz',
     'timescale.TimescaleBlock'
 ]
 
 LETTUCE_APPS = (
     'wacep.main',
 )
+LETTUCE_SERVER_PORT = 7000
+INTERNAL_IPS = ('0.0.0.0', )
 
-INTERNAL_IPS = ('127.0.0.1', )
+if 'harvest' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'lettuce.db',
+            'HOST': '',
+            'PORT': '',
+            'USER': '',
+            'PASSWORD': '',
+        }
+    }
+
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',

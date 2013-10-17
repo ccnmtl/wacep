@@ -3,10 +3,11 @@ from django.contrib.contenttypes import generic
 from pagetree.models import PageBlock
 from django import forms
 
+
 class YearInput (models.Model):
-    name  = models.CharField(max_length=256, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    
+    name = models.CharField(max_length=256, default='')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+
     def __unicode__(self):
         return self.name
 
@@ -18,11 +19,12 @@ class YearInput (models.Model):
             'id': self.id,
             'name': self.name
         }
+
 
 class GraphingModeInput (models.Model):
-    name  = models.CharField(max_length=256, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    
+    name = models.CharField(max_length=256, default='')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+
     def __unicode__(self):
         return self.name
 
@@ -34,11 +36,12 @@ class GraphingModeInput (models.Model):
             'id': self.id,
             'name': self.name
         }
+
 
 class SeasonInput (models.Model):
-    name  = models.CharField(max_length=256, default = '')
-    order_rank = models.IntegerField(default=0, null=True, blank=True, )
-    
+    name = models.CharField(max_length=256, default='')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+
     def __unicode__(self):
         return self.name
 
@@ -51,13 +54,16 @@ class SeasonInput (models.Model):
             'name': self.name
         }
 
-class InputCombination (models.Model):
-    """A combination of inputs that that puts the activity in a certain state."""
 
-    season_input        = models.ForeignKey ('SeasonInput',       null=True, blank=True)
-    graphing_mode_input = models.ForeignKey ('GraphingModeInput', null=True, blank=True)
-    year_input          = models.ForeignKey ('YearInput',         null=True, blank=True)
-    activity_state      = models.ForeignKey ('ActivityState')
+class InputCombination (models.Model):
+    """A combination of inputs that that puts the
+    activity in a certain state."""
+
+    season_input = models.ForeignKey('SeasonInput', null=True, blank=True)
+    graphing_mode_input = models.ForeignKey(
+        'GraphingModeInput', null=True, blank=True)
+    year_input = models.ForeignKey('YearInput', null=True, blank=True)
+    activity_state = models.ForeignKey('ActivityState')
 
     def __unicode__(self):
         return "Inputs resulting in state %s " % self.activity_state
@@ -68,42 +74,46 @@ class InputCombination (models.Model):
 
     def to_json(self):
         result = {
-            'season_input_id'           : self.season_input.id if self.season_input        else None,
-            'graphing_mode_input_id'    : self.graphing_mode_input.id if self.graphing_mode_input else None,
-            'year_input_id'             : self.year_input.id          if self.year_input          else None,
-            'activity_state_id'         : self.activity_state.id,
-            'id'                        : self.id
+            'season_input_id': (
+                self.season_input.id if self.season_input else None),
+            'graphing_mode_input_id': (
+                self.graphing_mode_input.id
+                if self.graphing_mode_input else None),
+            'year_input_id': (
+                self.year_input.id if self.year_input else None),
+            'activity_state_id': self.activity_state.id,
+            'id': self.id
         }
-        
         return result
 
 
 class ActivityState (models.Model):
-    name  = models.CharField(max_length=256, default = '')
+    name = models.CharField(max_length=256, default='')
 
-    image_filename  = models.CharField(max_length=256, default = '', blank=True)
-    legend_filename = models.CharField(max_length=256, default = '', blank=True)
-    show_left_side       = models.BooleanField()
-    show_year_details    = models.BooleanField()
+    image_filename = models.CharField(max_length=256, default='', blank=True)
+    legend_filename = models.CharField(max_length=256, default='', blank=True)
+    show_left_side = models.BooleanField()
+    show_year_details = models.BooleanField()
 
     order_rank = models.IntegerField(default=0, null=True, blank=True)
-    text = models.TextField(blank=True, default = '')
+    text = models.TextField(blank=True, default='')
 
     # a bunch of numbers:
-    climate_impact       = models.CharField(max_length=256, blank=True, default = '')
-    graph_title          = models.CharField(max_length=256, blank=True, default = '')
-    y_scale_title        = models.CharField(max_length=256, blank=True, default = '')
-    percent_interannual  = models.CharField(max_length=256, blank=True, default = '')
-    percent_interdecadal = models.CharField(max_length=256, blank=True, default = '')
-    percent_trend        = models.CharField(max_length=256, blank=True, default = '')
+    climate_impact = models.CharField(max_length=256, blank=True, default='')
+    graph_title = models.CharField(max_length=256, blank=True, default='')
+    y_scale_title = models.CharField(max_length=256, blank=True, default='')
+    percent_interannual = models.CharField(max_length=256, blank=True,
+                                           default='')
+    percent_interdecadal = models.CharField(max_length=256, blank=True,
+                                            default='')
+    percent_trend = models.CharField(max_length=256, blank=True, default='')
 
-    year                 = models.CharField(max_length=256, blank=True, default = '')
-    year_trend           = models.CharField(max_length=256, blank=True, default = '')
-    year_decadal         = models.CharField(max_length=256, blank=True, default = '')
-    year_interannual     = models.CharField(max_length=256, blank=True, default = '')
-    year_sum             = models.CharField(max_length=256, blank=True, default = '')
-    year_percentile      = models.CharField(max_length=256, blank=True, default = '')
-
+    year = models.CharField(max_length=256, blank=True, default='')
+    year_trend = models.CharField(max_length=256, blank=True, default='')
+    year_decadal = models.CharField(max_length=256, blank=True, default='')
+    year_interannual = models.CharField(max_length=256, blank=True, default='')
+    year_sum = models.CharField(max_length=256, blank=True, default='')
+    year_percentile = models.CharField(max_length=256, blank=True, default='')
 
     def get_absolute_url(self):
         return "/admin/timescale/activitystate/%i/" % self.id
@@ -123,34 +133,33 @@ class ActivityState (models.Model):
         legend_path = '%s/%s' % (where, fn) if (fn != '') else ''
 
         return {
-            'name'       : self.name,
-            'id'         : self.id,
-            'image_path'  : image_path,
-            'legend_path' : legend_path,
+            'name': self.name,
+            'id': self.id,
+            'image_path': image_path,
+            'legend_path': legend_path,
 
-            'absolute_url'        : self.get_absolute_url(),
+            'absolute_url': self.get_absolute_url(),
 
-            'text'                : self.text,
+            'text': self.text,
 
-            'graph_title'         : self.graph_title,
-            'y_scale_title'       : self.y_scale_title,
+            'graph_title': self.graph_title,
+            'y_scale_title': self.y_scale_title,
 
-            'percent_interannual' : self.percent_interannual,
+            'percent_interannual': self.percent_interannual,
             'percent_interdecadal': self.percent_interdecadal,
-            'percent_trend'       : self.percent_trend,
+            'percent_trend': self.percent_trend,
 
-            'year'                : self.year,
-            'year_trend'          : self.year_trend,
-            'year_interannual'    : self.year_interannual,
-            'year_decadal'        : self.year_decadal,
-            'year_sum'            : self.year_sum,
-            'year_percentile'     : self.year_percentile,
+            'year': self.year,
+            'year_trend': self.year_trend,
+            'year_interannual': self.year_interannual,
+            'year_decadal': self.year_decadal,
+            'year_sum': self.year_sum,
+            'year_percentile': self.year_percentile,
 
+            'climate_impact': self.climate_impact,
 
-            'climate_impact'      : self.climate_impact,
-
-            'show_left_side'      : self.show_left_side,
-            'show_year_details'   : self.show_year_details
+            'show_left_side': self.show_left_side,
+            'show_year_details': self.show_year_details
 
         }
 
@@ -185,8 +194,8 @@ class TimescaleBlock(models.Model):
 
     def edit(self, vals, files):
         form = TimescaleBlockForm(data=vals,
-                                          files=files,
-                                          instance=self)
+                                  files=files,
+                                  instance=self)
         if form.is_valid():
             form.save()
 
@@ -197,4 +206,3 @@ class TimescaleBlock(models.Model):
 class TimescaleBlockForm(forms.ModelForm):
     class Meta:
         model = TimescaleBlock
-
