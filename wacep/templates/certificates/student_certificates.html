@@ -2,7 +2,7 @@
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
-        <div class = "row well">
+        <div class = "row">
 	        <h1>Certificates for {{user.first_name}} {{user.last_name}}</h1>
 		</div>
 		{% for cert in user.certificates_earned.all %}
