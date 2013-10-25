@@ -91,6 +91,27 @@ def student_certificates(request):
     return {'the_courses': the_courses}
 
 
+@login_required
+@render_to('certificates/student_certificates.html')
+def student_completion(request):
+    """ A list of all the certificates earned by a student."""
+    the_courses = CertificateCourse.objects.all()
+    order_dates = []
+    hold_certs = []
+    for each in the_courses:
+        cert_set = Certificate.objects.get(course=each, user=request.user)
+        
+
+        #print cert_set
+        #print type(cert_set)
+        #print cert_set.date
+        print datetime.now()
+    #print the_courses.course_set.all()
+    #if the_courses.count() == 4:
+    #    print "you have gotten all of the courses and graduated!"
+    return {'the_courses': the_courses}
+
+
 #this is not authenticated: the certificates themselves are public.
 @render_to('certificates/certificate.html')
 def certificate(request, certificate_id):
