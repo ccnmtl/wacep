@@ -1,5 +1,5 @@
 from annoying.decorators import render_to
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -92,24 +92,18 @@ def student_certificates(request):
 
 
 @login_required
-@render_to('certificates/student_certificates.html')
+#@render_to('certificates/student_certificates.html')
 def student_completion(request):
-    """ A list of all the certificates earned by a student."""
+    """If student has earned all 4 certificates, return the oldest date."""
     the_courses = CertificateCourse.objects.all()
-    order_dates = []
-    hold_certs = []
-    for each in the_courses:
-        cert_set = Certificate.objects.get(course=each, user=request.user)
-        
-
-        #print cert_set
-        #print type(cert_set)
-        #print cert_set.date
-        print datetime.now()
-    #print the_courses.course_set.all()
-    #if the_courses.count() == 4:
-    #    print "you have gotten all of the courses and graduated!"
-    return {'the_courses': the_courses}
+    if the_courses.count() == 4:
+        hold_certs = []
+        for each in the_courses:
+            cert_set = Certificate.objects.get(course=each, user=request.user)
+            hold_certs.append(cert_set)
+        oldest = max(hold_certs[0].date, hold_certs[1].date, hold_certs[2].date, hold_certs[3].date)   
+        print oldest
+        return HttpResponse(oldest)
 
 
 #this is not authenticated: the certificates themselves are public.
