@@ -5,7 +5,7 @@
         <div id="q{{question.id}}" class="toggleable">
           <p>
             {% if question.correct_answer_letter %}
-              <i>The correct answer is {{question.correct_answer_number|add:"1"}}: "{{question.correct_answers.0}}"</i>
+              <i>The correct answer is {{question.correct_answer_number|add:"1"}}</i>
             {% endif %} 
             {{question.explanation|markdown}}
           </p>
