@@ -7,7 +7,7 @@ from wacep.certificates.models import Certificate, CertificateCourse
 from wacep.certificates.models import CourseAccess
 from datetime import datetime
 from django.utils.timezone import utc
-
+from django.db.models import Max
 
 @staff_member_required
 @render_to('certificates/certificates_admin.html')
@@ -86,32 +86,32 @@ def update_roster(request):
 @render_to('certificates/student_certificates.html')
 def student_certificates(request):
     """ A list of all the certificates earned by a student."""
-    the_courses = CertificateCourse.objects.all()
+    #need to get the courses that the student is enfolled in
+    user = request.user
+    user_certs = Certificate.objects.filter(user=user)
     graduated = False
-    if the_courses.count() == CertificateCourse.objects.all().count():
+    if user_certs.count() == CertificateCourse.objects.all().count():
         graduated = True
-    return {'the_courses': the_courses, 'graduated' : graduated}
+    return {'the_courses': user_certs, 'graduated' : graduated}
 
 
 def show_graduation(request, user_id):
-    total_courses = CertificateCourse.objects.all().count() # returns ALL courses with certificates
-    print total_courses
+    '''Double checks that the user with the appropriate id did
+    graduate, link is public to those they wish to share.'''
+    total_courses = CertificateCourse.objects.all().count()
     user = User.objects.get(pk=user_id)
-    completed = user.certificatecourse_set.all().count()#CertificateCourse.objects.get(user=user).count() # return all certific courses for the user
-    print completed
-    if total_courses == completed:
-        date = get_oldest(completed, user)
+    user_certs = Certificate.objects.filter(user=user).count()
+    if total_courses == user_certs:
+        date = get_oldest(user_certs, user)
         return HttpResponse("User Graduated")
     else:
         raise Http404
 
 def get_oldest(set_of_certs, user):
+    '''Returns oldest of the certificate objects.'''
     user_ = user
-    dates = []
-    for each in set_of_certs:
-        hold_date = Certificate.objects.get(course=each, user=user_)
-        dates.append(hold_date.date)
-    return max(dates)
+    hold_date = Certificate.objects.filter(user=user_)
+    return hold_date.aggregate(Max('date'))
 
 
 
