@@ -1,9 +1,9 @@
 {% extends "admin/base_site.html" %}
-{% load adminmedia admin_list i18n %}
+{% load admin_list i18n %}
 
 {% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/changelists.css" />
+    <link rel="stylesheet" type="text/css" href="css/changelists.css" />
     <link rel="stylesheet" href="/admin/pagetree/media/css/pagetree.css" media="screen" />
 {% endblock %}
 
@@ -16,7 +16,7 @@
                 // Hackish -- on first view create a root if it doesn't exist
                 $.ajax({
                     type: "POST",
-                    url: "{% url create_tree_root %}",
+                    url: "{% url 'create_tree_root' %}",
                     success: function() {
                         window.location.reload()
                     },
