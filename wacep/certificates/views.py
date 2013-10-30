@@ -95,6 +95,7 @@ def student_certificates(request):
     return {'the_courses': user_certs, 'graduated' : graduated}
 
 
+@render_to('certificates/grad_certificate.html')
 def show_graduation(request, user_id):
     '''Double checks that the user with the appropriate id did
     graduate, link is public to those they wish to share.'''
@@ -103,7 +104,7 @@ def show_graduation(request, user_id):
     user_certs = Certificate.objects.filter(user=user).count()
     if total_courses == user_certs:
         date = get_oldest(user_certs, user)
-        return HttpResponse("User Graduated")
+        return {'date' : date, 'user' : user}
     else:
         raise Http404
 
@@ -111,7 +112,8 @@ def get_oldest(set_of_certs, user):
     '''Returns oldest of the certificate objects.'''
     user_ = user
     hold_date = Certificate.objects.filter(user=user_)
-    return hold_date.aggregate(Max('date'))
+    date = hold_date.aggregate(Max('date'))
+    return date
 
 
 
