@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block css %}
+	<link href="/_certificates/media/css/certificates.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block sidebar %}{%endblock sidebar%}
+
+{% block content %}
+    <div class = "well certificate-div">
+	Omnibus et singulis has litteras lecturis, salutem. <br/>
+	Notum sit, quod nobis placet <strong>{{user.first_name}} {{user.last_name}}</strong>
+
+	pro meritis ejus titulo graduque <strong>{{certificate.course}}</strong> 				
+	placuit nobis adornare, eique concessimus honores, dignitates, insignia, jura, et privilegia omnia, quae hic et ubique ad gradum pertinent.
+
+	Cujus sint testimonio Collegii Sigillum Publicum atque Chirographum Praesidis litteris hisce apposite, 
+
+	Collegium Columbiae, Novi Eboraci<br/>
+
+	Die <strong>{{date.date}}</strong> <br/>
+	<img src="/site_media/splash/img/wacep_logo_horizontal.png"></image>
+
+	Curatorem Scriba <br/>
+	Praeses <br/>
+	</div>
+{%endblock content %}
+{% block footer %} {%endblock footer %}

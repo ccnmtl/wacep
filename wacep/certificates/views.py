@@ -104,7 +104,8 @@ def show_graduation(request, user_id):
     user_certs = Certificate.objects.filter(user=user).count()
     if total_courses == user_certs:
         date = get_oldest(user_certs, user)
-        return {'date' : date, 'user' : user}
+        print date
+        return {'date' : date['date__max'], 'user' : user}
     else:
         raise Http404
 
