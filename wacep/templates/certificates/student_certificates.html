@@ -9,6 +9,15 @@
 			<div class="well">
 					<a href = "{{cert.get_absolute_url}}" target='_blank' ">Certificate for {{cert.course}}</a>
 					dated {{cert.date}}
+
+
 			</div>
 		{%endfor%}
+		{% if graduated %}
+        <div class = "well"> "Your a very accomplished person!"
+        <a href = "/_certificates/certificate_of_completion/{{user.pk}}">Certificate of completion.</a>
+        </div>
+        {% endif %}
+
+
 {%endblock content %}

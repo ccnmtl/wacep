@@ -87,23 +87,32 @@ def update_roster(request):
 def student_certificates(request):
     """ A list of all the certificates earned by a student."""
     the_courses = CertificateCourse.objects.all()
-    print request.user.certificates_earned.all()
-    return {'the_courses': the_courses}
+    graduated = False
+    if the_courses.count() == CertificateCourse.objects.all().count():
+        graduated = True
+    return {'the_courses': the_courses, 'graduated' : graduated}
 
 
-@login_required
-#@render_to('certificates/student_certificates.html')
-def student_completion(request):
-    """If student has earned all 4 certificates, return the oldest date."""
-    the_courses = CertificateCourse.objects.all()
-    if the_courses.count() == 4:
-        hold_certs = []
-        for each in the_courses:
-            cert_set = Certificate.objects.get(course=each, user=request.user)
-            hold_certs.append(cert_set)
-        oldest = max(hold_certs[0].date, hold_certs[1].date, hold_certs[2].date, hold_certs[3].date)   
-        print oldest
-        return HttpResponse(oldest)
+def show_graduation(request, user_id):
+    total_courses = CertificateCourse.objects.all().count() # returns ALL courses with certificates
+    print total_courses
+    user = User.objects.get(pk=user_id)
+    completed = user.certificatecourse_set.all().count()#CertificateCourse.objects.get(user=user).count() # return all certific courses for the user
+    print completed
+    if total_courses == completed:
+        date = get_oldest(completed, user)
+        return HttpResponse("User Graduated")
+    else:
+        raise Http404
+
+def get_oldest(set_of_certs, user):
+    user_ = user
+    dates = []
+    for each in set_of_certs:
+        hold_date = Certificate.objects.get(course=each, user=user_)
+        dates.append(hold_date.date)
+    return max(dates)
+
 
 
 #this is not authenticated: the certificates themselves are public.

@@ -26,9 +26,9 @@ urlpatterns = patterns(
         'wacep.certificates.views.student_certificates',
         name='student_certificates'),
 
-    url(r'^certificate/complete/$',
-        'wacep.certificates.views.student_completion',
-        name='complete'),
+    url(r'^certificate_of_completion/(?P<user_id>.*)$',
+        'wacep.certificates.views.show_graduation',
+        name='courses_completed'),
 
     url(r'^certificate/(?P<certificate_id>.*)$',
         'wacep.certificates.views.certificate',
