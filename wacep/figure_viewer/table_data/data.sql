@@ -1,9 +1,19 @@
+--
+-- PostgreSQL database dump
+--
+
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+
 SET search_path = public, pg_catalog;
+
+--
+-- Data for Name: figure_viewer_activitystate; Type: TABLE DATA; Schema: public; Owner: -
+--
+
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (5, 'Annual / Precipitation / Off', 'prcp_annual.gif', 5, 'Title', '', '', '');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (16, 'DJF / Precipitation / Off', 'prcp_DJF.gif', 16, 'Title', '', '', '');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (26, 'MAM / Precipitation / Off', 'prcp_MAM.gif', 26, 'Title', '', '', '');
@@ -23,19 +33,77 @@ INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, t
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (36, 'JJA / Precipitation / Off', 'prcp_JJA.gif', 36, 'Title', '', '', '');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (44, 'SON / Temperature / Off', 'temp_SON.gif', 44, 'Title', '', '', '');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (42, 'SON / Wind / Off', 'wind_SON.gif', 42, 'Title', '', '', '');
+
+
+--
+-- Name: figure_viewer_activitystate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
 SELECT pg_catalog.setval('figure_viewer_activitystate_id_seq', 50, true);
+
+
+--
+-- Data for Name: figure_viewer_animationinput; Type: TABLE DATA; Schema: public; Owner: -
+--
+
 INSERT INTO figure_viewer_animationinput (id, name, order_rank) VALUES (1, 'On', 1);
 INSERT INTO figure_viewer_animationinput (id, name, order_rank) VALUES (2, 'Off ', 2);
+
+
+--
+-- Name: figure_viewer_animationinput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
 SELECT pg_catalog.setval('figure_viewer_animationinput_id_seq', 2, true);
+
+
+--
+-- Data for Name: figure_viewer_climatevariableinput; Type: TABLE DATA; Schema: public; Owner: -
+--
+
 INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (1, 'Precipitation', 1);
 INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (2, 'Temperature', 2);
 INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (3, 'Wind', 3);
+
+
+--
+-- Name: figure_viewer_climatevariableinput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
 SELECT pg_catalog.setval('figure_viewer_climatevariableinput_id_seq', 3, true);
+
+
+--
+-- Data for Name: figure_viewer_figureviewertopic; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (1, 'GC');
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (2, 'NV');
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (3, 'TC');
+
+
+--
+-- Name: figure_viewer_figureviewertopic_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('figure_viewer_figureviewertopic_id_seq', 1, false);
+
+
+--
+-- Data for Name: figure_viewer_seasoninput; Type: TABLE DATA; Schema: public; Owner: -
+--
+
 INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (1, 'Annual', 1);
 INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (2, 'DJF', 2);
 INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (3, 'MAM', 3);
 INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (4, 'JJA', 4);
 INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (5, 'SON', 5);
+
+
+--
+-- Data for Name: figure_viewer_inputcombination; Type: TABLE DATA; Schema: public; Owner: -
+--
+
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (1, 1, 1, 2, 5);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (2, 1, 1, 1, 6);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (3, 1, 3, 2, 1);
@@ -66,5 +134,23 @@ INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variabl
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (28, 4, NULL, 2, 0);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (29, 4, NULL, 2, 0);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (30, 5, NULL, 2, 0);
+
+
+--
+-- Name: figure_viewer_inputcombination_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
 SELECT pg_catalog.setval('figure_viewer_inputcombination_id_seq', 30, true);
+
+
+--
+-- Name: figure_viewer_seasoninput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
 SELECT pg_catalog.setval('figure_viewer_seasoninput_id_seq', 5, true);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
