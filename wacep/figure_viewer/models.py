@@ -1,0 +1,201 @@
+from django.db import models
+from django.contrib.contenttypes import generic
+from pagetree.models import PageBlock
+from django import forms
+
+class ClimateVariableInput (models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+    
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class SeasonInput (models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+    
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class AnimationInput(models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
+class ModeOfVariabilityInput(models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    order_rank = models.IntegerField(default=0, null=True, blank=True, )
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
+
+class InputCombination (models.Model):
+    """A combination of inputs that that puts the activity in a certain state."""
+
+    season_input                    = models.ForeignKey ('SeasonInput',                null=True, blank=True)
+    climate_variable_input          = models.ForeignKey ('ClimateVariableInput',       null=True, blank=True)
+    animation_input                 = models.ForeignKey ('AnimationInput',             null=True, blank=True)
+    activity_state                  = models.ForeignKey ('ActivityState')
+    #default_state                   = models.BooleanField (default = False, help_text= 'Set this to true only for the default / initial state of the activity.')
+
+
+    def __unicode__(self):
+        return "Inputs resulting in state %s " % self.activity_state
+
+    class Meta:
+        ordering = ['activity_state']
+        unique_together = ("season_input", "climate_variable_input", "animation_input")
+
+    def to_json(self):
+        result = {
+            'season_input_id'           : self.season_input.id if self.season_input        else None,
+            'climate_variable_input_id' : self.climate_variable_input_id   if self.climate_variable_input_id          else None,
+            'activity_state_id'         : self.activity_state.id,
+            'id'                        : self.id
+        }
+        
+        return result
+
+
+class ActivityState (models.Model):
+    name  = models.CharField(max_length=256, default = '')
+    image_filename  = models.CharField(max_length=256, default = '', blank=True)
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+    title = models.CharField(max_length=256, default = '')
+    text          = models.TextField(blank=True, default = '')
+
+    climate_impact       = models.CharField(max_length=256, blank=True, default = '')
+    graph_title          = models.CharField(max_length=256, blank=True, default = '')
+
+    def get_absolute_url(self):
+        return "/admin/figure_viewer/activitystate/%i/" % self.id
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+
+        where = '/_figure_viewer/media/img'
+        fn = self.image_filename
+        image_path = '%s/%s' % (where, fn) if (fn != '') else ''
+
+        return {
+            'name'       : self.name,
+            'id'         : self.id,
+            'image_path'  : image_path,
+        }
+
+
+class FigureViewerTopic (models.Model):
+    TOPIC_CHOICES = (
+        ('GC', 'Global Climatologies'),
+        ('NV', 'Modes of Natural Variability'),
+        ('TC', 'Teleconnections'),
+    )
+    slug = models.CharField(max_length=2, choices=TOPIC_CHOICES, default='CLIMATOLOGIES')
+
+class FigureViewerBlock(models.Model):
+    pageblocks = generic.GenericRelation(PageBlock, related_name = "FigureViewerBlocks")
+
+    topic = models.ForeignKey ('FigureViewerTopic',  null=True, blank=True)
+
+    template_file = "figure_viewer/figure_viewer.html"
+    js_template_file = "figure_viewer/block_js.html"
+    css_template_file = "figure_viewer/block_css.html"
+    display_name = "Figure Viewer Activity"
+
+    #topic = models.CharField(max_length=2, choices=TOPIC_CHOICES, default='CLIMATOLOGIES')
+    # This activity comes in three different "flavors" which are displayed in different places.
+    # Basic differences are described in methods here in this class,
+    # depending on the value of "TOPIC CHOICES."
+
+    def input_types (self):
+        """The dropdown / radio buttons needed to decide which ActivityState to show."""
+        if self.topic.slug == 'GC':
+            return ['season','climate_variable','animation']
+        elif self.topic.slug == 'NV':
+            return ['variability', 'year', 'animation']
+        elif self.topic.slug ==  'TC':
+            return ['variability']
+        else:
+            raise ValueError ("Can't find the topic %s." % self.topic)
+
+    def pageblock(self):
+        return self.pageblocks.all()[0]
+
+    def __unicode__(self):
+        return unicode(self.pageblock())
+
+    def needs_submit(self):
+        return False
+
+    @classmethod
+    def add_form(self):
+        return FigureViewerBlockForm()
+
+    def edit_form(self):
+        return FigureViewerBlockForm(instance=self)
+
+    @classmethod
+    def create(self, request):
+        form = FigureViewerBlockForm(request.POST)
+        return form.save()
+
+    def edit(self, vals, files):
+        form = FigureViewerBlockForm(data=vals,
+                                          files=files,
+                                          instance=self)
+        if form.is_valid():
+            form.save()
+
+    def unlocked(self, user):
+        return True
+
+class FigureViewerBlockForm(forms.ModelForm):
+    class Meta:
+        model = FigureViewerBlock
+

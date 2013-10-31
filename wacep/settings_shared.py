@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     'pageblocks',
     'quizblock',
     'wacep.timescale',
+    'wacep.figure_viewer',
     'wacep.certificates',
 ]
 
@@ -139,6 +140,7 @@ PAGEBLOCKS = [
     'pageblocks.ImagePullQuoteBlock',
     'quizblock.Quiz',
     'timescale.TimescaleBlock'
+    'timescale.FigureViewerBlock'
 ]
 
 LETTUCE_APPS = (

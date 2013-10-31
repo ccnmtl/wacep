@@ -1,0 +1,172 @@
+#sidebarleft, h1.section-label-header, #sidebar{
+    display:none;
+}
+
+header#masthead {
+  height:60px !important;
+}
+
+
+.figure_viewer_container {
+  background-color: black;
+  position: relative;
+  height: 693px;
+}
+
+.figure_viewer_subcontainer {
+  background-color: white;
+  position: absolute;
+  left: 100px;
+  top: 200px;
+  width: 100px;
+  height: 100px;
+}
+
+.show_hide_div {
+  display: none;
+}
+
+.figure_viewer_graph_title, .figure_viewer_graph_y_axis {
+  font-weight: bold;
+  padding: 0px 8px 0px 8px;
+  background-color: #000;
+  font-size: 10px;
+  color: white;
+
+}
+
+.figure_viewer_graph_title {
+  position: absolute;
+  left: 220px;
+  top: -7px;
+
+}
+.figure_viewer_graph_y_axis {
+	z-index: 9999;
+  position: absolute;
+  left: -92px;
+  top: 190px;
+  -moz-transform:    rotate(270deg);  /* FF3.5+ */
+  -o-transform:      rotate(270deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
+  filter:      progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; /* IE8 */
+}
+
+
+.figure_viewer_select, .reset_button {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.figure_viewer_year_highlight_rectangle {
+  position: absolute;
+  top: 146px;
+  width: 2px;
+  height: 330px;
+  z-index: 100;
+  background-color: red;
+  border: solid red 3px;
+  opacity:0.5;
+  filter:alpha(opacity=0.5);
+}
+
+.explanation_copy {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 350px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px 20px 10px 10px;
+  overflow: auto;
+}
+.edit_this_state {
+  margin-left: 10px;
+}
+
+.figure_viewer_subcontainer.help_icon {
+  cursor: pointer;
+  left: 1100px;
+  top: -30px;
+  width: 30px;
+  height: 30px;
+}
+
+
+.figure_viewer_subcontainer.help_box {
+  display:none;
+  background-color: white;
+  width: 500px;
+  height: 300px;
+  z-index:500;
+  border:solid lightblue 3px;
+}
+.help_copy_container_div {
+  margin : 30px;
+
+}
+
+
+.figure_viewer_subcontainer.color_key {
+  left: 8px;
+  top: 8px;
+  width: 820px;
+  height: 100px;
+}
+
+.figure_viewer_subcontainer.inputs {
+  left: 836px;
+  top: 8px;
+  width: 285px;
+  height: 203px;
+}
+
+.figure_viewer_subcontainer.graph {
+  left: 8px;
+  top: 115px;
+  width: 820px;
+  height: 400px;
+}
+
+.figure_viewer_subcontainer.explanation {
+  left: 836px;
+  top: 219px;
+  width: 285px;
+  height: 464px;
+}
+.figure_viewer_subcontainer.variance {
+  left: 8px;
+  top: 530px;
+  width: 202px;
+  height: 153px;
+}
+.figure_viewer_subcontainer.variance div {
+  margin-left: 10px
+
+}
+
+.figure_viewer_subcontainer.year_data {
+  left: 220px;
+  top: 530px;
+  width: 608px;
+  height: 85px;
+}
+
+.year_data .left_box, .year_data .right_box {
+    margin-left: 50px;
+    display: inline-table;
+}
+.percent_data_header, .year_data_header {
+  font-weight: bold;
+}
+
+.figure_viewer_subcontainer.impact_background {
+  left: 220px;
+  top: 625px;
+  width: 608px;
+  height: 58px;
+  color: white;
+  font-weight: bold;
+background-image: -webkit-gradient(linear, left top, right top, color-stop(0.01, #ff0000), color-stop(0.08, #ff0088), color-stop(0.16, #ff00ff), color-stop(0.24, #8800ff), color-stop(0.32, #0000ff), color-stop(0.40, #0088ff), color-stop(0.48, #00ffff), color-stop(0.56, #00ff88), color-stop(0.64, #00ff00), color-stop(0.72, #88ff00), color-stop(0.80, #ffff00), color-stop(0.88, #ff8800), color-stop(0.99, #ff0000));
+background-image: -moz-linear-gradient(left center, #ff0000 1%, #ff0088 8%, #ff00ff 16%, #8800ff 24%, #0000ff 32%, #0088ff 40%, #00ffff 48%, #00ff88 56%, #00ff00 64%, #88ff00 72%, #ffff00 80%, #ff8800 88%, #ff0000 99%);
+}

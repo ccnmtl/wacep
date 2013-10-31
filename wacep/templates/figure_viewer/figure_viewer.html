@@ -1,0 +1,51 @@
+<div class="figure_viewer_container">
+	<div class = "figure_viewer_subcontainer help_icon">
+		<button class = "btn btn-info">?</button>
+	</div>
+	<div class = "figure_viewer_subcontainer help_box">
+		<div class= "help_copy_container_div">
+			Help copy goes here. Lorem ipsum caveat emptor in loco parentis.
+			<br />
+			<br />
+			<br />
+			<button class = "btn btn-info help_ok_button">OK</button>
+		</div>
+	</div>
+	<!-- Left side -->
+	<div class="show_hide_div left_side">
+		<div class = "figure_viewer_subcontainer color_key">
+			<img class="figure_viewer_color_key" />
+		</div>
+
+		<span id ="year_for_highlight_rectangle">
+			<div class ="figure_viewer_year_highlight_rectangle"></div>
+		</span>
+
+		<div class = "figure_viewer_subcontainer graph">
+			<div class="figure_viewer_graph_title" >title</div>
+			<div class="figure_viewer_graph_y_axis">y axis</div>
+			<img class="figure_viewer_graph" />
+		</div>
+
+	</div>
+
+	<!-- Right side -->
+	<div class = "figure_viewer_subcontainer inputs">
+		<div class="topic_label">{{block.topic}}</div>
+
+		{% if block.topic == 'GC' %}
+		<select name ="season_input_select" class="figure_viewer_select season">
+			<option value = "">Select a Season:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+		<select name ="climate_variable_input_select" class="figure_viewer_select climate_variable">
+			<option value = "">Select a Climate Variable:</option>
+			<option value = ""></option>
+		</select><br/>
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="off" checked="checked"/>Off
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="on"  />On
+		<br/>
+        <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
+	</div>
+</div>
