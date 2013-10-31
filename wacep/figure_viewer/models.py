@@ -144,12 +144,12 @@ class FigureViewerTopic (models.Model):
     def __unicode__(self):
         return self.slug
 
-
     def to_json(self):
         result = {
             'slug'                      : self.id,
             'id'                        : self.id
         }
+        return result;
 
 class FigureViewerBlock(models.Model):
     pageblocks = generic.GenericRelation(PageBlock, related_name = "FigureViewerBlocks")

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
-from wacep.figure_viewer.models import AnimationInput, ClimateVariableInput, SeasonInput, InputCombination, ActivityState
+from wacep.figure_viewer.models import AnimationInput, ClimateVariableInput, SeasonInput, InputCombination, ActivityState, FigureViewerTopic
 from django.utils import simplejson
 
 
