@@ -38,6 +38,7 @@ urlpatterns = patterns(
     (r'^edit/(?P<path>.*)$', 'wacep.main.views.edit_page',
      {}, 'edit-page'),
     (r'^_timescale/', include('wacep.timescale.urls')),
+    (r'^_figure_viewer/', include('wacep.figure_viewer.urls')),
     (r'^_certificates/', include('wacep.certificates.urls',
                                  namespace='certificates')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page'),

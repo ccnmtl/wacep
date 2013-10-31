@@ -73,6 +73,9 @@ class ModeOfVariabilityInput(models.Model):
 class InputCombination (models.Model):
     """A combination of inputs that that puts the activity in a certain state."""
 
+
+    topic = models.ForeignKey ('FigureViewerTopic',  null=True, blank=True)
+
     season_input                    = models.ForeignKey ('SeasonInput',                null=True, blank=True)
     climate_variable_input          = models.ForeignKey ('ClimateVariableInput',       null=True, blank=True)
     animation_input                 = models.ForeignKey ('AnimationInput',             null=True, blank=True)
@@ -85,10 +88,11 @@ class InputCombination (models.Model):
 
     class Meta:
         ordering = ['activity_state']
-        unique_together = ("season_input", "climate_variable_input", "animation_input")
+        unique_together = ("topic", "season_input", "climate_variable_input", "animation_input")
 
     def to_json(self):
         result = {
+            'topic_id'                  : self.topic_id if self.topic else None,
             'season_input_id'           : self.season_input.id if self.season_input        else None,
             'climate_variable_input_id' : self.climate_variable_input_id   if self.climate_variable_input_id          else None,
             'activity_state_id'         : self.activity_state.id,
@@ -136,7 +140,16 @@ class FigureViewerTopic (models.Model):
         ('NV', 'Modes of Natural Variability'),
         ('TC', 'Teleconnections'),
     )
-    slug = models.CharField(max_length=2, choices=TOPIC_CHOICES, default='CLIMATOLOGIES')
+    slug = models.CharField(max_length=2, choices=TOPIC_CHOICES, default='TC')
+    def __unicode__(self):
+        return self.slug
+
+
+    def to_json(self):
+        result = {
+            'slug'                      : self.id,
+            'id'                        : self.id
+        }
 
 class FigureViewerBlock(models.Model):
     pageblocks = generic.GenericRelation(PageBlock, related_name = "FigureViewerBlocks")
@@ -154,7 +167,10 @@ class FigureViewerBlock(models.Model):
     # depending on the value of "TOPIC CHOICES."
 
     def input_types (self):
+
         """The dropdown / radio buttons needed to decide which ActivityState to show."""
+        if self.topic == None:
+                raise ValueError ("This figure viewer isn't associated with a topic." )
         if self.topic.slug == 'GC':
             return ['season','climate_variable','animation']
         elif self.topic.slug == 'NV':
