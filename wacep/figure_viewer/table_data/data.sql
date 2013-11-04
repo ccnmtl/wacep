@@ -14,25 +14,25 @@ SET search_path = public, pg_catalog;
 -- Data for Name: figure_viewer_activitystate; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (5, 'Annual / Precipitation / Off', 'prcp_annual.gif', 5, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (16, 'DJF / Precipitation / Off', 'prcp_DJF.gif', 16, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (26, 'MAM / Precipitation / Off', 'prcp_MAM.gif', 26, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (6, 'Annual / Precipitation / On', 'prcp_annual_animated.gif', 6, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (3, 'Annual / Temperature / Off', 'temp_annual.gif', 3, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (13, 'DJF / Temperature / Off', 'temp_DJF.gif', 13, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (24, 'MAM / Temperature / Off', 'temp_MAM.gif', 24, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (34, 'JJA / Temperature / Off', 'temp_JJA.gif', 34, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (4, 'Annual / Temperature / On', 'temp_annual_animated.gif', 4, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (1, 'Annual / Wind / Off', 'wind_annual.gif', 1, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (11, 'DJF / Wind / Off', 'wind_DJF.gif', 11, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (22, 'MAM / Wind / Off', 'wind_MAM.gif', 22, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (32, 'JJA / Wind / Off', 'wind_JJA.gif', 32, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (2, 'Annual / Wind / On', 'wind_annual_animated.gif', 2, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (0, 'Default', '', 0, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (46, 'SON / Precipitation / Off', 'prcp_SON.gif', 46, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (36, 'JJA / Precipitation / Off', 'prcp_JJA.gif', 36, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (44, 'SON / Temperature / Off', 'temp_SON.gif', 44, 'Title', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title) VALUES (42, 'SON / Wind / Off', 'wind_SON.gif', 42, 'Title', '', '', '');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (5, 'Annual / Precipitation / Off', 'prcp_annual.gif', 5, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (16, 'DJF / Precipitation / Off', 'prcp_DJF.gif', 16, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (26, 'MAM / Precipitation / Off', 'prcp_MAM.gif', 26, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (6, 'Annual / Precipitation / On', 'prcp_annual_animated.gif', 6, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (3, 'Annual / Temperature / Off', 'temp_annual.gif', 3, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (13, 'DJF / Temperature / Off', 'temp_DJF.gif', 13, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (24, 'MAM / Temperature / Off', 'temp_MAM.gif', 24, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (34, 'JJA / Temperature / Off', 'temp_JJA.gif', 34, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (4, 'Annual / Temperature / On', 'temp_annual_animated.gif', 4, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (1, 'Annual / Wind / Off', 'wind_annual.gif', 1, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (11, 'DJF / Wind / Off', 'wind_DJF.gif', 11, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (22, 'MAM / Wind / Off', 'wind_MAM.gif', 22, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (32, 'JJA / Wind / Off', 'wind_JJA.gif', 32, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (2, 'Annual / Wind / On', 'wind_annual_animated.gif', 2, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (0, 'Default', '', 0, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (46, 'SON / Precipitation / Off', 'prcp_SON.gif', 46, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (36, 'JJA / Precipitation / Off', 'prcp_JJA.gif', 36, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (44, 'SON / Temperature / Off', 'temp_SON.gif', 44, 'Title', '', '', '', NULL);
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename) VALUES (42, 'SON / Wind / Off', 'wind_SON.gif', 42, 'Title', '', '', '', NULL);
 
 
 --

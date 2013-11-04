@@ -1,5 +1,6 @@
 delete from figure_viewer_inputcombination;
 delete from figure_viewer_activitystate;
+	
 delete from figure_viewer_animationinput;
 delete from figure_viewer_seasoninput;
 delete from figure_viewer_climatevariableinput;

@@ -135,6 +135,10 @@ class InputCombination (models.Model):
             'topic_id'                  : self.topic_id if self.topic else None,
             'season_input_id'           : self.season_input.id if self.season_input        else None,
             'climate_variable_input_id' : self.climate_variable_input_id   if self.climate_variable_input_id          else None,
+            'animation_input_id'        : self.animation_input_id   if self.animation_input_id          else None,
+            'year_input_id'             : self.year_input.id if self.year_input        else None,
+            'mode_of_variability_input_id' : self.mode_of_variability_input_id   if self.mode_of_variability_input_id          else None,
+            'graphing_mode_input_id'    : self.graphing_mode_input_id   if self.graphing_mode_input_id          else None,
             'activity_state_id'         : self.activity_state.id,
             'id'                        : self.id
         }
@@ -144,7 +148,8 @@ class InputCombination (models.Model):
 
 class ActivityState (models.Model):
     name  = models.CharField(max_length=256, default = '')
-    image_filename  = models.CharField(max_length=256, default = '', blank=True)
+    image_filename     = models.CharField(max_length=256, default = '', blank=True)
+    colorbar_filename  = models.CharField(max_length=256, default = '', blank=True)
     order_rank = models.IntegerField(default=0, null=True, blank=True)
     title = models.CharField(max_length=256, default = '')
     text          = models.TextField(blank=True, default = '')
@@ -164,13 +169,19 @@ class ActivityState (models.Model):
     def to_json(self):
 
         where = '/_figure_viewer/media/img'
+
         fn = self.image_filename
         image_path = '%s/%s' % (where, fn) if (fn != '') else ''
+
+        fn = self.colorbar_filename
+        colorbar_path = '%s/%s' % (where, fn) if (fn != '') else ''
+
 
         return {
             'name'       : self.name,
             'id'         : self.id,
             'image_path'  : image_path,
+            'color_bar'  : colorbar_path
         }
 
 

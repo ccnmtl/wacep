@@ -2,9 +2,14 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
     events: {
         "change .figure_viewer_select": "menuChanged",
+
+        "change .figure_viewer_radio":  "menuChanged",
+
+
         "click .reset_button"     : "resetButtonPushed",
         "click .help_icon"        : "showHelp",
         "click .help_ok_button"   : "hideHelp",
+        "click .edit_this_state"  : "editCopy"
     },
 
     initialize: function(options) {
@@ -17,7 +22,8 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             "menuChanged",
             "resetButtonPushed",
             "showHelp",
-            "hideHelp"
+            "hideHelp",
+            "editCopy"
         );
 
         jQuery ('#right-content').removeClass ('span9');
@@ -61,11 +67,13 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
         */
+        /*
         the_dropdown = jQuery(".figure_viewer_select.year");
         for (var i=0; i < self.settings.year_inputs.length; i++)  {
             var the_item = self.settings.year_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
+        */
         the_dropdown = jQuery(".figure_viewer_select.climate_variable");
         for (var i=0; i < self.settings.climate_variable_inputs.length; i++)  {
             var the_item = self.settings.climate_variable_inputs[i];
@@ -78,15 +86,24 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
         var theSeason           = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
         //var theGraphingMode     = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
-        var theCLimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
-        var theAnimate         = parseInt(jQuery ('.figure_viewer_select.animate').val())          || null;
+        var theClimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
+        //var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
+        var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
+                
+
+                
+
         var theYear             = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
 
 
-        console.log ( theCLimateVariable);
+
+        console.log ( 'theClimateVariable');
+        console.log ( theClimateVariable);
+        console.log ( 'theSeason');
         console.log ( theSeason);
-        console.log ( theAnimate);
-        console.log ( theYear);
+        console.log ( 'theAnimation');
+        console.log ( theAnimation);
+        //console.log ( theYear);
 
 
         // do we know how to deal with this particular combination of inputs?
@@ -95,26 +112,31 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var inputFinder = function (inputCombination) { 
             return (
                 (inputCombination.season_input_id                    ==  theSeason       ) &&
-                (inputCombination.climate_variable_input_id          ==  theCLimateVariable       ) //&&
+                (inputCombination.climate_variable_input_id          ==  theClimateVariable       ) &&
+                (inputCombination.animation_input_id                 ==  theAnimation       ) //&&
                 //(inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
                 //(inputCombination.year_input_id                      ==  theYear         )
             );
         }
-        var inputCombination = _.find (self.settings.input_combinations, inputFinder);
-        console.log (self.settings.input_combinations);
 
-        
+
+        var inputCombination = _.find (self.settings.input_combinations, inputFinder);
+
+
         if (typeof (inputCombination) === "undefined") {
             // No, we don't. Kthxbye.
             alert ("ERROR: That input combination was not found.");
             return;
         }
-
+        console.log (inputCombination);
         // Yes, we do.
         var stateId = inputCombination.activity_state_id;
         var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
+
+
+        console.log (theState);
         if (typeof (theState) === "undefined") {
-            alert ("ERROR: That input combination was not found.");
+            alert ("ERROR: That state was not found.");
             return;
         }
 
@@ -134,15 +156,21 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         }
         else {
             jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
+            jQuery ('.show_hide_div.left_side')      .show ();
+
         }
-        /*
-        if (theState.image_path === '') {
-            jQuery ('.figure_viewer_color_key' ).replaceWith('<img class="figure_viewer_color_key">');
+
+
+        
+        
+        
+        if (theState.color_bar === '') {
+            jQuery ('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
         }
         else {
-            jQuery ('.figure_viewer_color_key' ).attr("src", theState.legend_path);
+            jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
-        */
+        
         /*
         jQuery ('.figure_viewer_graph_title')         .html (theState.graph_title);
         jQuery ('.figure_viewer_graph_y_axis')        .html (theState.y_scale_title);
@@ -173,29 +201,16 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             jQuery ('.show_hide_div.left_side')      .show ();
         }
 
-        if (jQuery('.edit_this_state').length > 0 ) {
-            jQuery('.edit_this_state')[0].href = theState.absolute_url
-        }
         */
 
-            /*
-        if (theState.climate_impact) {
-            var climateImpactLabels = {
-
-                extremely_wet : 'Extremely Wet',
-                wet           : 'Wet',
-                normal        : 'Normal',
-                dry           : 'Dry',
-                extremely_dry : 'Extremely Dry',
-            }
-            
-            jQuery ("#year_for_highlight_rectangle") .attr("class", 'year_' + theState.year);
-            jQuery ("#impact_level")                 .attr("class", theState.climate_impact);
-            jQuery ('.impact_bubble_title').html (climateImpactLabels[theState.climate_impact])
-            
-        }
-        */
     },
+
+    editCopy: function() {
+        "use strict";
+        var self = this;
+        window.open(self.currentState.absolute_url, 'times', 'times 2');
+    },
+
 
     showHelp: function() {
         "use strict";

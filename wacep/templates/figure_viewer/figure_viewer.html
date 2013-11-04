@@ -14,12 +14,10 @@
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
 		<div class = "figure_viewer_subcontainer color_key">
-			<img class="figure_viewer_color_key" />
+			<img class="figure_viewer_color_bar" /> color bar
 		</div>
 
 		<div class = "figure_viewer_subcontainer graph">
-			<div class="figure_viewer_graph_title" >title</div>
-			<div class="figure_viewer_graph_y_axis">y axis</div>
 			<img class="figure_viewer_graph" />
 		</div>
 
@@ -37,7 +35,7 @@
 			<option value = ""></option>
 		</select><br/>
 		{% endif %}
-		
+
 		{% if 'season' in block.input_types %}
 		<select name ="season_input_select" class="figure_viewer_select season">
 			<option value = "">Select a Season:</option>
@@ -49,10 +47,21 @@
 
 		{% if 'animation' in block.input_types %}
 		<div>Animate:</div>
-		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="off" checked="checked"/>Off
-		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="on"  />On
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="2" checked="checked"/>Off
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="1"  />On
 		<br/>
 		{%endif %}
         <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
 	</div>
+
+	<div class="figure_viewer_subcontainer explanation">
+		<h3>Notes</h3>
+		<div class="explanation_copy"></div>
+		{% if user.is_staff %}
+			<button class="btn btn-primary edit_this_state">Edit</a>
+		{%endif %}
+	</div>
+
+
+
 </div>

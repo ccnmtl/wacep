@@ -17,6 +17,7 @@ def settings(request):
         'year_inputs':               [y.to_json()      for y in YearInput          .objects.all()],
         'mode_of_variability_inputs':[m.to_json()      for m in ModeOfVariabilityInput        .objects.all()],
         'input_combinations':        [i.to_json()      for i in InputCombination   .objects.all()],
+        
         'topics':                    [t.to_json()      for t in FigureViewerTopic  .objects.all()],
         'activity_states':           [a.to_json()      for a in ActivityState      .objects.all()]
     }
