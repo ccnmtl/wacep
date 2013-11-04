@@ -1,6 +1,8 @@
-delete from figure_viewer_modeofvariabilityinput ;
 delete from figure_viewer_inputcombination;
 delete from figure_viewer_activitystate;
 delete from figure_viewer_animationinput;
 delete from figure_viewer_seasoninput;
 delete from figure_viewer_climatevariableinput;
+delete from figure_viewer_graphingmodeinput;
+delete from figure_viewer_yearinput;
+delete from figure_viewer_modeofvariabilityinput ;

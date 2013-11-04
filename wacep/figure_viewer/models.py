@@ -3,6 +3,24 @@ from django.contrib.contenttypes import generic
 from pagetree.models import PageBlock
 from django import forms
 
+
+class GraphingModeInput (models.Model):
+    name = models.CharField(max_length=256, default='')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
 class ClimateVariableInput (models.Model):
     name  = models.CharField(max_length=256, default = '')
     order_rank = models.IntegerField(default=0, null=True, blank=True, )
@@ -68,6 +86,21 @@ class ModeOfVariabilityInput(models.Model):
             'name': self.name
         }
 
+class YearInput (models.Model):
+    name = models.CharField(max_length=256, default='')
+    order_rank = models.IntegerField(default=0, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order_rank']
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
 
 
 class InputCombination (models.Model):
@@ -79,6 +112,13 @@ class InputCombination (models.Model):
     season_input                    = models.ForeignKey ('SeasonInput',                null=True, blank=True)
     climate_variable_input          = models.ForeignKey ('ClimateVariableInput',       null=True, blank=True)
     animation_input                 = models.ForeignKey ('AnimationInput',             null=True, blank=True)
+
+
+    year_input                      = models.ForeignKey ('YearInput',                   null=True, blank=True)
+    mode_of_variability_input       = models.ForeignKey ('ModeOfVariabilityInput',      null=True, blank=True)
+    graphing_mode_input             = models.ForeignKey ('GraphingModeInput',           null=True, blank=True)
+
+
     activity_state                  = models.ForeignKey ('ActivityState')
     #default_state                   = models.BooleanField (default = False, help_text= 'Set this to true only for the default / initial state of the activity.')
 

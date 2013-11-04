@@ -74,19 +74,12 @@ SELECT pg_catalog.setval('figure_viewer_climatevariableinput_id_seq', 3, true);
 
 
 --
--- Data for Name: figure_viewer_figureviewertopic; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: figure_viewer_modeofvariabilityinput; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (1, 'GC');
-INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (2, 'NV');
-INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (3, 'TC');
-
-
---
--- Name: figure_viewer_figureviewertopic_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('figure_viewer_figureviewertopic_id_seq', 1, false);
+INSERT INTO figure_viewer_modeofvariabilityinput (id, name, order_rank) VALUES (1, 'ENSO', 0);
+INSERT INTO figure_viewer_modeofvariabilityinput (id, name, order_rank) VALUES (2, 'AMO', 1);
+INSERT INTO figure_viewer_modeofvariabilityinput (id, name, order_rank) VALUES (3, 'PDO', 2);
 
 
 --
@@ -104,36 +97,36 @@ INSERT INTO figure_viewer_seasoninput (id, name, order_rank) VALUES (5, 'SON', 5
 -- Data for Name: figure_viewer_inputcombination; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (1, 1, 1, 2, 5);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (2, 1, 1, 1, 6);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (3, 1, 3, 2, 1);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (4, 1, 3, 1, 2);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (5, 1, 2, 2, 3);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (6, 1, 2, 1, 4);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (7, 2, 1, 2, 16);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (8, 2, 3, 2, 16);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (9, 2, 2, 2, 13);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (10, 3, 2, 2, 24);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (11, 3, 3, 2, 22);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (12, 3, 1, 2, 26);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (13, 4, 3, 2, 32);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (14, 4, 2, 2, 34);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (15, 4, 1, 2, 36);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (16, 5, 1, 2, 46);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (17, 5, 2, 2, 44);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (18, 5, 3, 2, 42);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (23, NULL, NULL, 1, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (24, NULL, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (19, NULL, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (20, NULL, 1, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (21, NULL, 2, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (22, NULL, 3, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (25, 1, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (26, 2, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (27, 3, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (28, 4, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (29, 4, NULL, 2, 0);
-INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id) VALUES (30, 5, NULL, 2, 0);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (1, 1, 1, 2, 5, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (2, 1, 1, 1, 6, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (3, 1, 3, 2, 1, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (4, 1, 3, 1, 2, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (5, 1, 2, 2, 3, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (6, 1, 2, 1, 4, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (7, 2, 1, 2, 16, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (8, 2, 3, 2, 16, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (9, 2, 2, 2, 13, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (10, 3, 2, 2, 24, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (11, 3, 3, 2, 22, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (12, 3, 1, 2, 26, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (13, 4, 3, 2, 32, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (14, 4, 2, 2, 34, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (15, 4, 1, 2, 36, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (16, 5, 1, 2, 46, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (17, 5, 2, 2, 44, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (18, 5, 3, 2, 42, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (23, NULL, NULL, 1, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (24, NULL, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (19, NULL, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (20, NULL, 1, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (21, NULL, 2, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (22, NULL, 3, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (25, 1, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (26, 2, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (27, 3, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (28, 4, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (29, 4, NULL, 2, 0, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (30, 5, NULL, 2, 0, 1, NULL, NULL, NULL);
 
 
 --
@@ -141,6 +134,13 @@ INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variabl
 --
 
 SELECT pg_catalog.setval('figure_viewer_inputcombination_id_seq', 30, true);
+
+
+--
+-- Name: figure_viewer_modeofvariabilityinput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('figure_viewer_modeofvariabilityinput_id_seq', 3, true);
 
 
 --

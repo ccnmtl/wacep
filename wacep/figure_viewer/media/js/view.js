@@ -41,8 +41,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             },
             success: function (json, textStatus, xhr) {
                 self.settings = json;
-                console.log ('Got the settings');
-                console.log (self.settings);
                 self.render();
             }
         });
@@ -76,16 +74,20 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     },
 
     findCurrentState: function () {
-        //console.log ("FIND CURRENT STATE")
 
         var self = this;
-        console.log (self.settings);
-        var self = this;
-        var theSeason       = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
-        var theGraphingMode = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
+        var theSeason           = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
+        //var theGraphingMode     = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
         var theCLimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
-        //var theAnimate         = parseInt(jQuery ('.figure_viewer_select.animate').val())          || null;
-        var theYear         = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
+        var theAnimate         = parseInt(jQuery ('.figure_viewer_select.animate').val())          || null;
+        var theYear             = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
+
+
+        console.log ( theCLimateVariable);
+        console.log ( theSeason);
+        console.log ( theAnimate);
+        console.log ( theYear);
+
 
         // do we know how to deal with this particular combination of inputs?
 
@@ -93,11 +95,15 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var inputFinder = function (inputCombination) { 
             return (
                 (inputCombination.season_input_id                    ==  theSeason       ) &&
-                (inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
-                (inputCombination.year_input_id                      ==  theYear         )
+                (inputCombination.climate_variable_input_id          ==  theCLimateVariable       ) //&&
+                //(inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
+                //(inputCombination.year_input_id                      ==  theYear         )
             );
         }
         var inputCombination = _.find (self.settings.input_combinations, inputFinder);
+        console.log (self.settings.input_combinations);
+
+        
         if (typeof (inputCombination) === "undefined") {
             // No, we don't. Kthxbye.
             alert ("ERROR: That input combination was not found.");
@@ -114,7 +120,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         // theState has everything we need to know about decorating the page accordingly.
         self.currentState = theState;
-        console.log (theState);
         return theState;
 
     },
@@ -122,7 +127,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     menuChanged: function () {
         "use strict";
         var self = this;
-        console.log ("MenuChanged;");
 
         var theState = self.findCurrentState();
         if (theState.image_path === '') {
@@ -218,13 +222,10 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     render: function() {
         "use strict";
         var self = this;
-        console.log ("Starting rendering")
-        console.log (self.settings);
         var self = this;
         self.setUpMenus();
         self.menuChanged();
         self.showHelp();
-        console.log ("Done rendering")
     },
 
 

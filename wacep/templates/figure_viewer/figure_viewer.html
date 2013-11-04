@@ -30,6 +30,14 @@
 		<div class="topic_label">{{block.topic.slug}}</div>
 
 		{{ block.input_types}}
+
+		{% if 'climate_variable' in block.input_types %}
+		<select name ="climate_variable_input_select" class="figure_viewer_select climate_variable">
+			<option value = "">Select a Climate Variable:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+		
 		{% if 'season' in block.input_types %}
 		<select name ="season_input_select" class="figure_viewer_select season">
 			<option value = "">Select a Season:</option>
@@ -38,12 +46,6 @@
 		{% endif %}
 
 
-		{% if 'climate_variable' in block.input_types %}
-		<select name ="climate_variable_input_select" class="figure_viewer_select climate_variable">
-			<option value = "">Select a Climate Variable:</option>
-			<option value = ""></option>
-		</select><br/>
-		{% endif %}
 
 		{% if 'animation' in block.input_types %}
 		<div>Animate:</div>
