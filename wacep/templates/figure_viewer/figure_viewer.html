@@ -17,10 +17,6 @@
 			<img class="figure_viewer_color_key" />
 		</div>
 
-		<span id ="year_for_highlight_rectangle">
-			<div class ="figure_viewer_year_highlight_rectangle"></div>
-		</span>
-
 		<div class = "figure_viewer_subcontainer graph">
 			<div class="figure_viewer_graph_title" >title</div>
 			<div class="figure_viewer_graph_y_axis">y axis</div>
@@ -50,6 +46,7 @@
 		{% endif %}
 
 		{% if 'animation' in block.input_types %}
+		<div>Animate:</div>
 		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="off" checked="checked"/>Off
 		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="on"  />On
 		<br/>

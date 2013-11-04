@@ -6,6 +6,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "click .help_icon"        : "showHelp",
         "click .help_ok_button"   : "hideHelp",
     },
+
     initialize: function(options) {
         "use strict";
         var self = this;
@@ -40,6 +41,8 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             },
             success: function (json, textStatus, xhr) {
                 self.settings = json;
+                console.log ('Got the settings');
+                console.log (self.settings);
                 self.render();
             }
         });
@@ -53,25 +56,40 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             var the_item = self.settings.season_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
+        /*
         the_dropdown = jQuery(".figure_viewer_select.graphing_mode");
         for (var i=0; i < self.settings.graphing_mode_inputs.length; i++)  {
             var the_item = self.settings.graphing_mode_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
+        */
         the_dropdown = jQuery(".figure_viewer_select.year");
         for (var i=0; i < self.settings.year_inputs.length; i++)  {
             var the_item = self.settings.year_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
+        the_dropdown = jQuery(".figure_viewer_select.climate_variable");
+        for (var i=0; i < self.settings.climate_variable_inputs.length; i++)  {
+            var the_item = self.settings.climate_variable_inputs[i];
+            the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
+        }
     },
 
     findCurrentState: function () {
+        //console.log ("FIND CURRENT STATE")
+
+        var self = this;
+        console.log (self.settings);
         var self = this;
         var theSeason       = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
         var theGraphingMode = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
+        var theCLimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
+        //var theAnimate         = parseInt(jQuery ('.figure_viewer_select.animate').val())          || null;
         var theYear         = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
 
         // do we know how to deal with this particular combination of inputs?
+
+
         var inputFinder = function (inputCombination) { 
             return (
                 (inputCombination.season_input_id                    ==  theSeason       ) &&
@@ -93,14 +111,19 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             alert ("ERROR: That input combination was not found.");
             return;
         }
+
         // theState has everything we need to know about decorating the page accordingly.
         self.currentState = theState;
+        console.log (theState);
         return theState;
+
     },
 
     menuChanged: function () {
         "use strict";
         var self = this;
+        console.log ("MenuChanged;");
+
         var theState = self.findCurrentState();
         if (theState.image_path === '') {
             jQuery ('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
@@ -108,13 +131,14 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         else {
             jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
         }
-
+        /*
         if (theState.image_path === '') {
             jQuery ('.figure_viewer_color_key' ).replaceWith('<img class="figure_viewer_color_key">');
         }
         else {
             jQuery ('.figure_viewer_color_key' ).attr("src", theState.legend_path);
         }
+        */
         /*
         jQuery ('.figure_viewer_graph_title')         .html (theState.graph_title);
         jQuery ('.figure_viewer_graph_y_axis')        .html (theState.y_scale_title);
@@ -131,6 +155,8 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         jQuery ('.year_data .sum')                .html (theState.year_sum             );
         jQuery ('.year_data .standard_dev')       .html (theState.year_percentile      );
         */
+
+        /*
         if (theState.show_year_details == false) {
             jQuery ('.show_hide_div.year_details')      .hide ();
         } else {
@@ -146,6 +172,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         if (jQuery('.edit_this_state').length > 0 ) {
             jQuery('.edit_this_state')[0].href = theState.absolute_url
         }
+        */
 
             /*
         if (theState.climate_impact) {
@@ -191,9 +218,13 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     render: function() {
         "use strict";
         var self = this;
+        console.log ("Starting rendering")
+        console.log (self.settings);
+        var self = this;
         self.setUpMenus();
         self.menuChanged();
         self.showHelp();
+        console.log ("Done rendering")
     },
 
 
