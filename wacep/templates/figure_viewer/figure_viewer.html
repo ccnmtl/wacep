@@ -43,14 +43,51 @@
 		</select><br/>
 		{% endif %}
 
-
-
 		{% if 'animation' in block.input_types %}
 		<div>Animate:</div>
 		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="2" checked="checked"/>Off
 		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="1"  />On
 		<br/>
 		{%endif %}
+
+
+
+		{% if 'mode_of_variability' in block.input_types %}
+		<select name ="mode_of_variability_input_select" class="figure_viewer_select mode_of_variability">
+			<option value = "">Select a Mode of Variability:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+
+
+
+		{% if 'graphing_mode' in block.input_types %}
+		<select name ="graphing_mode_input_select" class="figure_viewer_select graphing_mode">
+			<option value = "">Select a Graphing Mode:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+
+
+
+		{% if 'year' in block.input_types %}
+		<select name ="season_input_select" class="figure_viewer_select year">
+			<option value = "">Select a Year:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+
+
+
+
+		{% if 'season' in block.input_types %}
+		<select name ="season_input_select" class="figure_viewer_select season">
+			<option value = "">Select a Season:</option>
+			<option value = ""></option>
+		</select><br/>
+		{% endif %}
+
+
         <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
 	</div>
 

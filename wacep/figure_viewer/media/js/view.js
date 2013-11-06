@@ -60,20 +60,27 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             var the_item = self.settings.season_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
-        /*
+        
+     
+        the_dropdown = jQuery(".figure_viewer_select.mode_of_variability");
+        for (var i=0; i < self.settings.mode_of_variability_inputs.length; i++)  {
+            var the_item = self.settings.mode_of_variability_inputs[i];
+            the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
+        }
+
         the_dropdown = jQuery(".figure_viewer_select.graphing_mode");
         for (var i=0; i < self.settings.graphing_mode_inputs.length; i++)  {
             var the_item = self.settings.graphing_mode_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
-        */
-        /*
+        
+        
         the_dropdown = jQuery(".figure_viewer_select.year");
         for (var i=0; i < self.settings.year_inputs.length; i++)  {
             var the_item = self.settings.year_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
-        */
+        
         the_dropdown = jQuery(".figure_viewer_select.climate_variable");
         for (var i=0; i < self.settings.climate_variable_inputs.length; i++)  {
             var the_item = self.settings.climate_variable_inputs[i];

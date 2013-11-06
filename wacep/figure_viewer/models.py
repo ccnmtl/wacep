@@ -181,7 +181,8 @@ class ActivityState (models.Model):
             'name'       : self.name,
             'id'         : self.id,
             'image_path'  : image_path,
-            'color_bar'  : colorbar_path
+            'color_bar'  : colorbar_path,
+            'absolute_url' : self.get_absolute_url()
         }
 
 
@@ -225,9 +226,9 @@ class FigureViewerBlock(models.Model):
         if self.topic.slug == 'GC':
             return ['season','climate_variable','animation']
         elif self.topic.slug == 'NV':
-            return ['variability', 'year', 'animation']
+            return ['mode_of_variability', 'graphing_mode', 'year']
         elif self.topic.slug ==  'TC':
-            return ['variability']
+            return ['mode_of_variability', 'graphing_mode']
         else:
             raise ValueError ("Can't find the topic %s." % self.topic)
 
