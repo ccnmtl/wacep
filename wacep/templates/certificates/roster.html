@@ -8,9 +8,19 @@
 	        <h1>Roster</h1>
 		</div>
 		<div class = "row ">
-	    <p>
-	    Check the boxes next to each student to give them access to a course. If you need to add students, remove them, change their passwords and so on, go to <a href= "/admin/auth/user/?is_staff__exact=0">Administer</a>. To certify that a student graduated from a class and unlock their certificate so they can print it, go to <a href="/_certificates/certificates_admin/">Certificates</a>.
-	    </p>
+
+			<p>
+			On this page, you can grant participants access to courses.
+			</p>
+			
+			<p>
+			To do so, check the box next to a participant's name under the column of the course. Remember to click on the <b>Save</b> button at the bottom of the page for the change to take effect.
+			</p>
+			
+			<p>
+			If you need to add or remove participants, go to the <a href= "/admin/auth/user/?is_staff__exact=0">Administration</a> page. You can also change their passwords from there.	    
+			</p>
+	    
 	    </div>
 	<div class="row well" style="background-color: #67aee4 !important; font-weight: bold; color: #fff;">
 			<div class="span3">
@@ -38,7 +48,7 @@
 							<input type="checkbox"                      disabled = "disabled" name="{{st.id}}:{{course.id}}"  title="{{course}}"></input>
 						{%endif %}
 						<input type="checkbox" checked = "checked" style="display:none" name="{{st.id}}:{{course.id}}" title="{{course}}"></input>
-						Graduated
+						Completed
 					{%else  %}
 						{% if st.id in course.cached_student_user_ids %}
 							<input type="checkbox" checked = "checked" name="{{st.id}}:{{course.id}}" title="{{course}}"></input>
