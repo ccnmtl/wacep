@@ -152,7 +152,8 @@ class ActivityState (models.Model):
     colorbar_filename  = models.CharField(max_length=256, default = '', blank=True)
     order_rank = models.IntegerField(default=0, null=True, blank=True)
     title = models.CharField(max_length=256, default = '')
-    text          = models.TextField(blank=True, default = '')
+    text            = models.TextField(blank=True, default = '')
+    source          = models.TextField(blank=True, default = '')
 
     climate_impact       = models.CharField(max_length=256, blank=True, default = '')
     graph_title          = models.CharField(max_length=256, blank=True, default = '')
@@ -219,16 +220,15 @@ class FigureViewerBlock(models.Model):
     # depending on the value of "TOPIC CHOICES."
 
     def input_types (self):
-
         """The dropdown / radio buttons needed to decide which ActivityState to show."""
         if self.topic == None:
                 raise ValueError ("This figure viewer isn't associated with a topic." )
         if self.topic.slug == 'GC':
             return ['season','climate_variable','animation']
         elif self.topic.slug == 'NV':
-            return ['mode_of_variability', 'graphing_mode', 'year']
+            return ['mode_of_variability', 'graphing_mode', 'year', 'animation']
         elif self.topic.slug ==  'TC':
-            return ['mode_of_variability', 'graphing_mode']
+            return ['mode_of_variability', 'graphing_mode', ]
         else:
             raise ValueError ("Can't find the topic %s." % self.topic)
 

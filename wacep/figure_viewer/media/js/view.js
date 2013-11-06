@@ -92,17 +92,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         var self = this;
         var theSeason           = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
-        //var theGraphingMode     = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
+        var theGraphingMode     = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
         var theClimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
-        //var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
+        var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
         var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
-                
-
-                
-
         var theYear             = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
-
-
 
         console.log ( 'theClimateVariable');
         console.log ( theClimateVariable);
@@ -110,7 +104,8 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         console.log ( theSeason);
         console.log ( 'theAnimation');
         console.log ( theAnimation);
-        //console.log ( theYear);
+        console.log ( 'theYear');
+        console.log ( theYear);
 
 
         // do we know how to deal with this particular combination of inputs?
@@ -120,9 +115,9 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             return (
                 (inputCombination.season_input_id                    ==  theSeason       ) &&
                 (inputCombination.climate_variable_input_id          ==  theClimateVariable       ) &&
-                (inputCombination.animation_input_id                 ==  theAnimation       ) //&&
-                //(inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
-                //(inputCombination.year_input_id                      ==  theYear         )
+                (inputCombination.animation_input_id                 ==  theAnimation       ) &&
+                (inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
+                (inputCombination.year_input_id                      ==  theYear         )
             );
         }
 
@@ -158,10 +153,15 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
 
         var theState = self.findCurrentState();
+        console.log ('theState');
+
+        console.log ( theState.image_path);
         if (theState.image_path === '') {
+            console.log ('No image found.')
             jQuery ('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
         }
         else {
+            console.log ('Yes image found.')
             jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
             jQuery ('.show_hide_div.left_side')      .show ();
 
@@ -172,9 +172,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         
         
         if (theState.color_bar === '') {
+            console.log ('No colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
         }
         else {
+            console.log ('Yes colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
         

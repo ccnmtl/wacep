@@ -25,10 +25,6 @@
 
 	<!-- Right side -->
 	<div class = "figure_viewer_subcontainer inputs">
-		<div class="topic_label">{{block.topic.slug}}</div>
-
-		{{ block.input_types}}
-
 		{% if 'climate_variable' in block.input_types %}
 		<select name ="climate_variable_input_select" class="figure_viewer_select climate_variable">
 			<option value = "">Select a Climate Variable:</option>
@@ -42,14 +38,6 @@
 			<option value = ""></option>
 		</select><br/>
 		{% endif %}
-
-		{% if 'animation' in block.input_types %}
-		<div>Animate:</div>
-		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="2" checked="checked"/>Off
-		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="1"  />On
-		<br/>
-		{%endif %}
-
 
 
 		{% if 'mode_of_variability' in block.input_types %}
@@ -78,6 +66,12 @@
 		{% endif %}
 
 
+		{% if 'animation' in block.input_types %}
+		<div>Animate:</div>
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="2" checked="checked"/>Off
+		<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="1"  />On
+		<br/>
+		{%endif %}
 
 
 		{% if 'season' in block.input_types %}

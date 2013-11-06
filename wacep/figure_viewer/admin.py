@@ -30,9 +30,13 @@ class GraphingModeInputAdmin(admin.ModelAdmin):
 admin.site.register(GraphingModeInput, GraphingModeInputAdmin)
 
 ###
-
 class InputCombinationAdmin(admin.ModelAdmin):
-    list_display = ('season_input', 'climate_variable_input', 'animation_input', '__unicode__',)
+    list_display = ('topic', 'season_input', 'climate_variable_input',
+        'animation_input', 'mode_of_variability_input',
+        'year_input', 'graphing_mode_input',  '__unicode__')
+
+    #exclude = ('topic', 'season_input', 'climate_variable_input', 'year_input')
+    fields = ('mode_of_variability_input','graphing_mode_input', 'year_input', 'animation_input','activity_state')
 admin.site.register(InputCombination, InputCombinationAdmin)
 
 class ActivityStateAdmin(admin.ModelAdmin):
