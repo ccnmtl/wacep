@@ -37,8 +37,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         // Fetch the list of columns and scenarios from the back end.
         var self = this;
         var topic_slug = jQuery('.topic_slug').html();
-
-
         jQuery.ajax({
             type: 'POST',
             url: '/_figure_viewer/settings/' + topic_slug + '/',
@@ -64,7 +62,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
         
-     
         the_dropdown = jQuery(".figure_viewer_select.mode_of_variability");
         for (var i=0; i < self.settings.mode_of_variability_inputs.length; i++)  {
             var the_item = self.settings.mode_of_variability_inputs[i];
@@ -76,7 +73,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             var the_item = self.settings.graphing_mode_inputs[i];
             the_dropdown.append(jQuery('<option></option>').val(the_item.id).html(the_item.name));
         }
-        
         
         the_dropdown = jQuery(".figure_viewer_select.year");
         for (var i=0; i < self.settings.year_inputs.length; i++)  {
@@ -102,17 +98,8 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         if (jQuery ('.figure_viewer_radio:checked').length > 0) {
             var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
         }
-        var theYear             = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
-
-        console.log ( 'theClimateVariable');
-        console.log ( theClimateVariable);
-        console.log ( 'theSeason');
-        console.log ( theSeason);
-        console.log ( 'theAnimation');
-        console.log ( theAnimation);
-        console.log ( 'theYear');
-        console.log ( theYear);
-
+        var theYear                          = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
+        var theModeOfVariability             = parseInt(jQuery ('.figure_viewer_select.mode_of_variability').val())  || null;
 
         // do we know how to deal with this particular combination of inputs?
 
@@ -122,6 +109,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
                 (inputCombination.season_input_id                    ==  theSeason       ) &&
                 (inputCombination.climate_variable_input_id          ==  theClimateVariable       ) &&
                 (inputCombination.animation_input_id                 ==  theAnimation       ) &&
+                (inputCombination.mode_of_variability_input_id       ==  theModeOfVariability ) &&
                 (inputCombination.graphing_mode_input_id             ==  theGraphingMode ) &&
                 (inputCombination.year_input_id                      ==  theYear         )
             );
@@ -178,6 +166,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         }
         
         jQuery ('.explanation_copy')              .html (theState.text);
+        jQuery ('.source_copy')              .html (theState.source);
 
         /*
         jQuery ('.figure_viewer_graph_title')         .html (theState.graph_title);

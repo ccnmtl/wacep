@@ -155,9 +155,6 @@ class ActivityState (models.Model):
     text            = models.TextField(blank=True, default = '')
     source          = models.TextField(blank=True, default = '')
 
-    climate_impact       = models.CharField(max_length=256, blank=True, default = '')
-    graph_title          = models.CharField(max_length=256, blank=True, default = '')
-
     def get_absolute_url(self):
         return "/admin/figure_viewer/activitystate/%i/" % self.id
 
@@ -183,6 +180,8 @@ class ActivityState (models.Model):
             'id'         : self.id,
             'image_path'  : image_path,
             'color_bar'  : colorbar_path,
+            'text': self.text,
+            'source': self.source,
             'absolute_url' : self.get_absolute_url()
         }
 
@@ -214,7 +213,6 @@ class FigureViewerBlock(models.Model):
     css_template_file = "figure_viewer/block_css.html"
     display_name = "Figure Viewer Activity"
 
-    #topic = models.CharField(max_length=2, choices=TOPIC_CHOICES, default='CLIMATOLOGIES')
     # This activity comes in three different "flavors" which are displayed in different places.
     # Basic differences are described in methods here in this class,
     # depending on the value of "TOPIC CHOICES."
