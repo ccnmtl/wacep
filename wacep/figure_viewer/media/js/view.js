@@ -36,9 +36,12 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         // Fetch the list of columns and scenarios from the back end.
         var self = this;
+        var topic_slug = jQuery('.topic_slug').html();
+
+
         jQuery.ajax({
             type: 'POST',
-            url: '/_figure_viewer/settings/',
+            url: '/_figure_viewer/settings/' + topic_slug + '/',
             data: {
             },
             dataType: 'json',
@@ -154,26 +157,17 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     menuChanged: function () {
         "use strict";
         var self = this;
-
         var theState = self.findCurrentState();
-        console.log ('theState');
-
-        console.log ( theState.image_path);
         if (theState.image_path === '') {
             console.log ('No image found.')
             jQuery ('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
         }
         else {
-            console.log ('Yes image found.')
+            console.log (theState.image_path);
             jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
             jQuery ('.show_hide_div.left_side')      .show ();
 
         }
-
-
-        
-        
-        
         if (theState.color_bar === '') {
             console.log ('No colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
@@ -183,11 +177,12 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
         
+        jQuery ('.explanation_copy')              .html (theState.text);
+
         /*
         jQuery ('.figure_viewer_graph_title')         .html (theState.graph_title);
         jQuery ('.figure_viewer_graph_y_axis')        .html (theState.y_scale_title);
-        jQuery ('.explanation_copy')              .html (theState.text);
-
+        
         jQuery ('.variance .percent_trend')       .html (theState.percent_trend        );
         jQuery ('.variance .percent_interdecadal').html (theState.percent_interdecadal );
         jQuery ('.variance .percent_interannual') .html (theState.percent_interannual  );

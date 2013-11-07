@@ -5,22 +5,26 @@ from django.utils import simplejson
 
 
 @login_required
-def settings(request):
+def settings(request, topic_slug):
     #if not request.is_ajax() or request.method != "POST":
     #    return HttpResponseForbidden()
-
-    the_settings = {
-        'graphing_mode_inputs':      [g.to_json()      for g in GraphingModeInput   .objects.all()],
-        'animation_inputs':          [a.to_json()      for a in AnimationInput          .objects.all()],
-        'climate_variable_inputs':   [g.to_json()      for g in ClimateVariableInput  .objects.all()],
-        'season_inputs':             [s.to_json()      for s in SeasonInput        .objects.all()],
-        'year_inputs':               [y.to_json()      for y in YearInput          .objects.all()],
-        'mode_of_variability_inputs':[m.to_json()      for m in ModeOfVariabilityInput        .objects.all()],
-        'input_combinations':        [i.to_json()      for i in InputCombination   .objects.all()],
-        
-        'topics':                    [t.to_json()      for t in FigureViewerTopic  .objects.all()],
-        'activity_states':           [a.to_json()      for a in ActivityState      .objects.all()]
+    class_map = {
+        'graphing_mode_inputs':       GraphingModeInput,
+        'animation_inputs':           AnimationInput,
+        'climate_variable_inputs':    ClimateVariableInput,
+        'season_inputs':              SeasonInput,
+        'year_inputs':                YearInput,
+        'mode_of_variability_inputs': ModeOfVariabilityInput,
+        'activity_states':            ActivityState
     }
+
+    the_settings = {}
+    for label, clazz in class_map.iteritems():
+        its_json = getattr(clazz, 'to_json')
+        the_settings [label] = map (its_json, clazz.objects.all())
+
+    input_combos = InputCombination.objects.filter (topic__slug=topic_slug)
+    the_settings ['input_combinations'] =  [i.to_json() for i in input_combos]
 
     return HttpResponse(simplejson.dumps(the_settings, indent=2),  mimetype="application/json")
 

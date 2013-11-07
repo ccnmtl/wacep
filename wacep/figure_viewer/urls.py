@@ -8,7 +8,8 @@ urlpatterns = patterns(
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
      {'document_root': media_root}),
 
-    url(r'^settings/$',
+
+    url(r'^settings/(?P<topic_slug>.*)/$',
         'wacep.figure_viewer.views.settings',
         name='settings'),
 )
