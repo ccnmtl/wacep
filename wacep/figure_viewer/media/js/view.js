@@ -94,8 +94,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var theSeason           = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
         var theGraphingMode     = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
         var theClimateVariable  = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())          || null;
-        var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
-        var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
+        //var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
+        var theAnimation = null;
+        if (jQuery ('.figure_viewer_radio:checked').length > 0) {
+            var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
+        }
         var theYear             = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
 
         console.log ( 'theClimateVariable');
