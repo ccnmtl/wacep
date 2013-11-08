@@ -111,6 +111,42 @@ SELECT pg_catalog.setval('figure_viewer_climatevariableinput_id_seq', 4, true);
 
 
 --
+-- Data for Name: figure_viewer_figureviewertopic; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (1, 'GC');
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (2, 'NV');
+INSERT INTO figure_viewer_figureviewertopic (id, slug) VALUES (3, 'TC');
+
+
+--
+-- Name: figure_viewer_figureviewertopic_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('figure_viewer_figureviewertopic_id_seq', 1, false);
+
+
+--
+-- Data for Name: figure_viewer_graphingmodeinput; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (1, 'Time Series', 0);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (2, 'Identification Of Events', 1);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (3, 'Correlation with SST', 3);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (4, 'El Nino', 4);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (5, 'La Nina', 5);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (6, 'Correlation with temperature', 10);
+INSERT INTO figure_viewer_graphingmodeinput (id, name, order_rank) VALUES (7, 'Correlation with precipitation', 11);
+
+
+--
+-- Name: figure_viewer_graphingmodeinput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('figure_viewer_graphingmodeinput_id_seq', 7, true);
+
+
+--
 -- Data for Name: figure_viewer_modeofvariabilityinput; Type: TABLE DATA; Schema: public; Owner: -
 --
 

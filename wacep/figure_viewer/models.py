@@ -155,6 +155,10 @@ class ActivityState (models.Model):
     text            = models.TextField(blank=True, default = '')
     source          = models.TextField(blank=True, default = '')
 
+
+    climate_impact = models.CharField(max_length=256, blank=True, default='') # TODO -- REMOVE
+    graph_title = models.CharField(max_length=256, blank=True, default='') # TODO -- REMOVE
+
     def get_absolute_url(self):
         return "/admin/figure_viewer/activitystate/%i/" % self.id
 

@@ -139,8 +139,8 @@ PAGEBLOCKS = [
     'pageblocks.ImageBlock',
     'pageblocks.ImagePullQuoteBlock',
     'quizblock.Quiz',
-    'timescale.TimescaleBlock'
-    'timescale.FigureViewerBlock'
+    'timescale.TimescaleBlock',
+    'timescale.FigureViewerBlock',
 ]
 
 LETTUCE_APPS = (
