@@ -15,24 +15,18 @@ SET search_path = public, pg_catalog;
 --
 
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (0, 'Default', '', 0, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (1, 'Annual / Wind / Off', 'wind_annual.gif', 1, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (2, 'Annual / Wind / On', 'wind_annual_animated.gif', 2, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (3, 'Annual / Temperature / Off', 'temp_annual.gif', 3, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (4, 'Annual / Temperature / On', 'temp_annual_animated.gif', 4, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (5, 'Annual / Precipitation / Off', 'prcp_annual.gif', 5, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (6, 'Annual / Precipitation / On', 'prcp_annual_animated.gif', 6, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (11, 'DJF / Wind / Off', 'wind_DJF.gif', 11, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (13, 'DJF / Temperature / Off', 'temp_DJF.gif', 13, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (16, 'DJF / Precipitation / Off', 'prcp_DJF.gif', 16, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (22, 'MAM / Wind / Off', 'wind_MAM.gif', 22, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (24, 'MAM / Temperature / Off', 'temp_MAM.gif', 24, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (26, 'MAM / Precipitation / Off', 'prcp_MAM.gif', 26, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (32, 'JJA / Wind / Off', 'wind_JJA.gif', 32, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (34, 'JJA / Temperature / Off', 'temp_JJA.gif', 34, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (36, 'JJA / Precipitation / Off', 'prcp_JJA.gif', 36, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (42, 'SON / Wind / Off', 'wind_SON.gif', 42, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (44, 'SON / Temperature / Off', 'temp_SON.gif', 44, 'Title', '', '', '', '', '');
-INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (46, 'SON / Precipitation / Off', 'prcp_SON.gif', 46, 'Title', '', '', '', '', '');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (77, 'Precipitation accumulation / Annual / ', 'prcp_annual_cm.gif', 77, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0215');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (80, 'Precipitation accumulation / SON / ', 'prcp_SON_cm.gif', 80, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0218');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (32, 'Wind / JJA / ', 'wind_JJA.gif', 32, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (46, 'Precipitation / SON / ', 'prcp_SON.gif', 46, 'Title', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0211');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (81, 'Precipitation accumulation / JJA / ', 'prcp_JJA_cm.gif', 81, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0219');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (1, 'Wind / Annual / ', 'wind_annual.gif', 1, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (78, 'Precipitation accumulation / DJF / ', 'prcp_DJF_cm.gif', 78, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0216');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (3, 'Temperature / Annual / ', 'temp_annual.gif', 3, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (24, 'Temperature / MAM / ', 'temp_MAM.gif', 24, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (26, 'Precipitation / MAM / ', 'prcp_MAM.gif', 26, 'Title', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0210');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (11, 'Wind / DJF / ', 'wind_DJF.gif', 11, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (22, 'Wind / MAM / ', 'wind_MAM.gif', 22, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (61, 'ENSO/La Nina/1997/No', 'el_nino_1997_static.gif', 61, '', 'Average SST anomalies in the tropical Pacific in December 1997.', '', '', 'el_nino_colorbar.gif', 'NOAA NCDC ERSST version 3b');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (62, 'ENSO/La Nina/1988/Yes', 'la_nina_1988_animated.gif', 62, '', 'Map of monthly SST anomalies in the tropical Pacific for the time period of April 1988 to May 1989, displaying the evolution of the 1988 La Nina event. ', '', '', 'la_nina_colorbar.gif', 'NOAA NCDC ERSST version 3b');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (63, 'ENSO/La Nina/1999/Yes', 'la_nina_1999_animated.gif', 63, '', 'Map of monthly SST anomalies in the tropical Pacific for the time period of April 1999 to May 2000, displaying the evolution of the 1999 La Nina event. ', '', '', 'la_nina_colorbar.gif', 'NOAA NCDC ERSST version 3b');
@@ -63,6 +57,18 @@ INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, t
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (51, 'AMO/Identification of Events//No', 'ERSST_v3b_AMVI_9yr_events.jpg', 51, '', 'Standardized AMV index with 9 year smoothing, with positive and negative events identified. An event is defined by SST anomalies 1 standard deviation above or below the mean, as defined by the smoothed dataset, for a minimum of 4 years. ', '', '', 'el_nino_colorbar.gif', 'NOAA NCDC ERSST version 3b');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (52, 'PDO/Identification of Events//No', 'ERSST_v3b_PDOI_9yr_events.jpg', 52, '', 'Standardized PDO index with 9 year smoothing, with positive and negative events identified. An event is defined by SST anomalies 1 standard deviation above or below the mean, as defined by the smoothed dataset, for a minimum of 4 years.', '', '', 'el_nino_colorbar.gif', 'NOAA NCDC ERSST version 3b');
 INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (72, 'ENSO / Correlation with Precipitation', 'correlation_ERSST_ENSOI_5mo_CRU_TS3p1_det_prcp_95.jpg', 72, 'Correlation between detrended monthly global precipitation anomalies and an ENSO index, based on a 5 month running average of detrended SST anomalies averaged over the Nino 3.4 region, for the time period of March 1950 to March 2013.', 'Correlation between detrended monthly global precipitation anomalies and an ENSO index, based on a 5 month running average of detrended SST anomalies averaged over the Nino 3.4 region, for the time period of March 1950 to March 2013.', '', '', '', 'NOAA NCDC ERSST version 3b, UEA CRU 3.1 Precipitation Data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (5, 'Precipitation / Annual / ', 'prcp_annual.gif', 5, 'Title', 'Average annual daily precipitation rate.', '', '', '', 'NOAA NCEP CPC CAMS OPI v0208');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (16, 'Precipitation / DJF / ', 'prcp_DJF.gif', 16, 'Title', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0209');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (36, 'Precipitation / JJA / ', 'prcp_JJA.gif', 36, 'Title', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0212');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (6, 'Precipitation /  / Yes', 'prcp_annual_animated.gif', 6, 'Title', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0213');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (79, 'Precipitation accumulation / MAM / ', 'prcp_MAM_cm.gif', 79, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0217');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (82, 'Precipitation accumulation /  / Yes', 'prcp_annual_animated_cm.gif', 82, '', '', '', '', '', 'NOAA NCEP CPC CAMS OPI v0222');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (13, 'Temperature / DJF / ', 'temp_DJF.gif', 13, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (44, 'Temperature / SON / ', 'temp_SON.gif', 44, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (34, 'Temperature / JJA / ', 'temp_JJA.gif', 34, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (4, 'Temperature /  / Yes', 'temp_annual_animated.gif', 4, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1, Diagnostic monthly surface temperature data');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (42, 'Wind / SON / ', 'wind_SON.gif', 42, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
+INSERT INTO figure_viewer_activitystate (id, name, image_filename, order_rank, title, text, climate_impact, graph_title, colorbar_filename, source) VALUES (2, 'Wind /  / Yes', 'wind_annual_animated.gif', 2, 'Title', '', '', '', '', 'NOAA NCEP-NCAR reanalysis CDAS-1 at 1000 mb. ');
 
 
 --
@@ -92,15 +98,16 @@ SELECT pg_catalog.setval('figure_viewer_animationinput_id_seq', 2, true);
 --
 
 INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (1, 'Precipitation', 1);
-INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (2, 'Temperature', 2);
 INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (3, 'Wind', 3);
+INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (2, 'Temperature', 4);
+INSERT INTO figure_viewer_climatevariableinput (id, name, order_rank) VALUES (4, 'Precipitation accumulation', 2);
 
 
 --
 -- Name: figure_viewer_climatevariableinput_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('figure_viewer_climatevariableinput_id_seq', 3, true);
+SELECT pg_catalog.setval('figure_viewer_climatevariableinput_id_seq', 4, true);
 
 
 --
@@ -187,13 +194,18 @@ INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variabl
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (61, NULL, NULL, NULL, 74, 3, NULL, 2, 7);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (62, NULL, NULL, NULL, 75, 3, NULL, 3, 6);
 INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (63, NULL, NULL, NULL, 76, 3, NULL, 3, 7);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (68, 1, 4, 1, 82, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (64, 1, 4, 2, 77, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (65, 2, 4, 2, 78, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (66, 3, 4, 2, 79, 1, NULL, NULL, NULL);
+INSERT INTO figure_viewer_inputcombination (id, season_input_id, climate_variable_input_id, animation_input_id, activity_state_id, topic_id, year_input_id, mode_of_variability_input_id, graphing_mode_input_id) VALUES (67, 4, 4, 2, 81, 1, NULL, NULL, NULL);
 
 
 --
 -- Name: figure_viewer_inputcombination_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('figure_viewer_inputcombination_id_seq', 63, true);
+SELECT pg_catalog.setval('figure_viewer_inputcombination_id_seq', 68, true);
 
 
 --

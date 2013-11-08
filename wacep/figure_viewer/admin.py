@@ -36,7 +36,11 @@ class InputCombinationAdmin(admin.ModelAdmin):
         'year_input', 'graphing_mode_input',  '__unicode__')
 
     #exclude = ('topic', 'season_input', 'climate_variable_input', 'year_input')
-    fields = ('mode_of_variability_input','graphing_mode_input','activity_state')
+    #fields = ('mode_of_variability_input','graphing_mode_input','activity_state')
+
+
+
+    fields = ('climate_variable_input', 'season_input', 'animation_input', 'activity_state', 'topic')
 admin.site.register(InputCombination, InputCombinationAdmin)
 
 class ActivityStateAdmin(admin.ModelAdmin):
