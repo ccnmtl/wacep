@@ -7,7 +7,13 @@
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
-    <div class = "well certificate-div">
+    <div class = "certificate-div">
+    
+    	<div class="certificate-art">
+	<img src="/site_media/img/background_certificate.jpg" />
+	</div>
+
+    	<div class="certificate-text">
 	Omnibus et singulis has litteras lecturis, salutem. <br/>
 	Notum sit, quod nobis placet <strong>{{certificate.user.first_name}} {{certificate.user.last_name}}</strong>
 
@@ -19,10 +25,11 @@
 	Collegium Columbiae, Novi Eboraci<br/>
 
 	Die <strong>{{certificate.date}}</strong> <br/>
-	<img src="/site_media/img/sadowl.jpg" />
 
 	Curatorem Scriba <br/>
 	Praeses <br/>
+	</div>
+	
 	</div>
 {%endblock content %}
 {% block footer %} {%endblock footer %}
