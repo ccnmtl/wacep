@@ -1,8 +1,11 @@
+.certificate-div {
+	  position: relative;
+	color: #375b8e;
+}
+
 @media screen {
 
 	.certificate-div  {
-	  margin-top: 5%;
-	  position: relative;
 	}
 	
 	.certificate-div .certificate-text 
@@ -27,7 +30,6 @@
 	  -webkit-transform: rotate(-90deg); 
 	  -moz-transform:rotate(-90deg);
 	  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	  position: relative;
 	}
 	
 	.certificate-div .certificate-text 
@@ -37,7 +39,7 @@
 	left: 270px;
 	text-align: center;
 	width: 350px;
-	font-size: 12px;
+	font-size: 10px;
 	}
 	
 	.navbar {

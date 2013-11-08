@@ -9,26 +9,27 @@
 {% block content %}
     <div class = "certificate-div">
     
-    	<div class="certificate-art">
-	<img src="/site_media/img/background_certificate.jpg" />
-	</div>
-
-    	<div class="certificate-text">
-	Omnibus et singulis has litteras lecturis, salutem. <br/>
-	Notum sit, quod nobis placet <strong>{{certificate.user.first_name}} {{certificate.user.last_name}}</strong>
-
-	pro meritis ejus titulo graduque <strong>{{certificate.course}}</strong> 				
-	placuit nobis adornare, eique concessimus honores, dignitates, insignia, jura, et privilegia omnia, quae hic et ubique ad gradum pertinent.
-
-	Cujus sint testimonio Collegii Sigillum Publicum atque Chirographum Praesidis litteris hisce apposite, 
-
-	Collegium Columbiae, Novi Eboraci<br/>
-
-	Die <strong>{{certificate.date}}</strong> <br/>
-
-	Curatorem Scriba <br/>
-	Praeses <br/>
-	</div>
+		<div class="certificate-art">
+			<img src="/site_media/img/background_certificate.jpg" />
+		</div>
+	
+		<div class="certificate-text">
+		
+			<h2>Certificate of Completion</h2>
+			
+			<p>
+			This is to certify that 
+			<br/>
+			<strong>{{certificate.user.first_name}} {{certificate.user.last_name}}</strong>
+			<br/>
+			has successfully completed the Water and Climate Education Program (WACEP) course 
+			<br/>
+			<strong>{{certificate.course}}</strong>
+			<br/>			
+			on {{certificate.date}}
+			</p>
+			
+		</div>
 	
 	</div>
 {%endblock content %}
