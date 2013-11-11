@@ -217,22 +217,6 @@ class FigureViewerBlock(models.Model):
     css_template_file = "figure_viewer/block_css.html"
     display_name = "Figure Viewer Activity"
 
-    # This activity comes in three different "flavors" which are displayed in different places.
-    # Basic differences are described in methods here in this class,
-    # depending on the value of "TOPIC CHOICES."
-
-    def input_types (self):
-        """The dropdown / radio buttons needed to decide which ActivityState to show."""
-        if self.topic == None:
-                raise ValueError ("This figure viewer isn't associated with a topic." )
-        if self.topic.slug == 'GC':
-            return ['season','climate_variable','animation']
-        elif self.topic.slug == 'NV':
-            return ['mode_of_variability', 'graphing_mode', 'year', 'animation']
-        elif self.topic.slug ==  'TC':
-            return ['mode_of_variability', 'graphing_mode', ]
-        else:
-            raise ValueError ("Can't find the topic %s." % self.topic)
 
     def pageblock(self):
         return self.pageblocks.all()[0]
