@@ -246,59 +246,40 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
 
     extraCleanup: function () {
+        // Sorry, only found out about this functionality really late, so I'm just tacking it on.
         "use strict";
         var self = this;
-
+        var la_nina_years = ['1988', '1999', '2010'];
+        var el_nino_years = ['1982', '1986', '1997'];
         function disable_an_option (the_class) {
             jQuery ('.figure_viewer_select option.' + the_class ).attr('disabled','disabled');
         }
         function enable_an_option (the_class) {
             jQuery ('.figure_viewer_select option.' + the_class ).removeAttr('disabled');
         }
-
-
         if (self.topic_slug === 'NV') {
-
             var el_nino_selected;
             var la_nina_selected;
             el_nino_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
             la_nina_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
-
-
             if (el_nino_selected || la_nina_selected) {
                 jQuery ('.figure_viewer_select.year').show();
-
-
                 if (el_nino_selected) {
-                    disable_an_option('1988');
-                    disable_an_option('1999');
-                    disable_an_option('2010');
+                    jQuery.map (el_nino_years, function (a) {enable_an_option(a)});
                 }
                 else {
-                    enable_an_option('1988');
-                    enable_an_option('1999');
-                    enable_an_option('2010');
+                    jQuery.map (el_nino_years, function (a) {disable_an_option(a)});
                 }
                 if (la_nina_selected) {
-                    disable_an_option('1982');
-                    disable_an_option('1986');
-                    disable_an_option('1997');
+                    jQuery.map (la_nina_years, function (a) {enable_an_option(a)});
                 }
-                else {
-                    enable_an_option('1982');
-                    enable_an_option('1986');
-                    enable_an_option('1997');
+                else { 
+                    jQuery.map (la_nina_years, function (a) {disable_an_option(a)});
                 }
-
-
             } else {
                 jQuery ('.figure_viewer_select.year').hide();
             }
-
-
-
         }
-
     },
 
     editCopy: function() {
