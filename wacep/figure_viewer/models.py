@@ -123,10 +123,26 @@ class InputCombination (models.Model):
     #default_state                   = models.BooleanField (default = False, help_text= 'Set this to true only for the default / initial state of the activity.')
 
 
+    def is_default (self):
+        #if self.id == 24:
+        #    import pdb
+        #    pdb.set_trace()
+
+        if ( self.season_input
+            or self.climate_variable_input
+            or self.animation_input
+            or self.year_input
+            or self.mode_of_variability_input
+            or self.graphing_mode_input ):
+                return False
+        return True
+
 
     def show_animate_buttons(self):
-        if self.animation_input.name == "On":
+        if self.animation_input and (self.animation_input.name == "On"):
             return True
+        if self.is_default():
+            return False
         else:
             tmp = InputCombination.objects
             tmp = tmp.filter(topic__id=self.topic.id )if self.topic else tmp
@@ -145,7 +161,7 @@ class InputCombination (models.Model):
                 Animation should be disabled for this."""
                 return False
             """There is another state which is identical
-            except for the value of animation_input"""
+            except for the value of animation_input, so show the animation toggle buttons"""
             return True
 
 
@@ -159,6 +175,7 @@ class InputCombination (models.Model):
 
     def to_json(self):
         result = {
+            'name'                      : self.__unicode__(),
             'show_animate_buttons'      : self.show_animate_buttons(),
             'topic_id'                  : self.topic_id if self.topic else None,
             'season_input_id'           : self.season_input.id if self.season_input        else None,
@@ -168,7 +185,8 @@ class InputCombination (models.Model):
             'mode_of_variability_input_id' : self.mode_of_variability_input_id   if self.mode_of_variability_input_id          else None,
             'graphing_mode_input_id'    : self.graphing_mode_input_id   if self.graphing_mode_input_id          else None,
             'activity_state_id'         : self.activity_state.id,
-            'id'                        : self.id
+            'id'                        : self.id,
+            'is_default'                : self.is_default()
         }
         
         return result
@@ -229,18 +247,30 @@ class FigureViewerTopic (models.Model):
     def __unicode__(self):
         return self.slug
 
+    topic_settings = {
+        'GC': {'use_animation': True,
+            'menu_items_to_suppress' : [],
+        },
+        'NV': {'use_animation': True,
+            'menu_items_to_suppress' : ['correlation_with_temperature', 'correlation_with_precipitation'],
+        },
+        'TC': {
+            'use_animation': False,
+            'menu_items_to_suppress' : ['time_series', 'correlation_with_sst', 'el_nino', 'la_nina'],
+        }
+    }
+
     def to_json(self):
         result = {
-            'slug'                      : self.id,
-            'id'                        : self.id
+            'slug'                      : self.slug,
+            'id'                        : self.id,
+            'topic_settings'            : self.topic_settings [self.slug]
         }
         return result;
 
 class FigureViewerBlock(models.Model):
     pageblocks = generic.GenericRelation(PageBlock, related_name = "FigureViewerBlocks")
-
     topic = models.ForeignKey ('FigureViewerTopic',  null=True, blank=True)
-
     template_file = "figure_viewer/figure_viewer.html"
     js_template_file = "figure_viewer/block_js.html"
     css_template_file = "figure_viewer/block_css.html"

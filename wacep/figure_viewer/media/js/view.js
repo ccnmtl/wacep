@@ -18,6 +18,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             "render",
             "getSettings",
             "setUpMenus",
+            "set_up_menu",
             "menuChanged",
             "inputsChanged",
             "resetButtonPushed",
@@ -26,8 +27,10 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             "startAnimatePushed",
             "endAnimatePushed",
             "whetherAnimationIsOn",
-            "editCopy"
+            "editCopy",
+            "extraCleanup"
         );
+        self.topic_slug = jQuery('.topic_slug').html();
 
         jQuery ('#right-content').removeClass ('span9');
         // makes the div go back to its default (wider) width.
@@ -73,10 +76,12 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         // Fetch the list of columns and scenarios from the back end.
         var self = this;
-        var topic_slug = jQuery('.topic_slug').html();
+        
+        var url = '/_figure_viewer/settings/' + self.topic_slug + '/';
+        console.log (url);
         jQuery.ajax({
             type: 'POST',
-            url: '/_figure_viewer/settings/' + topic_slug + '/',
+            url: url,
             data: {
             },
             dataType: 'json',
@@ -92,11 +97,18 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
     set_up_menu: function (css_class, inputs){
         "use strict";
-        var the_dropdown = jQuery(css_class);
+        var self = this;
+        var the_dropdown = jQuery(css_class);        
+        var suppressed_items = self.settings.topic.topic_settings.menu_items_to_suppress;
         for (var i=0; i < inputs.length; i++)  {
             var the_item = inputs[i];
             var item_class = the_item.name.replace(/ /g, "_").toLowerCase()
-            the_dropdown.append(jQuery('<option class="' + item_class +  '"></option>').val(the_item.id).html(the_item.name));
+            console.log (item_class);
+            console.log (suppressed_items);
+
+            if ( jQuery.inArray(item_class,  suppressed_items) === -1) {
+                the_dropdown.append(jQuery('<option class="' + item_class +  '"></option>').val(the_item.id).html(the_item.name));
+            }
         }
     },
 
@@ -120,21 +132,17 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var theYear                          = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
         var theModeOfVariability             = parseInt(jQuery ('.figure_viewer_select.mode_of_variability').val())   || null;
 
-
-        //var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
         var theAnimation = null;
-        /*
-        if (jQuery ('.figure_viewer_radio:checked').length > 0) {
-            var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
-        }
-        */
-        if (self.whetherAnimationIsOn()) {
-            theAnimation = 1;
-        }
-        else {
-            theAnimation = 2;
-        }
 
+        console.log (self.settings)
+        if (self.settings.topic.topic_settings.use_animation ) {
+            if (self.whetherAnimationIsOn()) {
+                theAnimation = 1;
+            }
+            else {
+                theAnimation = 2;
+            }
+        }
         /*
         console.log ('theSeason '            + theSeason);
         console.log ('theGraphingMode '      + theGraphingMode);
@@ -142,7 +150,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         console.log ('theYear '              + theYear);
         console.log ('theModeOfVariability ' + theModeOfVariability);
         console.log ('theAnimation         ' + theAnimation);
-*/
+        */
         // do we know how to deal with this particular combination of inputs?
 
 
@@ -159,45 +167,33 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             );
         }
 
+        var defaultInputFinder = function (inputCombination) {
+            "use strict";
+            return (inputCombination.is_default  ==  true  );
+        }
         var inputCombination = _.find (self.settings.input_combinations, inputFinder);
 
 
         if (typeof (inputCombination) === "undefined") {
-            // No, we don't. Kthxbye.
-            alert ("ERROR: That input combination was not found.");
+            inputCombination = _.find (self.settings.input_combinations, defaultInputFinder);
+        }
+
+        if (typeof (inputCombination) === "undefined") {
+            alert ("ERROR: Could not find either that input combination or a default state.");
             return;
         }
+
         // Yes, we do.
         var stateId = inputCombination.activity_state_id;
         var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
 
-        console.log (inputCombination)
-
+        console.log (inputCombination);
         if (inputCombination.show_animate_buttons) {
-            console.log ('yes show animate');
-
             jQuery('.animate_buttons_span').show();
-            
-            //jQuery ('.end_animate').hide();
-            if (inputCombination.animation_input_id == 1 ) {       
-                console.log ("animate on") 
-                //jQuery ('.start_animate').show();
-                //jQuery ('.end_animate').hide();
-            } else {   
-                console.log ("animate off") 
-    
-                //jQuery ('.start_animate').hide();
-                //jQuery ('.end_animate').show();
-            }
-
         }
         else {
-            console.log ('no snow animate');
             jQuery('.animate_buttons_span').hide();
         }
-        
-
-
         if (typeof (theState) === "undefined") {
             alert ("ERROR: That state was not found.");
             return;
@@ -219,10 +215,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     inputsChanged: function () {
         "use strict";
         var self = this;
-
-
-        //self.setAnimateButtonstoOff();
-        
         var theState = self.findCurrentState();
         console.log (theState);
         if (theState.image_path === '') {
@@ -247,23 +239,72 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         jQuery ('.explanation_copy')         .html (theState.text);
         jQuery ('.source_copy')              .html (theState.source);
 
+        self.extraCleanup();
     },
 
-    /*  "animation_inputs": [
-    {
-      "id": 1,
-      "name": "On"
+
+
+
+    extraCleanup: function () {
+        "use strict";
+        var self = this;
+
+        function disable_an_option (the_class) {
+            jQuery ('.figure_viewer_select option.' + the_class ).attr('disabled','disabled');
+        }
+        function enable_an_option (the_class) {
+            jQuery ('.figure_viewer_select option.' + the_class ).removeAttr('disabled');
+        }
+
+
+        if (self.topic_slug === 'NV') {
+
+            var el_nino_selected;
+            var la_nina_selected;
+            el_nino_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
+            la_nina_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
+
+
+            if (el_nino_selected || la_nina_selected) {
+                jQuery ('.figure_viewer_select.year').show();
+
+
+                if (el_nino_selected) {
+                    disable_an_option('1988');
+                    disable_an_option('1999');
+                    disable_an_option('2010');
+                }
+                else {
+                    enable_an_option('1988');
+                    enable_an_option('1999');
+                    enable_an_option('2010');
+                }
+                if (la_nina_selected) {
+                    disable_an_option('1982');
+                    disable_an_option('1986');
+                    disable_an_option('1997');
+                }
+                else {
+                    enable_an_option('1982');
+                    enable_an_option('1986');
+                    enable_an_option('1997');
+                }
+
+
+            } else {
+                jQuery ('.figure_viewer_select.year').hide();
+            }
+
+
+
+        }
+
     },
-    {
-      "id": 2,
-      "name": "Off "
-    }
-  ],*/
 
     editCopy: function() {
         "use strict";
         var self = this;
-        window.open(self.currentState.absolute_url, 'times', 'times 2');
+        window.open(self.currentState.absolute_url, '', '');
     },
 
 
@@ -285,13 +326,17 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
         jQuery('.figure_viewer_select.season').val(0)
         jQuery('.figure_viewer_select.graphing_mode').val(0)
+        jQuery('.figure_viewer_select.climate_variable').val(0)
+        jQuery('.figure_viewer_select.graphing_mode').val(0)
         jQuery('.figure_viewer_select.year').val(0)
-        self.menuChanged();
+        jQuery('.figure_viewer_select.mode_of_variability').val(0)
+        self.setAnimateButtonstoOff()
+        self.inputsChanged();
     },
+
 
     render: function() {
         "use strict";
-        var self = this;
         var self = this;
         self.setUpMenus();
         self.menuChanged();

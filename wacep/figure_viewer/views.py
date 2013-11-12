@@ -15,7 +15,7 @@ def settings(request, topic_slug):
         'season_inputs':              SeasonInput,
         'year_inputs':                YearInput,
         'mode_of_variability_inputs': ModeOfVariabilityInput,
-        'activity_states':            ActivityState
+        'activity_states':            ActivityState,
     }
 
     the_settings = {}
@@ -25,6 +25,7 @@ def settings(request, topic_slug):
 
     input_combos = InputCombination.objects.filter (topic__slug=topic_slug)
     the_settings ['input_combinations'] =  [i.to_json() for i in input_combos]
+    the_settings ['topic'] = FigureViewerTopic.objects.get(slug=topic_slug).to_json()
 
     return HttpResponse(simplejson.dumps(the_settings, indent=2),  mimetype="application/json")
 
