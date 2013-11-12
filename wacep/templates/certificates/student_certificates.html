@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
+
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
-        <div class = "row">
-	        <h1>Certificates for {{user.first_name}} {{user.last_name}}</h1>
-		</div>
-		{% for cert in user.certificates_earned.all %}
-			<div class="well">
-					<a href = "{{cert.get_absolute_url}}" target='_blank' ">Certificate for {{cert.course}}</a>
-					dated {{cert.date}}
 
+<div class = "row">
+<h1>Certificates for {{user.first_name}} {{user.last_name}}</h1>
+</div>
 
-			</div>
-		{%endfor%}
-		{% if graduated %}
-        <div class = "well"> "You have completed all of the courses."
-        <a href = "/_certificates/certificate_of_completion/{{user.pk}}">Certificate of completion.</a>
-        </div>
-        {% endif %}
+{% for cert in user.certificates_earned.all %}
+<div class="well">
+Congratulations! You have completed {{cert.course}}. 
+<br />
+You may now <a href = "{{cert.get_absolute_url}}" target='_blank' ">print your course certificate</a>.
+dated {{cert.date}}
+</div>
+{%endfor%}
 
+{% if graduated %}
+<div class = "well">
+Congratulations! You have completed all of the required WACEP courses. 
+<br />
+You may now <a href = "/_certificates/certificate_of_completion/{{user.pk}}">print your overall program certificate</a>.
+</div>
+{% endif %}
 
 {%endblock content %}

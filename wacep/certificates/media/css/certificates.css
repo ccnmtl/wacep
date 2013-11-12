@@ -1,15 +1,49 @@
-.certificate-div  {
-  margin-top: 35%;
-  -webkit-transform: rotate(-90deg); 
-  -moz-transform:rotate(-90deg);
-  text-align: center;
-  border-style:double;
-  border-width:10px;   
-  border-color: black; 
-  padding: 4em;
-  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+.certificate-div {
+	  position: relative;
+	color: #375b8e;
 }
 
-.navbar {
+@media screen {
+
+	.certificate-div  {
+	}
+	
+	.certificate-div .certificate-text 
+	{
+	position: absolute;
+	top: 140px;
+	left: 330px;
+	text-align: center;
+	width: 420px;
+	}
+	
+	.navbar {
   display:none;
+}
+
+}
+
+@media print {
+
+	.certificate-div  {
+	margin-top: 25%;
+	  -webkit-transform: rotate(-90deg); 
+	  -moz-transform:rotate(-90deg);
+	  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+	
+	.certificate-div .certificate-text 
+	{
+	position: absolute;
+	top: 120px;
+	left: 270px;
+	text-align: center;
+	width: 350px;
+	font-size: 10px;
+	}
+	
+	.navbar {
+	  display:none;
+	}
+
 }
