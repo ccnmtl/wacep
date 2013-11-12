@@ -95,11 +95,11 @@ header#masthead {
 
 /* hiding inputs */
 
+  .animate_buttons_span {
+    display : none;
+  }
 
   .figure_viewer_container.topic_GC .figure_viewer_select.mode_of_variability {
-    display: none;
-  }
-  .figure_viewer_container.topic_GC .figure_viewer_select.animate {
     display: none;
   }
   .figure_viewer_container.topic_GC .figure_viewer_select.year {
@@ -116,12 +116,6 @@ header#masthead {
   .figure_viewer_container.topic_NV .figure_viewer_select.season {
     display: none;
   }
-  .figure_viewer_container.topic_NV .figure_viewer_select.animate {
-    display: none;
-  }
-  .figure_viewer_container.topic_NV .figure_viewer_select.animate {
-    display: none;
-  }
 
 
   .figure_viewer_container.topic_TC .figure_viewer_select.climate_variable {
@@ -133,11 +127,9 @@ header#masthead {
   .figure_viewer_container.topic_TC .figure_viewer_select.year {
     display: none;
   }
-  .figure_viewer_container.topic_TC .figure_viewer_select.animate {
+  .figure_viewer_container.topic_TC .figure_viewer_radio {
     display: none;
   }
-
-
 
 
 }

@@ -2,14 +2,13 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
     events: {
         "change .figure_viewer_select": "menuChanged",
-
         "change .figure_viewer_radio":  "menuChanged",
-
-
         "click .reset_button"     : "resetButtonPushed",
         "click .help_icon"        : "showHelp",
         "click .help_ok_button"   : "hideHelp",
-        "click .edit_this_state"  : "editCopy"
+        "click .edit_this_state"  : "editCopy",
+        "click .start_animate"  : "startAnimatePushed",
+        "click .end_animate"    : "endAnimatePushed"
     },
 
     initialize: function(options) {
@@ -20,15 +19,53 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             "getSettings",
             "setUpMenus",
             "menuChanged",
+            "inputsChanged",
             "resetButtonPushed",
             "showHelp",
             "hideHelp",
+            "startAnimatePushed",
+            "endAnimatePushed",
+            "whetherAnimationIsOn",
             "editCopy"
         );
 
         jQuery ('#right-content').removeClass ('span9');
         // makes the div go back to its default (wider) width.
+        jQuery('.animate_buttons_span').hide();
         self.getSettings();
+    },
+
+
+    whetherAnimationIsOn: function() {
+        "use strict";
+        var self = this;
+        return jQuery ('.end_animate').is(':visible');
+        //jQuery('.help_box').show();
+    },
+
+
+    startAnimatePushed: function() {
+        "use strict";
+        var self = this;
+        self.setAnimateButtonstoOn();
+        self.inputsChanged();
+    },
+
+    endAnimatePushed: function() {
+        "use strict";
+        var self = this;
+        self.setAnimateButtonstoOff();
+        self.inputsChanged();
+    },
+
+    setAnimateButtonstoOff: function() {
+        jQuery ('.start_animate').show();
+        jQuery ('.end_animate').hide();
+    },
+
+    setAnimateButtonstoOn: function() {
+        jQuery ('.start_animate').hide();
+        jQuery ('.end_animate').show();
     },
 
     getSettings: function() {
@@ -54,16 +91,17 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     },
 
     set_up_menu: function (css_class, inputs){
-        console.log (inputs);
+        "use strict";
         var the_dropdown = jQuery(css_class);
         for (var i=0; i < inputs.length; i++)  {
             var the_item = inputs[i];
-            item_class = the_item.name.replace(/ /g, "_").toLowerCase()
+            var item_class = the_item.name.replace(/ /g, "_").toLowerCase()
             the_dropdown.append(jQuery('<option class="' + item_class +  '"></option>').val(the_item.id).html(the_item.name));
         }
     },
 
     setUpMenus: function () {
+        "use strict";
         var self = this;
         self.set_up_menu (".figure_viewer_select.season",              self.settings.season_inputs);
         self.set_up_menu (".figure_viewer_select.mode_of_variability", self.settings.mode_of_variability_inputs);
@@ -73,6 +111,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     },
 
     findCurrentState: function () {
+        "use strict";
 
         var self = this;
         var theSeason                        = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
@@ -84,14 +123,32 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         //var theAnimation         = parseInt(jQuery ('.figure_viewer_radio.animate').val())          || null;
         var theAnimation = null;
+        /*
         if (jQuery ('.figure_viewer_radio:checked').length > 0) {
             var theAnimation         = parseInt(jQuery ('.figure_viewer_radio:checked')[0].value)         || null;
         }
+        */
+        if (self.whetherAnimationIsOn()) {
+            theAnimation = 1;
+        }
+        else {
+            theAnimation = 2;
+        }
 
+        /*
+        console.log ('theSeason '            + theSeason);
+        console.log ('theGraphingMode '      + theGraphingMode);
+        console.log ('theClimateVariable '   + theClimateVariable);
+        console.log ('theYear '              + theYear);
+        console.log ('theModeOfVariability ' + theModeOfVariability);
+        console.log ('theAnimation         ' + theAnimation);
+*/
         // do we know how to deal with this particular combination of inputs?
 
 
-        var inputFinder = function (inputCombination) { 
+        var inputFinder = function (inputCombination) {
+            "use strict";
+            // returns true if this inputcombination matches what we're looking for.
             return (
                 (inputCombination.season_input_id                    ==  theSeason            ) &&
                 (inputCombination.climate_variable_input_id          ==  theClimateVariable   ) &&
@@ -102,7 +159,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             );
         }
 
-
         var inputCombination = _.find (self.settings.input_combinations, inputFinder);
 
 
@@ -111,13 +167,37 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             alert ("ERROR: That input combination was not found.");
             return;
         }
-        console.log (inputCombination);
         // Yes, we do.
         var stateId = inputCombination.activity_state_id;
         var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
 
+        console.log (inputCombination)
 
-        console.log (theState);
+        if (inputCombination.show_animate_buttons) {
+            console.log ('yes show animate');
+
+            jQuery('.animate_buttons_span').show();
+            
+            //jQuery ('.end_animate').hide();
+            if (inputCombination.animation_input_id == 1 ) {       
+                console.log ("animate on") 
+                //jQuery ('.start_animate').show();
+                //jQuery ('.end_animate').hide();
+            } else {   
+                console.log ("animate off") 
+    
+                //jQuery ('.start_animate').hide();
+                //jQuery ('.end_animate').show();
+            }
+
+        }
+        else {
+            console.log ('no snow animate');
+            jQuery('.animate_buttons_span').hide();
+        }
+        
+
+
         if (typeof (theState) === "undefined") {
             alert ("ERROR: That state was not found.");
             return;
@@ -132,6 +212,17 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     menuChanged: function () {
         "use strict";
         var self = this;
+        self.setAnimateButtonstoOff();
+        self.inputsChanged();
+    },
+
+    inputsChanged: function () {
+        "use strict";
+        var self = this;
+
+
+        //self.setAnimateButtonstoOff();
+        
         var theState = self.findCurrentState();
         console.log (theState);
         if (theState.image_path === '') {
@@ -152,11 +243,22 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             console.log ('Yes colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
-        
+
         jQuery ('.explanation_copy')         .html (theState.text);
         jQuery ('.source_copy')              .html (theState.source);
 
     },
+
+    /*  "animation_inputs": [
+    {
+      "id": 1,
+      "name": "On"
+    },
+    {
+      "id": 2,
+      "name": "Off "
+    }
+  ],*/
 
     editCopy: function() {
         "use strict";

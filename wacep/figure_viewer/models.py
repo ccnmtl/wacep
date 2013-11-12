@@ -123,6 +123,33 @@ class InputCombination (models.Model):
     #default_state                   = models.BooleanField (default = False, help_text= 'Set this to true only for the default / initial state of the activity.')
 
 
+
+    def show_animate_buttons(self):
+        if self.animation_input.name == "On":
+            return True
+        else:
+            tmp = InputCombination.objects
+            tmp = tmp.filter(topic__id=self.topic.id )if self.topic else tmp
+            tmp = tmp.filter(season_input__id=self.season_input.id )if self.season_input else tmp
+            tmp = tmp.filter(climate_variable_input__id=self.climate_variable_input.id ) if self.climate_variable_input else tmp
+            tmp = tmp.filter(year_input__id=self.year_input.id) if self.year_input else tmp
+            tmp = tmp.filter(mode_of_variability_input__id=self.mode_of_variability_input.id) if self.mode_of_variability_input else tmp
+            tmp = tmp.filter(graphing_mode_input__id=self.graphing_mode_input.id) if self.graphing_mode_input else tmp
+            if len (tmp)  == 1:
+                """ There is no other state which is identical
+                except for the value of animation_input."""
+                return False
+            if len (tmp) > 2:
+                """ this is the default input combination --
+                just used when the page loads.
+                Animation should be disabled for this."""
+                return False
+            """There is another state which is identical
+            except for the value of animation_input"""
+            return True
+
+
+
     def __unicode__(self):
         return "Inputs resulting in state %s " % self.activity_state
 
@@ -132,6 +159,7 @@ class InputCombination (models.Model):
 
     def to_json(self):
         result = {
+            'show_animate_buttons'      : self.show_animate_buttons(),
             'topic_id'                  : self.topic_id if self.topic else None,
             'season_input_id'           : self.season_input.id if self.season_input        else None,
             'climate_variable_input_id' : self.climate_variable_input_id   if self.climate_variable_input_id          else None,
@@ -164,6 +192,7 @@ class ActivityState (models.Model):
 
     def __unicode__(self):
         return self.name
+
 
     class Meta:
         ordering = ['order_rank']

@@ -40,7 +40,7 @@ class InputCombinationAdmin(admin.ModelAdmin):
 
 
 
-    fields = ('climate_variable_input', 'season_input', 'animation_input', 'activity_state', 'topic')
+    fields = ('mode_of_variability_input',  'graphing_mode_input', 'animation_input', 'activity_state', 'topic')
 admin.site.register(InputCombination, InputCombinationAdmin)
 
 class ActivityStateAdmin(admin.ModelAdmin):

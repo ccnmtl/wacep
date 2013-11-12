@@ -9,7 +9,7 @@
 			<br />
 			<br />
 			<button class = "btn btn-info help_ok_button">OK</button>
-		</div>
+		</div>	
 	</div>
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
@@ -44,10 +44,18 @@
 			<option value = "">Select a Year:</option>
 			<option value = ""></option>
 		</select>
-		<div>Animate:</div>
-			<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="2" checked="checked"/>Off
-			<input type="radio" name ="animation_radio" class="figure_viewer_radio animation" value="1"  />On
-		<br/>
+
+
+		<span class = "animate_buttons_span">
+			<div class="btn btn-success animate_button start_animate">
+					<i class="icon-play icon-large icon-white"></i> Animate
+			</div>
+			<div class="btn btn-danger animate_button end_animate">
+					<i class="icon-stop icon-large icon-white"></i> Stop animation
+			</div>
+		</span>
+
+
         <button class="btn btn-large btn-primary reset_button" type="button">Reset</button>
 	</div>
 
