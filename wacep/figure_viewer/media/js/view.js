@@ -78,7 +78,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
         
         var url = '/_figure_viewer/settings/' + self.topic_slug + '/';
-        console.log (url);
         jQuery.ajax({
             type: 'POST',
             url: url,
@@ -102,10 +101,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var suppressed_items = self.settings.topic.topic_settings.menu_items_to_suppress;
         for (var i=0; i < inputs.length; i++)  {
             var the_item = inputs[i];
-            var item_class = the_item.name.replace(/ /g, "_").toLowerCase()
-            console.log (item_class);
-            console.log (suppressed_items);
-
+            var item_class = the_item.name.replace(/ /g, "_").toLowerCase();
             if ( jQuery.inArray(item_class,  suppressed_items) === -1) {
                 the_dropdown.append(jQuery('<option class="' + item_class +  '"></option>').val(the_item.id).html(the_item.name));
             }
@@ -133,8 +129,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var theModeOfVariability             = parseInt(jQuery ('.figure_viewer_select.mode_of_variability').val())   || null;
 
         var theAnimation = null;
-
-        console.log (self.settings)
         if (self.settings.topic.topic_settings.use_animation ) {
             if (self.whetherAnimationIsOn()) {
                 theAnimation = 1;
@@ -186,8 +180,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         // Yes, we do.
         var stateId = inputCombination.activity_state_id;
         var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
-
-        console.log (inputCombination);
         if (inputCombination.show_animate_buttons) {
             jQuery('.animate_buttons_span').show();
         }
@@ -216,23 +208,18 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         var theState = self.findCurrentState();
-        console.log (theState);
         if (theState.image_path === '') {
-            console.log ('No image found.')
             jQuery ('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
         }
         else {
-            console.log (theState.image_path);
             jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
             jQuery ('.show_hide_div.left_side')      .show ();
 
         }
         if (theState.color_bar === '') {
-            console.log ('No colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
         }
         else {
-            console.log ('Yes colorbar image found.')
             jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
 
