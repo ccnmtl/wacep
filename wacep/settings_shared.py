@@ -140,7 +140,7 @@ PAGEBLOCKS = [
     'pageblocks.ImagePullQuoteBlock',
     'quizblock.Quiz',
     'timescale.TimescaleBlock',
-    'timescale.FigureViewerBlock',
+    'figure_viewer.FigureViewerBlock',
 ]
 
 LETTUCE_APPS = (
