@@ -129,7 +129,7 @@ INSTALLED_APPS = [
     'quizblock',
     'wacep.timescale',
     'wacep.figure_viewer',
-    'wacep.weather_dj'
+    'wacep.weather_dj',
     'wacep.certificates',
 ]
 

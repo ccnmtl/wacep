@@ -1,17 +1,22 @@
-Timescale.TimescaleView = Backbone.View.extend({
-
+WeatherDJ.WeatherDJView = Backbone.View.extend({
     events: {
+        /*
         "change .timescale_select": "menuChanged",
         "click .reset_button"     : "resetButtonPushed",
         "click .help_icon"        : "showHelp",
         "click .help_ok_button"   : "hideHelp",
         "click .edit_this_state"  : "editCopy"
+        */
     },
     initialize: function(options) {
         "use strict";
         var self = this;
+        
         _.bindAll(this ,
-            "render",
+            
+            "render"
+            /*
+            ,
             "getSettings",
             "setUpMenus",
             "menuChanged",
@@ -19,13 +24,15 @@ Timescale.TimescaleView = Backbone.View.extend({
             "showHelp",
             "hideHelp",
             "editCopy"
+            */
         );
-
-        jQuery ('#right-content').removeClass ('span9');
-        // makes the div go back to its default (wider) width.
+        $( "#tabs" ).tabs();
+        /*
         self.getSettings();
+        */
     },
 
+    /*
     getSettings: function() {
         "use strict";
 
@@ -191,13 +198,15 @@ Timescale.TimescaleView = Backbone.View.extend({
         jQuery('.timescale_select.year').val(0)
         self.menuChanged();
     },
-
+    */
     render: function() {
+    /* 
         "use strict";
         var self = this;
         self.setUpMenus();
         self.menuChanged();
         self.showHelp();
+    */
     },
 
 

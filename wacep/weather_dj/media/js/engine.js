@@ -1,6 +1,4 @@
-importPackage(java.lang);
-
-var WeatherDJCore = (function() {
+var WeatherDJEngine = (function() {
 	"use strict";
     // settings:
     var max_rain = 0.4;
@@ -19,12 +17,12 @@ var WeatherDJCore = (function() {
     var errors; // should be null
 
     // constructor
-    function WeatherDJCore(){
+    function WeatherDJEngine(){
 	"use strict";
     	groundwater = 1.0;
     };
 
-    WeatherDJCore.prototype.getRain = function () {
+    WeatherDJEngine.prototype.getRain = function () {
 	"use strict";
 	var it_rained = (Math.random() < r);
 	if ( it_rained) {
@@ -36,7 +34,7 @@ var WeatherDJCore = (function() {
     }
     
     
-    WeatherDJCore.prototype.tick = function() {
+    WeatherDJEngine.prototype.tick = function() {
 	"use strict";
 	if (errors)  {
 	    return;
@@ -50,7 +48,7 @@ var WeatherDJCore = (function() {
     };
     
     
-    WeatherDJCore.prototype.validate = function() {
+    WeatherDJEngine.prototype.validate = function() {
         if (a + b > 1.0) {
             errors = 'a + b must be less than 1.0';
         }
@@ -69,7 +67,7 @@ var WeatherDJCore = (function() {
 	
     }
     
-    WeatherDJCore.prototype.setInputs = function(values) {
+    WeatherDJEngine.prototype.setInputs = function(values) {
 	"use strict";
         a = values ['a'];
         b = values ['b'];
@@ -81,7 +79,7 @@ var WeatherDJCore = (function() {
         }
     };
     
-    WeatherDJCore.prototype.getOutputs= function() {
+    WeatherDJEngine.prototype.getOutputs= function() {
 	"use strict";
 	this.tick();
 	if (errors){
@@ -96,7 +94,7 @@ var WeatherDJCore = (function() {
         };
     };
     
-    return WeatherDJCore;
+    return WeatherDJEngine;
 })();
 
 
@@ -141,16 +139,16 @@ var ScrollingTable = (function() {
 
 function log(str) {
     "use strict";
-    System.out.println(str);
+    console.log(str);
 }
 
 function main() {
     "use strict";
-    var weatherDJ = new WeatherDJCore();
+    var weatherDJ = new WeatherDJEngine();
     weatherDJ.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
     var t = new ScrollingTable(['precipitation', 'runoff', 'groundwater', 'streamflow'])
     for (var i=0;i<30;i++) { 
-	outputs = weatherDJ.getOutputs();
+	var outputs = weatherDJ.getOutputs();
 	t.addRow ( [
 	    outputs['precipitation'],
 	    outputs['runoff'],

@@ -8,7 +8,7 @@ urlpatterns = patterns(
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
      {'document_root': media_root}),
 
-    url(r'^settings/$',
-        'wacep.timescale.views.settings',
-        name='settings'),
+    url(r'^$',
+        'wacep.weather_dj.views.weather_dj',
+        name='weather_dj'),
 )
