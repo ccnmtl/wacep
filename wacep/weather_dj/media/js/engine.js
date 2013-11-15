@@ -23,22 +23,22 @@ var WeatherDJEngine = (function() {
     };
 
     WeatherDJEngine.prototype.getRain = function () {
-	"use strict";
-	var it_rained = (Math.random() < r);
-	if ( it_rained) {
-	    return 	Math.random() * max_rain;
-	}
-	else {
-	    return 0.0;
-	}
+    	"use strict";
+    	var it_rained = (Math.random() < r);
+    	if ( it_rained) {
+    	    return 	Math.random() * max_rain;
+    	}
+    	else {
+    	    return 0.0;
+    	}
     }
     
     
     WeatherDJEngine.prototype.tick = function() {
-	"use strict";
-	if (errors)  {
-	    return;
-	}
+    	"use strict";
+    	if (errors)  {
+    	    return;
+    	}
 	
         precipitation = this.getRain();
         var old_groundwater = groundwater;
@@ -68,23 +68,23 @@ var WeatherDJEngine = (function() {
     }
     
     WeatherDJEngine.prototype.setInputs = function(values) {
-	"use strict";
+	   "use strict";
         a = values ['a'];
         b = values ['b'];
         c = values ['c'];
         r = values ['r'];
-	this.validate();
+    	this.validate();
        if (errors) {
             return;
         }
     };
     
     WeatherDJEngine.prototype.getOutputs= function() {
-	"use strict";
-	this.tick();
-	if (errors){
-	    return {'errors': errors};
-	}
+    	"use strict";
+    	this.tick();
+    	if (errors){
+    	    return {'errors': errors};
+    	}
         return {
             'precipitation': precipitation  ,
             'runoff'       : runoff         ,
@@ -93,70 +93,55 @@ var WeatherDJEngine = (function() {
             'errors'	   : errors         
         };
     };
-    
+        
     return WeatherDJEngine;
 })();
 
 
 var ScrollingTable = (function() {
-    "use strict";
-    // settings:
-    var numRows = 3;
-    var columnTitles = [];
-    var rows;
+        "use strict";
+        // settings:
+        var numRows = 10;
+        var columnTitles = [];
+        var rows;
+        var observers;
 
-    // constructor
-    function ScrollingTable(_columnTitles){
-	"use strict";
-    	columnTitles = _columnTitles;
-	rows = new Array (numRows);
+        // constructor
+        function ScrollingTable(_columnTitles){
+        	"use strict";
+        	columnTitles = _columnTitles;
+        	rows = new Array (numRows);
+            observers = [];
     };
 
+    ScrollingTable.prototype.attach = function ( observer ) {
+        "use strict";
+        observers.push (observer);
+    }
+
+    ScrollingTable.prototype.notify = function ( ) {
+        "use strict";
+        for (var i=0;i<observers.length; i++) { 
+            observers[i].update();
+        }
+    }
+
     ScrollingTable.prototype.addRow = function (row) {
-	"use strict";
-	if (row.length != columnTitles.length) {
-	    return;
-	}
-	delete rows [0];
-	for (var i=1;i<numRows;i++) { 
-	    rows[i-1] = rows [i]
-	}
-	rows[numRows-1] = row;
+    	"use strict";
+    	if (row.length != columnTitles.length) {
+    	    return;
+    	}
+    	delete rows [0];
+    	for (var i=1;i<numRows;i++) { 
+    	    rows[i-1] = rows [i]
+    	}
+    	rows[numRows-1] = row;
     }
 
     ScrollingTable.prototype.getContents= function() {
-	"use strict";
-	return rows;
+    	"use strict";
+    	return rows;
     }
 
     return ScrollingTable;
 })();
-
-
-
-////////////////
-//testing:
-
-function log(str) {
-    "use strict";
-    console.log(str);
-}
-
-function main() {
-    "use strict";
-    var weatherDJ = new WeatherDJEngine();
-    weatherDJ.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
-    var t = new ScrollingTable(['precipitation', 'runoff', 'groundwater', 'streamflow'])
-    for (var i=0;i<30;i++) { 
-	var outputs = weatherDJ.getOutputs();
-	t.addRow ( [
-	    outputs['precipitation'],
-	    outputs['runoff'],
-	    outputs['groundwater'],
-	    outputs['streamflow']
-	]);
-    }
-    log (JSON.stringify (t.getContents(), null, 4));
-}
-
-main();

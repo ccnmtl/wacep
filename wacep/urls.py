@@ -41,7 +41,7 @@ urlpatterns = patterns(
     (r'^_figure_viewer/', include('wacep.figure_viewer.urls')),
     (r'^_certificates/', include('wacep.certificates.urls',
                                  namespace='certificates')),
-    (r'^weather_dj/', include('wacep.weather_dj.urls',
+    (r'^hydrologic_cycle/', include('wacep.weather_dj.urls',
                                  namespace='weather_dj')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page'),
 
