@@ -144,13 +144,11 @@ function log(str) {
     System.out.println(str);
 }
 
-function harness() {
+function main() {
     "use strict";
     var weatherDJ = new WeatherDJCore();
     weatherDJ.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
-
-    var t = new ScrollingTable(['Precipitation', 'Runoff', 'Groundwater', 'Streamflow'])
-
+    var t = new ScrollingTable(['precipitation', 'runoff', 'groundwater', 'streamflow'])
     for (var i=0;i<30;i++) { 
 	outputs = weatherDJ.getOutputs();
 	t.addRow ( [
@@ -161,8 +159,6 @@ function harness() {
 	]);
     }
     log (JSON.stringify (t.getContents(), null, 4));
-   
 }
 
-
-harness();
+main();
