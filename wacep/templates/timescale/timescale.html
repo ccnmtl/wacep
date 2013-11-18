@@ -4,7 +4,11 @@
 	</div>
 	<div class = "timescale_subcontainer help_box">
 		<div class= "help_copy_container_div">
-			Help copy goes here. Lorem ipsum caveat emptor in loco parentis.
+			To use this tool, first select the season that you wish to examine. Three lines will appear representing each component of the precipitation variability in the region. The magnitude of percent variance explained by each component will additionally populate at the top of the tool. Note that in most cases the percent variance explained by all three components will not sum to 100%. This is because the filtering procedure used to separate the decadal and interannual components of the detrended data is necessarily imperfect, and leads to a degree of covariance between the two components.
+
+            There is an additional graphing mode option which overlays the total precipitation sum over the three components of variability. The final graphing option displays the percentile category of the total precipitation sum with the "climate impact" thresholds indicated. Here the definition of "dry" or "extremely dry" applies to rainfall below the 10th percentile or the 5th percentile, respectively. Likewise the definition of "wet" or "extremely wet" applies to rainfall above the 90th percentile or the 95th percentile. Rainfall that falls between the 10th and 90th percentiles is categorized as "normal".
+
+            Once you have selected the season and graphing mode, select a year of interest from the time selection. The magnitude of the contribution of each of the three climate components at the time step selected will populate in the tool, and sum to show the total precipitation mm/month, and its corresponding percentile. The percentile value will trigger the climate impact in the precipitation gauge, located on the right side of the tool.
 			<br />
 			<br />
 			<br />
@@ -66,16 +70,17 @@
 	<!-- Right side -->
 	<div class = "timescale_subcontainer inputs">
 		<select name ="season_input_select" class="timescale_select season">
+		    <p>Select a Season:</p>
 			<option value = "">Select a Season:</option>
-			<option value = ""></option>
+			<!-- <option value = ""></option> -->
 		</select><br/>
 		<select name ="graphing_mode_input_select" class="timescale_select graphing_mode">
 			<option value = "">Select a Graphing Mode:</option>
-			<option value = ""></option>
+			<!-- <option value = ""></option> -->
 		</select><br/>
 		<select name ="year_input_select" class="timescale_select year">
 			<option value = "">Select a Year:</option>
-			<option value = ""></option>
+			<!-- <option value = ""></option> -->
 		</select><br/>
         <button class="btn btn-primary reset_button" type="button">Reset</button>
 	</div>
