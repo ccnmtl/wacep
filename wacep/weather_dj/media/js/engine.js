@@ -14,13 +14,16 @@ var WeatherDJEngine = (function() {
     var runoff;
     var groundwater;
     var streamflow;
+    var date;
     var errors; // should be null
 
     // constructor
     function WeatherDJEngine(){
-	"use strict";
+    	"use strict";
     	groundwater = 1.0;
+        date = new Date();
     };
+
 
     WeatherDJEngine.prototype.getRain = function () {
     	"use strict";
@@ -33,6 +36,9 @@ var WeatherDJEngine = (function() {
     	}
     }
     
+    WeatherDJEngine.prototype.incrementClock = function() {
+        date.setDate (date.getDate() + 1 )
+    }
     
     WeatherDJEngine.prototype.tick = function() {
     	"use strict";
@@ -45,6 +51,7 @@ var WeatherDJEngine = (function() {
         runoff      = precipitation * (1-a-b);
         streamflow  = runoff+(c *old_groundwater);
         groundwater = (old_groundwater * (1-c))+(a*precipitation);
+        this.incrementClock();
     };
     
     
@@ -79,13 +86,14 @@ var WeatherDJEngine = (function() {
         }
     };
     
-    WeatherDJEngine.prototype.getOutputs= function() {
+    WeatherDJEngine.prototype.generateOutputs= function() {
     	"use strict";
     	this.tick();
     	if (errors){
     	    return {'errors': errors};
     	}
         return {
+            'date'         : date           ,
             'precipitation': precipitation  ,
             'runoff'       : runoff         ,
             'groundwater'  : groundwater    ,
@@ -93,6 +101,9 @@ var WeatherDJEngine = (function() {
             'errors'	   : errors         
         };
     };
+
+
+
         
     return WeatherDJEngine;
 })();
@@ -141,6 +152,16 @@ var ScrollingTable = (function() {
     ScrollingTable.prototype.getContents= function() {
     	"use strict";
     	return rows;
+    }
+
+    ScrollingTable.prototype.getNumberOfRows= function() {
+        "use strict";
+        return numRows;
+    }
+
+    ScrollingTable.prototype.getColumnTitles= function() {
+        "use strict";
+        return columnTitles;
     }
 
     return ScrollingTable;

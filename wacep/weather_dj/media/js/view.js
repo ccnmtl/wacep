@@ -29,8 +29,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         );
         $( "#tabs" ).tabs();
 
-
-
         self.setUpEngine();
 
         /*
@@ -38,46 +36,66 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         */
     },
 
-    setUpEngine: function () {
+    buildTable: function() {
+
         var self = this;
-        "use strict";
-        self.engine = new WeatherDJEngine();
-        self.engine.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
-        self.scrollingTable =  new ScrollingTable(['precipitation', 'runoff', 'groundwater', 'streamflow'])
-
-
-
         /// set up table:
         var content = "<table>"
-        for(i=0; i<10; i++){
+        for(i=0; i<self.scrollingTable.getNumberOfRows(); i++){
             content += '<tr>';
-            for(j=0; j<4; j++){
-                content += '<td class = "the_td ' + i + ' ' + j + '">' + 'result ' +  i + ',' +  j + '</td>'
+            for(j=0; j<columnLabels.length; j++){
+                // content += '<td class = "the_td row_' + i + ' column_' + j + '">' + 'row_' +  i + ', column_' +  j + '</td>';
+                content += '<td class = "the_td row_' + i + ' column_' + j + '"></td>'
             }
             content += '</tr>';
         }
         content += "</table>"
         $('.table_span').append(content);
 
-        self.graph = new Graph();
-        self.graph.setSubject (self.scrollingTable);
+    },
 
-        // start calculating:
-        for (var i=0;i<300;i++) { 
-            var outputs = self.engine.getOutputs();
-
-            self.scrollingTable.addRow ( [
-                outputs['precipitation'],
-                outputs['runoff'],
-                outputs['groundwater'],
+    loop: function () {
+        var self = this;
+        var outputs;
+        var  i = 0;
+        function loopTwo() {   
+            outputs = self.engine.generateOutputs();
+            var new_row = [
+                outputs['date'].toDateString(),
+                outputs['precipitation']      ,
+                outputs['runoff']             ,
+                outputs['groundwater']        ,
                 outputs['streamflow']
-            ]);
-
+            ];
+            self.scrollingTable.addRow (new_row);
             self.scrollingTable.notify();
+            i++;                    
+            if (i < 100) { loopOne(); }     
         }
 
+        function loopOne() {
+            setTimeout( loopTwo , 200);
+        }
+        loopOne();
 
 
+    },
+
+    setUpEngine: function () {
+        var self = this;
+        "use strict";
+        self.engine = new WeatherDJEngine();
+        self.engine.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
+        columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
+
+        self.scrollingTable =  new ScrollingTable(columnLabels)
+
+        self.buildTable();
+
+        self.graph = new Graph();
+        self.graph.setSubject (self.scrollingTable);
+        self.loop();
+        
     },
 
     /*
