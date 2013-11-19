@@ -19,7 +19,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             "setUpEngine",
             "setUpSliders",
             "sliderValues",
-            "buildTable",
             "loop"
             /*
             ,
@@ -40,24 +39,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         /*
         self.getSettings();
         */
-    },
-
-    buildTable: function() {
-
-        var self = this;
-        /// set up table:
-        var content = "<table><tbody>"
-        for(i=0; i<self.scrollingTable.getNumberOfRows(); i++){
-            content += '<tr>';
-            for(j=0; j<columnLabels.length; j++){
-                // content += '<td class = "the_td row_' + i + ' column_' + j + '">' + 'row_' +  i + ', column_' +  j + '</td>';
-                content += '<td class = "the_td row_' + i + ' column_' + j + '"></td>'
-            }
-            content += '</tr>';
-        }
-        content += "</tbody></table>"
-        $('.table_span').append(content);
-
     },
 
     sliderValues: function() {
@@ -119,11 +100,9 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.engine = new WeatherDJEngine();
         self.engine.setInputs(self.initial_slider_values);
         columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
-        self.scrollingTable =  new ScrollingTable(columnLabels)
-        self.buildTable();
-        self.graph = new Graph();
-        self.graph.setSubject (self.scrollingTable);
-        self.loop();  
+        self.scrollingTable =  new ScrollingTable(columnLabels);
+        self.table = new Table().hitch (self.scrollingTable);
+        self.loop(); 
     },
 
     /*

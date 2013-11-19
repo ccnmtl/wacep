@@ -6,14 +6,21 @@ var Observer = (function() {
         "use strict";
     };
 
-    Observer.prototype.setSubject = function (_subject) {
+    Observer.prototype.hitch = function (_subject) {
         "use strict";
         subject = _subject;
         subject.attach (this);
+        this.prepareDOM();
     }
 
     Observer.prototype.getSubject = function () {
         return subject;
+    }
+
+
+    Observer.prototype.prepareDOM = function () {
+        // override this function
+
     }
 
     Observer.prototype.update = function () {
@@ -22,22 +29,3 @@ var Observer = (function() {
 
     return Observer;
 })();
-
-
-
-//////////
-function Graph ( ) {}
-Graph.prototype = new Observer();
-Graph.prototype.update = function ( ) {
-    contents = this.getSubject().getContents();
-    for(var i=0; i<contents.length; i++){
-        if (contents[i] != null) {
-            for(var j=0; j<contents[i].length; j++){
-                css_class = '.the_td.row_' + i + '.column_'+ j;
-                jQuery(css_class ).html (  contents[i][j]  );
-            }
-        }
-    }
-    //jQuery('.the_td.7.2').html ('asd');
-}
-////////
