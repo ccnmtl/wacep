@@ -11,11 +11,16 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     initialize: function(options) {
         "use strict";
         var self = this;
-        
+        self.initial_slider_values  =  {'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.2};
+
         _.bindAll(this ,
             
             "render",
-            "setUpEngine"
+            "setUpEngine",
+            "setUpSliders",
+            "sliderValues",
+            "buildTable",
+            "loop"
             /*
             ,
             "getSettings",
@@ -30,6 +35,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         $( "#tabs" ).tabs();
 
         self.setUpEngine();
+        self.setUpSliders();
 
         /*
         self.getSettings();
@@ -40,7 +46,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
         var self = this;
         /// set up table:
-        var content = "<table>"
+        var content = "<table><tbody>"
         for(i=0; i<self.scrollingTable.getNumberOfRows(); i++){
             content += '<tr>';
             for(j=0; j<columnLabels.length; j++){
@@ -49,16 +55,32 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             }
             content += '</tr>';
         }
-        content += "</table>"
+        content += "</tbody></table>"
         $('.table_span').append(content);
 
+    },
+
+    sliderValues: function() {
+        var self = this;
+        return {
+            'a': jQuery('.slider.a').slider('value') / 100,
+            'b': jQuery('.slider.b').slider('value') / 100,
+            'c': jQuery('.slider.c').slider('value') / 100,
+            'r': jQuery('.slider.r').slider('value') / 100
+        }
     },
 
     loop: function () {
         var self = this;
         var outputs;
         var  i = 0;
-        function loopTwo() {   
+        function loopTwo() {
+            //console.log (self.sliderValues())
+
+            self.engine.setInputs(self.sliderValues());
+            if (self.engine.getErrors()) {
+                console.log (errors);
+            }
             outputs = self.engine.generateOutputs();
             var new_row = [
                 outputs['date'].toDateString(),
@@ -70,32 +92,38 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             self.scrollingTable.addRow (new_row);
             self.scrollingTable.notify();
             i++;                    
-            if (i < 100) { loopOne(); }     
+            if (i < 200) { loopOne(); }     
         }
 
         function loopOne() {
             setTimeout( loopTwo , 200);
         }
         loopOne();
+    },
 
-
+    setUpSliders: function() {
+        var self = this;
+        jQuery( ".slider" ).slider(
+            {
+                  value: 60,
+                  orientation: "horizontal",
+                  range: "min",
+                  animate: true
+            }
+        );
     },
 
     setUpEngine: function () {
         var self = this;
         "use strict";
         self.engine = new WeatherDJEngine();
-        self.engine.setInputs({'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.4});
+        self.engine.setInputs(self.initial_slider_values);
         columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
-
         self.scrollingTable =  new ScrollingTable(columnLabels)
-
         self.buildTable();
-
         self.graph = new Graph();
         self.graph.setSubject (self.scrollingTable);
-        self.loop();
-        
+        self.loop();  
     },
 
     /*

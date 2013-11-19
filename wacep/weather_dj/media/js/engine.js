@@ -7,7 +7,7 @@ var WeatherDJEngine = (function() {
     var a; // Fraction of rainwater that enters the ground per tick.
     var b; // Fraction of rainfall that re-enters the atmosphere through evapo-transpiration per tick.
     var c; // Fraction of groundwater that enters the stream channel per tick.
-    var r = 0.2; // rain probability per tick.
+    var r; // rain probability per tick.
 
     // outputs
     var precipitation;
@@ -36,6 +36,12 @@ var WeatherDJEngine = (function() {
     	}
     }
     
+
+    
+    WeatherDJEngine.prototype.getErrors = function() {
+        return errors;
+    }
+
     WeatherDJEngine.prototype.incrementClock = function() {
         date.setDate (date.getDate() + 1 )
     }
@@ -71,7 +77,7 @@ var WeatherDJEngine = (function() {
         if (r > 1.0) {
             errors = 'r must be less than 1.0';
         }
-	
+        errors = null;
     }
     
     WeatherDJEngine.prototype.setInputs = function(values) {
