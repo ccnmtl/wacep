@@ -3,6 +3,11 @@
 
 }
 
+.sliders {
+	position: absolute;
+	top: 500px;
+
+}
 
 .ui-slider {
 	position: relative;

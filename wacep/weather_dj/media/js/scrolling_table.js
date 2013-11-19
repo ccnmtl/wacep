@@ -38,6 +38,37 @@ var ScrollingTable = (function() {
     	rows[numRows-1] = row;
     }
 
+    ScrollingTable.prototype.getLastRow= function() {
+        "use strict";
+        var result = {};
+        var the_row =  rows[numRows-1];
+        for (var i=0;i<columnTitles.length;i++) { 
+            result [ columnTitles[i]]  = the_row [i];
+        }
+        return result;
+    }
+
+    ScrollingTable.prototype.getColumns= function() {
+        "use strict";
+
+        var columns = {};
+        
+        for (var i=0;i<columnTitles.length;i++) { 
+            columns [ columnTitles[i]]  = Array();
+        }
+
+        for (var i=0;i<numRows;i++) { 
+            the_row = rows[i];
+            for (var j=0;columnTitles<columnTitles.length;j++) { 
+                columnTitle = columnTitles[j]
+                columns[columnTitle][i] = rows[i][j];
+            }
+        }
+        return result;
+    }
+
+
+
     ScrollingTable.prototype.getContents= function() {
     	"use strict";
     	return rows;

@@ -1,7 +1,7 @@
 var WeatherDJEngine = (function() {
 	"use strict";
     // settings:
-    var max_rain = 0.4;
+    var max_rain = 5.0;
 
     // inputs
     var a; // Fraction of rainwater that enters the ground per tick.
@@ -25,6 +25,15 @@ var WeatherDJEngine = (function() {
     };
 
 
+    /*  
+        if a == 0
+        b    == 0
+        c    == 100%
+        r    == 100%
+
+        why is stream == to rainwater? shouldn't it accumulate?
+    */
+
     WeatherDJEngine.prototype.getRain = function () {
     	"use strict";
     	var it_rained = (Math.random() < r);
@@ -35,9 +44,7 @@ var WeatherDJEngine = (function() {
     	    return 0.0;
     	}
     }
-    
-
-    
+        
     WeatherDJEngine.prototype.getErrors = function() {
         return errors;
     }
@@ -54,28 +61,35 @@ var WeatherDJEngine = (function() {
 	
         precipitation = this.getRain();
         var old_groundwater = groundwater;
-        runoff      = precipitation * (1-a-b);
+        runoff      = (1-a-b) * precipitation;
         streamflow  = runoff+(c *old_groundwater);
-        groundwater = (old_groundwater * (1-c))+(a*precipitation);
+        groundwater = (1-c) * old_groundwater  + a * precipitation;
         this.incrementClock();
     };
     
-    
     WeatherDJEngine.prototype.validate = function() {
+        "use strict";
+        errors = null;
+
         if (a + b > 1.0) {
             errors = 'a + b must be less than 1.0';
+            return;
         }
         if (a > 1.0) {
             errors = 'c must be less than 1.0';
+            return;
         }
         if (b > 1.0) {
             errors = 'c must be less than 1.0';
+            return;
         }
         if (c > 1.0) {
             errors = 'c must be less than 1.0';
+            return;
         }
         if (r > 1.0) {
             errors = 'r must be less than 1.0';
+            return;
         }
         errors = null;
     }
@@ -112,63 +126,4 @@ var WeatherDJEngine = (function() {
 
         
     return WeatherDJEngine;
-})();
-
-
-var ScrollingTable = (function() {
-        "use strict";
-        // settings:
-        var numRows = 10;
-        var columnTitles = [];
-        var rows;
-        var observers;
-
-        // constructor
-        function ScrollingTable(_columnTitles){
-        	"use strict";
-        	columnTitles = _columnTitles;
-        	rows = new Array (numRows);
-            observers = [];
-    };
-
-    ScrollingTable.prototype.attach = function ( observer ) {
-        "use strict";
-        observers.push (observer);
-    }
-
-    ScrollingTable.prototype.notify = function ( ) {
-        "use strict";
-        for (var i=0;i<observers.length; i++) { 
-            observers[i].update();
-        }
-    }
-
-    ScrollingTable.prototype.addRow = function (row) {
-    	"use strict";
-    	if (row.length != columnTitles.length) {
-    	    return;
-    	}
-    	delete rows [0];
-    	for (var i=1;i<numRows;i++) { 
-    	    rows[i-1] = rows [i]
-    	}
-    	rows[numRows-1] = row;
-    }
-
-    ScrollingTable.prototype.getContents= function() {
-    	"use strict";
-    	return rows;
-    }
-
-    ScrollingTable.prototype.getNumberOfRows= function() {
-        "use strict";
-        return numRows;
-    }
-
-    ScrollingTable.prototype.getColumnTitles= function() {
-        "use strict";
-        return columnTitles;
-    }
-
-    return ScrollingTable;
 })();

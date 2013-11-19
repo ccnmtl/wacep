@@ -17,10 +17,8 @@ var Observer = (function() {
         return subject;
     }
 
-
     Observer.prototype.prepareDOM = function () {
         // override this function
-
     }
 
     Observer.prototype.update = function () {
