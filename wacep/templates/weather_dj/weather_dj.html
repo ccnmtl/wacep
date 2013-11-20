@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<link href="/site_media/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -8,10 +9,7 @@
 		<script src="/site_media/js/jquery-ui.js"                type="text/javascript" ></script>
 		<script src="/site_media/js/backbone-min.js"             type="text/javascript" ></script>
 		<script src="/site_media/bootstrap/js/bootstrap.js"         ></script>
-
-
 		<script src="/hydrologic_cycle/media/js/highcharts.js"         type="text/javascript" ></script>
-
 		<script src="/hydrologic_cycle/media/js/weather_dj.js"         type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/engine.js"         type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/scrolling_table.js"         type="text/javascript" ></script>
@@ -26,42 +24,46 @@
 		<div class="weather_dj_container">
 			<div id="tabs" >
 			  <ul class="nav nav-tabs" >
-			    <li><a href="#tabs-1">Image</a></li>
-			    <li><a href="#tabs-2">Graph</a></li>
-			    <li><a href="#tabs-3">Table</a></li>
-			    <li><a href="#tabs-4">Help</a></li>
+			    <li><a href="#image_tab">Image</a></li>
+			    <li><a href="#graph_tab">Graph</a></li>
+			    <li><a href="#table_tab">Table</a></li>
+			    <li><a href="#help_tab">Help</a></li>
 			  </ul>
-			  <div id="tabs-1" class="tab_box">
+
+
+			  <div id="image_tab" class="tab_box">
 			    	Image
 			  </div>
-			  <div id="tabs-2" class="tab_box">
+			  <div id="graph_tab" class="tab_box">
 			  		<div class="graph" >the graph</div>
 			  </div>
-			  <div id="tabs-3" class="tab_box">
+			  <div id="table_tab" class="tab_box">
 			  		<span class= "table_span"></span>
 			  </div>
-			  <div id="tabs-4" class="tab_box">
+			  <div id="help_tab" class="tab_box">
 				    Help
 			  </div>
 
 			<div class = "sliders" >
-				<div class="span2">buttons</div>
-				<div class="span2">a (rain -> ground)</div>
-				<div class="span2">b (ground -> air) </div>
-				<div class="span2">c (ground -> stream)</div>
-				<div class="span2">r (rain prob.)</div>
-	
-				<hr />
-				<div class="span2">
-					<button><i class="icon-large icon-play"></i></button>
-					<button><i class="icon-large icon-pause"></i></button>
+				<div class="span2">&nbsp;</div>
+				<div class="span2">Perviousness (a)</div>
+				<div class="span2">Evapo-transpiration (b)</div>
+				<div class="span2">Porosity (c)</div>
+				<div class="span2">Rainfall frequency (r)</div>
+				<br />
+				<br />
+				<div class="jquery_sliders">
+
+					<div class="span2">
+						<button class="play_button"><i class="icon-large icon-play"></i></button>
+						<button class="pause_button"><i class="icon-large icon-pause"></i></button>
+					</div>
+
+					<div class="slider a span2"></div>
+					<div class="slider b span2" ></div>
+					<div class="slider c span2" ></div>
+					<div class="slider r span2" ></div>
 				</div>
-
-				<div class="slider a span2"></div>
-				<div class="slider b span2" ></div>
-				<div class="slider c span2" ></div>
-				<div class="slider r span2" ></div>
-
 			</div>
 			 
 

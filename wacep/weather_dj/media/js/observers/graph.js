@@ -27,6 +27,9 @@ Graph.prototype.prepareDOM = function () {
     ];
 
      $('.graph').highcharts({
+            chart: {
+                width: 800
+            },
             title: {
                 text: 'title',
                 x: -20 //center
