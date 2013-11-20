@@ -28,7 +28,7 @@ Graph.prototype.prepareDOM = function () {
 
      $('.graph').highcharts({
             chart: {
-                width: 800
+                width: 780
             },
             title: {
                 text: 'title',

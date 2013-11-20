@@ -19,8 +19,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             "pause",
             "play"
         );
-        $( "#tabs" ).tabs();
-
+        jQuery( "#tabs" ).tabs();
         self.setUpEngine();
         self.setUpSliders();
         self.play(); 

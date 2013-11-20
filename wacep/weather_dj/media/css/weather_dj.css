@@ -9,6 +9,14 @@
 
 }
 
+.new_div {
+	height:400px
+}
+
+.help_scrolling_div {
+	overflow-y: scroll;
+}
+
 .jquery_sliders .ui-slider {
 	position: relative;
 	text-align: left;
