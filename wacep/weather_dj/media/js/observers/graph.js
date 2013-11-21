@@ -78,31 +78,4 @@ Graph.prototype.prepareDOM = function () {
                 data: initial_data
             }]
         });
-
-    /*
-    var content = "<table><tbody>"
-    var titles = this.getSubject().getColumnTitles();
-    console.log (titles);
-
-
-    content += '<tr>';
-    for(i=0; i<titles.length; i++){
-        content += '<td>' + titles[i] + '</td>';
-    }
-    content += '</tr>';
-
-    for(i=0; i<this.getSubject().getNumberOfRows(); i++){
-        content += '<tr>';
-
-
-
-        for(j=0; j<columnLabels.length; j++){
-            // content += '<td class = "the_td row_' + i + ' column_' + j + '">' + 'row_' +  i + ', column_' +  j + '</td>';
-            content += '<td class = "the_td row_' + i + ' column_' + j + '"></td>'
-        }
-        content += '</tr>';
-    }
-    content += "</tbody></table>"
-    $('.table_span').append(content);
-    */
 }

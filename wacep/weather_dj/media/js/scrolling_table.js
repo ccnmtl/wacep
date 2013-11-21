@@ -48,6 +48,14 @@ var ScrollingTable = (function() {
         return result;
     }
 
+
+    ScrollingTable.prototype.getLatestInfo= function() {
+        "use strict";
+        var result = this.getLastRow();
+        return result;
+    }
+
+
     ScrollingTable.prototype.getColumns= function() {
         "use strict";
 

@@ -98,7 +98,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                   animate: true
             }
         );
-
         // don't let a + b > 100
         function slide_a (event, ui) {
             if (ui.value + jQuery('.slider.b').slider('value') > 100) {
@@ -110,19 +109,16 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                 event.preventDefault();
             }
         }
-
         jQuery ('.slider.a').slider ({
             'value': self.initial_slider_values['a'] * 100,
             'slide' : slide_a
         });
-
         jQuery ('.slider.b').slider ({
             'value': self.initial_slider_values['b'] * 100,
             'slide' : slide_b
          });
         jQuery ('.slider.c').slider ({'value': self.initial_slider_values['c'] * 100 });
         jQuery ('.slider.r').slider ({'value': self.initial_slider_values['r'] * 100 });
-
     },
 
     setUpEngine: function () {
@@ -134,6 +130,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.scrollingTable =  new ScrollingTable(columnLabels);
         self.table = new Table().hitch (self.scrollingTable);
         self.graph = new Graph().hitch (self.scrollingTable);
+        self.scene = new Scene().hitch (self.scrollingTable);
     },
 
 
