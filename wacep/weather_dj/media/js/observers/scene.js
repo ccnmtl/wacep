@@ -97,6 +97,7 @@ Scene.prototype.prepareDOM = function () {
     this.sun = draw.circle(100).move (650,50).fill ('yellow');
     this.river = draw.rect(800, 600).move (0,400).fill ('blue');
 
+    //tree:
     this.tree = draw.image('/hydrologic_cycle/media/img/tree.png').size(200,200).move (530, 90);
 
 
@@ -111,17 +112,18 @@ Scene.prototype.prepareDOM = function () {
     this.unsat_soil_ellipse =    draw.ellipse(2000,900);
 
 
-    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).y(-140);
-    this.rain_rect = draw.rect(100, 500).move (0,-200).fill ('lightblue')
-    //rain
-    this.rain_rect.maskWith (this.rain_mask);
-
-
     var initial_groundwater = 0; // should actually be initial value of groundwater.
     var wetness = initial_groundwater  * 50;
     this.unsat_soil_ellipse.move(-600, - (500 + wetness));
     var saturated_soil = this.unsat_soil_ellipse.maskWith(this.the_mask);
     saturated_soil.fill ('#a98');
+
+    //rain
+    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).y(-140);
+    this.rain_rect = draw.rect(100, 500).move (0,-200).fill ('lightblue')
+    this.rain_rect.maskWith (this.rain_mask);
+
+
 
     
 }
