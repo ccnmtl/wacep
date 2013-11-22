@@ -5,7 +5,6 @@ Scene.prototype.update = function ( ) {
     "use strict";
 
 /*
-
     var precipitation;
     var runoff;
     var groundwater;
@@ -14,6 +13,8 @@ Scene.prototype.update = function ( ) {
     var errors; // should be null
 
     */
+
+
     var info = this.getSubject().getLatestInfo();
 
     var a = jQuery('.slider.a').slider('value') / 100;
@@ -22,17 +23,12 @@ Scene.prototype.update = function ( ) {
     var r = jQuery('.slider.r').slider('value') / 100;
 
 
-    //var ellipse1 =     draw.ellipse(300, 200).move(150, 100).fill({ color: '#fff' })
-    
-    //
+    var wetness = info['groundwater'] * 50;
+    this.unsat_soil_ellipse.move(-600, - (500 + wetness))
 
-    var image = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
-    image.size(800, 800).y(-140);
+    var saturated_soil = this.unsat_soil_ellipse.maskWith(this.the_mask);
+    saturated_soil.fill ('#abc');
 
-    var ellipse2 =    draw.ellipse(2000,900).move(-600,-550).fill({ color: '#fff' });
-
-    var unsaturated_soil = ellipse2.maskWith(image);
-    unsaturated_soil.fill ('#f06');
 
 
 
@@ -82,6 +78,8 @@ Scene.prototype.update = function ( ) {
 }
 
 function update_div(label, number, jq_obj) {
+
+    /*
     if (label == 'precipitation') {
         jq_obj.width (number * 50);
     }
@@ -113,14 +111,25 @@ function update_div(label, number, jq_obj) {
     if (label == 'evapotranspiration_2') {
         jq_obj.height (number * 50);
     }
-
+    */
 }
 
-
-
-Table.prototype.prepareDOM = function () {
+Scene.prototype.prepareDOM = function () {
     "use strict";
 
-    self.draw = SVG (jQuery('.scene')[0])
+    window.draw = SVG (jQuery('.scene')[0]);
+    this.saturated_soil_background = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
+    this.saturated_soil_background.size(800, 800).y(-140);
+    this.the_mask = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
+    this.the_mask.size(800, 800).y(-140);
 
+
+    this.unsat_soil_ellipse =    draw.ellipse(2000,900);
+    var initial_groundwater = 0; // should actually be initial value of groundwater.
+    var wetness = initial_groundwater  * 50;
+    this.unsat_soil_ellipse.move(-600, - (500 + wetness))
+
+    var saturated_soil = this.unsat_soil_ellipse.maskWith(this.the_mask);
+    saturated_soil.fill ('#abc');
+    
 }
