@@ -99,14 +99,13 @@ header#masthead { height: 60px !important; }
 
 
 .figure_viewer_container.topic_GC {height: 473px; width: 749px;}
-.figure_viewer_container.topic_GC .figure_viewer_subcontainer.explanation {height: 235px;}
+.figure_viewer_container.topic_GC .figure_viewer_subcontainer.explanation {height: 235px; left: 508px;}
 .figure_viewer_container.topic_GC .figure_viewer_subcontainer.color_key {width: 506px; height: 58px;}
 .figure_viewer_container.topic_GC .figure_viewer_subcontainer.graph {top: 60px; width: 506px; height: 412px;}
 .figure_viewer_container.topic_GC .figure_viewer_select.mode_of_variability { display: none; }
 .figure_viewer_container.topic_GC .figure_viewer_select.year { display: none; }
 .figure_viewer_container.topic_GC .figure_viewer_select.graphing_mode { display: none; }
 .figure_viewer_container.topic_GC .figure_viewer_subcontainer.inputs {left: 508px;}
-.figure_viewer_container.topic_GC .figure_viewer_subcontainer.explanation {left: 508px;}
 .figure_viewer_container.topic_GC .figure_viewer_subcontainer.help_box { left: 125px; top: 75px;}
 .figure_viewer_container.topic_GC .figure_viewer_subcontainer.help_icon { left: 755px; top: 0px;}
 
@@ -126,12 +125,13 @@ header#masthead { height: 60px !important; }
 .figure_viewer_container.topic_TC .figure_viewer_subcontainer.graph {top: 1px;}
 .figure_viewer_container.topic_TC .figure_viewer_subcontainer.inputs {left: 822px;}
 .figure_viewer_container.topic_TC .figure_viewer_subcontainer.explanation {left: 822px; height: 379px;}
+.figure_viewer_container.topic_TC .figure_viewer_subcontainer.explanation .explanation_copy {height: 215px;}
 .figure_viewer_container.topic_TC .figure_viewer_select.climate_variable { display: none; }
 .figure_viewer_container.topic_TC .figure_viewer_select.season { display: none; }
 .figure_viewer_container.topic_TC .figure_viewer_select.year { display: none; }
 .figure_viewer_container.topic_TC .figure_viewer_radio { display: none; }
 .figure_viewer_container.topic_TC .figure_viewer_subcontainer.color_key { display: none; }
-.figure_viewer_container.topic_TC .figure_viewer_subcontainer.help_box { left: 275px; top: 200px;}
+.figure_viewer_container.topic_TC .figure_viewer_subcontainer.help_box { left: 275px; top: 135px;}
 .figure_viewer_container.topic_TC .figure_viewer_subcontainer.help_icon { left: 1070px; top: 0px;}
 
 
