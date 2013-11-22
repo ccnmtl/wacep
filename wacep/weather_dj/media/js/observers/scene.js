@@ -25,11 +25,20 @@ Scene.prototype.update = function ( ) {
     //var ellipse1 =     draw.ellipse(300, 200).move(150, 100).fill({ color: '#fff' })
     
     //
-    var ellipse2 =    draw.ellipse(1000,500).move(-400,180).fill({ color: '#fff' })
+
+    var image = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
+    image.size(800, 800).y(-140);
+
+    var ellipse2 =    draw.ellipse(2000,900).move(-600,-550).fill({ color: '#fff' });
+
+    var unsaturated_soil = ellipse2.maskWith(image);
+    unsaturated_soil.fill ('#f06');
+
+
+
     //ellipse1.maskWith(ellipse2)
 
-    var image = draw.image('/hydrologic_cycle/media/img/mask_1.jpg')
-    image.size(800, 800).y(-140)
+
 
 /*
         var text = draw.text('SVG.JS').move(300, 300)
@@ -42,7 +51,6 @@ Scene.prototype.update = function ( ) {
 */
         // clip image with text
   
-    ellipse2.maskWith(image)
 
     //"M 100 100 L 300 100 L 200 300 z"
     
