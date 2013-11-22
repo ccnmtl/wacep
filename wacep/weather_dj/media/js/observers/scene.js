@@ -29,7 +29,7 @@ Scene.prototype.update = function ( ) {
     var water_level = info['streamflow'] * 50;
     this.river.animate().move (0,400 - water_level);
 
-    this.rain_rect.attr({ width: (  info['precipitation'] * 50)})
+    this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
 
 /*
     update_div ('precipitation', info['precipitation'], jQuery('.scene_div.precipitation'));
@@ -94,8 +94,10 @@ Scene.prototype.prepareDOM = function () {
 
     //backdrop:
     this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
-    this.sun = draw.circle(100).move (600,50).fill ('yellow');
+    this.sun = draw.circle(100).move (650,50).fill ('yellow');
     this.river = draw.rect(800, 600).move (0,400).fill ('blue');
+
+    this.tree = draw.image('/hydrologic_cycle/media/img/tree.png').size(200,200).move (530, 90);
 
 
     // saturated soil background:
