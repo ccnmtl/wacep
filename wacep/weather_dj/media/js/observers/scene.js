@@ -88,9 +88,7 @@ function update_div(label, number, jq_obj) {
 
 Scene.prototype.prepareDOM = function () {
     "use strict";
-
     window.draw = SVG (jQuery('.scene')[0]);
-
 
     //backdrop:
     this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
@@ -100,8 +98,10 @@ Scene.prototype.prepareDOM = function () {
     //tree:
     this.tree = draw.image('/hydrologic_cycle/media/img/tree.png').size(200,200).move (530, 90);
 
+    // cloud:
+    this.cloud = draw.image('/hydrologic_cycle/media/img/cloud.png').size(200, 200).move (100, 0);
 
-    // saturated soil background:
+    // ubsaturated soil background:
     this.saturated_soil_background = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
     this.saturated_soil_background.size(800, 800).y(-140);
     this.big_rect = draw.rect(800, 600).move (0,-200).fill ('#654').maskWith (this.saturated_soil_background);
@@ -111,7 +111,7 @@ Scene.prototype.prepareDOM = function () {
     this.the_mask.size(800, 800).y(-140);
     this.unsat_soil_ellipse =    draw.ellipse(2000,900);
 
-
+    
     var initial_groundwater = 0; // should actually be initial value of groundwater.
     var wetness = initial_groundwater  * 50;
     this.unsat_soil_ellipse.move(-600, - (500 + wetness));
@@ -122,8 +122,4 @@ Scene.prototype.prepareDOM = function () {
     this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).y(-140);
     this.rain_rect = draw.rect(100, 500).move (0,-200).fill ('lightblue')
     this.rain_rect.maskWith (this.rain_mask);
-
-
-
-    
 }
