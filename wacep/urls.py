@@ -21,6 +21,7 @@ urlpatterns = patterns(
     {'next_page': None}),
     (r'^_pagetree/', include('pagetree.urls')),
     (r'^_quiz/', include('quizblock.urls')),
+    (r'analytics/', include('wacep.analytics.urls')),
     (r'/admin/login/',   RedirectView.as_view(url='/admin/')),
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', RedirectView.as_view(url='/welcome/'),
