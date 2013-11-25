@@ -1,5 +1,5 @@
 from annoying.decorators import render_to
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -8,6 +8,7 @@ from wacep.certificates.models import CourseAccess
 from datetime import datetime
 from django.utils.timezone import utc
 from django.db.models import Max
+
 
 @staff_member_required
 @render_to('certificates/certificates_admin.html')
@@ -92,7 +93,7 @@ def student_certificates(request):
     graduated = False
     if user_certs.count() == CertificateCourse.objects.all().count():
         graduated = True
-    return {'the_courses': user_certs, 'graduated' : graduated}
+    return {'the_courses': user_certs, 'graduated': graduated}
 
 
 @render_to('certificates/grad_certificate.html')
@@ -104,9 +105,10 @@ def show_graduation(request, user_id):
     user_certs = Certificate.objects.filter(user=user).count()
     if total_courses == user_certs:
         date = get_oldest(user_certs, user)
-        return {'date' : date['date__max'], 'user' : user}
+        return {'date': date['date__max'], 'user': user}
     else:
         raise Http404
+
 
 def get_oldest(set_of_certs, user):
     '''Returns oldest of the certificate objects.'''
@@ -114,7 +116,6 @@ def get_oldest(set_of_certs, user):
     hold_date = Certificate.objects.filter(user=user_)
     date = hold_date.aggregate(Max('date'))
     return date
-
 
 
 #this is not authenticated: the certificates themselves are public.

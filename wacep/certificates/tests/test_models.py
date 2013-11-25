@@ -1,6 +1,7 @@
 from django.test import TestCase
-from wacep.timescale.models import YearInput, GraphingModeInput, SeasonInput, ActivityState, TimescaleBlock
-from datetime import datetime
+from wacep.timescale.models import YearInput, GraphingModeInput
+from wacep.timescale.models import SeasonInput
+
 
 class BasicModelTest(TestCase):
     def setUp(self):
@@ -9,6 +10,6 @@ class BasicModelTest(TestCase):
         self.season = SeasonInput(name="season")
 
     def test_uni(self):
-    	self.assertEquals(unicode(self.yearinput), self.yearinput.name)
-    	self.assertEquals(unicode(self.graphinput), self.graphinput.name)
-    	self.assertEquals(unicode(self.season), self.season.name)
+        self.assertEquals(unicode(self.yearinput), self.yearinput.name)
+        self.assertEquals(unicode(self.graphinput), self.graphinput.name)
+        self.assertEquals(unicode(self.season), self.season.name)
