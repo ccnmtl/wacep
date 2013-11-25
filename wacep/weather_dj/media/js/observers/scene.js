@@ -21,19 +21,32 @@ Scene.prototype.update = function ( ) {
     var c = jQuery('.slider.c').slider('value') / 100;
     var r = jQuery('.slider.r').slider('value') / 100;
 
-    var wetness = info['groundwater'] * 50;
-    this.unsat_soil_ellipse.animate().move(-600, - (500 + wetness))
 
-    var water_level = info['streamflow'] * 50;
-    this.river.animate().move (0,400 - water_level);
+    this.unsat_soil_ellipse.animate().move(-600, - (500 + info['groundwater'] * 50))
+
+    var river_level = 400 - info['streamflow'] * 50;
+    this.river.animate().move (0,river_level);
+
+
+
+    var boat_angle = Math.ceil(10 * (Math.random() - 0.5));
+    this.boat.animate().move (400 + (Math.random() * 10), river_level - 90).rotate( boat_angle );
+
     this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
 
-    var max_outflow = 3.0; // the level required to get the arrow at 100%.
-    var outflow = parseInt (c * info['groundwater'] * 10 / max_outflow);
-    //console.log (this.arrows['outflow']);
 
 
+    var outflow = Math.floor (c * info['groundwater'] * 10 / 3.0);
     this.changeArrow (this.arrows['outflow'], outflow, this.arrowSettings.outflow);
+
+    var infiltration = Math.floor(a * info['precipitation'] * 2.0);
+    this.changeArrow (this.arrows['infiltration'], infiltration, this.arrowSettings.infiltration);
+
+    var evapotranspiration =  Math.floor (b * info['precipitation'] * 2);
+
+
+    this.changeArrow (this.arrows['evapotranspiration_1'], evapotranspiration, this.arrowSettings.evapotranspiration_1);
+    this.changeArrow (this.arrows['evapotranspiration_2'], evapotranspiration, this.arrowSettings.evapotranspiration_2);
 
 
 /*
@@ -54,43 +67,6 @@ Scene.prototype.update = function ( ) {
 
 }
 
-function update_div(label, number, jq_obj) {
-
-    /*
-    if (label == 'precipitation') {
-        jq_obj.width (number * 50);
-    }
-
-    if (label == 'groundwater') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'streamflow') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'runoff') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'infiltration') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'outflow') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'evapotranspiration_1') {
-        jq_obj.height (number * 50);
-    }
-
-    if (label == 'evapotranspiration_2') {
-        jq_obj.height (number * 50);
-    }
-    */
-}
-
 Scene.prototype.prepareDOM = function () {
     "use strict";
     window.draw = SVG (jQuery('.scene')[0]);
@@ -98,6 +74,10 @@ Scene.prototype.prepareDOM = function () {
     //backdrop:
     this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
     this.sun = draw.circle(100).move (650,50).fill ('yellow');
+
+
+
+    this.boat = draw.image('/hydrologic_cycle/media/img/boat.png').move (400, 300);
     this.river = draw.rect(800, 600).move (0,400).fill ('blue');
 
     //tree:
@@ -131,13 +111,23 @@ Scene.prototype.prepareDOM = function () {
 
 
     this.arrowSettings = {
-        'outflow':  {'x': 260, 'y': 340, 'rotate': 95}
+        'outflow':          {'x': 260, 'y': 340, 'rotate': 95},
+        'infiltration' :    {'x': 100, 'y': 200, 'rotate': 180},
+
+        'evapotranspiration_1' :    {'x': 300, 'y': 200, 'rotate': 340},
+        'evapotranspiration_2' :    {'x': 500, 'y': 100, 'rotate': 320}
     }
 
 
     //arrow for groundwater outflow:
     this.arrows = {};
-    this.arrows['outflow'] = this.makeArrow(this.arrowSettings.outflow);
+
+    this.arrows['outflow']      = this.makeArrow(this.arrowSettings.outflow);
+    this.arrows['infiltration'] = this.makeArrow(this.arrowSettings.infiltration);
+
+
+    this.arrows['evapotranspiration_1'] = this.makeArrow(this.arrowSettings.evapotranspiration_1);
+    this.arrows['evapotranspiration_2'] = this.makeArrow(this.arrowSettings.evapotranspiration_2);
 
 
 }
@@ -145,7 +135,7 @@ Scene.prototype.prepareDOM = function () {
 Scene.prototype.makeArrow = function(settings){
     "use strict";
     var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('red');
-    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
+    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_1.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
     arrow_background.maskWith (arrow_shape);
     return arrow_background;
 }
