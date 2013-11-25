@@ -13,7 +13,7 @@
 Congratulations! You have completed {{cert.course}}. 
 <br />
 You may now <a href = "{{cert.get_absolute_url}}" target='_blank' ">print your course certificate</a>.
-dated {{cert.date:  "F d o"}}
+dated {{cert.date|date:"F d o"}}
 </div>
 {%endfor%}
 
