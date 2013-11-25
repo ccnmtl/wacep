@@ -29,13 +29,11 @@ Scene.prototype.update = function ( ) {
     this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
 
     var max_outflow = 3.0; // the level required to get the arrow at 100%.
-    var outflow = c * info['groundwater'] / max_outflow;
-    console.log (outflow);
+    var outflow = parseInt (c * info['groundwater'] * 10 / max_outflow);
+    //console.log (this.arrows['outflow']);
 
 
-    this.arrows['outflow']
-
-    this.pickArrowShape(outflow);
+    this.changeArrow (this.arrows['outflow'], outflow, this.arrowSettings.outflow);
 
 
 /*
@@ -131,12 +129,15 @@ Scene.prototype.prepareDOM = function () {
     this.rain_rect.maskWith (this.rain_mask);
 
 
+
+    this.arrowSettings = {
+        'outflow':  {'x': 260, 'y': 340, 'rotate': 95}
+    }
+
+
     //arrow for groundwater outflow:
     this.arrows = {};
-    this.arrows['outflow'] = this.makeArrow({'x': 300, 'y': 300});
-
-    //this.arrows['outflow'] = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).y(140);
-    //this.arrows['outflow'] = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).y(140);
+    this.arrows['outflow'] = this.makeArrow(this.arrowSettings.outflow);
 
 
 }
@@ -144,15 +145,21 @@ Scene.prototype.prepareDOM = function () {
 Scene.prototype.makeArrow = function(settings){
     "use strict";
     var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('red');
-    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).move (settings.x,settings.y);
+    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
     arrow_background.maskWith (arrow_shape);
     return arrow_background;
+}
+
+Scene.prototype.changeArrow = function(arrow, num, settings){
+    "use strict";
+    arrow.unmask();
+    var new_arrow_shape = draw.image(this.pickArrowShape(num)).size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
+    arrow.maskWith (new_arrow_shape);
 }
 
 
 Scene.prototype.pickArrowShape = function(num) {
     "use strict";
-    num = parseInt (num);
     var arrow_shapes = [
             '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_2.jpg'
@@ -165,9 +172,9 @@ Scene.prototype.pickArrowShape = function(num) {
         ,   '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_10.jpg'
     ];
-
     if (num < 0) return arrow_shapes[0];
     if (num > 9) return arrow_shapes[9];
+
     return arrow_shapes[num];
 }
 
