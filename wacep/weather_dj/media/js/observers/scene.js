@@ -4,16 +4,6 @@ Scene.prototype = new Observer();
 Scene.prototype.update = function ( ) {
     "use strict";
 
-/*
-    var precipitation;
-    var runoff;
-    var groundwater;
-    var streamflow;
-    var date;
-    var errors; // should be null
-
-    */
-
     var info = this.getSubject().getLatestInfo();
 
     var a = jQuery('.slider.a').slider('value') / 100;
@@ -27,14 +17,10 @@ Scene.prototype.update = function ( ) {
     var river_level = 400 - info['streamflow'] * 50;
     this.river.animate().move (0,river_level);
 
-
-
     var boat_angle = Math.ceil(10 * (Math.random() - 0.5));
     this.boat.animate().move (400 + (Math.random() * 10), river_level - 90).rotate( boat_angle );
 
     this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
-
-
 
     var outflow = Math.floor (c * info['groundwater'] * 10 / 3.0);
     this.changeArrow (this.arrows['outflow'], outflow, this.arrowSettings.outflow);
@@ -44,26 +30,11 @@ Scene.prototype.update = function ( ) {
 
     var evapotranspiration =  Math.floor (b * info['precipitation'] * 2);
 
-
     this.changeArrow (this.arrows['evapotranspiration_1'], evapotranspiration, this.arrowSettings.evapotranspiration_1);
     this.changeArrow (this.arrows['evapotranspiration_2'], evapotranspiration, this.arrowSettings.evapotranspiration_2);
 
-
-/*
-    update_div ('precipitation', info['precipitation'], jQuery('.scene_div.precipitation'));
-    update_div ('groundwater',   info['groundwater'],   jQuery('.scene_div.groundwater'  ));
-    update_div ('streamflow',    info['streamflow'],    jQuery('.scene_div.streamflow'   ));
-    update_div ('runoff',        info['runoff'],        jQuery('.scene_div.runoff'       ));
-
-    //arrows:
-    update_div ('infiltration',      a * info['precipitation'],        jQuery('.scene_div.infiltration'       ));
-    update_div ('outflow',           c * info['groundwater'],          jQuery('.scene_div.outflow'       ));
-
-
-    update_div ('evapotranspiration_1',           b * info['precipitation'],          jQuery('.scene_div.evapotranspiration_1'       ));
-    update_div ('evapotranspiration_2',           b * info['precipitation'],          jQuery('.scene_div.evapotranspiration_2'       ));
-*/
-
+    var runoff = Math.floor (info['runoff'] * 2);
+    this.changeArrow (this.arrows['runoff'], runoff, this.arrowSettings.runoff);
 
 }
 
@@ -74,8 +45,6 @@ Scene.prototype.prepareDOM = function () {
     //backdrop:
     this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
     this.sun = draw.circle(100).move (650,50).fill ('yellow');
-
-
 
     this.boat = draw.image('/hydrologic_cycle/media/img/boat.png').move (400, 300);
     this.river = draw.rect(800, 600).move (0,400).fill ('blue');
@@ -103,18 +72,20 @@ Scene.prototype.prepareDOM = function () {
     var saturated_soil = this.unsat_soil_ellipse.maskWith(this.the_mask);
     saturated_soil.fill ('#a98');
 
+    
     //rain
-    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).y(-140);
-    this.rain_rect = draw.rect(100, 500).move (0,-200).fill ('lightblue')
+
+    this.rain_rect = draw.rect(100, 600).move (180,-220).fill ('lightblue').rotate(20);
+    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).move( 80, -160).rotate(-20);
     this.rain_rect.maskWith (this.rain_mask);
 
 
 
     this.arrowSettings = {
-        'outflow':          {'x': 260, 'y': 340, 'rotate': 95},
-        'infiltration' :    {'x': 100, 'y': 200, 'rotate': 180},
-
-        'evapotranspiration_1' :    {'x': 300, 'y': 200, 'rotate': 340},
+        'outflow':                  {'x': 180, 'y': 330, 'rotate': 95},
+        'infiltration' :            {'x': 0,   'y': 200, 'rotate': 180},
+        'runoff':                   {'x': 120, 'y': 220, 'rotate': 130},
+        'evapotranspiration_1' :    {'x': 0,   'y': 100, 'rotate': 45},
         'evapotranspiration_2' :    {'x': 500, 'y': 100, 'rotate': 320}
     }
 
@@ -124,6 +95,9 @@ Scene.prototype.prepareDOM = function () {
 
     this.arrows['outflow']      = this.makeArrow(this.arrowSettings.outflow);
     this.arrows['infiltration'] = this.makeArrow(this.arrowSettings.infiltration);
+
+
+    this.arrows['runoff'] =       this.makeArrow(this.arrowSettings.runoff);
 
 
     this.arrows['evapotranspiration_1'] = this.makeArrow(this.arrowSettings.evapotranspiration_1);
