@@ -1,19 +1,21 @@
+.weather_dj_container {
+	padding: 30px;
+
+}
+
 .tab_box {
 	height:400px;
 	width: 600px;
+	min-width: 800px;
 }
 
 .sliders {
 	position: absolute;
-	top: 500px;
-
+	top: 550px;
+	min-width: 800px;
 }
 
-.new_div {
-	height:400px
-}
-
-.help_scrolling_div {
+.help_tab {
 	overflow-y: scroll;
 }
 
@@ -227,4 +229,12 @@ div.runoff {
 	position: absolute;
 	left:100px;
 	top:300px;
+}
+
+
+/* table */
+
+.weather_dj_table tr {
+	height: 35px;
+}
 }
