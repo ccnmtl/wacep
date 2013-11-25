@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
-from wacep.figure_viewer.models import AnimationInput, ClimateVariableInput, ModeOfVariabilityInput, SeasonInput, GraphingModeInput, YearInput, InputCombination, ActivityState, FigureViewerTopic
+from django.http import HttpResponse
+from .models import AnimationInput, ClimateVariableInput
+from .models import ModeOfVariabilityInput, SeasonInput, GraphingModeInput
+from .models import YearInput, InputCombination, ActivityState
+from .models import FigureViewerTopic
 from django.utils import simplejson
 
 
@@ -21,11 +24,12 @@ def settings(request, topic_slug):
     the_settings = {}
     for label, clazz in class_map.iteritems():
         its_json = getattr(clazz, 'to_json')
-        the_settings [label] = map (its_json, clazz.objects.all())
+        the_settings[label] = map(its_json, clazz.objects.all())
 
-    input_combos = InputCombination.objects.filter (topic__slug=topic_slug)
-    the_settings ['input_combinations'] =  [i.to_json() for i in input_combos]
-    the_settings ['topic'] = FigureViewerTopic.objects.get(slug=topic_slug).to_json()
+    input_combos = InputCombination.objects.filter(topic__slug=topic_slug)
+    the_settings['input_combinations'] = [i.to_json() for i in input_combos]
+    the_settings['topic'] = FigureViewerTopic.objects.get(
+        slug=topic_slug).to_json()
 
-    return HttpResponse(simplejson.dumps(the_settings, indent=2),  mimetype="application/json")
-
+    return HttpResponse(simplejson.dumps(the_settings, indent=2),
+                        mimetype="application/json")
