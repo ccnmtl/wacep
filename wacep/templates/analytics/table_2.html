@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load compress %}
+{% load bootstrap %}
+{% load render %}
+{% block title %}Analytics{% endblock %}
+{% block js %}
+{%endblock %}
+
+{%block css %}
+<style>
+    #sidebar, #primarynav, #breadcrumbs, #header {
+        display:none;
+    }
+    #right-content {
+        width : 10000px;
+    }
+    
+    .container {
+      margin-right: 0px;
+      margin-left:  0px;
+    }
+    
+    
+</style>
+{%endblock %}
+
+{% block content %}
+    <h1>Analytics</h1>
+{% for s in submissions %} <p>s.quiz</p><space>{{s.quiz}} <space><space>  <p>s.quiz.question</p><space>{s.quiz.question}} <space><space>  <p>s.value</p><space>{{s.value}} <br>{% endfor %} <!--This does show the 1 quiz submitted-->
+
+{% for s in submissions %} <p>s.quiz.id</p><space>{{s.quiz.id}} <space><space>  <p>s.quiz.question.id</p><space>{s.quiz.question.id}} <space><space>  <p>s.value.id</p><space>{{s.value.id}} <br>{% endfor %} <!--only shows quiz id-->
+
+    <table class="table table-bordered">
+        {% for row in the_table %}
+        <tr class = "" >
+            {% for cell in row %}
+                <td>
+                    {{cell}}
+                </td>
+            {%endfor%}
+        </tr>
+        {%endfor %}
+    </table>
+{%endblock%}
