@@ -14,7 +14,6 @@ Scene.prototype.update = function ( ) {
 
     */
 
-
     var info = this.getSubject().getLatestInfo();
 
     var a = jQuery('.slider.a').slider('value') / 100;
@@ -22,14 +21,22 @@ Scene.prototype.update = function ( ) {
     var c = jQuery('.slider.c').slider('value') / 100;
     var r = jQuery('.slider.r').slider('value') / 100;
 
-
     var wetness = info['groundwater'] * 50;
     this.unsat_soil_ellipse.animate().move(-600, - (500 + wetness))
 
     var water_level = info['streamflow'] * 50;
     this.river.animate().move (0,400 - water_level);
-
     this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
+
+    var max_outflow = 3.0; // the level required to get the arrow at 100%.
+    var outflow = c * info['groundwater'] / max_outflow;
+    console.log (outflow);
+
+
+    this.arrows['outflow']
+
+    this.pickArrowShape(outflow);
+
 
 /*
     update_div ('precipitation', info['precipitation'], jQuery('.scene_div.precipitation'));
@@ -122,4 +129,45 @@ Scene.prototype.prepareDOM = function () {
     this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).y(-140);
     this.rain_rect = draw.rect(100, 500).move (0,-200).fill ('lightblue')
     this.rain_rect.maskWith (this.rain_mask);
+
+
+    //arrow for groundwater outflow:
+    this.arrows = {};
+    this.arrows['outflow'] = this.makeArrow({'x': 300, 'y': 300});
+
+    //this.arrows['outflow'] = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).y(140);
+    //this.arrows['outflow'] = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).y(140);
+
+
 }
+
+Scene.prototype.makeArrow = function(settings){
+    "use strict";
+    var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('red');
+    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_10.jpg').size(100, 100).move (settings.x,settings.y);
+    arrow_background.maskWith (arrow_shape);
+    return arrow_background;
+}
+
+
+Scene.prototype.pickArrowShape = function(num) {
+    "use strict";
+    num = parseInt (num);
+    var arrow_shapes = [
+            '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_2.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_3.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_4.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_5.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_6.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_7.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_8.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_10.jpg'
+    ];
+
+    if (num < 0) return arrow_shapes[0];
+    if (num > 9) return arrow_shapes[9];
+    return arrow_shapes[num];
+}
+
