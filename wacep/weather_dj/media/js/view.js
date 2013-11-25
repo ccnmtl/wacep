@@ -27,6 +27,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
 
     pause: function() {
+        "use strict";
         var self = this;
         jQuery ('.pause_button').hide()
         jQuery ('.play_button').show()
@@ -35,6 +36,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
 
     play: function() {
+        "use strict";
         var self = this;
         jQuery ('.pause_button').show()
         jQuery ('.play_button').hide()
@@ -43,6 +45,8 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     },
 
     sliderValues: function() {
+
+        "use strict";
         var self = this;
         return {
             'a': jQuery('.slider.a').slider('value') / 100,
@@ -53,10 +57,12 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     },
 
     loop: function () {
+        "use strict";
         var self = this;
         var outputs;
         var  i = 0;
         function loopTwo() {
+            "use strict";
             self.engine.setInputs(self.sliderValues());
             outputs = self.engine.generateOutputs();
             if (outputs['errors'] != null ) { 
@@ -84,12 +90,14 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         }
 
         function loopOne() {
+            "use strict";
             setTimeout( loopTwo , 800);
         }
         loopOne();
     },
 
     setUpSliders: function() {
+        "use strict";
         var self = this;
         jQuery( ".slider" ).slider(
             {
@@ -100,11 +108,13 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         );
         // don't let a + b > 100
         function slide_a (event, ui) {
+            "use strict";
             if (ui.value + jQuery('.slider.b').slider('value') > 100) {
                 event.preventDefault();
             }
         }
         function slide_b (event, ui) {
+            "use strict";
             if (ui.value + jQuery('.slider.a').slider('value') > 100) {
                 event.preventDefault();
             }
@@ -122,16 +132,15 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     },
 
     setUpEngine: function () {
-        var self = this;
         "use strict";
+        var self = this;
+        var columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
         self.engine = new WeatherDJEngine();
         self.engine.setInputs(self.initial_slider_values);
-        columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
         self.scrollingTable =  new ScrollingTable(columnLabels);
         self.table = new Table().hitch (self.scrollingTable);
         self.graph = new Graph().hitch (self.scrollingTable);
         self.scene = new Scene().hitch (self.scrollingTable);
     },
-
 
 });
