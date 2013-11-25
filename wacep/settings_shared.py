@@ -48,9 +48,11 @@ JENKINS_TASKS = (
     'django_jenkins.tasks.run_pyflakes',
 )
 PROJECT_APPS = [
-    'wacep.main',
     'wacep.certificates',
+    'wacep.main',
+    'wacep.figure_viewer',
     'wacep.timescale',
+    'wacep.weather_dj',
 ]
 
 ALLOWED_HOSTS = ['localhost', '.ccnmtl.columbia.edu']
