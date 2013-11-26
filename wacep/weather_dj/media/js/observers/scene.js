@@ -125,7 +125,9 @@ Scene.prototype.changeArrow = function(arrow, num, settings){
 Scene.prototype.pickArrowShape = function(num) {
     "use strict";
     var arrow_shapes = [
-            '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
+
+            '/hydrologic_cycle/media/img/arrows/arrow_0.jpg'
+        ,   '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_2.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_3.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_4.jpg'
@@ -134,7 +136,6 @@ Scene.prototype.pickArrowShape = function(num) {
         ,   '/hydrologic_cycle/media/img/arrows/arrow_7.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_8.jpg'
         ,   '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_10.jpg'
     ];
     if (num < 0) return arrow_shapes[0];
     if (num > 9) return arrow_shapes[9];
