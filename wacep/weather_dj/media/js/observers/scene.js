@@ -12,13 +12,17 @@ Scene.prototype.update = function ( ) {
     var r = jQuery('.slider.r').slider('value') / 100;
 
 
-    this.unsat_soil_ellipse.animate().move(-600, - (500 + info['groundwater'] * 50))
+    this.unsaturated_soil.animate().move(-600, - (500 + info['groundwater'] * 50))
 
+
+    var river_angle = Math.ceil((Math.random() - 0.5));
     var river_level = 400 - info['streamflow'] * 50;
-    this.river.animate().move (0,river_level);
+    this.river.animate().move (0,river_level).rotate(river_angle);
 
     var boat_angle = Math.ceil(10 * (Math.random() - 0.5));
     this.boat.animate().move (400 + (Math.random() * 10), river_level - 90).rotate( boat_angle );
+
+
 
     this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
 
@@ -38,47 +42,226 @@ Scene.prototype.update = function ( ) {
 
 }
 
+
 Scene.prototype.prepareDOM = function () {
     "use strict";
     window.draw = SVG (jQuery('.scene')[0]);
 
-    //backdrop:
-    this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
-    this.sun = draw.circle(100).move (650,50).fill ('yellow');
 
-    this.boat = draw.image('/hydrologic_cycle/media/img/boat.png').move (400, 300);
-    this.river = draw.rect(800, 600).move (0,400).fill ('blue');
+    this.scene_settings = {
+        'sky' : {
+            'size': {
+                'x':800,
+                'y':600
+            },
+            'position': {
+                'x':0,
+                'y':-200
+            },
+            'color': '#2af'
+        },
 
-    //tree:
-    this.tree = draw.image('/hydrologic_cycle/media/img/tree.png').size(200,200).move (530, 90);
+        'sun' : {
+            'radius':100,
+            'position': {
+                'x': 680,
+                'y': 30
+            },
+            'color': 'yellow'
+        },
 
-    // cloud:
-    this.cloud = draw.image('/hydrologic_cycle/media/img/cloud.png').size(200, 200).move (100, 0);
+        'boat' : {
+            'position': {
+                'x': 400,
+                'y': 300
+            }
+        },
 
-    // ubsaturated soil background:
-    this.saturated_soil_background = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
-    this.saturated_soil_background.size(800, 800).y(-140);
-    this.big_rect = draw.rect(800, 600).move (0,-200).fill ('#654').maskWith (this.saturated_soil_background);
+        'river' : {
+            'size': {
+                'x':800,
+                'y':600
+            },
+            'position': {
+                'x':0,
+                'y':400
+            },
+            'color': 'blue'
+        },
+        'tree' : {
+            'size': {
+                'x':200,
+                'y':200
+            },
+            'position': {
+                'x':570,
+                'y':80
+            }
+        },
+        'cloud' : {
+            'size': {
+                'x':200,
+                'y':200
+            },
+            'position': {
+                'x':100,
+                'y':0
+            }
+        },
+        'grass_mask' : {
+            'size': {
+                'x':800,
+                'y':800
+            },
+            'position': {
+                'x':  0,
+                'y':-140
+            }
+        },
+        'grass' : {
+            'size': {
+                'x':800,
+                'y':800
+            },
+            'position': {
+                'x':  0,
+                'y':-200
+            },
+            'color': '#5d5'
+        },
 
-    // unsaturated soil ellipse
-    this.the_mask = draw.image('/hydrologic_cycle/media/img/mask_1.jpg');
-    this.the_mask.size(800, 800).y(-140);
-    this.unsat_soil_ellipse =    draw.ellipse(2000,900);
+        'saturated_soil_mask' : {
+            'size': {
+                'x':800,
+                'y':800
+            },
+            'position': {
+                'x':  0,
+                'y':  -140
+            }
+        },
 
+        'saturated_soil_rect' : {
+            'size': {
+                'x':800,
+                'y':800
+            },
+            'position': {
+                'x':  0,
+                'y':-200
+            },
+            'color': '#654'
+        },
+
+        'saturated_soil_ellipse' : {
+            'size': {
+                'x':2000,
+                'y':900
+            },
+            'position': {
+                'x':  -600,
+                'y': -500
+            },
+            'color': '#a98'
+        },
+
+        'rain_rect' : {
+            'size': {
+                'x':100,
+                'y':600
+            },
+            'position': {
+                'x':  180,
+                'y': -220
+            },
+            'color': 'lightblue'
+        },
+
+        'rain_mask' : {
+            'size': {
+                'x':800,
+                'y':800
+            },
+            'position': {
+                'x':  80,
+                'y': -160
+            }
+        }
+        ///
+
+    }
+
+    /*
+    function my_move (what_to_move, position) {
+        what_to_move.move (position.x, position.y);
+    }
+    */
     
-    var initial_groundwater = 0; // should actually be initial value of groundwater.
-    var wetness = initial_groundwater  * 50;
-    this.unsat_soil_ellipse.move(-600, - (500 + wetness));
-    var saturated_soil = this.unsat_soil_ellipse.maskWith(this.the_mask);
-    saturated_soil.fill ('#a98');
+    function my_rect (size) {
+        return window.draw.rect (size.x, size.y);
+    }
 
+    function my_ellipse (size) {
+        return window.draw.ellipse (size.x, size.y);
+    }
     
-    //rain
+    SVG.Shape.prototype.my_move = function (position) {
+        return this.move (position.x, position.y);
+    }
 
-    this.rain_rect = draw.rect(100, 600).move (180,-220).fill ('lightblue').rotate(20);
-    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg').size(800, 800).move( 80, -160).rotate(-20);
-    this.rain_rect.maskWith (this.rain_mask);
+    SVG.Shape.prototype.my_size = function (position) {
+        return this.size (position.x, position.y);
+    }
 
+    SVG.Shape.prototype.my_size_move = function (settings) {
+        return this.size (settings.size.x, settings.size.y)
+        .move (settings.position.x, settings.position.y);
+    }
+
+
+    var set = this.scene_settings;
+
+    this.sky = my_rect(set.sky.size)
+        .my_move ( set.sky.position)
+        .fill (set.sky.color);
+    this.sun = draw.circle(set.sun.radius)
+        .my_move (set.sun.position)
+        .fill (set.sun.color);
+    this.boat = draw.image('/hydrologic_cycle/media/img/boat.png')
+        .my_move (set.boat.position);
+    this.river = my_rect(set.river.size)
+        .my_move (set.river.position)
+        .fill (set.river.color);
+    this.tree = draw.image('/hydrologic_cycle/media/img/tree.png')
+        .my_size_move (set.tree);
+    this.cloud = draw.image('/hydrologic_cycle/media/img/cloud.png')
+        .my_size_move (set.cloud);
+    this.grass_mask = draw.image('/hydrologic_cycle/media/img/grass.jpg')
+        .my_size_move (set.grass_mask);
+    this.grass = my_rect(set.grass.size)
+        .my_move ( set.grass.position)
+        .fill (set.grass.color)
+        .maskWith(this.grass_mask)
+    this.saturated_soil_mask = draw.image('/hydrologic_cycle/media/img/mask_1.jpg')
+        .my_size_move ( set.saturated_soil_mask);
+    this.saturated_soil_rect = my_rect(set.saturated_soil_rect.size)
+        .my_move ( set.saturated_soil_rect.position)
+        .fill (set.saturated_soil_rect.color)
+        .maskWith (this.saturated_soil_mask);
+    this.unsaturated_soil_mask = draw.image('/hydrologic_cycle/media/img/mask_1.jpg')
+        .my_size_move ( set.saturated_soil_mask);
+    this.unsaturated_soil = my_ellipse(set.saturated_soil_ellipse.size)
+        .my_move ( set.saturated_soil_ellipse.position)
+        .maskWith(this.unsaturated_soil_mask)
+        .fill (set.saturated_soil_ellipse.color);
+    this.rain_mask = draw.image('/hydrologic_cycle/media/img/rain_mask.jpg')
+        .my_size_move ( set.rain_mask)
+        .rotate(-20);
+    this.rain_rect = my_rect(set.rain_rect.size)
+        .my_move (set.rain_rect.position)
+        .fill (set.rain_rect.color)
+        .rotate(20)
+        .maskWith (this.rain_mask);
 
 
     this.arrowSettings = {
@@ -108,8 +291,8 @@ Scene.prototype.prepareDOM = function () {
 
 Scene.prototype.makeArrow = function(settings){
     "use strict";
-    var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('red');
-    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_1.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
+    var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('blue');
+    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_0.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
     arrow_background.maskWith (arrow_shape);
     return arrow_background;
 }
