@@ -7,19 +7,22 @@
 {%block loginlink %}{%endblock loginlink %}
 {% block content %}
 
-<h1>Log In</h1>
+
+<div class="hero-unit" style="color: white; padding: 30px; text-shadow: 1px 1px 1px #000; background-image: url('/site_media/img/beach.jpg');  ">
+
+		<h1>
+		Water and Climate Education Program (WACEP)
+		</h1>
+		<h3>
+		Short Courses in Climate Risk Management and Water Resources Management
+		</h3>
+		
+</div>
+
 
 <div class="row-fluid">
 
-	<div class="span7">
-	
-		<div class="pageblock">
-		
-		<h3>
-		Welcome to the Water and Climate Education Program (WACEP):
-		<br/>
-		Short Courses in Climate Risk Management and Water Resources Management
-		</h3>
+	<div class="span6">
 		
 		<p>
 		Caribbean islands have limited water resources, and increasing pressure on those resources from population pressure, urbanization, economic development, and tourism. Climatic variability is magnifying existing pressures. Adaptation to climate is essential, but regional capacity needs to be built in how to identify and implement effective strategies to manage climate and water-related risks.
@@ -38,15 +41,11 @@
 		<li>Water Planning and Policy for Climate Variability and Change</li>
 		</ol>
 		
-
 		<p>Please contact <a href="mailto:wacep@iri.columbia.edu">wacep@iri.columbia.edu </a>for more information and course registration.</p>
+		
+		</div>
 
-	</div>	
-	
-	</div>
-	
-	<div class="span5">
-
+	<div class="span6">
 		<form method="post" action="." class="well">
 		
 		<label for="id_username">User Name: {{ form.username }}</label>
@@ -73,11 +72,14 @@
 		
 		</form>
 		{% endcomment%}
-		
-		<img src="http://wacep.qa.ccnmtl.columbia.edu/site_media/splash/img/wacep_logo_vertical.png" alt="WACEP Logo" />
-		
+		<img src="/site_media/splash/img/wacep_logo_vertical.png" alt="WACEP Logo" />
+
 	</div>
+	
 
 </div>
+
+
+
 
 {% endblock %}
