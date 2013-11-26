@@ -9,51 +9,114 @@ from pagetree.models import Section
 from quizblock.models import Answer, Question, Submission, Quiz
 from django.shortcuts import render, render_to_response
 #from wacep.main import Question, Answer
+# trying to cut down on Eddie's get responses
+# 4 methods - working backwards
+# method 1:
+# method 4 - searching for the users responses and returning them in order of latest submission
+def user_responses(user):
+    result = {}
+
+    for s in user.submission_set.order_by('submitted'):
+        for r in s.response_set.all():
+            result[r.question.id] = r.value
+    return result
+
+# method 3 - generate_row_info - cut params down from 4 to 2, combined generate row so methods 2 & 3
+def get_row(user, all_questions):
+    responses = user_responses(user)
+    #print type(responses) #dict
+    # print responses #they're all empty!!!!
+
+    user_questions = []
+    question_ids = responses.keys() # type list
+    # calling user_responses method #4
+    # print "type of question_ids " + str(type(question_ids))
+    # print question_ids
+    for q in all_questions:
+        #print type(q)
+        # print "individual question q " + str(q)
+        if q.id in question_ids: # this is using keys grabbed above
+            # print type(q.id) # int
+            # print q.id # value of int
+            # print type(question_ids) type list
+            user_questions.append(responses[q.id])
+        else:
+            user_questions.append(None)
+    #print type(user) # this is user object
+    #print type(user_questions) # this is list...
+    #individual objects of lists are quizblock questions...
+    return {
+            'user':user,
+            'user_questions':user_questions
+            }
 
 
-questions = []
-answers = []
+def get_table():
+    all_questions = Question.objects.all()
+    all_users = User.objects.all()
+    the_table = []
 
-def get_answers(request):
-    answers = Answer.objects.all()
-    return render(request, 'analytics/table_1.html', {"answers": answers})
+    for u in all_users:
+        the_table.append(get_row(u, all_questions))
+    return the_table
 
-def get_submission_quiz(request):
-    submissions = Submission.objects.all()
-    return render(request, 'analytics/table_2.html', {"submissions": submissions})
-
-def get_submission_quiz_quiz(request):
-    quizzes = Quiz.objects.all()
-    keep = []
-    for q in quizzes:
-        keep.append(q.submission_set.all())
-
-    return render(request, 'analytics/table_3.html', { "keep" : keep })#{"submissions": submissions, "quizzes" : quizzes})
+@render_to('analytics/analytics_table.html')
+def website_table(request):
+    return {'the_table' : get_table()}
 
 
 
-def get_user_quiz_answers(request):
-    submission_objects = Submission.objects.all()
-    question_objects = Question.objects.all()
-    answer_objects = Answer.objects.all()
-    #print "Objects retrieved"
 
-    question_submission_table = []
-    question_answer_table = []
-    x = 0
-    y = 0
-    #print "tables and counters created"
 
-    #go over submissions, for each row, grab user and quiz, search for questions of quiz and answers
-    for submission in submission_objects:
-        print submission.quiz
 
-        #hang on to submission quiz to search for it in quizzes
-        submission_quiz = submission.quiz
-        for q in question_objects:
-            quiz_quiz = q.quiz
-            if submission_quiz == quiz_quiz:
-                question_submission_table[x] = zip(submission_quiz, quiz_quiz)
+
+
+
+
+
+# questions = []
+# answers = []
+
+# def get_answers(request):
+#     answers = Answer.objects.all()
+#     return render(request, 'analytics/table_1.html', {"answers": answers})
+
+# def get_submission_quiz(request):
+#     submissions = Submission.objects.all()
+#     return render(request, 'analytics/table_2.html', {"submissions": submissions})
+
+# def get_submission_quiz_quiz(request):
+#     quizzes = Quiz.objects.all()
+#     keep = []
+#     for q in quizzes:
+#         keep.append(q.submission_set.all())
+
+#     return render(request, 'analytics/table_3.html', { "keep" : keep })#{"submissions": submissions, "quizzes" : quizzes})
+
+
+
+# def get_user_quiz_answers(request):
+#     submission_objects = Submission.objects.all()
+#     question_objects = Question.objects.all()
+#     answer_objects = Answer.objects.all()
+#     #print "Objects retrieved"
+
+#     question_submission_table = []
+#     question_answer_table = []
+#     x = 0
+#     y = 0
+#     #print "tables and counters created"
+
+#     #go over submissions, for each row, grab user and quiz, search for questions of quiz and answers
+#     for submission in submission_objects:
+#         print submission.quiz
+
+#         #hang on to submission quiz to search for it in quizzes
+#         submission_quiz = submission.quiz
+#         for q in question_objects:
+#             quiz_quiz = q.quiz
+#             if submission_quiz == quiz_quiz:
+#                 question_submission_table[x] = zip(submission_quiz, quiz_quiz)
 
 
         #for a in answer_objects:
@@ -69,7 +132,7 @@ def get_user_quiz_answers(request):
     #             question_answer_table = dict(key_1.items() + key_2.items())
     #             counter_two = counter_two + 1
 
-    return render(request, 'analytics/table_4.html', {"question_submission_table": question_submission_table})
+#    return render(request, 'analytics/table_4.html', {"question_submission_table": question_submission_table})
 # def responses_for(the_user):
 #     """The user's responses to quiz questions.
 #     If there is more than one response

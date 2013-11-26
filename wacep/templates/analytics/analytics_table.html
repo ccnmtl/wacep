@@ -27,14 +27,19 @@
 {% block content %}
     <h1>Analytics</h1>
     <table class="table table-bordered">
-        {% for row in the_table %}
+        {% for t in the_table %}
         <tr class = "" >
-            {% for cell in row %}
+                <td>
+                    {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}} {{t.user.user_questions}} {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+                </td>
+<!--            {% for cell in row %}
                 <td>
                     {{cell}}
                 </td>
             {%endfor%}
+-->
         </tr>
+
         {%endfor %}
     </table>
 {%endblock%}

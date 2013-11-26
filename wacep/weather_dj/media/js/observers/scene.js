@@ -1,49 +1,12 @@
 function Scene ( ) {}
 Scene.prototype = new Observer();
 
-Scene.prototype.update = function ( ) {
-    "use strict";
-
-    var info = this.getSubject().getLatestInfo();
-
-    var a = jQuery('.slider.a').slider('value') / 100;
-    var b = jQuery('.slider.b').slider('value') / 100;
-    var c = jQuery('.slider.c').slider('value') / 100;
-    var r = jQuery('.slider.r').slider('value') / 100;
-
-
-    this.unsat_soil_ellipse.animate().move(-600, - (500 + info['groundwater'] * 50))
-
-    var river_level = 400 - info['streamflow'] * 50;
-    this.river.animate().move (0,river_level);
-
-    var boat_angle = Math.ceil(10 * (Math.random() - 0.5));
-    this.boat.animate().move (400 + (Math.random() * 10), river_level - 90).rotate( boat_angle );
-
-    this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
-
-    var outflow = Math.floor (c * info['groundwater'] * 10 / 3.0);
-    this.changeArrow (this.arrows['outflow'], outflow, this.arrowSettings.outflow);
-
-    var infiltration = Math.floor(a * info['precipitation'] * 2.0);
-    this.changeArrow (this.arrows['infiltration'], infiltration, this.arrowSettings.infiltration);
-
-    var evapotranspiration =  Math.floor (b * info['precipitation'] * 2);
-
-    this.changeArrow (this.arrows['evapotranspiration_1'], evapotranspiration, this.arrowSettings.evapotranspiration_1);
-    this.changeArrow (this.arrows['evapotranspiration_2'], evapotranspiration, this.arrowSettings.evapotranspiration_2);
-
-    var runoff = Math.floor (info['runoff'] * 2);
-    this.changeArrow (this.arrows['runoff'], runoff, this.arrowSettings.runoff);
-
-}
 
 Scene.prototype.prepareDOM = function () {
     "use strict";
     window.draw = SVG (jQuery('.scene')[0]);
-
     //backdrop:
-    this.sky = draw.rect(800, 600).move (0,-200).fill ('#2af');
+    this.sky = draw.rect(800, 600).fill ('#2af');
     this.sun = draw.circle(100).move (650,50).fill ('yellow');
 
     this.boat = draw.image('/hydrologic_cycle/media/img/boat.png').move (400, 300);
@@ -106,10 +69,48 @@ Scene.prototype.prepareDOM = function () {
 
 }
 
+
+Scene.prototype.update = function ( ) {
+    "use strict";
+
+    var info = this.getSubject().getLatestInfo();
+
+    var a = jQuery('.slider.a').slider('value') / 100;
+    var b = jQuery('.slider.b').slider('value') / 100;
+    var c = jQuery('.slider.c').slider('value') / 100;
+    var r = jQuery('.slider.r').slider('value') / 100;
+
+
+    this.unsat_soil_ellipse.animate().move(-600, - (500 + info['groundwater'] * 50))
+
+    var river_level = 400 - info['streamflow'] * 50;
+    this.river.animate().move (0,river_level);
+
+    var boat_angle = Math.ceil(10 * (Math.random() - 0.5));
+    this.boat.animate().move (400 + (Math.random() * 10), river_level - 90).rotate( boat_angle );
+
+    this.rain_rect.animate().attr({ width: (  info['precipitation'] * 50)})
+
+    var outflow = Math.floor (c * info['groundwater'] * 10 / 3.0);
+    this.changeArrow (this.arrows['outflow'], outflow, this.arrowSettings.outflow);
+
+    var infiltration = Math.floor(a * info['precipitation'] * 2.0);
+    this.changeArrow (this.arrows['infiltration'], infiltration, this.arrowSettings.infiltration);
+
+    var evapotranspiration =  Math.floor (b * info['precipitation'] * 2);
+
+    this.changeArrow (this.arrows['evapotranspiration_1'], evapotranspiration, this.arrowSettings.evapotranspiration_1);
+    this.changeArrow (this.arrows['evapotranspiration_2'], evapotranspiration, this.arrowSettings.evapotranspiration_2);
+
+    var runoff = Math.floor (info['runoff'] * 2);
+    this.changeArrow (this.arrows['runoff'], runoff, this.arrowSettings.runoff);
+
+}
+
 Scene.prototype.makeArrow = function(settings){
     "use strict";
     var arrow_background = draw.rect(100, 100).move (settings.x,settings.y).fill ('red');
-    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_1.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
+    var arrow_shape = draw.image('/hydrologic_cycle/media/img/arrows/arrow_0.jpg').size(100, 100).move (settings.x,settings.y).rotate(settings.rotate);
     arrow_background.maskWith (arrow_shape);
     return arrow_background;
 }
@@ -124,17 +125,18 @@ Scene.prototype.changeArrow = function(arrow, num, settings){
 
 Scene.prototype.pickArrowShape = function(num) {
     "use strict";
+    var tmp = '/hydrologic_cycle/media/img/arrows/arrow_'
     var arrow_shapes = [
-            '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_2.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_3.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_4.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_5.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_6.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_7.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_8.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_10.jpg'
+           tmp + '0.jpg'
+        ,  tmp + '1.jpg'
+        ,  tmp + '2.jpg'
+        ,  tmp + '3.jpg'
+        ,  tmp + '4.jpg'
+        ,  tmp + '5.jpg'
+        ,  tmp + '6.jpg'
+        ,  tmp + '7.jpg'
+        ,  tmp + '8.jpg'
+        ,  tmp + '9.jpg'
     ];
     if (num < 0) return arrow_shapes[0];
     if (num > 9) return arrow_shapes[9];
