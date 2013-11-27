@@ -24,16 +24,6 @@ var WeatherDJEngine = (function() {
         date = new Date();
     };
 
-
-    /*  
-        if a == 0
-        b    == 0
-        c    == 100%
-        r    == 100%
-
-        why is stream == to rainwater? shouldn't it accumulate?
-    */
-
     WeatherDJEngine.prototype.getRain = function () {
     	"use strict";
     	var it_rained = (Math.random() < r);
