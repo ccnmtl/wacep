@@ -140,13 +140,14 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
                 theAnimation = 2;
             }
         }
-        
+        /*
         console.log ('theSeason '            + theSeason);
         console.log ('theGraphingMode '      + theGraphingMode);
         console.log ('theClimateVariable '   + theClimateVariable);
         console.log ('theYear '              + theYear);
         console.log ('theModeOfVariability ' + theModeOfVariability);
         console.log ('theAnimation         ' + theAnimation);
+        */
         
         // do we know how to deal with this particular combination of inputs?
 
@@ -237,7 +238,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         // Sorry, only found out about this functionality really late, so I'm just tacking it on.
         "use strict";
         var self = this;
-
         if (self.topic_slug === 'NV') {
             var enso_selected;
             var el_nino_selected;
@@ -245,15 +245,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             enso_selected =  jQuery ('.figure_viewer_select.mode_of_variability option:selected').hasClass ('enso');
             el_nino_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
             la_nina_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
-
-
             if (enso_selected) {
-                console.log ("Enso selected.")
                 self.enable_an_option('el_nino');
                 self.enable_an_option('la_nina');
             }
             else {
-                console.log ("Enso NOT selected.")
                 self.disable_an_option('el_nino');
                 self.disable_an_option('la_nina');
                 if (el_nino_selected || la_nina_selected) {
@@ -264,8 +260,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
                 jQuery('.figure_viewer_select.year').val(0);
             }
         }
-
-
     },
 
     disable_an_option: function (the_class) {
@@ -281,9 +275,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         // Sorry, only found out about this functionality really late, so I'm just tacking it on.
         "use strict";
         var self = this;
-
-
-        // Tweak two: You can only select years if "El Nino" or "La Nina" is selected.
         var la_nina_years = ['1988', '1999', '2010'];
         var el_nino_years = ['1982', '1986', '1997'];
 
