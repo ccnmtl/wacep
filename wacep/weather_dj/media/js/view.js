@@ -1,7 +1,9 @@
 WeatherDJ.WeatherDJView = Backbone.View.extend({
     events: {
         "click .pause_button"   : "pause",
-        "click .play_button"    : "play"
+        "click .play_button"    : "play",
+        "click .show_labels_button"  : "showLabels",
+        "click .hide_labels_button"  : "hideLabels",
     },
     initialize: function(options) {
         "use strict";
@@ -10,30 +12,62 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.paused = false;
 
         _.bindAll(this ,
-            
-            "render",
             "setUpEngine",
             "setUpSliders",
             "sliderValues",
             "loop",
             "pause",
-            "play"
+            "play",
+            "showLabels",
+            "hideLabels"
         );
         jQuery( "#tabs" ).tabs();
+        jQuery('.hide_labels_button').hide();
         self.setUpEngine();
         self.setUpSliders();
         self.play(); 
     },
 
-
-    pause: function() {
+    loop: function () {
         "use strict";
         var self = this;
-        jQuery ('.pause_button').hide()
-        jQuery ('.play_button').show()
-        self.paused = true;
-    },
 
+        var loop_functions = [
+            function () {
+                "use strict";
+                setTimeout( loop_functions[1] , 800);
+            },
+            function() {
+                "use strict";
+                if (self.paused) {
+                    return;
+                } 
+                self.engine.setInputs(self.sliderValues());
+                var outputs = self.engine.generateOutputs();
+                if (outputs['errors'] != null ) { 
+                    console.log (outputs['errors']);
+                    return;
+                }
+                var new_row = [
+                    outputs['date'].toDateString(),
+                    outputs['precipitation']      ,
+                    outputs['runoff']             ,
+                    outputs['groundwater']        ,
+                    outputs['streamflow']
+                ];
+                self.scrollingTable.addRow (new_row);
+                self.scrollingTable.notify();
+                if (self.engine.getErrors() == null) {
+                    loop_functions[0]();
+                }
+                else {
+                    console.log (self.engine.getErrors());
+                }
+            
+            }
+        ];
+        loop_functions[0]();
+    },
 
     play: function() {
         "use strict";
@@ -44,8 +78,33 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.loop();
     },
 
-    sliderValues: function() {
+    pause: function() {
+        "use strict";
+        var self = this;
+        jQuery ('.pause_button').hide()
+        jQuery ('.play_button').show()
+        self.paused = true;
+    },
 
+
+    showLabels: function() {
+        "use strict";
+        var self = this;
+        jQuery ('.show_labels_button').hide()
+        jQuery ('.hide_labels_button').show()
+        self.scene.turnOnLabels();
+    },
+
+    hideLabels: function() {
+        "use strict";
+        var self = this;
+        jQuery ('.hide_labels_button').hide()
+        jQuery ('.show_labels_button').show()
+        self.scene.turnOffLabels();
+    },
+
+
+    sliderValues: function() {
         "use strict";
         var self = this;
         return {
@@ -54,46 +113,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             'c': jQuery('.slider.c').slider('value') / 100,
             'r': jQuery('.slider.r').slider('value') / 100
         }
-    },
-
-    loop: function () {
-        "use strict";
-        var self = this;
-        var outputs;
-        var  i = 0;
-        function loopTwo() {
-            "use strict";
-            self.engine.setInputs(self.sliderValues());
-            outputs = self.engine.generateOutputs();
-            if (outputs['errors'] != null ) { 
-                console.log (outputs['errors']);
-                return;
-            }
-            var new_row = [
-                outputs['date'].toDateString(),
-                outputs['precipitation']      ,
-                outputs['runoff']             ,
-                outputs['groundwater']        ,
-                outputs['streamflow']
-            ];
-            self.scrollingTable.addRow (new_row);
-            self.scrollingTable.notify();
-            i++;
-            if (self.paused==false) {
-                if (self.engine.getErrors() == null) {
-                    loopOne();
-                }
-                else {
-                    console.log (self.engine.getErrors());
-                }
-            }
-        }
-
-        function loopOne() {
-            "use strict";
-            setTimeout( loopTwo , 800);
-        }
-        loopOne();
     },
 
     setUpSliders: function() {
@@ -141,6 +160,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.table = new Table().hitch (self.scrollingTable);
         self.graph = new Graph().hitch (self.scrollingTable);
         self.scene = new Scene().hitch (self.scrollingTable);
+        console.log (self.scene);
     },
 
 });

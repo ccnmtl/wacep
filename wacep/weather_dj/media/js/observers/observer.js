@@ -11,6 +11,7 @@ var Observer = (function() {
         subject = _subject;
         subject.attach (this);
         this.prepareDOM();
+        return this;
     }
 
     Observer.prototype.getSubject = function () {

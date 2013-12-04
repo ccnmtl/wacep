@@ -92,7 +92,10 @@ header#masthead { height: 60px !important; }
 	border: solid lightblue 3px;
 }
 
-.help_copy_container_div { margin: 30px; }
+.help_copy_container_div {
+	margin: 30px;
+	font-size: 0.9em;
+}
 
 /* hiding inputs */
 .animate_buttons_span { display: none; }

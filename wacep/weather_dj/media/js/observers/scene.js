@@ -2,6 +2,20 @@ function Scene ( ) {}
 
 Scene.prototype = new Observer();
 
+
+SVG.Shape.prototype.my_move = function (position) {
+    return this.move (position.x, position.y);
+}
+
+SVG.Shape.prototype.my_size = function (position) {
+    return this.size (position.x, position.y);
+}
+
+SVG.Shape.prototype.my_size_move = function (settings) {
+    return this.size (settings.size.x, settings.size.y)
+    .move (settings.position.x, settings.position.y);
+}
+
 Scene.prototype.prepareDOM = function () {
     "use strict";
 
@@ -12,19 +26,7 @@ Scene.prototype.prepareDOM = function () {
     function my_ellipse (size) {
         return window.draw.ellipse (size.x, size.y);
     }
-    
-    SVG.Shape.prototype.my_move = function (position) {
-        return this.move (position.x, position.y);
-    }
 
-    SVG.Shape.prototype.my_size = function (position) {
-        return this.size (position.x, position.y);
-    }
-
-    SVG.Shape.prototype.my_size_move = function (settings) {
-        return this.size (settings.size.x, settings.size.y)
-        .move (settings.position.x, settings.position.y);
-    }
     this.scene_settings = WeatherDJ.scene_settings;
 
 
@@ -86,13 +88,28 @@ Scene.prototype.prepareDOM = function () {
         .maskWith (this.rain_mask);
 
     this.arrows = {}
-
     this.arrows['outflow']              = this.makeArrow(set.arrows.outflow);
     this.arrows['infiltration']         = this.makeArrow(set.arrows.infiltration);
     this.arrows['runoff']               = this.makeArrow(set.arrows.runoff);
     this.arrows['evapotranspiration_1'] = this.makeArrow(set.arrows.evapotranspiration_1);
     this.arrows['evapotranspiration_2'] = this.makeArrow(set.arrows.evapotranspiration_2);
 
+
+    this.label_settings = {
+        'runoff' : {
+            'x': 100,
+            'y': 100
+        }
+    }
+    this.labels = {}
+    this.labels ['outflow'] = this.makeLabel (this.label_settings.runoff);
+
+
+}
+
+Scene.prototype.makeLabel = function (settings) {
+
+    console.log ('goat');
 }
 
 
@@ -142,14 +159,16 @@ Scene.prototype.update = function ( ) {
 
 Scene.prototype.makeArrow = function(settings){
     "use strict";
-    var arrow_shape = draw.image(this.pickArrowShape(0))
+    var arrow_shape = draw
+        .image(this.pickArrowShape(0))
         .size(100, 100)
         .move (settings.x,settings.y)
         .rotate(settings.rotate);
 
-    var arrow = draw.rect(100, 100)
+    var arrow = draw
+        .rect(100, 100)
         .move (settings.x,settings.y)
-        .fill ('blue')
+        .fill (settings.color)
         .maskWith (arrow_shape);
 
     arrow.settings = settings;
@@ -161,13 +180,16 @@ Scene.prototype.changeArrow = function(arrow_label, factors){
     var arrow = this.arrows[arrow_label];
     var settings = arrow.settings;
     var product = Math.floor(_.reduce (factors, function(a, b) {return a * b}));
+
     var new_arrow_shape = draw
         .image(this.pickArrowShape(product))
         .size(100, 100)
         .move (settings.x,settings.y)
         .rotate(settings.rotate);
 
-    arrow.unmask().maskWith(new_arrow_shape);
+    arrow
+        .unmask()
+        .maskWith(new_arrow_shape);
 }
 
 Scene.prototype.pickArrowShape = function(num) {
@@ -178,4 +200,19 @@ Scene.prototype.pickArrowShape = function(num) {
     if (num < 0)     { i = 0   }
     if (num > last)  { i = last}
     return arrow_shapes[i];
+}
+
+
+Scene.prototype.turnOnLabels = function () {
+
+    console.log ('turning on labels')
+
+}
+
+
+Scene.prototype.turnOffLabels = function () {
+
+    console.log ('turning off labels')
+
+    
 }

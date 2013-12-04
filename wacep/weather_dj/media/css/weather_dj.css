@@ -160,7 +160,7 @@
 }
 
 
-
+/*scene */
 div.scene {
 	height: 400px;
 	background-color: green;
@@ -168,68 +168,13 @@ div.scene {
 
 }
 
-div.streamflow {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:100px;
-	top:100px;
-}
 
-div.groundwater {
-	background-color: brown;
-	color:white;
+.show_labels_button, .hide_labels_button{
 	position: absolute;
-	left:200px;
-	top:100px;
-}
-
-div.precipitation {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:300px;
-	top:100px;
-}
-
-div.infiltration {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:100px;
-	top:200px;
-}
-
-div.outflow {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:200px;
-	top:200px;
-}
-
-div.evapotranspiration_1 {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:300px;
-	top:200px;
-}
-
-div.evapotranspiration_2 {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:300px;
-	top:300px;
-}
-
-div.runoff {
-	background-color: blue;
-	color:white;
-	position: absolute;
-	left:100px;
-	top:300px;
+	left:20px;
+	top:350px;
+	min-width: 150px;
+	z-index: 5;
 }
 
 
@@ -238,4 +183,4 @@ div.runoff {
 .weather_dj_table tr {
 	height: 35px;
 }
-}
+
