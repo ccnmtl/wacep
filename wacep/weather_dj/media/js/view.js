@@ -5,11 +5,10 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         "click .show_labels_button"  : "showLabels",
         "click .hide_labels_button"  : "hideLabels",
     },
+
     initialize: function(options) {
         "use strict";
         var self = this;
-        self.initial_slider_values  =  {'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.2};
-        self.paused = false;
 
         _.bindAll(this ,
             "setUpEngine",
@@ -21,9 +20,20 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             "showLabels",
             "hideLabels"
         );
+
+        self.initial_slider_values  =  {'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.2};
+        self.columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
+        self.paused = false;
         jQuery( "#tabs" ).tabs();
         jQuery('.hide_labels_button').hide();
         self.setUpEngine();
+        self.scrollingTable =  new ScrollingTable(self.columnLabels);
+        self.table = new Table().hitch (self.scrollingTable);
+        self.graph = new Graph().hitch (self.scrollingTable);
+        self.scene = new Scene().hitch (self.scrollingTable);
+
+        self.scene.sliderValues = self.sliderValues;
+
         self.setUpSliders();
         self.play(); 
     },
@@ -153,14 +163,8 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     setUpEngine: function () {
         "use strict";
         var self = this;
-        var columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
         self.engine = new WeatherDJEngine();
         self.engine.setInputs(self.initial_slider_values);
-        self.scrollingTable =  new ScrollingTable(columnLabels);
-        self.table = new Table().hitch (self.scrollingTable);
-        self.graph = new Graph().hitch (self.scrollingTable);
-        self.scene = new Scene().hitch (self.scrollingTable);
-        console.log (self.scene);
     },
 
 });

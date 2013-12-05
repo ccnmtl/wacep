@@ -88,45 +88,42 @@ Scene.prototype.prepareDOM = function () {
         .maskWith (this.rain_mask);
 
     this.arrows = {}
-    this.arrows['outflow']              = this.makeArrow(set.arrows.outflow);
-    this.arrows['infiltration']         = this.makeArrow(set.arrows.infiltration);
-    this.arrows['runoff']               = this.makeArrow(set.arrows.runoff);
-    this.arrows['evapotranspiration_1'] = this.makeArrow(set.arrows.evapotranspiration_1);
-    this.arrows['evapotranspiration_2'] = this.makeArrow(set.arrows.evapotranspiration_2);
-
-
-    this.label_settings = {
-        'runoff' : {
-            'x': 100,
-            'y': 100
+    for (var arrow_name in set.arrows) {
+        if (set.arrows.hasOwnProperty(arrow_name)) {
+            this.arrows [arrow_name] = this.makeArrow (set.arrows[arrow_name]);
         }
     }
+
+    this.label_group = draw.group();
     this.labels = {}
-    this.labels ['outflow'] = this.makeLabel (this.label_settings.runoff);
-
-
+    for (var label in set.labels) {
+        if (set.labels.hasOwnProperty(label)) {
+            this.labels [label] = this.makeLabel (set.labels[label]);
+        }
+    }
+    this.turnOffLabels();
 }
 
 Scene.prototype.makeLabel = function (settings) {
-
-    console.log ('goat');
+    var new_label =  draw
+    .text(settings.text)
+    .move(settings.x, settings.y)
+    .rotate(settings.rotate - 95)
+    .font({ size: 18 })
+    .fill({ color: settings.color })
+    this.label_group.add (new_label);
 }
 
 
 Scene.prototype.update = function ( ) {
     "use strict";
     var info = this.getSubject().getLatestInfo();
-
-    var a = jQuery('.slider.a').slider('value') / 100;
-    var b = jQuery('.slider.b').slider('value') / 100;
-    var c = jQuery('.slider.c').slider('value') / 100;
-    var r = jQuery('.slider.r').slider('value') / 100;
-    
-    this.changeArrow ( 'infiltration',         [info['precipitation'], a,  3]);
-    this.changeArrow ( 'evapotranspiration_1', [info['precipitation'], b , 3]);
-    this.changeArrow ( 'evapotranspiration_2', [info['precipitation'], b,  3]);
-    this.changeArrow ( 'outflow',              [info['groundwater'  ], c,  3]);
-    this.changeArrow ( 'runoff',               [info['runoff'       ],     3]);
+    jQuery.extend (info, this.sliderValues());
+    this.changeArrow ( 'infiltration',         [info.precipitation, info.a,  3]);
+    this.changeArrow ( 'evapotranspiration_1', [info.precipitation, info.b , 3]);
+    this.changeArrow ( 'evapotranspiration_2', [info.precipitation, info.b,  3]);
+    this.changeArrow ( 'outflow',              [info.groundwater  , info.c,  3]);
+    this.changeArrow ( 'runoff',               [info.runoff       ,          3]);
 
     var river_angle           = Math.ceil( 2 * (Math.random() - 0.5));
     var boat_angle            = Math.ceil(10 * (Math.random() - 0.5));
@@ -204,15 +201,10 @@ Scene.prototype.pickArrowShape = function(num) {
 
 
 Scene.prototype.turnOnLabels = function () {
-
-    console.log ('turning on labels')
-
+    this.label_group.show();
 }
 
 
 Scene.prototype.turnOffLabels = function () {
-
-    console.log ('turning off labels')
-
-    
+    this.label_group.hide();
 }

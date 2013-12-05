@@ -160,5 +160,13 @@ WeatherDJ.scene_settings = {
         'runoff':                   {'x': 120, 'y': 220, 'rotate': 130   ,'color': 'blue'},
         'evapotranspiration_1' :    {'x': 0,   'y': 100, 'rotate': 45    ,'color': 'blue'},
         'evapotranspiration_2' :    {'x': 500, 'y': 100, 'rotate': 320   ,'color': 'blue'}
+    },
+
+    'labels' : {
+        'outflow':                  {'text': 'Outflow',            'x': 180, 'y': 330, 'rotate': 95    ,'color': 'white'},
+        'infiltration' :            {'text': 'Infiltration',       'x': 60,  'y': 200, 'rotate': 180   ,'color': 'white'},
+        'runoff':                   {'text': 'Runoff',             'x': 140, 'y': 200, 'rotate': 130   ,'color': 'white'},
+        'evapotranspiration_1' :    {'text': 'Evapotranspiration', 'x': 0,   'y': 100, 'rotate': 45    ,'color': 'white'},
+        'evapotranspiration_2' :    {'text': 'Evapotranspiration', 'x': 500, 'y': 100, 'rotate': 140   ,'color': 'white'}
     }
 }
