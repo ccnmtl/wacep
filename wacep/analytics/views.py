@@ -8,11 +8,9 @@ import csv
 from pagetree.models import Section
 from quizblock.models import Answer, Question, Submission, Quiz
 from django.shortcuts import render, render_to_response
-#from wacep.main import Question, Answer
-# trying to cut down on Eddie's get responses
-# 4 methods - working backwards
-# method 1:
-# method 4 - searching for the users responses and returning them in order of latest submission
+
+
+
 def user_responses(user):
     result = {}
 
@@ -24,31 +22,17 @@ def user_responses(user):
 # method 3 - generate_row_info - cut params down from 4 to 2, combined generate row so methods 2 & 3
 def get_row(user, all_questions):
     responses = user_responses(user)
-    #print type(responses) #dict
-    # print responses #they're all empty!!!!
 
     user_questions = []
     question_ids = responses.keys() # type list
-    # calling user_responses method #4
-    # print "type of question_ids " + str(type(question_ids))
-    # print question_ids
     for q in all_questions:
-        #print type(q)
-        # print "individual question q " + str(q)
-        if q.id in question_ids: # this is using keys grabbed above
-            # print type(q.id) # int
-            # print q.id # value of int
-            # print type(question_ids) type list
-            user_questions.append(responses[q.id])
+        if q.id in question_ids:
         else:
             user_questions.append(None)
-    #print type(user) # this is user object
-    #print type(user_questions) # this is list...
-    #individual objects of lists are quizblock questions...
     return {
             'user':user,
             'user_questions':user_questions
-            }
+        }
 
 
 def get_table():
@@ -61,10 +45,21 @@ def get_table():
     return the_table
 
 @render_to('analytics/analytics_table.html')
-def website_table(request):
+def analytics_table(request):
     return {'the_table' : get_table()}
 
 
+def table_to_csv(request, table):
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=nynjaetc.csv'
+    writer = csv.writer(response)
+    for row in table:
+        writer.writerow(row)
+    return response
+
+
+def analytics_csv(request):
+    return table_to_csv(request, get_table())
 
 
 

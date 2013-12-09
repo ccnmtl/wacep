@@ -30,16 +30,22 @@
         {% for t in the_table %}
         <tr class = "" >
                 <td>
-                    {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}} {{t.user.user_questions}} {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+                    {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}}
+                
+                {% for q in t.user.user_questions%}
+                 {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+
+                {% endfor %}
                 </td>
+
 <!--            {% for cell in row %}
-                <td>
+                <td>{{t.user.user_questions}}
                     {{cell}}
                 </td>
             {%endfor%}
 -->
         </tr>
 
-        {%endfor %}
+        {% endfor %}
     </table>
 {%endblock%}
