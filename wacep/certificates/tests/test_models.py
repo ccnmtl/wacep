@@ -6,7 +6,7 @@ from wacep.certificates.models import CertificateCourse, CourseAccess
 from wacep.certificates.models import Certificate
 
 
-class BasicModelTest(TestCase):
+class TestBasicModel(TestCase):
     def setUp(self):
         self.yearinput = YearInput(name="yearinput")
         self.graphinput = GraphingModeInput(name="graphinput")
