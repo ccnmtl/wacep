@@ -2,7 +2,8 @@ from django.test import TestCase
 from wacep.timescale.models import YearInput, GraphingModeInput
 from wacep.timescale.models import SeasonInput
 from django.contrib.auth.models import User
-from wacep.certificates.models import CertificateCourse
+from wacep.certificates.models import CertificateCourse, CourseAccess
+from wacep.certificates.models import Certificate
 
 
 class BasicModelTest(TestCase):
@@ -15,6 +16,13 @@ class BasicModelTest(TestCase):
         self.user.save()
         self.certcourse = CertificateCourse()
         self.certcourse.save()
+        self.studentuser = User.objects.create_user(
+            'studentperson', 'email@email.com', 'studentperson')
+        self.studentuser.save()
+        self.courseaccess = CourseAccess(user=self.studentuser, course=self.certcourse)
+        self.courseaccess.save()
+        self.certificate = Certificate(user=self.studentuser, course=self.certcourse)
+        self.certificate.save()
 
 
     def test_uni(self):
@@ -22,49 +30,47 @@ class BasicModelTest(TestCase):
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
         self.assertEquals(unicode(self.season), self.season.name)
         self.assertEquals(unicode(self.certcourse), self.certcourse.name)
+        self.assertEquals(unicode(self.courseaccess), '%s has access to %s' % (self.courseaccess.user, self.courseaccess.course))
+        self.assertEquals(unicode(self.certificate), '%s took %s' % (self.courseaccess.user, self.courseaccess.course))
+
 
     def test_absolute_url(self):
         self.urlcheck = self.certcourse.get_absolute_url()
         self.assertEquals(self.urlcheck, '/admin/certificates/certificatecourse/%d/'  % self.certcourse.id)
 
-    def test_absolute_url(self):
-        self.urlcheck = self.certcourse.get_absolute_url()
-        self.assertEquals(self.urlcheck, '/admin/certificates/certificatecourse/%d/'  % self.certcourse.id)
+
+    def test_to_json(self):
+        self.to_json = self.certcourse.to_json()
+        self.assertEquals(self.to_json, {'id': self.certcourse.id, 'name': self.certcourse.name})
 
 
-# 8 		    """A course for which we offer a certificate"""
-# 9 	1 	    name = models.CharField(max_length=256, default='')
-# 10 	1 	    order_rank = models.IntegerField(default=0, null=True, blank=True)
-# 11 		
-# 12 	1 	    section = models.ForeignKey(
-# 13 		        Section, null=True, blank=True,
-# 14 		        help_text="The section corresponding to this course.",
-# 15 		        unique=True, limit_choices_to={'depth': 2})
-# 16 		
-# 17 	1 	    description = models.TextField(
-# 18 		        blank=True, default='',
-# 19 		        help_text=(
-# 20 		            "A description of this course, to appear on the Courses page."))
-# 21 		
-# 22 	1 	    def get_absolute_url(self):
-# 23 	0 	        return '/admin/certificates/certificatecourse/%d/' % self.id
-# 24 		
-# 25 	1 	    def __unicode__(self):
-# 26 	0 	        return self.name
-# 27 		
-# 28 	1 	    class Meta:
-# 29 	1 	        ordering = ['order_rank']
-# 30 	1 	        verbose_name_plural = "Courses"
-# 31 		
-# 32 	1 	    def to_json(self):
-# 33 	0 	        return {
-# 34 		            'id': self.id,
-# 35 		            'name': self.name
-# 36 		        }
-# 37 		
-# 38 	1 	    def student_user_ids(self):
-# 39 	0 	        return [c.user.id for c in self.courseaccess_set.all()]
-# 40 		
-# 41 	1 	    def graduate_user_ids(self):
-# 42 	0 	        return [c.user.id for c in self.certificate_set.all()]
-# 43 		
+    def test_corresponding_cert(self):
+        self.check = self.courseaccess.corresponding_certificate()
+        self.assertEquals(self.check, self.certificate)
+
+
+    def test_no_corresponding_cert(self):
+        self.studentnocert = User.objects.create_user(
+            'otherstudentperson', 'email@email.com', 'otherstudentperson')
+        self.studentnocert.save()
+        self.no_cert = CourseAccess(user=self.studentnocert, course=self.certcourse)
+        self.no_cert.save()
+        self.checknocert = self.no_cert.corresponding_certificate()
+        self.assertEquals(self.checknocert, None)
+
+
+    def test_course_access_to_json(self):
+        self.to_json = self.courseaccess.to_json()
+        self.assertEquals(self.to_json, {'user': self.courseaccess.user, 'course': self.courseaccess.course, 'date': None})
+
+
+    def test_cert_get_url(self):
+       self.assertEquals(self.certificate.get_absolute_url(), '/_certificates/certificate/%d' % self.certificate.id)
+
+
+    def test_cert_corresponding_course_access(self):
+        self.assertEquals(self.certificate.corresponding_course_access(), self.courseaccess)
+ 
+
+    def test_cert_to_json(self):
+        self.assertEquals(self.certificate.to_json(), {'user': self.certificate.user, 'course': self.certificate.course, 'date': None})
