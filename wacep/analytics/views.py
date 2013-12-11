@@ -27,6 +27,7 @@ def get_row(user, all_questions):
     question_ids = responses.keys() # type list
     for q in all_questions:
         if q.id in question_ids:
+            user_questions.append(responses[q.id])
         else:
             user_questions.append(None)
     return {
