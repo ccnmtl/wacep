@@ -13,8 +13,16 @@ class TestFigureViewerModel(TestCase):
     def setUp(self):
         self.graphinput = GraphingModeInput(name="graphinput")
         self.graphinput.save()
+        self.climate = ClimateVariableInput(name="climate")
+        self.climate.save()
         self.season = SeasonInput(name="season")
         self.season.save()
+        self.animation = AnimationInput(name="season")
+        self.animation.save()
+        self.mode = ModeOfVariabilityInput(name="season")
+        self.mode.save()
+        self.year = YearInput(name="season")
+        self.year.save()
         # self.user = User.objects.create_superuser(
         #     'staffperson', 'email@email.com', 'staffperson')
         # self.user.save()
@@ -34,7 +42,10 @@ class TestFigureViewerModel(TestCase):
         #self.assertEquals(unicode(self.yearinput), self.yearinput.name)
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
         self.assertEquals(unicode(self.season), self.season.name)
-    #     self.assertEquals(unicode(self.certcourse), self.certcourse.name)
+        self.assertEquals(unicode(self.climate), self.climate.name)
+        self.assertEquals(unicode(self.animation), self.animation.name)
+        self.assertEquals(unicode(self.mode), self.mode.name)
+        self.assertEquals(unicode(self.year), self.year.name)
     #     self.assertEquals(
     #         unicode(self.courseaccess),
     #         '%s has access to %s' % (self.courseaccess.user,
@@ -52,13 +63,51 @@ class TestFigureViewerModel(TestCase):
              'name': self.graphinput.name})
 
 
-
     def test_seasoninput_to_json(self):
         self.to_json = self.season.to_json()
         self.assertEquals(
             self.to_json,
             {'id': self.season.id,
              'name': self.season.name})
+
+
+    def test_climate_to_json(self):
+        self.to_json = self.climate.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'id': self.climate.id,
+             'name': self.climate.name})
+
+
+
+        self.assertEquals(unicode(self.mode), self.mode.name)
+        self.assertEquals(unicode(self.year), self.year.name)
+
+
+    def test_animation_to_json(self):
+        self.to_json = self.animation.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'id': self.animation.id,
+             'name': self.animation.name})
+
+
+    def test_mode_to_json(self):
+        self.to_json = self.mode.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'id': self.mode.id,
+             'name': self.mode.name})
+
+
+    def test_year_to_json(self):
+        self.to_json = self.year.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'id': self.year.id,
+             'name': self.year.name})
+
+        
     # def test_absolute_url(self):
     #     self.urlcheck = self.certcourse.get_absolute_url()
     #     self.assertEquals(
