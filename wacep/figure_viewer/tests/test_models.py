@@ -13,7 +13,8 @@ class TestFigureViewerModel(TestCase):
     def setUp(self):
         self.graphinput = GraphingModeInput(name="graphinput")
         self.graphinput.save()
-        # self.season = SeasonInput(name="season")
+        self.season = SeasonInput(name="season")
+        self.season.save()
         # self.user = User.objects.create_superuser(
         #     'staffperson', 'email@email.com', 'staffperson')
         # self.user.save()
@@ -32,7 +33,7 @@ class TestFigureViewerModel(TestCase):
     def test_uni(self):
         #self.assertEquals(unicode(self.yearinput), self.yearinput.name)
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
-    #     self.assertEquals(unicode(self.season), self.season.name)
+        self.assertEquals(unicode(self.season), self.season.name)
     #     self.assertEquals(unicode(self.certcourse), self.certcourse.name)
     #     self.assertEquals(
     #         unicode(self.courseaccess),
@@ -52,6 +53,12 @@ class TestFigureViewerModel(TestCase):
 
 
 
+    def test_seasoninput_to_json(self):
+        self.to_json = self.season.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'id': self.season.id,
+             'name': self.season.name})
     # def test_absolute_url(self):
     #     self.urlcheck = self.certcourse.get_absolute_url()
     #     self.assertEquals(
