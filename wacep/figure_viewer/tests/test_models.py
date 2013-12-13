@@ -9,6 +9,7 @@ from wacep.figure_viewer.models import InputCombination, ActivityState
 from wacep.figure_viewer.models import FigureViewerTopic, FigureViewerBlock
 from wacep.figure_viewer.models import FigureViewerBlockForm
 
+
 class TestFigureViewerModel(TestCase):
     def setUp(self):
         self.graphinput = GraphingModeInput(name="graphinput")
@@ -27,21 +28,16 @@ class TestFigureViewerModel(TestCase):
         self.figureviewer.save()
         self.activitystate = ActivityState(name="activitystate")
         self.activitystate.save()
-        #self.inputcombination = InputCombination()
-        # self.user = User.objects.create_superuser(
-        #     'staffperson', 'email@email.com', 'staffperson')
-        # self.user.save()
-        # self.certcourse = CertificateCourse()
-        # self.certcourse.save()
-        # self.studentuser = User.objects.create_user(
-        #     'studentperson', 'email@email.com', 'studentperson')
-        # self.studentuser.save()
-        # self.courseaccess = CourseAccess(user=self.studentuser,
-        #                                  course=self.certcourse)
-        # self.courseaccess.save()
-        # self.certificate = Certificate(user=self.studentuser,
-        #                                course=self.certcourse)
-        # self.certificate.save()
+        self.inputcombination = InputCombination(
+            topic=self.figureviewer,
+            season_input=self.season,
+            climate_variable_input=self.climate,
+            animation_input=self.animation,
+            year_input=self.year,
+            mode_of_variability_input=self.mode,
+            graphing_mode_input=self.graphinput,
+            activity_state=self.activitystate)
+        self.inputcombination.save()
 
     def test_uni(self):
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
@@ -52,7 +48,8 @@ class TestFigureViewerModel(TestCase):
         self.assertEquals(unicode(self.year), self.year.name)
         self.assertEquals(unicode(self.figureviewer), self.figureviewer.slug)
         self.assertEquals(unicode(self.activitystate), self.activitystate.name)
-
+        self.assertEquals(unicode(self.inputcombination),
+            "Inputs resulting in state %s " % self.inputcombination.activity_state)
 
     def test_graphinput_to_json(self):
         self.to_json = self.graphinput.to_json()
@@ -61,14 +58,12 @@ class TestFigureViewerModel(TestCase):
             {'id': self.graphinput.id,
              'name': self.graphinput.name})
 
-
     def test_seasoninput_to_json(self):
         self.to_json = self.season.to_json()
         self.assertEquals(
             self.to_json,
             {'id': self.season.id,
              'name': self.season.name})
-
 
     def test_climate_to_json(self):
         self.to_json = self.climate.to_json()
@@ -77,11 +72,8 @@ class TestFigureViewerModel(TestCase):
             {'id': self.climate.id,
              'name': self.climate.name})
 
-
-
         self.assertEquals(unicode(self.mode), self.mode.name)
         self.assertEquals(unicode(self.year), self.year.name)
-
 
     def test_animation_to_json(self):
         self.to_json = self.animation.to_json()
@@ -90,14 +82,12 @@ class TestFigureViewerModel(TestCase):
             {'id': self.animation.id,
              'name': self.animation.name})
 
-
     def test_mode_to_json(self):
         self.to_json = self.mode.to_json()
         self.assertEquals(
             self.to_json,
             {'id': self.mode.id,
              'name': self.mode.name})
-
 
     def test_year_to_json(self):
         self.to_json = self.year.to_json()
@@ -106,7 +96,6 @@ class TestFigureViewerModel(TestCase):
             {'id': self.year.id,
              'name': self.year.name})
 
-
     def test_figureviewer_to_json(self):
         self.to_json = self.figureviewer.to_json()
         self.assertEquals(
@@ -114,8 +103,7 @@ class TestFigureViewerModel(TestCase):
             {'slug': self.figureviewer.slug,
              'id': self.figureviewer.id,
              'topic_settings': self.figureviewer.topic_settings[self.figureviewer.slug]})
-
-        
+       
     def test_absolute_url(self):
         self.urlcheck = self.activitystate.get_absolute_url()
         self.assertEquals(
@@ -135,3 +123,8 @@ class TestFigureViewerModel(TestCase):
               'absolute_url': self.activitystate.get_absolute_url()
               })
 
+    def test_input_is_default(self):
+        self.assertFalse(self.inputcombination.is_default())
+
+    def test_input_show_buttons(self):
+        self.assertFalse(self.inputcombination.show_animate_buttons())
