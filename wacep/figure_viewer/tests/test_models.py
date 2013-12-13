@@ -25,6 +25,8 @@ class TestFigureViewerModel(TestCase):
         self.year.save()
         self.figureviewer = FigureViewerTopic()
         self.figureviewer.save()
+        self.activitystate = ActivityState(name="activitystate")
+        self.activitystate.save()
         #self.inputcombination = InputCombination()
         # self.user = User.objects.create_superuser(
         #     'staffperson', 'email@email.com', 'staffperson')
@@ -42,7 +44,6 @@ class TestFigureViewerModel(TestCase):
         # self.certificate.save()
 
     def test_uni(self):
-        #self.assertEquals(unicode(self.yearinput), self.yearinput.name)
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
         self.assertEquals(unicode(self.season), self.season.name)
         self.assertEquals(unicode(self.climate), self.climate.name)
@@ -50,14 +51,8 @@ class TestFigureViewerModel(TestCase):
         self.assertEquals(unicode(self.mode), self.mode.name)
         self.assertEquals(unicode(self.year), self.year.name)
         self.assertEquals(unicode(self.figureviewer), self.figureviewer.slug)
-    #     self.assertEquals(
-    #         unicode(self.courseaccess),
-    #         '%s has access to %s' % (self.courseaccess.user,
-    #         self.courseaccess.course))
-    #     self.assertEquals(
-    #         unicode(self.certificate),
-    #         '%s took %s' % (self.courseaccess.user,
-    #         self.courseaccess.course))
+        self.assertEquals(unicode(self.activitystate), self.activitystate.name)
+
 
     def test_graphinput_to_json(self):
         self.to_json = self.graphinput.to_json()
@@ -121,50 +116,22 @@ class TestFigureViewerModel(TestCase):
              'topic_settings': self.figureviewer.topic_settings[self.figureviewer.slug]})
 
         
-    # def test_absolute_url(self):
-    #     self.urlcheck = self.certcourse.get_absolute_url()
-    #     self.assertEquals(
-    #         self.urlcheck,
-    #         '/admin/certificates/certificatecourse/%d/' % self.certcourse.id)
+    def test_absolute_url(self):
+        self.urlcheck = self.activitystate.get_absolute_url()
+        self.assertEquals(
+            self.urlcheck,
+            "/admin/figure_viewer/activitystate/%i/" % self.activitystate.id)
 
+    def test_activity_state_to_json(self):
+        self.to_json = self.activitystate.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'name': self.activitystate.name,
+             'id': self.activitystate.id,
+              'image_path': '',
+              'color_bar': '',
+              'text': self.activitystate.text,
+              'source': self.activitystate.source,
+              'absolute_url': self.activitystate.get_absolute_url()
+              })
 
-
-    # def test_corresponding_cert(self):
-    #     self.check = self.courseaccess.corresponding_certificate()
-    #     self.assertEquals(self.check, self.certificate)
-
-    # def test_no_corresponding_cert(self):
-    #     self.studentnocert = User.objects.create_user(
-    #         'otherstudentperson', 'email@email.com', 'otherstudentperson')
-    #     self.studentnocert.save()
-    #     self.no_cert = CourseAccess(
-    #         user=self.studentnocert,
-    #         course=self.certcourse)
-    #     self.no_cert.save()
-    #     self.checknocert = self.no_cert.corresponding_certificate()
-    #     self.assertEquals(self.checknocert, None)
-
-    # def test_course_access_to_json(self):
-    #     self.to_json = self.courseaccess.to_json()
-    #     self.assertEquals(
-    #         self.to_json,
-    #         {'user': self.courseaccess.user,
-    #          'course': self.courseaccess.course,
-    #          'date': None})
-
-    # def test_cert_get_url(self):
-    #     self.assertEquals(
-    #         self.certificate.get_absolute_url(),
-    #         '/_certificates/certificate/%d' % self.certificate.id)
-
-    # def test_cert_corresponding_course_access(self):
-    #     self.assertEquals(
-    #         self.certificate.corresponding_course_access(),
-    #         self.courseaccess)
-
-    # def test_cert_to_json(self):
-    #     self.assertEquals(
-    #         self.certificate.to_json(),
-    #         {'user': self.certificate.user,
-    #          'course': self.certificate.course,
-    #          'date': None})
