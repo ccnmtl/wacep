@@ -23,6 +23,9 @@ class TestFigureViewerModel(TestCase):
         self.mode.save()
         self.year = YearInput(name="season")
         self.year.save()
+        self.figureviewer = FigureViewerTopic()
+        self.figureviewer.save()
+        #self.inputcombination = InputCombination()
         # self.user = User.objects.create_superuser(
         #     'staffperson', 'email@email.com', 'staffperson')
         # self.user.save()
@@ -46,6 +49,7 @@ class TestFigureViewerModel(TestCase):
         self.assertEquals(unicode(self.animation), self.animation.name)
         self.assertEquals(unicode(self.mode), self.mode.name)
         self.assertEquals(unicode(self.year), self.year.name)
+        self.assertEquals(unicode(self.figureviewer), self.figureviewer.slug)
     #     self.assertEquals(
     #         unicode(self.courseaccess),
     #         '%s has access to %s' % (self.courseaccess.user,
@@ -106,6 +110,15 @@ class TestFigureViewerModel(TestCase):
             self.to_json,
             {'id': self.year.id,
              'name': self.year.name})
+
+
+    def test_figureviewer_to_json(self):
+        self.to_json = self.figureviewer.to_json()
+        self.assertEquals(
+            self.to_json,
+            {'slug': self.figureviewer.slug,
+             'id': self.figureviewer.id,
+             'topic_settings': self.figureviewer.topic_settings[self.figureviewer.slug]})
 
         
     # def test_absolute_url(self):
