@@ -1,13 +1,9 @@
 from django.test import TestCase
-from wacep.timescale.models import YearInput, GraphingModeInput
-from wacep.timescale.models import SeasonInput
-from django.contrib.auth.models import User
 from wacep.figure_viewer.models import GraphingModeInput, ClimateVariableInput
 from wacep.figure_viewer.models import SeasonInput, AnimationInput
 from wacep.figure_viewer.models import ModeOfVariabilityInput, YearInput
 from wacep.figure_viewer.models import InputCombination, ActivityState
-from wacep.figure_viewer.models import FigureViewerTopic, FigureViewerBlock
-from wacep.figure_viewer.models import FigureViewerBlockForm
+from wacep.figure_viewer.models import FigureViewerTopic
 
 
 class TestFigureViewerModel(TestCase):
@@ -49,7 +45,8 @@ class TestFigureViewerModel(TestCase):
         self.assertEquals(unicode(self.figureviewer), self.figureviewer.slug)
         self.assertEquals(unicode(self.activitystate), self.activitystate.name)
         self.assertEquals(unicode(self.inputcombination),
-            "Inputs resulting in state %s " % self.inputcombination.activity_state)
+                          "Inputs resulting in state %s " %
+                          self.inputcombination.activity_state)
 
     def test_graphinput_to_json(self):
         self.to_json = self.graphinput.to_json()
@@ -102,8 +99,9 @@ class TestFigureViewerModel(TestCase):
             self.to_json,
             {'slug': self.figureviewer.slug,
              'id': self.figureviewer.id,
-             'topic_settings': self.figureviewer.topic_settings[self.figureviewer.slug]})
-       
+             'topic_settings': self.figureviewer.topic_settings[
+                 self.figureviewer.slug]})
+
     def test_absolute_url(self):
         self.urlcheck = self.activitystate.get_absolute_url()
         self.assertEquals(
@@ -116,12 +114,11 @@ class TestFigureViewerModel(TestCase):
             self.to_json,
             {'name': self.activitystate.name,
              'id': self.activitystate.id,
-              'image_path': '',
-              'color_bar': '',
-              'text': self.activitystate.text,
-              'source': self.activitystate.source,
-              'absolute_url': self.activitystate.get_absolute_url()
-              })
+             'image_path': '',
+             'color_bar': '',
+             'text': self.activitystate.text,
+             'source': self.activitystate.source,
+             'absolute_url': self.activitystate.get_absolute_url()})
 
     def test_input_is_default(self):
         self.assertFalse(self.inputcombination.is_default())

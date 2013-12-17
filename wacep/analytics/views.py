@@ -1,18 +1,15 @@
 # Create your views here.
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-import csv
-from pagetree.models import Section
-from quizblock.models import Answer, Question, Submission, Quiz
-from django.shortcuts import render, render_to_response
+from quizblock.models import Question
 #from wacep.main import Question, Answer
 # trying to cut down on Eddie's get responses
 # 4 methods - working backwards
 # method 1:
-# method 4 - searching for the users responses and returning them in order of latest submission
+# method 4 - searching for the users responses and returning them in order
+# of latest submission
+
+
 def user_responses(user):
     result = {}
 
@@ -21,34 +18,36 @@ def user_responses(user):
             result[r.question.id] = r.value
     return result
 
-# method 3 - generate_row_info - cut params down from 4 to 2, combined generate row so methods 2 & 3
+
+# method 3 - generate_row_info - cut params down from 4 to 2, combined
+# generate row so methods 2 & 3
 def get_row(user, all_questions):
     responses = user_responses(user)
-    #print type(responses) #dict
+    # print type(responses) #dict
     # print responses #they're all empty!!!!
 
     user_questions = []
-    question_ids = responses.keys() # type list
+    question_ids = responses.keys()  # type list
     # calling user_responses method #4
     # print "type of question_ids " + str(type(question_ids))
     # print question_ids
     for q in all_questions:
-        #print type(q)
+        # print type(q)
         # print "individual question q " + str(q)
-        if q.id in question_ids: # this is using keys grabbed above
+        if q.id in question_ids:  # this is using keys grabbed above
             # print type(q.id) # int
             # print q.id # value of int
             # print type(question_ids) type list
             user_questions.append(responses[q.id])
         else:
             user_questions.append(None)
-    #print type(user) # this is user object
-    #print type(user_questions) # this is list...
-    #individual objects of lists are quizblock questions...
+    # print type(user) # this is user object
+    # print type(user_questions) # this is list...
+    # individual objects of lists are quizblock questions...
     return {
-            'user':user,
-            'user_questions':user_questions
-            }
+        'user': user,
+        'user_questions': user_questions
+    }
 
 
 def get_table():
@@ -60,9 +59,10 @@ def get_table():
         the_table.append(get_row(u, all_questions))
     return the_table
 
+
 @render_to('analytics/analytics_table.html')
 def website_table(request):
-    return {'the_table' : get_table()}
+    return {'the_table': get_table()}
 
 
 
@@ -83,7 +83,8 @@ def website_table(request):
 
 # def get_submission_quiz(request):
 #     submissions = Submission.objects.all()
-#     return render(request, 'analytics/table_2.html', {"submissions": submissions})
+# return render(request, 'analytics/table_2.html', {"submissions":
+# submissions})
 
 # def get_submission_quiz_quiz(request):
 #     quizzes = Quiz.objects.all()
@@ -91,7 +92,8 @@ def website_table(request):
 #     for q in quizzes:
 #         keep.append(q.submission_set.all())
 
-#     return render(request, 'analytics/table_3.html', { "keep" : keep })#{"submissions": submissions, "quizzes" : quizzes})
+# return render(request, 'analytics/table_3.html', { "keep" : keep
+# })#{"submissions": submissions, "quizzes" : quizzes})
 
 
 
@@ -99,28 +101,30 @@ def website_table(request):
 #     submission_objects = Submission.objects.all()
 #     question_objects = Question.objects.all()
 #     answer_objects = Answer.objects.all()
-#     #print "Objects retrieved"
+# print "Objects retrieved"
 
 #     question_submission_table = []
 #     question_answer_table = []
 #     x = 0
 #     y = 0
-#     #print "tables and counters created"
+# print "tables and counters created"
 
-#     #go over submissions, for each row, grab user and quiz, search for questions of quiz and answers
+# go over submissions, for each row, grab user and quiz,
+# search for questions of quiz and answers
 #     for submission in submission_objects:
 #         print submission.quiz
 
-#         #hang on to submission quiz to search for it in quizzes
+# hang on to submission quiz to search for it in quizzes
 #         submission_quiz = submission.quiz
 #         for q in question_objects:
 #             quiz_quiz = q.quiz
 #             if submission_quiz == quiz_quiz:
-#                 question_submission_table[x] = zip(submission_quiz, quiz_quiz)
+#                 question_submission_table[x] =
+#                 zip(submission_quiz, quiz_quiz)
 
 
-        #for a in answer_objects:
-        #    if 
+        # for a in answer_objects:
+        #    if
 
 
 
@@ -132,7 +136,8 @@ def website_table(request):
     #             question_answer_table = dict(key_1.items() + key_2.items())
     #             counter_two = counter_two + 1
 
-#    return render(request, 'analytics/table_4.html', {"question_submission_table": question_submission_table})
+#    return render(request, 'analytics/table_4.html',
+#                  {"question_submission_table": question_submission_table})
 # def responses_for(the_user):
 #     """The user's responses to quiz questions.
 #     If there is more than one response
@@ -141,7 +146,8 @@ def website_table(request):
 
 #     for sub in the_user.submission_set.order_by('submitted'):
 #         for resp in sub.response_set.all():
-#             result[resp.question.id] = resp.value #what exactly is this doing? getting the id and setting it to the value?
+# result[resp.question.id] = resp.value #what exactly is this doing?
+# getting the id and setting it to the value?
 #             print "result[resp.question.id] " + result[resp.question.id]
 #             print "resp.value " + resp.value
 #     return result
@@ -158,7 +164,7 @@ def website_table(request):
 #             user_questions.append(None)
 #     return {
 #         'the_user': the_user,
-#         #'the_profile': the_profile,
+# 'the_profile': the_profile,
 #         'user_questions': user_questions
 #     }
 
@@ -176,32 +182,32 @@ def website_table(request):
 #     answers = Answer.objects.all()
 #     questions = []
 #     for a in answers:
-#         #questions = a.answer_set.all()
+# questions = a.answer_set.all()
 #         questions.append(a.answer_set.all())
 
 
 
 
 #     class Submission(models.Model):
-# 259     1       quiz = models.ForeignKey(Quiz)
+# 2quiz = models.ForeignKey(Quiz)
 # 260     1       user = models.ForeignKey(User)
 # 261     1       submitted = models.DateTimeField(default=datetime.now)
-# 262         
+# 262
 # 263     1       def __unicode__(self):
 # 264     1           return "quiz %d submission by %s at %s" % (self.quiz.id,
-# 265                                                            unicode(self.user),
-# 266                                                            self.submitted)
-# # def get_quizzes(request):
+# 265                     unicode(self.user),
+# 266                     self.submitted)
+# def get_quizzes(request):
 #     quizzes = Quizzes.objects.all()
 #     questions = []
 #     for quiz in quizzes:
 
-#         #get_question(quiz)
+# get_question(quiz)
 #     return render(request, 'analytics/table_1.html', {"quizzes": quizzes})
 
-#def get_question(q):
+# def get_question(q):
 #    questions = q
-    #get_
+    # get_
 
 
 
@@ -213,24 +219,24 @@ def website_table(request):
 #     return table_to_csv(request, generate_the_table())
 
 
-# # @login_required
-# # @staff_member_required
-# # @render_to('analytics/analytics_table.html')
-# # def analytics_table(request):
-# #     """keep the code in here to a minimum"""
-# #     return {
-# #         'the_table': generate_the_table()
-# #     }
+# @login_required
+# @staff_member_required
+# @render_to('analytics/analytics_table.html')
+# def analytics_table(request):
+# """keep the code in here to a minimum"""
+# return {
+# 'the_table': generate_the_table()
+# }
 
 
-# # @login_required
-# # @staff_member_required
-# # @render_to('analytics/analytics_table.html')
-# # def analytics_table_testing(request):
-# #     """keep the code in here to a minimum"""
-# #     return {
-# #         'the_table': generate_the_table(True)
-# #     }
+# @login_required
+# @staff_member_required
+# @render_to('analytics/analytics_table.html')
+# def analytics_table_testing(request):
+# """keep the code in here to a minimum"""
+# return {
+# 'the_table': generate_the_table(True)
+# }
 
 
 # def table_to_csv(request, table):
@@ -243,9 +249,9 @@ def website_table(request):
 
 
 # def generate_the_table(testing=False):
-#     #all_sections = [s for s in Section.objects.get(pk=1).get_tree()
-#     #                if s.is_leaf_or_has_content()]
-#     #all_questions = find_the_questions(all_sections)
+# all_sections = [s for s in Section.objects.get(pk=1).get_tree()
+# if s.is_leaf_or_has_content()]
+# all_questions = find_the_questions(all_sections)
 #     questions = []
 #     questions = Question.objects.all()
 #     all_users = []
@@ -257,7 +263,7 @@ def website_table(request):
 #     the_table = []
 #     heading = generate_heading(all_sections, all_questions, testing)
 
-#     #the_table.append([("column %d" % (a + 1)) for a in range(len(heading))])
+# the_table.append([("column %d" % (a + 1)) for a in range(len(heading))])
 #     the_table.append(heading)
 
 #     for the_user in all_users:
@@ -267,34 +273,34 @@ def website_table(request):
 #     return the_table
 
 # '''We dont have sections...'''
-# # def find_the_questions(sections_in_order):
-# #     """ returns all the questions,
-# #     in all the quizzes,
-# #     in the order they are presented
-# #     in the sections."""
-# #     result = []
-# #     all_questions = []
-# #     quizzes_we_want = [25, 15]
+# def find_the_questions(sections_in_order):
+# """ returns all the questions,
+# in all the quizzes,
+# in the order they are presented
+# in the sections."""
+# result = []
+# all_questions = []
+# quizzes_we_want = [25, 15]
 
-#     #first get all the questions in pagetree order:
-#     # for the_section in sections_in_order:
-#     #     for the_pageblock in the_section.pageblock_set.all():
-#     #         if the_pageblock.block().__class__.display_name == 'Quiz':
-#     #             all_questions.extend(the_pageblock.block().question_set.all())
+# first get all the questions in pagetree order:
+# for the_section in sections_in_order:
+# for the_pageblock in the_section.pageblock_set.all():
+# if the_pageblock.block().__class__.display_name == 'Quiz':
+# all_questions.extend(the_pageblock.block().question_set.all())
 
-#     #filter out most of the questions; re-label one of them.
-#     #enduring_materials_question_id = 50
-# #     for the_q in all_questions:
-#         #print 'question id ', the_q.id
-#         #print 'quiz ', the_q.quiz
-#         #print 'quiz id ', the_q.quiz.id
-#         #if the_q.id == enduring_materials_question_id:
-#         #    the_q.text = 'Enduring materials acknowledgement'
+# filter out most of the questions; re-label one of them.
+# enduring_materials_question_id = 50
+# for the_q in all_questions:
+# print 'question id ', the_q.id
+# print 'quiz ', the_q.quiz
+# print 'quiz id ', the_q.quiz.id
+# if the_q.id == enduring_materials_question_id:
+# the_q.text = 'Enduring materials acknowledgement'
 
-# #        if the_q.quiz.id in quizzes_we_want:
-# #            result.append(the_q)
+# if the_q.quiz.id in quizzes_we_want:
+# result.append(the_q)
 
-# #    return result
+# return result
 
 
 # def generate_heading(all_sections, all_questions, testing):
@@ -390,8 +396,8 @@ def website_table(request):
 #     }
 
 
-# #hard-coding the section pk is still a terrible idea
-# #but at least now it's injectable for testing
+# hard-coding the section pk is still a terrible idea
+# but at least now it's injectable for testing
 # def checked_enduring_materials_box(the_user, section_pk=50):
 #     enduring_materials_section = Section.objects.get(pk=section_pk)
 #     return SectionQuizAnsweredCorrectly.objects.filter(

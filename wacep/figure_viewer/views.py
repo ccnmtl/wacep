@@ -12,13 +12,13 @@ def settings(request, topic_slug):
     #if not request.is_ajax() or request.method != "POST":
     #    return HttpResponseForbidden()
     class_map = {
-        'graphing_mode_inputs':       GraphingModeInput,
-        'animation_inputs':           AnimationInput,
-        'climate_variable_inputs':    ClimateVariableInput,
-        'season_inputs':              SeasonInput,
-        'year_inputs':                YearInput,
+        'graphing_mode_inputs': GraphingModeInput,
+        'animation_inputs': AnimationInput,
+        'climate_variable_inputs': ClimateVariableInput,
+        'season_inputs': SeasonInput,
+        'year_inputs': YearInput,
         'mode_of_variability_inputs': ModeOfVariabilityInput,
-        'activity_states':            ActivityState,
+        'activity_states': ActivityState,
     }
 
     the_settings = {}
