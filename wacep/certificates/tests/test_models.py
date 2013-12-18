@@ -34,11 +34,11 @@ class TestBasicModel(TestCase):
         self.assertEquals(
             unicode(self.courseaccess),
             '%s has access to %s' % (self.courseaccess.user,
-            self.courseaccess.course))
+                                     self.courseaccess.course))
         self.assertEquals(
             unicode(self.certificate),
             '%s took %s' % (self.courseaccess.user,
-            self.courseaccess.course))
+                            self.courseaccess.course))
 
     def test_absolute_url(self):
         self.urlcheck = self.certcourse.get_absolute_url()
