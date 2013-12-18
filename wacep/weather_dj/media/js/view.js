@@ -23,8 +23,9 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
         self.initial_slider_values  =  {'a':0.2,  'b': 0.1, 'c':0.3, 'r': 0.2};
         self.columnLabels = ['date', 'precipitation', 'runoff', 'groundwater', 'streamflow'];
-        self.paused = false;
-        jQuery( "#tabs" ).tabs();
+        self.paused = true;
+        jQuery("button.pause_button").hide();
+        jQuery("#tabs").tabs();
         jQuery('.hide_labels_button').hide();
         self.setUpEngine();
         self.scrollingTable =  new ScrollingTable(self.columnLabels);
@@ -35,7 +36,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         self.scene.sliderValues = self.sliderValues;
 
         self.setUpSliders();
-        self.play(); 
     },
 
     loop: function () {
