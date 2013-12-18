@@ -4,15 +4,11 @@ from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-import csv
 from pagetree.models import Section
 from quizblock.models import Answer, Question, Submission, Quiz
 from django.shortcuts import render, render_to_response
-#from wacep.main import Question, Answer
-# trying to cut down on Eddie's get responses
-# 4 methods - working backwards
-# method 1:
-# method 4 - searching for the users responses and returning them in order of latest submission
+import csv
+
 def user_responses(user):
     result = {}
 
@@ -30,21 +26,11 @@ def get_row(user, all_questions):
     user_questions = []
     question_ids = responses.keys() # type list
     # calling user_responses method #4
-    # print "type of question_ids " + str(type(question_ids))
-    # print question_ids
     for q in all_questions:
-        #print type(q)
-        # print "individual question q " + str(q)
         if q.id in question_ids: # this is using keys grabbed above
-            # print type(q.id) # int
-            # print q.id # value of int
-            # print type(question_ids) type list
             user_questions.append(responses[q.id])
         else:
             user_questions.append(None)
-    #print type(user) # this is user object
-    #print type(user_questions) # this is list...
-    #individual objects of lists are quizblock questions...
     return {
             'user':user,
             'user_questions':user_questions
@@ -63,6 +49,152 @@ def get_table():
 @render_to('analytics/analytics_table.html')
 def website_table(request):
     return {'the_table' : get_table()}
+
+
+
+@render_to('analytics/analytics_table.html')
+def analytics_table(request):
+    """keep the code in here to a minimum"""
+    return {
+        'the_table': generate_the_table()
+    }
+
+
+
+def table_to_csv(request, table):
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=wacep.csv'
+    writer = csv.writer(response)
+    for row in table:
+        writer.get_row(row)
+    return response
+
+
+def csv(request):
+    return table_to_csv(request, get_table())
+
+
+
+# trying once more from nynjaetc
+
+
+def generate_row(the_user, all_sections, all_questions, testing):
+    line = generate_row_info(the_user, all_sections, all_questions)
+    the_profile = line['the_profile']
+    result = []
+
+    result.extend([
+        line['the_user'].first_name,
+        line['the_user'].last_name,
+        line['the_user'].username,
+        line['the_user'].email,
+        ])
+
+    result.extend(line['user_sections'])
+    result.extend(line['user_questions'])
+    return result
+
+
+
+def generate_row_info(the_user, all_sections, all_questions):
+    responses = responses_for(the_user)
+    user_sections = []
+    user_questions = []
+    question_ids = responses.keys()
+
+    for the_section in all_sections:
+        if the_section.id in section_ids:
+            user_sections.append(the_section.id)
+        else:
+            user_sections.append(None)
+
+    for the_question in all_questions:
+        if the_question.id in question_ids:
+            user_questions.append(responses[the_question.id])
+        else:
+            user_questions.append(None)
+
+    the_profile = None
+    try:
+        the_profile = the_user.get_profile()
+    except UserProfile.DoesNotExist:
+        pass
+
+    return {
+        'the_user': the_user,
+        'the_profile': the_profile,
+        'user_questions': user_questions,
+        'user_sections': user_sections
+        }
+
+
+
+def responses_for(the_user):
+    """The user's responses to quiz questions.
+    If there is more than one response
+    to a question, returns the most recent."""
+    result = {}
+
+    for sub in the_user.submission_set.order_by('submitted'):
+        for resp in sub.response_set.all():
+            result[resp.question.id] = resp.value
+    return result
+
+
+
+
+# using my own probably horrible approach
+# for a quiz - get all questions and stick in columns as headers
+# for each user who submitted to the quiz get all answers and match to the quizzes
+
+
+# def get_answers(request):
+#     answers = Answer.objects.all()
+#     return render(request, 'analytics/table_1.html', {"answers": answers})
+
+# def get_submission_quiz(request):
+#     submissions = Submission.objects.all()
+#     return render(request, 'analytics/table_2.html', {"submissions": submissions})
+
+
+def create_table(request, quiz_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
+    questions = quiz.question_set.all()
+    n = 0
+    header = [n]["first name", "last name", "email"]
+
+    print quiz.question_set.count()
+    print quiz.submission_set.count()
+    # get the questions of the quiz and stick them in a header
+
+    for q in questions:
+        header.append(q)
+    # get all users who submitted answers
+    submissions = quiz.submission_set.all()
+    
+    rest_of_row = []
+    # try first to go by user
+    for s in submissions:
+        rest_of_row.append(s.user.first_name)
+        rest_of_row.append(s.user.last_name)
+        rest_of_row.append(s.user.email)
+        response_set = s.response_set.all()
+        for r in response_set:
+            rest_of_row.append(r.question.text)
+            rest_of_row.append(r.value)
+            print row
+        header.append([n+1][rest_of_row])
+
+            #print r.question.text
+            #print r.value
+
+
+
+
+    return render(request, 'analytics/experiment_1.html', {"header" : header})#{"questions" : questions, "submissions": submissions})
+
+
+
 
 
 
