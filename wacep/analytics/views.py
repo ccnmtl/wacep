@@ -1,13 +1,10 @@
 # Create your views here.
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from django.http import HttpResponse
 from pagetree.models import Section
 from quizblock.models import Answer, Question, Submission, Quiz
 from django.shortcuts import render, render_to_response
-import csv
-=======
 from quizblock.models import Question
 #from wacep.main import Question, Answer
 # trying to cut down on Eddie's get responses
