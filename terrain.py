@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from lettuce.django import django_url
-from lettuce import before, after, world, step
-from django.test import client
 from django.conf import settings
+from django.test import client
+from lettuce import before, after, world, step
+from lettuce.django import django_url
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 import os
 import time
 
@@ -28,7 +29,7 @@ def robust_string_compare(a, b):
 def skip_selenium():
     return (os.environ.get('LETTUCE_SKIP_SELENIUM', False)
             or (hasattr(settings, 'LETTUCE_SKIP_SELENIUM')
-            and settings.LETTUCE_SKIP_SELENIUM))
+                and settings.LETTUCE_SKIP_SELENIUM))
 
 
 @before.harvest
@@ -38,8 +39,12 @@ def setup_browser(variables):
         world.browser = None
         world.skipping = False
     else:
-        browser = getattr(settings, 'BROWSER', 'Chrome')
-        if browser == 'Chrome':
+        browser = getattr(settings, 'BROWSER', 'Firefox')
+        if browser == 'Firefox':
+            ff_profile = FirefoxProfile()
+            ff_profile.set_preference("webdriver_enable_native_events", False)
+            world.browser = webdriver.Firefox(ff_profile)
+        elif browser == 'Chrome':
             world.browser = webdriver.Chrome()
         elif browser == 'Headless':
             world.browser = webdriver.PhantomJS()
@@ -95,7 +100,7 @@ def clear_selenium(step):
 
 @step(r'I access the url "(.*)"')
 def access_url(step, url):
-    if world.using_selenium == True:
+    if world.using_selenium is True:
         world.browser.get(django_url(url))
     else:
         response = world.client.get(django_url(url))
@@ -104,7 +109,7 @@ def access_url(step, url):
 
 @step(u'I am not logged in')
 def i_am_not_logged_in(step):
-    if world.using_selenium == True:
+    if world.using_selenium is True:
         world.browser.get(django_url("/accounts/logout/"))
     else:
         world.client.logout()
@@ -199,7 +204,7 @@ def wait(step, seconds):
 
 @step(r'I see the header "(.*)"')
 def see_header(step, text):
-    if world.using_selenium == True:
+    if world.using_selenium is True:
         assert text.strip() == world.browser.find_element_by_tag_name(
             "h1").text.strip()
     else:

@@ -2,16 +2,15 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from pagetree.models import Section
-from quizblock.models import Answer, Question, Submission, Quiz
-from django.shortcuts import render, render_to_response
-from quizblock.models import Question
+from django.shortcuts import render
+from quizblock.models import Quiz, Question
 #from wacep.main import Question, Answer
 # trying to cut down on Eddie's get responses
 # 4 methods - working backwards
 # method 1:
 # method 4 - searching for the users responses and returning them in order
 # of latest submission
+
 
 def user_responses(user):
     result = {}
@@ -66,14 +65,12 @@ def website_table(request):
     return {'the_table': get_table()}
 
 
-
 @render_to('analytics/analytics_table.html')
 def analytics_table(request):
     """keep the code in here to a minimum"""
     return {
         'the_table': generate_the_table()
     }
-
 
 
 def table_to_csv(request, table):
@@ -89,10 +86,7 @@ def csv(request):
     return table_to_csv(request, get_table())
 
 
-
 # trying once more from nynjaetc
-
-
 def generate_row(the_user, all_sections, all_questions, testing):
     line = generate_row_info(the_user, all_sections, all_questions)
     the_profile = line['the_profile']
@@ -103,12 +97,11 @@ def generate_row(the_user, all_sections, all_questions, testing):
         line['the_user'].last_name,
         line['the_user'].username,
         line['the_user'].email,
-        ])
+    ])
 
     result.extend(line['user_sections'])
     result.extend(line['user_questions'])
     return result
-
 
 
 def generate_row_info(the_user, all_sections, all_questions):
@@ -140,8 +133,7 @@ def generate_row_info(the_user, all_sections, all_questions):
         'the_profile': the_profile,
         'user_questions': user_questions,
         'user_sections': user_sections
-        }
-
+    }
 
 
 def responses_for(the_user):
@@ -156,22 +148,17 @@ def responses_for(the_user):
     return result
 
 
-
-
 # using my own probably horrible approach
 # for a quiz - get all questions and stick in columns as headers
-# for each user who submitted to the quiz get all answers and match to the quizzes
-
-
+# for each user who submitted to the quiz get all answers and match to the
+# quizzes
 # def get_answers(request):
 #     answers = Answer.objects.all()
 #     return render(request, 'analytics/table_1.html', {"answers": answers})
-
 # def get_submission_quiz(request):
 #     submissions = Submission.objects.all()
-#     return render(request, 'analytics/table_2.html', {"submissions": submissions})
-
-
+# return render(request, 'analytics/table_2.html', {"submissions":
+# submissions})
 def create_table(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
     questions = quiz.question_set.all()
@@ -186,7 +173,7 @@ def create_table(request, quiz_id):
         header.append(q)
     # get all users who submitted answers
     submissions = quiz.submission_set.all()
-    
+
     rest_of_row = []
     # try first to go by user
     for s in submissions:
@@ -197,16 +184,13 @@ def create_table(request, quiz_id):
         for r in response_set:
             rest_of_row.append(r.question.text)
             rest_of_row.append(r.value)
-            print row
-        header.append([n+1][rest_of_row])
+        header.append([n + 1][rest_of_row])
 
-            #print r.question.text
-            #print r.value
+            # print r.question.text
+            # print r.value
 
-
-
-
-    return render(request, 'analytics/experiment_1.html', {"header" : header})#{"questions" : questions, "submissions": submissions})
+    #{"questions" : questions, "submissions": submissions})
+    return render(request, 'analytics/experiment_1.html', {"header": header})
 
 
 

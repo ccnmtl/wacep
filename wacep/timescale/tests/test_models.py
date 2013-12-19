@@ -3,6 +3,7 @@ from wacep.timescale.models import GraphingModeInput, YearInput
 from wacep.timescale.models import SeasonInput, InputCombination
 from wacep.timescale.models import ActivityState
 
+
 class TestTimescaleModel(TestCase):
 
     def setUp(self):
@@ -21,7 +22,6 @@ class TestTimescaleModel(TestCase):
             activity_state=self.activitystate)
         self.inputcombination.save()
 
-
     def test_uni(self):
         self.assertEquals(unicode(self.graphinput), self.graphinput.name)
         self.assertEquals(unicode(self.season), self.season.name)
@@ -31,8 +31,6 @@ class TestTimescaleModel(TestCase):
                           "Inputs resulting in state %s " %
                           self.inputcombination.activity_state)
 
-
-
     def test_graphinput_to_json(self):
         self.to_json = self.graphinput.to_json()
         self.assertEquals(
@@ -40,14 +38,12 @@ class TestTimescaleModel(TestCase):
             {'id': self.graphinput.id,
              'name': self.graphinput.name})
 
-
     def test_seasoninput_to_json(self):
         self.to_json = self.season.to_json()
         self.assertEquals(
             self.to_json,
             {'id': self.season.id,
              'name': self.season.name})
-
 
     def test_year_to_json(self):
         self.to_json = self.year.to_json()
@@ -63,7 +59,8 @@ class TestTimescaleModel(TestCase):
             {'name': self.activitystate.name,
              'id': self.activitystate.id,
              'image_path': '',
-             'legend_path': '',#'%s/%s' % ('/_timescale/media/img', ) if (fn != '') else '',
+             #'%s/%s' % ('/_timescale/media/img', ) if (fn != '') else '',
+             'legend_path': '',
              'absolute_url': self.activitystate.get_absolute_url(),
              'text': self.activitystate.text,
              'graph_title': self.activitystate.graph_title,
