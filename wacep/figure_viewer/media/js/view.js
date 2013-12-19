@@ -335,6 +335,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         jQuery('.figure_viewer_select.mode_of_variability').val(0)
         self.setAnimateButtonstoOff()
         self.inputsChanged();
+        jQuery("div.show_hide_div.left_side").hide();
     },
 
 
@@ -343,7 +344,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
         self.setUpMenus();
         self.menuChanged();
-        self.showHelp();
     },
 
 

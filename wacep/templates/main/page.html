@@ -29,7 +29,7 @@
             jQuery("form").submit(function() {
                 var valid = true;
     
-                var children = jQuery(this).find("input,textarea,select");
+                var children = jQuery(this).find("div.cases input,div.cases textarea,div.cases select");
                 jQuery.each(children, function() {
                     if (valid && jQuery(this).is(":visible")) {
                         if (this.tagName === 'INPUT' && this.type === 'text' ||
@@ -131,40 +131,33 @@
 
 {% block content %}
 <div id="content">
-{% if needs_submit %}
-{% if is_submitted %}
-{% else %}
-<form action="." method="post">
-{% endif %}
-{% endif %}
+    {% if needs_submit %}
+        {% if is_submitted %}
+        {% else %}
+            <form action="." method="post">
+        {% endif %}
+    {% endif %}
 
-
-{% for block in section.pageblock_set.all %}
-<div class="pageblock{% if block.css_extra %} {{block.css_extra}}{% endif %}">
-{% if block.label %}<h3>{{block.label}}</h3>{% endif %}
-{% render block %}
-</div>
-{% endfor %}
-
-
-{% if needs_submit %}
-{% if request.user.is_anonymous %}
-{% else %}
-
-{% if is_submitted %}
-<form action="." method="post">
-<input type="hidden" name="action" value="reset" />
-{% if user.is_staff %}
-    <input type="submit" value="Clear your answers (staff only)" class="btn" />
-{% endif %}
-</form>
-{% else %}
-<input type="submit" value="Submit" class="btn btn-primary" />
-
-</form>
-{% endif %}
-{% endif %}
-{% endif %}
+    {% for block in section.pageblock_set.all %}
+        <div class="pageblock{% if block.css_extra %} {{block.css_extra}}{% endif %}">
+            {% if block.label %}<h3>{{block.label}}</h3>{% endif %}
+            {% render block %}
+        </div>
+    {% endfor %}
+    
+    {% if needs_submit %}
+        {% if is_submitted %}
+            <form action="." method="post">
+                <input type="hidden" name="action" value="reset" />
+                {% if user.is_staff %}
+                    <input type="submit" value="Clear your answers (staff only)" class="btn" />
+                {% endif %}
+            </form>
+        {% else %}
+            <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
 

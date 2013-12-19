@@ -1,50 +1,45 @@
 <div class="figure_viewer_container topic_{{block.topic.slug}}">
-	<div class = "figure_viewer_subcontainer help_icon">
-		<button class = "btn btn-info">?</button>
+	<div class="figure_viewer_subcontainer help_icon">
+		<button class="btn btn-info">?</button>
 	</div>
-	<div class = "figure_viewer_subcontainer help_box">
-		<div class= "help_copy_container_div">
+	<div class="figure_viewer_subcontainer help_box">
+		<div class="help_copy_container_div">
 				{%include 'figure_viewer/figure_viewer_help.html' %}
 				<br/>
-			<button class = "btn btn-info help_ok_button">OK</button>
+			<button class="btn btn-info help_ok_button">OK</button>
 		</div>	
 	</div>
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
-		<div class = "figure_viewer_subcontainer color_key">
+		<div class="figure_viewer_subcontainer color_key">
 			<img class="figure_viewer_color_bar" /> <!--color bar-->
 		</div>
 
-		<div class = "figure_viewer_subcontainer graph">
+		<div class="figure_viewer_subcontainer graph">
 			<img class="figure_viewer_graph" />
 		</div>
 	</div>
 
 	<!-- Right side -->
-	<div class = "figure_viewer_subcontainer inputs">
+	<div class="figure_viewer_subcontainer inputs">
 		<select name ="climate_variable_input_select" class="figure_viewer_select climate_variable">
-			<option value = "">Select a Climate Variable:</option>
-			<option value = ""></option>
+			<option value="">Select a Climate Variable:</option>
 		</select>
 		<select name ="season_input_select" class="figure_viewer_select season">
-			<option value = "">Select a Season:</option>
-			<option value = ""></option>
+			<option value="">Select a Season:</option>
 		</select>
 		<select name ="mode_of_variability_input_select" class="figure_viewer_select mode_of_variability">
-			<option value = "">Select a Mode of Variability:</option>
-			<option value = ""></option>
+			<option value="">Select a Mode of Variability:</option>
 		</select>
 		<select name ="graphing_mode_input_select" class="figure_viewer_select graphing_mode">
-			<option value = "">Select a Graphing Mode:</option>
-			<option value = ""></option>
+			<option value="">Select a Graphing Mode:</option>
 		</select>
 		<select name ="year_input_select" class="figure_viewer_select year">
-			<option value = "">Select a Year:</option>
-			<option value = ""></option>
+			<option value="">Select a Year:</option>
 		</select>
 
 
-		<span class = "animate_buttons_span">
+		<span class="animate_buttons_span">
 			<div class="btn btn-success animate_button start_animate">
 					<i class="icon-play icon-large icon-white"></i> Animate
 			</div>
@@ -60,14 +55,14 @@
 	<div class="figure_viewer_subcontainer explanation">
 		<h3>Notes</h3>
 		<div class="explanation_copy"></div>
-		<div class = "source_box">
+		<div class="source_box">
 			Source: <span class="source_copy"></span>
 		</div>
 		{% if user.is_staff %}
-			<button class="btn btn-primary edit_this_state">Edit</a>
+			<button class="btn btn-primary edit_this_state">Edit Notes (staff only)</a>
 		{%endif %}
 	</div>
-	<div class = "topic_slug">{{block.topic.slug}}</div>
+	<div class="topic_slug" style="display: none">{{block.topic.slug}}</div>
 
 
 
