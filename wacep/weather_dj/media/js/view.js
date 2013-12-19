@@ -44,30 +44,28 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
         var loop_functions = [
             function () {
-                "use strict";
                 setTimeout( loop_functions[1] , 800);
             },
             function() {
-                "use strict";
                 if (self.paused) {
                     return;
                 } 
                 self.engine.setInputs(self.sliderValues());
                 var outputs = self.engine.generateOutputs();
-                if (outputs['errors'] != null ) { 
-                    console.log (outputs['errors']);
+                if (outputs.errors !== null ) { 
+                    console.log (outputs.errors);
                     return;
                 }
                 var new_row = [
-                    outputs['date'].toDateString(),
-                    outputs['precipitation']      ,
-                    outputs['runoff']             ,
-                    outputs['groundwater']        ,
-                    outputs['streamflow']
+                    outputs.date.toDateString(),
+                    outputs.precipitation,
+                    outputs.runoff,
+                    outputs.groundwater,
+                    outputs.streamflow
                 ];
                 self.scrollingTable.addRow (new_row);
                 self.scrollingTable.notify();
-                if (self.engine.getErrors() == null) {
+                if (self.engine.getErrors() === null) {
                     loop_functions[0]();
                 }
                 else {
@@ -82,8 +80,8 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     play: function() {
         "use strict";
         var self = this;
-        jQuery ('.pause_button').show()
-        jQuery ('.play_button').hide()
+        jQuery('.pause_button').show();
+        jQuery('.play_button').hide();
         self.paused = false;
         self.loop();
     },
@@ -91,8 +89,8 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     pause: function() {
         "use strict";
         var self = this;
-        jQuery ('.pause_button').hide()
-        jQuery ('.play_button').show()
+        jQuery('.pause_button').hide();
+        jQuery('.play_button').show();
         self.paused = true;
     },
 
@@ -100,16 +98,16 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     showLabels: function() {
         "use strict";
         var self = this;
-        jQuery ('.show_labels_button').hide()
-        jQuery ('.hide_labels_button').show()
+        jQuery('.show_labels_button').hide();
+        jQuery('.hide_labels_button').show();
         self.scene.turnOnLabels();
     },
 
     hideLabels: function() {
         "use strict";
         var self = this;
-        jQuery ('.hide_labels_button').hide()
-        jQuery ('.show_labels_button').show()
+        jQuery('.hide_labels_button').hide();
+        jQuery('.show_labels_button').show();
         self.scene.turnOffLabels();
     },
 
@@ -122,7 +120,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
             'b': jQuery('.slider.b').slider('value') / 100,
             'c': jQuery('.slider.c').slider('value') / 100,
             'r': jQuery('.slider.r').slider('value') / 100
-        }
+        };
     },
 
     setUpSliders: function() {
@@ -137,27 +135,25 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
         );
         // don't let a + b > 100
         function slide_a (event, ui) {
-            "use strict";
             if (ui.value + jQuery('.slider.b').slider('value') > 100) {
                 event.preventDefault();
             }
         }
         function slide_b (event, ui) {
-            "use strict";
             if (ui.value + jQuery('.slider.a').slider('value') > 100) {
                 event.preventDefault();
             }
         }
-        jQuery ('.slider.a').slider ({
-            'value': self.initial_slider_values['a'] * 100,
+        jQuery('.slider.a').slider({
+            'value': self.initial_slider_values.a * 100,
             'slide' : slide_a
         });
-        jQuery ('.slider.b').slider ({
-            'value': self.initial_slider_values['b'] * 100,
+        jQuery('.slider.b').slider({
+            'value': self.initial_slider_values.b * 100,
             'slide' : slide_b
          });
-        jQuery ('.slider.c').slider ({'value': self.initial_slider_values['c'] * 100 });
-        jQuery ('.slider.r').slider ({'value': self.initial_slider_values['r'] * 100 });
+        jQuery('.slider.c').slider({'value': self.initial_slider_values.c * 100 });
+        jQuery('.slider.r').slider({'value': self.initial_slider_values.r * 100 });
     },
 
     setUpEngine: function () {

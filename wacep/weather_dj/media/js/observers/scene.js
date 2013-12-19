@@ -5,16 +5,16 @@ Scene.prototype = new Observer();
 
 SVG.Shape.prototype.my_move = function (position) {
     return this.move (position.x, position.y);
-}
+};
 
 SVG.Shape.prototype.my_size = function (position) {
     return this.size (position.x, position.y);
-}
+};
 
 SVG.Shape.prototype.my_size_move = function (settings) {
     return this.size (settings.size.x, settings.size.y)
     .move (settings.position.x, settings.position.y);
-}
+};
 
 Scene.prototype.prepareDOM = function () {
     "use strict";
@@ -87,7 +87,7 @@ Scene.prototype.prepareDOM = function () {
         .rotate(20)
         .maskWith (this.rain_mask);
 
-    this.arrows = {}
+    this.arrows = {};
     for (var arrow_name in set.arrows) {
         if (set.arrows.hasOwnProperty(arrow_name)) {
             this.arrows [arrow_name] = this.makeArrow (set.arrows[arrow_name]);
@@ -95,14 +95,14 @@ Scene.prototype.prepareDOM = function () {
     }
 
     this.label_group = draw.group();
-    this.labels = {}
+    this.labels = {};
     for (var label in set.labels) {
         if (set.labels.hasOwnProperty(label)) {
             this.labels [label] = this.makeLabel (set.labels[label]);
         }
     }
     this.turnOffLabels();
-}
+};
 
 Scene.prototype.makeLabel = function (settings) {
     var new_label =  draw
@@ -110,9 +110,9 @@ Scene.prototype.makeLabel = function (settings) {
     .move(settings.x, settings.y)
     .rotate(settings.rotate - 95)
     .font({ size: 18 })
-    .fill({ color: settings.color })
+    .fill({ color: settings.color });
     this.label_group.add (new_label);
-}
+};
 
 
 Scene.prototype.update = function ( ) {
@@ -129,14 +129,14 @@ Scene.prototype.update = function ( ) {
     var boat_angle            = Math.ceil(10 * (Math.random() - 0.5));
     var bottom_of_river_y     = this.scene_settings.river.position.y;
     var vertical_range_pixels = this.scene_settings.vertical_range_pixels;
-    var unsaturated_soil_x    = this.scene_settings.saturated_soil_ellipse.position.x
+    var unsaturated_soil_x    = this.scene_settings.saturated_soil_ellipse.position.x;
     var unsaturated_soil_y    = this.scene_settings.saturated_soil_ellipse.position.y;
-    var river_level           = bottom_of_river_y  - info['streamflow']  * vertical_range_pixels;
-    var groundwater_level     = unsaturated_soil_y - info['groundwater'] * vertical_range_pixels;
+    var river_level           = bottom_of_river_y  - info.streamflow  * vertical_range_pixels;
+    var groundwater_level     = unsaturated_soil_y - info.groundwater * vertical_range_pixels;
 
     this.unsaturated_soil
         .animate()
-        .move( unsaturated_soil_x , groundwater_level)
+        .move( unsaturated_soil_x , groundwater_level);
 
     this.river
         .animate()
@@ -150,9 +150,9 @@ Scene.prototype.update = function ( ) {
     
     this.rain_rect
         .animate()
-        .attr({ width: (  info['precipitation'] * vertical_range_pixels)})
+        .attr({ width: (info.precipitation * vertical_range_pixels)});
 
-}
+};
 
 Scene.prototype.makeArrow = function(settings){
     "use strict";
@@ -170,13 +170,13 @@ Scene.prototype.makeArrow = function(settings){
 
     arrow.settings = settings;
     return arrow;
-}
+};
 
 Scene.prototype.changeArrow = function(arrow_label, factors){
     "use strict";
     var arrow = this.arrows[arrow_label];
     var settings = arrow.settings;
-    var product = Math.floor(_.reduce (factors, function(a, b) {return a * b}));
+    var product = Math.floor(_.reduce (factors, function(a, b) {return a * b;}));
 
     var new_arrow_shape = draw
         .image(this.pickArrowShape(product))
@@ -187,24 +187,24 @@ Scene.prototype.changeArrow = function(arrow_label, factors){
     arrow
         .unmask()
         .maskWith(new_arrow_shape);
-}
+};
 
 Scene.prototype.pickArrowShape = function(num) {
     "use strict";
     var arrow_shapes = this.scene_settings.arrow_shapes;
     var last = arrow_shapes.length - 1;
     var i = num;
-    if (num < 0)     { i = 0   }
-    if (num > last)  { i = last}
+    if (num < 0)     { i = 0; }
+    if (num > last)  { i = last; }
     return arrow_shapes[i];
-}
+};
 
 
 Scene.prototype.turnOnLabels = function () {
     this.label_group.show();
-}
+};
 
 
 Scene.prototype.turnOffLabels = function () {
     this.label_group.hide();
-}
+};

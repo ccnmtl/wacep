@@ -4,12 +4,12 @@ Graph.prototype = new Observer();
 
 Graph.prototype.update = function ( ) {
     var latest_data = this.getSubject().getLastRow();
-    var date = Date.parse(latest_data['date']);
-    jQuery('.graph').highcharts().series[0].addPoint([date, latest_data['precipitation']], true, true);
-    jQuery('.graph').highcharts().series[1].addPoint([date, latest_data['runoff'       ]], true, true);
-    jQuery('.graph').highcharts().series[2].addPoint([date, latest_data['groundwater'  ]], true, true);
-    jQuery('.graph').highcharts().series[3].addPoint([date, latest_data['streamflow'   ]], true, true);
-}
+    var date = Date.parse(latest_data.date);
+    jQuery('.graph').highcharts().series[0].addPoint([date, latest_data.precipitation], true, true);
+    jQuery('.graph').highcharts().series[1].addPoint([date, latest_data.runoff], true, true);
+    jQuery('.graph').highcharts().series[2].addPoint([date, latest_data.groundwater], true, true);
+    jQuery('.graph').highcharts().series[3].addPoint([date, latest_data.streamflow], true, true);
+};
 
 Graph.prototype.prepareDOM = function () {
 
@@ -78,4 +78,4 @@ Graph.prototype.prepareDOM = function () {
                 data: initial_data
             }]
         });
-}
+};
