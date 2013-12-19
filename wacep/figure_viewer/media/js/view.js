@@ -315,6 +315,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         jQuery('.help_box').show();
+        return false;
     },
 
 
@@ -322,6 +323,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         jQuery('.help_box').hide();
+        return false;
     },
 
     resetButtonPushed: function () {
