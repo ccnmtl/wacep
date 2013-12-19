@@ -171,7 +171,9 @@
 
 {% if section.get_next %}
 {% with section.get_next as next_section %}
-<li class="next"><a href="{{section.get_next.get_absolute_url}}">{{section.get_next.label}} &rarr;</a></li>
+    {% if next_section.get_depth > 2 %}    
+        <li class="next"><a href="{{section.get_next.get_absolute_url}}">{{section.get_next.label}} &rarr;</a></li>
+    {% endif %}
 {% endwith %}
 {% endif %}
 </ul>
