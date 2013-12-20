@@ -31,19 +31,19 @@ Graph.prototype.prepareDOM = function () {
                 width: 780
             },
             title: {
-                text: 'title',
+                text: '',
                 x: -20 //center
             },
             xAxis: {
                 type: 'datetime',
                 dateTimeLabelFormats: { // don't display the dummy year
-                    millisecond: '',
-                    second: '',
-                    minute: '',
-                    hour: '',
+                    millisecond: '0',
+                    second: '0',
+                    minute: '0',
+                    hour: '0',
                     day: '%b %e',
-                    month: '',
-                    year: ''
+                    month: '0',
+                    year: '0'
                 },
                 tickPixelInterval: 30,
                 tickInterval: 24 * 3600 * 1000,
@@ -66,16 +66,24 @@ Graph.prototype.prepareDOM = function () {
             },
             series: [{
                 name: 'precipitation',
-                data: initial_data
+                data: initial_data,
+                color: "#0d233a", // dark blue
+                type: "column"
             }, {
                 name: 'runoff',
-                data: initial_data
+                data: initial_data,
+                color: "#910000", // purple
+                type: "spline"
             }, {
                 name: 'groundwater',
-                data: initial_data
+                data: initial_data,
+                color: "#8bbc21", // green
+                type: "spline"                    
             }, {
                 name: 'streamflow',
-                data: initial_data
+                data: initial_data,
+                color: "#2f7ed8", // light blue
+                type: "spline"                    
             }]
         });
 };
