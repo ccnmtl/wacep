@@ -35,7 +35,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         );
         self.topic_slug = jQuery('.topic_slug').html();
 
-        jQuery ('#right-content').removeClass ('span9');
+        jQuery('#right-content').removeClass ('span9');
         // makes the div go back to its default (wider) width.
         jQuery('.animate_buttons_span').hide();
         self.getSettings();
@@ -45,7 +45,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     whetherAnimationIsOn: function() {
         "use strict";
         var self = this;
-        return jQuery ('.end_animate').is(':visible');
+        return jQuery('.end_animate').is(':visible');
         //jQuery('.help_box').show();
     },
 
@@ -65,13 +65,13 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     },
 
     setAnimateButtonstoOff: function() {
-        jQuery ('.start_animate').show();
-        jQuery ('.end_animate').hide();
+        jQuery('.start_animate').show();
+        jQuery('.end_animate').hide();
     },
 
     setAnimateButtonstoOn: function() {
-        jQuery ('.start_animate').hide();
-        jQuery ('.end_animate').show();
+        jQuery('.start_animate').hide();
+        jQuery('.end_animate').show();
     },
 
     getSettings: function() {
@@ -125,11 +125,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
 
         var self = this;
-        var theSeason                        = parseInt(jQuery ('.figure_viewer_select.season').val())        || null;
-        var theGraphingMode                  = parseInt(jQuery ('.figure_viewer_select.graphing_mode').val()) || null;
-        var theClimateVariable               = parseInt(jQuery ('.figure_viewer_select.climate_variable').val())       || null;
-        var theYear                          = parseInt(jQuery ('.figure_viewer_select.year').val())          || null;
-        var theModeOfVariability             = parseInt(jQuery ('.figure_viewer_select.mode_of_variability').val())   || null;
+        var theSeason = parseInt(jQuery('.figure_viewer_select.season').val(), 10) || null;
+        var theGraphingMode = parseInt(jQuery('.figure_viewer_select.graphing_mode').val(), 10) || null;
+        var theClimateVariable  = parseInt(jQuery('.figure_viewer_select.climate_variable').val(), 10) || null;
+        var theYear = parseInt(jQuery('.figure_viewer_select.year').val(), 10) || null;
+        var theModeOfVariability = parseInt(jQuery('.figure_viewer_select.mode_of_variability').val(), 10) || null;
 
         var theAnimation = null;
         if (self.settings.topic.topic_settings.use_animation ) {
@@ -153,7 +153,6 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
 
         var inputFinder = function (inputCombination) {
-            "use strict";
             // returns true if this inputcombination matches what we're looking for.
             return (
                 (inputCombination.season_input_id                    ==  theSeason            ) &&
@@ -163,12 +162,11 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
                 (inputCombination.graphing_mode_input_id             ==  theGraphingMode      ) &&
                 (inputCombination.year_input_id                      ==  theYear              )
             );
-        }
+        };
 
         var defaultInputFinder = function (inputCombination) {
-            "use strict";
-            return (inputCombination.is_default  ==  true  );
-        }
+            return (inputCombination.is_default === true);
+        };
         var inputCombination = _.find (self.settings.input_combinations, inputFinder);
 
 
@@ -183,7 +181,9 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
 
         // Yes, we do.
         var stateId = inputCombination.activity_state_id;
-        var theState = _.find (self.settings.activity_states, function (st) { return (st.id == stateId)});
+        var theState = _.find(self.settings.activity_states, function (st) {
+            return (st.id == stateId);
+        });
         if (inputCombination.show_animate_buttons) {
             jQuery('.animate_buttons_span').show();
         }
@@ -214,22 +214,22 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         self.extraPrep();
         var theState = self.findCurrentState();
         if (theState.image_path === '') {
-            jQuery ('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
+            jQuery('.figure_viewer_graph' ).replaceWith('<img class="figure_viewer_graph">');
         }
         else {
-            jQuery ('.figure_viewer_graph' ).attr("src", theState.image_path);
-            jQuery ('.show_hide_div.left_side')      .show ();
+            jQuery('.figure_viewer_graph' ).attr("src", theState.image_path);
+            jQuery('.show_hide_div.left_side')      .show ();
 
         }
         if (theState.color_bar === '') {
-            jQuery ('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
+            jQuery('.figure_viewer_color_bar' ).replaceWith('<img class="figure_viewer_color_bar">');
         }
         else {
-            jQuery ('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
+            jQuery('.figure_viewer_color_bar' ).attr("src", theState.color_bar);
         }
 
-        jQuery ('.explanation_copy')         .html (theState.text);
-        jQuery ('.source_copy')              .html (theState.source);
+        jQuery('.explanation_copy')         .html (theState.text);
+        jQuery('.source_copy')              .html (theState.source);
 
         self.extraCleanup();
     },
@@ -242,9 +242,9 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
             var enso_selected;
             var el_nino_selected;
             var la_nina_selected;
-            enso_selected =  jQuery ('.figure_viewer_select.mode_of_variability option:selected').hasClass ('enso');
-            el_nino_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
-            la_nina_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
+            enso_selected =  jQuery('.figure_viewer_select.mode_of_variability option:selected').hasClass ('enso');
+            el_nino_selected = jQuery('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
+            la_nina_selected = jQuery('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
             if (enso_selected) {
                 self.enable_an_option('el_nino');
                 self.enable_an_option('la_nina');
@@ -263,10 +263,10 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
     },
 
     disable_an_option: function (the_class) {
-            jQuery ('.figure_viewer_select option.' + the_class ).attr('disabled','disabled');
+            jQuery('.figure_viewer_select option.' + the_class ).attr('disabled','disabled');
     },
     enable_an_option: function (the_class) {
-            jQuery ('.figure_viewer_select option.' + the_class ).removeAttr('disabled');
+            jQuery('.figure_viewer_select option.' + the_class ).removeAttr('disabled');
     },
     
 
@@ -281,25 +281,25 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         if (self.topic_slug === 'NV') {
             var el_nino_selected;
             var la_nina_selected;
-            el_nino_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
-            la_nina_selected = jQuery ('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
+            el_nino_selected = jQuery('.figure_viewer_select.graphing_mode option:selected').hasClass ('el_nino');
+            la_nina_selected = jQuery('.figure_viewer_select.graphing_mode option:selected').hasClass ('la_nina');
             if (el_nino_selected || la_nina_selected) {
-                jQuery ('.figure_viewer_select.year').show();
+                jQuery('.figure_viewer_select.year').show();
                 if (el_nino_selected) {
-                    jQuery.map (el_nino_years, function (a) {self.enable_an_option(a)});
+                    jQuery.map(el_nino_years, function (a) {self.enable_an_option(a);});
                 }
                 else {
-                    jQuery.map (el_nino_years, function (a) {self.disable_an_option(a)});
+                    jQuery.map(el_nino_years, function (a) {self.disable_an_option(a);});
                 }
                 if (la_nina_selected) {
-                    jQuery.map (la_nina_years, function (a) {self.enable_an_option(a)});
+                    jQuery.map(la_nina_years, function (a) {self.enable_an_option(a);});
                 }
                 else { 
-                    jQuery.map (la_nina_years, function (a) {self.disable_an_option(a)});
+                    jQuery.map(la_nina_years, function (a) {self.disable_an_option(a);});
                 }
             } else {
                 // set year to null:
-                jQuery ('.figure_viewer_select.year').hide();
+                jQuery('.figure_viewer_select.year').hide();
             }
         }
     },
@@ -308,6 +308,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         window.open(self.currentState.absolute_url, '', '');
+        return false;
     },
 
 
@@ -315,6 +316,7 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         jQuery('.help_box').show();
+        return false;
     },
 
 
@@ -322,19 +324,22 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         "use strict";
         var self = this;
         jQuery('.help_box').hide();
+        return false;
     },
 
     resetButtonPushed: function () {
         "use strict";
         var self = this;
-        jQuery('.figure_viewer_select.season').val(0)
-        jQuery('.figure_viewer_select.graphing_mode').val(0)
-        jQuery('.figure_viewer_select.climate_variable').val(0)
-        jQuery('.figure_viewer_select.graphing_mode').val(0)
-        jQuery('.figure_viewer_select.year').val(0)
-        jQuery('.figure_viewer_select.mode_of_variability').val(0)
-        self.setAnimateButtonstoOff()
+        jQuery('.figure_viewer_select.season').val(0);
+        jQuery('.figure_viewer_select.graphing_mode').val(0);
+        jQuery('.figure_viewer_select.climate_variable').val(0);
+        jQuery('.figure_viewer_select.graphing_mode').val(0);
+        jQuery('.figure_viewer_select.year').val(0);
+        jQuery('.figure_viewer_select.mode_of_variability').val(0);
+        self.setAnimateButtonstoOff();
         self.inputsChanged();
+        jQuery("div.show_hide_div.left_side").hide();
+        return false;
     },
 
 
@@ -343,8 +348,5 @@ FigureViewer.FigureViewerView = Backbone.View.extend({
         var self = this;
         self.setUpMenus();
         self.menuChanged();
-        self.showHelp();
-    },
-
-
+    }
 });

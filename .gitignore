@@ -10,3 +10,9 @@ local_settings.py
 uploads
 x
 .DS_Store
+.project
+.pydevproject
+.settings
+chromedriver.log
+ghostdriver.log
+node_modules/

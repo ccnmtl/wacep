@@ -46,32 +46,29 @@
 		</div>
 
 	<div class="span6">
-		<form method="post" action="." class="well">
-		
-		<label for="id_username">User Name: {{ form.username }}</label>
-		<label for="id_password">Password: {{ form.password }}</label>
-		
-		<input type="submit" value="Log In" class="btn btn-primary" />
-		{% comment%}
-		<!-- don't have a pmt for this yet, so I'm commenting it out. -->
-		<input type="submit" value="I Forgot My Password" class="btn btn-warning" />
-		{% endcomment%}
-		
-		<input type="hidden" name="next" value="{{ next }}" />
+        <form method="post" action="." class="well">
+            {% if form.errors %}
+                <p class="errornote">
+                    <span>
+                        <b>ERROR:</b> Invalid username or password.
+                    </span>
+                    Please try again. Note that both username and password are case-sensitive.
+                </p>
+            {% endif %}
+        
+    		<label for="id_username">User Name: {{ form.username }}</label>
+    		<label for="id_password">Password: {{ form.password }}</label>
+    		
+    		<input type="submit" value="Log In" class="btn btn-primary" />
+    		{% comment%}
+    		<!-- don't have a pmt for this yet, so I'm commenting it out. -->
+    		<input type="submit" value="I Forgot My Password" class="btn btn-warning" />
+    		{% endcomment%}
+    		
+    		<input type="hidden" name="next" value="{{ next }}" />
 		
 		</form>
 
-		{% comment%}
-		<form method="get" action="{{ wind_base }}login" class="well">
-		
-		<input type="hidden" name="service" value="{{ wind_service }}" />
-		<input type="hidden" name="destination" value="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />
-		
-		<p>I have a Columbia University Network ID (UNI).</p>
-		<input type="submit" value="Log In" class="btn btn-primary"/></p>
-		
-		</form>
-		{% endcomment%}
 		<img src="/site_media/splash/img/wacep_logo_vertical.png" alt="WACEP Logo" />
 
 	</div>

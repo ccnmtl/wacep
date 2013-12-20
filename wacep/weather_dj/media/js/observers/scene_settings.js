@@ -141,17 +141,16 @@ WeatherDJ.scene_settings = {
         }
     },
 
-    'arrow_shapes' : [
-            '/hydrologic_cycle/media/img/arrows/arrow_0.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_1.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_2.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_3.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_4.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_5.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_6.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_7.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_8.jpg'
-        ,   '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
+    'arrow_shapes': ['/hydrologic_cycle/media/img/arrows/arrow_0.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_1.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_2.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_3.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_4.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_5.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_6.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_7.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_8.jpg',
+                     '/hydrologic_cycle/media/img/arrows/arrow_9.jpg'
     ],
 
     'arrows' : {
@@ -169,4 +168,4 @@ WeatherDJ.scene_settings = {
         'evapotranspiration_1' :    {'text': 'Evapotranspiration', 'x': 0,   'y': 100, 'rotate': 45    ,'color': 'white'},
         'evapotranspiration_2' :    {'text': 'Evapotranspiration', 'x': 500, 'y': 100, 'rotate': 140   ,'color': 'white'}
     }
-}
+};
