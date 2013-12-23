@@ -43,7 +43,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
 
         var loop_functions = [
             function () {
-                setTimeout( loop_functions[1] , 800);
+                setTimeout( loop_functions[1] , 1200);
             },
             function() {
                 if (self.paused) {
