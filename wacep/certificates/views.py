@@ -22,8 +22,10 @@ def certificates_admin(request):
     for c in the_courses:
         c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
-
-    return {'the_students': the_students, 'the_courses': the_courses}
+        
+    return {'the_students': the_students,
+            'the_courses': the_courses,
+            'saved': request.GET.get('saved', None)}
 
 
 @staff_member_required
@@ -44,7 +46,7 @@ def update_certificates_admin(request):
     for deleted_cert in Certificate.objects.exclude(
             id__in=certificates_to_keep):
         deleted_cert.delete()
-    return HttpResponseRedirect('/_certificates/certificates_admin/')
+    return HttpResponseRedirect('/_certificates/certificates_admin/?saved=saved')
 
 
 @staff_member_required
@@ -56,7 +58,9 @@ def roster(request):
     for c in the_courses:
         c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
-    return {'the_students': the_students, 'the_courses': the_courses}
+    return {'the_students': the_students,
+            'the_courses': the_courses,
+            'saved': request.GET.get('saved', None)}
 
 
 @staff_member_required
@@ -80,7 +84,7 @@ def update_roster(request):
     for deleted_accesses in CourseAccess.objects.exclude(
             id__in=accesses_to_keep):
         deleted_accesses.delete()
-    return HttpResponseRedirect('/_certificates/roster/')
+    return HttpResponseRedirect('/_certificates/roster/?saved=saved')
 
 
 @login_required

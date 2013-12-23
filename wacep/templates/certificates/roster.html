@@ -1,4 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block js %}
+    {% if saved %}
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+                jQuery("div.alert").fadeIn();
+                setTimeout(function() {
+                    jQuery("div.alert").fadeOut();
+                }, 2000);
+                jQuery("div.alert a").click(function() {
+                    jQuery("div.alert").hide();
+                });            
+            });
+        </script>        
+    {% endif %}
+{% endblock %}
+
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
@@ -6,6 +23,11 @@
         {% csrf_token %}
         <div class = "row ">
 	        <h1>Roster</h1>
+            <br />
+            <div class="alert alert-success" data-alert="info" style="display: none;">
+                <a class="close" href="#">&times;</a>
+                <p>Your changes have been saved.</p>
+            </div>            
 		</div>
 		<div class = "row ">
 
