@@ -2,7 +2,7 @@
   {% comment %} short/long text questions {% endcomment %}
   {% if question.explanation %}
       <div class="casesanswerdisplay">
-        <div id="q{{question.id}}" class="toggleable">
+        <div id="q{{question.id}}">
           <h5>Explanation</h5>
           <p>{{question.explanation|markdown}}</p>
         </div>

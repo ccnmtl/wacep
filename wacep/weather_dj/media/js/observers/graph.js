@@ -50,7 +50,7 @@ Graph.prototype.prepareDOM = function () {
             },
             yAxis: {
                 title: {
-                    text: 'y axis'
+                    text: 'levels'
                 },
                 plotLines: [{
                     value: 0,
@@ -67,23 +67,35 @@ Graph.prototype.prepareDOM = function () {
             series: [{
                 name: 'precipitation',
                 data: initial_data,
-                color: "#0d233a", // dark blue
+                color: "#B6BDC4", // dark blue
                 type: "column"
             }, {
                 name: 'runoff',
                 data: initial_data,
                 color: "#910000", // purple
-                type: "spline"
+                type: "spline",
+                lineWidth: 2,
+                marker: {
+                    enabled: false
+                }
             }, {
                 name: 'groundwater',
                 data: initial_data,
                 color: "#8bbc21", // green
-                type: "spline"                    
+                type: "spline",
+                lineWidth: 2,
+                marker: {
+                    enabled: false
+                }
             }, {
                 name: 'streamflow',
                 data: initial_data,
                 color: "#2f7ed8", // light blue
-                type: "spline"                    
+                type: "spline",
+                lineWidth: 5,
+                marker: {
+                    enabled: false
+                }                
             }]
         });
 };

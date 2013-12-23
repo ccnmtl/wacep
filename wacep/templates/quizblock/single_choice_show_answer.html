@@ -12,5 +12,29 @@
         </div>
       </div>
 {% else %}
-<p>{{question.explanation|markdown}}</p>
+   <div class="casesanswerdisplay">
+        <p><i>You selected
+        {% for answer in question.answer_set.all %}
+            {% if response %}
+                {% ifequal response.value answer.value %}
+                    #{{forloop.counter}}.
+                {% else %}
+                {% endifequal %}
+            {% endif %}
+        {% endfor %}
+        
+        The correct answer:</i></p>
+          <ul style="list-style-type: none">
+            {% for answer in question.answer_set.all %}
+              {% if answer.correct %}
+                <li>
+                  <span class="correctanswer">
+                    <span class="answer-inner">{{forloop.counter}}. {{answer.label}}</span>
+                  </span>
+                </li>
+                {%endif%}
+            {% endfor %}
+          </ul>
+          <p>{{question.explanation|markdown}}</p>
+     </div>
 {% endif %}

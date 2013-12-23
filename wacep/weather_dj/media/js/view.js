@@ -7,7 +7,6 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
     },
 
     initialize: function(options) {
-        "use strict";
         var self = this;
 
         _.bindAll(this ,
@@ -52,7 +51,7 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                 } 
                 self.engine.setInputs(self.sliderValues());
                 var outputs = self.engine.generateOutputs();
-                if (outputs.errors !== null ) { 
+                if (outputs.errors != null ) { 
                     console.log (outputs.errors);
                     return;
                 }
@@ -65,13 +64,11 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                 ];
                 self.scrollingTable.addRow (new_row);
                 self.scrollingTable.notify();
-                if (self.engine.getErrors() === null) {
+                if (self.engine.getErrors() == null) {
                     loop_functions[0]();
-                }
-                else {
+                } else {
                     console.log (self.engine.getErrors());
                 }
-            
             }
         ];
         loop_functions[0]();
@@ -144,11 +141,11 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                 event.preventDefault();
             }
         }
-        jQuery('.slider.a').slider({
+        jQuery('.slider.a').slider ({
             'value': self.initial_slider_values.a * 100,
             'slide' : slide_a
         });
-        jQuery('.slider.b').slider({
+        jQuery('.slider.b').slider ({
             'value': self.initial_slider_values.b * 100,
             'slide' : slide_b
          });

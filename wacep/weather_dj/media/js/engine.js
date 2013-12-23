@@ -37,7 +37,7 @@ var WeatherDJEngine = (function() {
     };
 
     WeatherDJEngine.prototype.incrementClock = function() {
-        date.setDate (date.getDate() + 1);
+        date.setDate(date.getDate() + 1);
     };
     
     WeatherDJEngine.prototype.tick = function() {
@@ -47,8 +47,8 @@ var WeatherDJEngine = (function() {
 	
         precipitation = this.getRain();
         var old_groundwater = groundwater;
-        runoff      = (1-a-b) * precipitation;
-        streamflow  = runoff+(c *old_groundwater);
+        runoff = (1-a-b) * precipitation;
+        streamflow = runoff+ (c *old_groundwater);
         groundwater = (1-c) * old_groundwater  + a * precipitation;
         this.incrementClock();
     };
@@ -90,7 +90,7 @@ var WeatherDJEngine = (function() {
         }
     };
     
-    WeatherDJEngine.prototype.generateOutputs= function() {
+    WeatherDJEngine.prototype.generateOutputs = function() {
         this.tick();
         if (errors) {
             return {'errors': errors};
@@ -104,9 +104,6 @@ var WeatherDJEngine = (function() {
             'errors': errors
         };
     };
-
-
-
         
     return WeatherDJEngine;
 })();
