@@ -9,6 +9,10 @@ urlpatterns = patterns(
         'wacep.analytics.views.website_table',
         name="website_table"),
 
+    url(r'^quiz_table/(?P<quiz_id>\d+)/$',
+        'wacep.analytics.views.quiz_table',
+        name="quiz_table"),
+
     url(r'^quiz/(?P<quiz_id>\d+)/$',
         'wacep.analytics.views.create_table',
         name="create_table"),

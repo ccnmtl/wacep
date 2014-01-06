@@ -26,20 +26,33 @@
 
 {% block content %}
     <h1>Analytics</h1>
-    <table class="table table-bordered">
+
         {% for t in the_table %}
-        <tr class = "" >
-                <td>
-                    {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}} {{t.user.user_questions}} {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+
+        <p>  {{t.quiz}} {{t.question}} {{t.first_name}} {{t.last_name}} {{t.email}}  {{t.response}} </p>
+
+                {%endfor %}
+
+{% comment %}
+<!--                                {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}} {{t.user.user_questions}} {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+{{t.first_name}} {{t.last_name}} {{t.email}} {{t.response}} 
                 </td>
-<!--            {% for cell in row %}
+          {% for cell in row %}
                 <td>
                     {{cell}}
                 </td>
             {%endfor%}
--->
-        </tr>
 
-        {%endfor %}
+
+
+    <table class="table table-bordered">
+        {% for t in the_table %}
+        <tr class = "" >
+         <td> {{t.first_name}} <td></td> {{t.last_name}} <td></td> {{t.email}} <td></td>  {{t.response}}  </td>
+        </tr>
+                {%endfor %}
     </table>
+
+-->{% endcomment %}
+
 {%endblock%}
