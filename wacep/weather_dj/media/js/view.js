@@ -129,16 +129,26 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
                   range: "min",
                   animate: true
             }
-        );
+        );        
+        function updatePerviousnessPlusEvapoTranspiration(value) {
+            // update the total value
+            jQuery("#perviousness_plus_evapotranspiration").html(Math.round(value));            
+        }
         // don't let a + b > 100
         function slide_a (event, ui) {
-            if (ui.value + jQuery('.slider.b').slider('value') > 100) {
+            var bValue = jQuery('.slider.b').slider('value');
+            if (ui.value +  bValue > 100) {
                 event.preventDefault();
+            } else {
+                updatePerviousnessPlusEvapoTranspiration(ui.value + bValue);                
             }
         }
         function slide_b (event, ui) {
-            if (ui.value + jQuery('.slider.a').slider('value') > 100) {
+            var aValue = jQuery('.slider.a').slider('value');
+            if (ui.value + aValue > 100) {
                 event.preventDefault();
+            } else {
+                updatePerviousnessPlusEvapoTranspiration(ui.value + aValue);                
             }
         }
         jQuery('.slider.a').slider ({
@@ -151,6 +161,9 @@ WeatherDJ.WeatherDJView = Backbone.View.extend({
          });
         jQuery('.slider.c').slider({'value': self.initial_slider_values.c * 100 });
         jQuery('.slider.r').slider({'value': self.initial_slider_values.r * 100 });
+        
+        updatePerviousnessPlusEvapoTranspiration(
+                (self.initial_slider_values.a + self.initial_slider_values.b) * 100);
     },
 
     setUpEngine: function () {
