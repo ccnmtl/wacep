@@ -25,7 +25,7 @@
 					{%endblock loginlink %}
 				{% else %}	  
 				
-				{% if user.is_staff %}
+				{% if user.is_superuser %}
 					<li><a href="/admin/auth/user/?is_staff__exact=0">Administration</a></li>
 				{%endif %}
 				

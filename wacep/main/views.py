@@ -27,6 +27,8 @@ def splash_or_page(request, path):
         return page(request, path)
 
 
+
+
 def splash(request):
     """ show the splash page."""
     splash_path = 'splash.html'

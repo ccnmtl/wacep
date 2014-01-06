@@ -1,0 +1,24 @@
+{% load markup %}
+{% load getresponse %}
+
+<ol type="A">
+  {% for answer in question.answer_set.all %}
+    {% if block.rhetorical %}
+      <li><input name="question{{question.id}}" value="{{answer.label}}" type="checkbox" />{{answer.label}}</li>
+    {% else %}
+      <li>
+        {% if response %}
+          {% ifanswerin response answer %}
+            <input name="pageblock-{{block.pageblock.id}}-question{{question.id}}"
+                value="{{answer.value}}" type="checkbox" disabled="disabled" checked="checked"/> {{answer.label}}
+          {% else %}
+            <input name="pageblock-{{block.pageblock.id}}-question{{question.id}}"
+                value="{{answer.value}}" type="checkbox" disabled="disabled"/> {{answer.label}}
+          {% endifanswerin %}
+        {% else %}
+          <input name="pageblock-{{block.pageblock.id}}-question{{question.id}}" value="{{answer.value}}" type="checkbox" /> {{answer.label}}
+        {% endif %}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ol>

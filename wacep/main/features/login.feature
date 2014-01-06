@@ -14,4 +14,4 @@ stuff is all hooked up properly and running.
     Scenario: Index Page Load
         Given I am not logged in
         When I access the url "/accounts/login/"
-        Then I see the header "Log In"
+        Then I see the page title "WACEP | Log In"

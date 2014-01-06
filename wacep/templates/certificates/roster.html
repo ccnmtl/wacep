@@ -1,4 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block js %}
+    {% if saved %}
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+                jQuery("div.alert").fadeIn();
+                setTimeout(function() {
+                    jQuery("div.alert").fadeOut();
+                }, 2000);
+                jQuery("div.alert a").click(function() {
+                    jQuery("div.alert").hide();
+                });            
+            });
+        </script>        
+    {% endif %}
+{% endblock %}
+
 {% block sidebar %}{%endblock sidebar%}
 
 {% block content %}
@@ -6,6 +23,11 @@
         {% csrf_token %}
         <div class = "row ">
 	        <h1>Roster</h1>
+            <br />
+            <div class="alert alert-success" data-alert="info" style="display: none;">
+                <a class="close" href="#">&times;</a>
+                <p>Your changes have been saved.</p>
+            </div>            
 		</div>
 		<div class = "row ">
 
@@ -17,9 +39,11 @@
 			To do so, check the box next to a participant's name under the column of the course. Remember to click on the <b>Save</b> button at the bottom of the page for the change to take effect.
 			</p>
 			
+            {% if user.is_superuser %}
 			<p>
 			If you need to add or remove participants, go to the <a href= "/admin/auth/user/?is_staff__exact=0">Administration</a> page. You can also change their passwords from there.	    
 			</p>
+            {% endif %}
 	    
 	    </div>
 	<div class="row well" style="background-color: #67aee4 !important; font-weight: bold; color: #fff;">

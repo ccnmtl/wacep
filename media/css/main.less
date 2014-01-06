@@ -84,14 +84,21 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
 ul.pager {margin-top: 40px;}
 
+ul.pager li.previous a,
+ul.pager li.next a {
+    max-width: 46%;
+}
+
 #sidebar ul
 {
 	list-style-type: none;
+	outline: none;
 }
 
 #sidebar ul li
 {
 	margin-bottom: 14px;
+	outline: none;
 }
 
 
@@ -126,3 +133,33 @@ footer
 #logo04 {margin-top: 20px;}
 #logo05 {margin-top: 10px;}
 #logo06 {margin-top: 45px;}
+
+
+
+
+.cases, .cases .youranswer, .cases .casesanswerdisplay 
+{
+padding: 15px; 
+margin-bottom: 5px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.cases {
+background-color: #dff7ff; 
+margin-bottom: 5px;
+}
+
+.cases .youranswer {
+background-color: #eee; 
+}
+.cases .casesanswerdisplay {
+background-color: #fff; 
+}
+
+.cases .casetitle, .cases h5 {font-size: 16px;}
+
+.cases textarea {width: 98%;}
+
+.choke-graph-350px {width: 350px;}

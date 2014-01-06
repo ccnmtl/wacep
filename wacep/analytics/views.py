@@ -7,6 +7,8 @@ from quizblock.models import Answer, Question, Submission, Quiz, Response
 from django.shortcuts import render, render_to_response
 from quizblock.models import Question
 
+
+
 def user_responses(user):
     result = {}
     for s in user.submission_set.order_by('submitted'):
@@ -75,14 +77,12 @@ def website_table(request):
     return {'the_table': get_table()}
 
 
-
 @render_to('analytics/analytics_table.html')
 def analytics_table(request):
     """keep the code in here to a minimum"""
     return {
         'the_table': generate_the_table()
     }
-
 
 
 def table_to_csv(request, table):
@@ -97,35 +97,3 @@ def table_to_csv(request, table):
 def csv(request):
     return table_to_csv(request, get_table())
 
-def create_table(request, quiz_id):
-    quiz = Quiz.objects.get(pk=quiz_id)
-    questions = quiz.question_set.all()
-    n = 0
-    header = [n]["first name", "last name", "email"]
-
-    print quiz.question_set.count()
-    print quiz.submission_set.count()
-    # get the questions of the quiz and stick them in a header
-
-    for q in questions:
-        header.append(q)
-    # get all users who submitted answers
-    submissions = quiz.submission_set.all()
-    
-    rest_of_row = []
-    # try first to go by user
-    for s in submissions:
-        rest_of_row.append(s.user.first_name)
-        rest_of_row.append(s.user.last_name)
-        rest_of_row.append(s.user.email)
-        response_set = s.response_set.all()
-        for r in response_set:
-            rest_of_row.append(r.question.text)
-            rest_of_row.append(r.value)
-            print row
-        header.append([n+1][rest_of_row])
-
-            #print r.question.text
-            #print r.value
-
-    return render(request, 'analytics/experiment_1.html', {"header" : header})#{"questions" : questions, "submissions": submissions})

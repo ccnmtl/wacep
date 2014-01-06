@@ -18,47 +18,42 @@ var WeatherDJEngine = (function() {
     var errors; // should be null
 
     // constructor
-    function WeatherDJEngine(){
-    	"use strict";
-    	groundwater = 1.0;
+    function WeatherDJEngine() {
+        groundwater = 1.0;
         date = new Date();
-    };
+    }
 
     WeatherDJEngine.prototype.getRain = function () {
-    	"use strict";
-    	var it_rained = (Math.random() < r);
-    	if ( it_rained) {
-    	    return 	Math.random() * max_rain;
-    	}
-    	else {
-    	    return 0.0;
-    	}
-    }
+        var it_rained = (Math.random() < r);
+        if (it_rained) {
+            return Math.random() * max_rain;
+        } else {
+            return 0.0;
+        }
+    };
         
     WeatherDJEngine.prototype.getErrors = function() {
         return errors;
-    }
+    };
 
     WeatherDJEngine.prototype.incrementClock = function() {
-        date.setDate (date.getDate() + 1 )
-    }
+        date.setDate(date.getDate() + 1);
+    };
     
     WeatherDJEngine.prototype.tick = function() {
-    	"use strict";
-    	if (errors)  {
-    	    return;
-    	}
+        if (errors)  {
+            return;
+        }
 	
         precipitation = this.getRain();
         var old_groundwater = groundwater;
-        runoff      = (1-a-b) * precipitation;
-        streamflow  = runoff+(c *old_groundwater);
+        runoff = (1-a-b) * precipitation;
+        streamflow = runoff+ (c *old_groundwater);
         groundwater = (1-c) * old_groundwater  + a * precipitation;
         this.incrementClock();
     };
     
     WeatherDJEngine.prototype.validate = function() {
-        "use strict";
         errors = null;
 
         if (a + b > 1.0) {
@@ -82,38 +77,33 @@ var WeatherDJEngine = (function() {
             return;
         }
         errors = null;
-    }
+    };
     
     WeatherDJEngine.prototype.setInputs = function(values) {
-	   "use strict";
-        a = values ['a'];
-        b = values ['b'];
-        c = values ['c'];
-        r = values ['r'];
-    	this.validate();
-       if (errors) {
+        a = values.a;
+        b = values.b;
+        c = values.c;
+        r = values.r;
+        this.validate();
+        if (errors) {
             return;
         }
     };
     
-    WeatherDJEngine.prototype.generateOutputs= function() {
-    	"use strict";
-    	this.tick();
-    	if (errors){
-    	    return {'errors': errors};
-    	}
+    WeatherDJEngine.prototype.generateOutputs = function() {
+        this.tick();
+        if (errors) {
+            return {'errors': errors};
+        }
         return {
-            'date'         : date           ,
-            'precipitation': precipitation  ,
-            'runoff'       : runoff         ,
-            'groundwater'  : groundwater    ,
-            'streamflow'   : streamflow     ,
-            'errors'	   : errors         
+            'date': date,
+            'precipitation': precipitation,
+            'runoff': runoff,
+            'groundwater': groundwater,
+            'streamflow': streamflow,
+            'errors': errors
         };
     };
-
-
-
         
     return WeatherDJEngine;
 })();

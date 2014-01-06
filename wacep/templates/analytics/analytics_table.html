@@ -28,6 +28,7 @@
     <h1>Analytics</h1>
 
         {% for t in the_table %}
+<<<<<<< HEAD
 
         <p>  {{t.quiz}} {{t.question}} {{t.first_name}} {{t.last_name}} {{t.email}}  {{t.response}} </p>
 
@@ -39,10 +40,25 @@
                 </td>
           {% for cell in row %}
                 <td>
+=======
+        <tr class = "" >
+                <td>
+                    {{t.user.username}} {{t.user.first_name}} {{t.user.last_name}} {{t.user.email}}
+                
+                
+                 {{t.user_questions}} {{t.quiz}} {{t.question.quiz}} {{t.question}} {{t.question.text}} {{t.text}} {{t.question.question_type}} {{t.question_type}}
+
+                
+                </td>
+
+<!--            {% for cell in row %}
+                <td>{{t.user.user_questions}}
+>>>>>>> 952ebac00b18c81ede157805bdf184443ed85282
                     {{cell}}
                 </td>
             {%endfor%}
 
+<<<<<<< HEAD
 
 
     <table class="table table-bordered">
@@ -51,6 +67,9 @@
          <td> {{t.first_name}} <td></td> {{t.last_name}} <td></td> {{t.email}} <td></td>  {{t.response}}  </td>
         </tr>
                 {%endfor %}
+=======
+        {% endfor %}
+>>>>>>> 952ebac00b18c81ede157805bdf184443ed85282
     </table>
 
 -->{% endcomment %}

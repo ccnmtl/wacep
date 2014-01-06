@@ -2,24 +2,63 @@
 {% load render %}
 
 {% block js %}
-{% for block in section.pageblock_set.all %}
-{% renderjs block %}
-{% endfor %}
-<!-- menu collapse-->
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script>
-$(function() {
-	jQuery("#accordion").accordion({
-		heightStyle: "content",
-		active: {{sub_submodule_index}},
-	});
-	jQuery('a').click(function (event) {
-	    event.stopImmediatePropagation();
-		window.location = event.target.href;
-		return false;
-	});
-});
-</script>  
+    {% for block in section.pageblock_set.all %}
+        {% renderjs block %}
+    {% endfor %}
+    
+    <!-- menu collapse-->
+    <script>
+    $(function() {
+    	jQuery("#accordion").accordion({
+    		heightStyle: "content",
+    		active: {{sub_submodule_index}},
+    		disabled: true
+    	});
+    	jQuery('#accordion a').click(function (event) {    	    
+    	    event.preventDefault();
+    	    event.stopPropagation();
+    		window.location = event.target.href;
+    		return false;
+    	});
+    });
+    </script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+    
+            jQuery("form.pagetree").submit(function() {
+                var valid = true;
+    
+                var children = jQuery(this).find("div.cases input,div.cases textarea,div.cases select");
+                jQuery.each(children, function() {
+                    if (valid && jQuery(this).is(":visible")) {
+                        if (this.tagName === 'INPUT' && this.type === 'text' ||
+                                this.tagName === 'TEXTAREA') {
+                            valid = jQuery(this).val().trim().length > 0;
+                        }
+    
+                        if (this.tagName === 'SELECT') {
+                            var value = jQuery(this).val()
+                            valid = value !== undefined && value.length > 0 && jQuery(this).val().trim() !== '-----';
+                        }
+    
+                        if (this.type === 'checkbox' || this.type === 'radio') {
+                            // one in the group needs to be checked
+                            var selector = 'input[name=' + jQuery(this).attr("name") + ']';
+                            valid = jQuery(selector).is(":checked");
+                        }
+                    }
+                });
+    
+                if (!valid) {
+                    alert("Please complete all form fields before continuing.");
+                }
+    
+                return valid;
+            });
+        });
+    </script>
+  
 {% endblock %}
 
 {% block css %}
@@ -92,38 +131,33 @@ $(function() {
 
 {% block content %}
 <div id="content">
-{% if needs_submit %}
-{% if is_submitted %}
-{% else %}
-<form action="." method="post">
-{% endif %}
-{% endif %}
+    {% if needs_submit %}
+        {% if is_submitted %}
+        {% else %}
+            <form action="." method="post" class="pagetree">
+        {% endif %}
+    {% endif %}
 
-
-{% for block in section.pageblock_set.all %}
-<div class="pageblock{% if block.css_extra %} {{block.css_extra}}{% endif %}">
-{% if block.label %}<h3>{{block.label}}</h3>{% endif %}
-{% render block %}
-</div>
-{% endfor %}
-
-
-{% if needs_submit %}
-{% if request.user.is_anonymous %}
-{% else %}
-
-{% if is_submitted %}
-<form action="." method="post">
-<input type="hidden" name="action" value="reset" />
-<input type="submit" value="clear your answers and try again" class="btn" />
-</form>
-{% else %}
-<input type="submit" value="Submit" class="btn btn-primary" />
-
-</form>
-{% endif %}
-{% endif %}
-{% endif %}
+    {% for block in section.pageblock_set.all %}
+        <div class="pageblock{% if block.css_extra %} {{block.css_extra}}{% endif %}">
+            {% if block.label %}<h3>{{block.label}}</h3>{% endif %}
+            {% render block %}
+        </div>
+    {% endfor %}
+    
+    {% if needs_submit %}
+        {% if is_submitted %}
+            <form action="." method="post">
+                <input type="hidden" name="action" value="reset" />
+                {% if user.is_staff %}
+                    <input type="submit" value="Clear your answers (staff only)" class="btn" />
+                {% endif %}
+            </form>
+        {% else %}
+            <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
 
@@ -137,7 +171,9 @@ $(function() {
 
 {% if section.get_next %}
 {% with section.get_next as next_section %}
-<li class="next"><a href="{{section.get_next.get_absolute_url}}">{{section.get_next.label}} &rarr;</a></li>
+    {% if next_section.get_depth > 2 %}    
+        <li class="next"><a href="{{section.get_next.get_absolute_url}}">{{section.get_next.label}} &rarr;</a></li>
+    {% endif %}
 {% endwith %}
 {% endif %}
 </ul>

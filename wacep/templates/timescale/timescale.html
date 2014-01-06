@@ -1,8 +1,8 @@
 <div class="timescale_container">
-	<div class = "timescale_subcontainer help_icon">
-		<button class = "btn btn-primary">Help</button>
+	<div class="timescale_subcontainer help_icon">
+		<button class="btn btn-primary">Help</button>
 	</div>
-	<div class = "timescale_subcontainer help_box" style="overflow-y: scroll;">
+	<div class="timescale_subcontainer help_box" style="overflow-y: scroll;">
 		<div class= "help_copy_container_div">
 		<h3>Instructions</h3><br><br>
 			To use this tool, first select the season that you wish to examine. Three lines will appear representing each component of the precipitation variability in the region. The magnitude of percent variance explained by each component will additionally populate at the top of the tool. Note that in most cases the percent variance explained by all three components will not sum to 100%. This is because the filtering procedure used to separate the decadal and interannual components of the detrended data is necessarily imperfect, and leads to a degree of covariance between the two components.<br><br>
@@ -13,12 +13,12 @@
 			<br />
 			<br />
 			<br />
-			<button class = "btn btn-primary help_ok_button">OK</button>
+			<button class="btn btn-primary help_ok_button">OK</button>
 		</div>
 	</div>
 	<!-- Left side -->
 	<div class="show_hide_div left_side">
-		<div class = "timescale_subcontainer color_key">
+		<div class="timescale_subcontainer color_key">
 			<img class="timescale_color_key" />
 		</div>
 
@@ -26,40 +26,40 @@
 			<div class ="timescale_year_highlight_rectangle"></div>
 		</span>
 
-		<div class = "timescale_subcontainer graph">
+		<div class="timescale_subcontainer graph">
 			<div class="timescale_graph_title" >title</div>
 			<div class="timescale_graph_y_axis">y axis</div>
 			<img class="timescale_graph" />
 		</div>
 
-		<div class = "timescale_subcontainer variance">
+		<div class="timescale_subcontainer variance">
 			<div class="percent_data_header">% Variance Explained</div>
 			<div >Trend: <span class= "percent_data_value percent_trend"></span></div>
-			<div >Decadal: <span class = "percent_data_value percent_interdecadal"></span></div>
-			<div >Interannual: <span class = "percent_data_value percent_interannual"></span></div>
+			<div >Decadal: <span class="percent_data_value percent_interdecadal"></span></div>
+			<div >Interannual: <span class="percent_data_value percent_interannual"></span></div>
 		</div>
 
 		<div class="show_hide_div year_details">
-			<div class = "timescale_subcontainer year_data">
+			<div class="timescale_subcontainer year_data">
 				<div class="left_box">
-					<div class="year_data_header">For t       = <span class="year_data_value year"></span>:</div>
-					<div >Trend       = <span class="year_data_value trend"></span></div>
-					<div >Decadal     = <span class="year_data_value decadal"></span></div>
-					<div >Interannual = <span class="year_data_value interannual"></span></div>
+					<div class="year_data_header">For t      =<span class="year_data_value year"></span>:</div>
+					<div >Trend      =<span class="year_data_value trend"></span></div>
+					<div >Decadal    =<span class="year_data_value decadal"></span></div>
+					<div >Interannual=<span class="year_data_value interannual"></span></div>
 				</div>
 				<div class="right_box">
 					<br/>
 					<br/>
-					<div >Sum         = <span class="year_data_value sum"></span></div>
-					<div >Percentile        = <span class="year_data_value standard_dev"></span></div>
+					<div >Sum        =<span class="year_data_value sum"></span></div>
+					<div >Percentile       =<span class="year_data_value standard_dev"></span></div>
 				</div>
 			</div>
-			<div class = "timescale_subcontainer impact_background" style="position: relative;">
+			<div class="timescale_subcontainer impact_background" style="position: relative;">
 				<div align="center" style="color: black;">Climate Impact</div>
 				<div align="center" style="color: white;" id="drylabel">Dry</div>
 				<div align="center" style="color: white;" id="wetlabel">Wet</div>
 				<span id ="impact_level">
-					<div class = "timescale_subcontainer impact_bubble">
+					<div class="timescale_subcontainer impact_bubble">
 						<span class="impact_bubble_title"></span>
 						<div id="pointer"></div>
 					</div>
@@ -69,19 +69,16 @@
 	</div>
 
 	<!-- Right side -->
-	<div class = "timescale_subcontainer inputs">
+	<div class="timescale_subcontainer inputs">
 		<select name ="season_input_select" class="timescale_select season">
 		    <p>Select a Season:</p>
-			<option value = "">Select a Season:</option>
-			<!-- <option value = ""></option> -->
+			<option value="">Select a Season:</option>
 		</select><br/>
 		<select name ="graphing_mode_input_select" class="timescale_select graphing_mode">
-			<option value = "">Select a Graphing Mode:</option>
-			<!-- <option value = ""></option> -->
+			<option value="">Select a Graphing Mode:</option>
 		</select><br/>
 		<select name ="year_input_select" class="timescale_select year">
-			<option value = "">Select a Year:</option>
-			<!-- <option value = ""></option> -->
+			<option value="">Select a Year:</option>
 		</select><br/>
         <button class="btn btn-primary reset_button" type="button">Reset</button>
 	</div>
@@ -89,7 +86,7 @@
 		<h3>Notes</h3>
 		<div class="explanation_copy"></div>
 		{% if user.is_staff %}
-			<button class="btn btn-primary edit_this_state">Edit</a>
+			<button class="btn btn-primary edit_this_state">Edit Notes (staff only)</a>
 		{%endif %}
 	</div>
 

@@ -38,7 +38,7 @@ var ScrollingTable = (function() {
     	rows[numRows-1] = row;
     }
 
-    ScrollingTable.prototype.getLastRow= function() {
+    ScrollingTable.prototype.getLastRow = function() {
         "use strict";
         var result = {};
         var the_row =  rows[numRows-1];
