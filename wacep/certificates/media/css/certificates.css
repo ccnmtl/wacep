@@ -5,6 +5,9 @@
 
 @media screen {
 
+
+	.row-fluid {min-width: 1200px;}
+	
 	.certificate-div  {
 	}
 	
@@ -40,6 +43,7 @@
 	text-align: center;
 	width: 350px;
 	font-size: 10px;
+	line-height: 11px;
 	}
 	
 	.navbar {
