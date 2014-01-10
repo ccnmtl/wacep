@@ -22,7 +22,7 @@ def certificates_admin(request):
     for c in the_courses:
         c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
-        
+
     return {'the_students': the_students,
             'the_courses': the_courses,
             'saved': request.GET.get('saved', None)}
@@ -46,7 +46,8 @@ def update_certificates_admin(request):
     for deleted_cert in Certificate.objects.exclude(
             id__in=certificates_to_keep):
         deleted_cert.delete()
-    return HttpResponseRedirect('/_certificates/certificates_admin/?saved=saved')
+    return HttpResponseRedirect(
+        '/_certificates/certificates_admin/?saved=saved')
 
 
 @staff_member_required

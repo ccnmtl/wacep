@@ -2,11 +2,8 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from pagetree.models import Section
-from quizblock.models import Answer, Question, Submission, Quiz, Response
-from django.shortcuts import render, render_to_response
-from quizblock.models import Question
-
+from quizblock.models import Question, Quiz, Response
+from django.shortcuts import render
 
 
 def user_responses(user):
@@ -22,17 +19,10 @@ def get_row(user, all_questions):
     user_questions = []
     question_ids = responses.keys()
     for q in all_questions:
-        # print type(q)
-        # print "individual question q " + str(q)
         if q.id in question_ids:  # this is using keys grabbed above
-            # print type(q.id) # int
-            # print q.id # value of int
-            # print type(question_ids) type list
             user_questions.append(responses[q.id])
         else:
             user_questions.append(None)
-    # print type(user) # this is user object
-    # print type(user_questions) # this is list...
     # individual objects of lists are quizblock questions...
     return {
         'user': user,
@@ -50,7 +40,6 @@ def get_table():
     return the_table
 
 
-
 @render_to('analytics/analytics_table.html')
 def quiz_table(request, quiz_id):
     the_table = []
@@ -64,10 +53,13 @@ def quiz_table(request, quiz_id):
             email = response.submission.user.email
             response = response.value
             question = each.text
-            print question
             quiz = quiz
-            print quiz
-            row ={ "first_name" : first_name, "last_name" : last_name, "email" : email, "response" : response, "question" : question, "quiz" : quiz}
+            row = {"first_name": first_name,
+                   "last_name": last_name,
+                   "email": email,
+                   "response": response,
+                   "question": question,
+                   "quiz": quiz}
             the_table.append(row)
     return {'the_table': the_table}
 
@@ -97,21 +89,20 @@ def table_to_csv(request, table):
 def csv(request):
     return table_to_csv(request, get_table())
 
+
 def create_table(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
     questions = quiz.question_set.all()
     n = 0
     header = [n]["first name", "last name", "email"]
 
-    print quiz.question_set.count()
-    print quiz.submission_set.count()
     # get the questions of the quiz and stick them in a header
 
     for q in questions:
         header.append(q)
     # get all users who submitted answers
     submissions = quiz.submission_set.all()
-    
+
     rest_of_row = []
     # try first to go by user
     for s in submissions:
@@ -122,10 +113,8 @@ def create_table(request, quiz_id):
         for r in response_set:
             rest_of_row.append(r.question.text)
             rest_of_row.append(r.value)
-            print row
         header.append([n+1][rest_of_row])
 
-            #print r.question.text
-            #print r.value
-
-    return render(request, 'analytics/experiment_1.html', {"header" : header})#{"questions" : questions, "submissions": submissions})
+    return render(request,
+                  'analytics/experiment_1.html',
+                  {"header": header})

@@ -20,23 +20,20 @@ class GetMultipleChoiceQuestionResponseNode(template.Node):
         submission = submissions[0]
         responses = Response.objects.filter(question=q,
                                             submission=submission)
-        
         indices = []
         for answer_idx, answer in enumerate(q.answer_set.all()):
             for response in responses:
                 if answer.value == response.value:
                     indices.append("#" + str(answer_idx + 1))
-        
-            
         if responses.count() > 0:
             context[self.var_name] = ', '.join(indices)
         else:
             context[self.var_name] = None
-            
         return ''
-        
+
+
 @register.tag('getmultiplechoiceresponse')
 def getmultiplechoiceresponse(parser, token):
     question = token.split_contents()[1:][0]
     var_name = token.split_contents()[1:][2]
-    return GetMultipleChoiceQuestionResponseNode(question, var_name)        
+    return GetMultipleChoiceQuestionResponseNode(question, var_name)
