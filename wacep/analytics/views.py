@@ -1,12 +1,23 @@
 # Create your views here.
+# Create your views here.
+import csv
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from quizblock.models import Question, Quiz, Response
-from django.shortcuts import render
+from pagetree.models import Section
+from quizblock.models import Answer, Question, Submission
+from django.shortcuts import render, render_to_response
+from quizblock.models import Quiz, Response
+from pagetree.models import PageBlock
+from pagetree.models import Hierarchy
+from django.contrib.contenttypes.models import ContentType
+from pagetree.helpers import get_hierarchy, get_section_from_path, \
+    get_module, needs_submit, submitted
+from zipfile import ZipFile
+from django.utils.encoding import smart_str
 
 
-def user_responses(user):
+def responses_for(user):
     result = {}
     for s in user.submission_set.order_by('submitted'):
         for r in s.response_set.all():
@@ -14,107 +25,138 @@ def user_responses(user):
     return result
 
 
+
 def get_row(user, all_questions):
     responses = user_responses(user)
     user_questions = []
     question_ids = responses.keys()
     for q in all_questions:
-        if q.id in question_ids:  # this is using keys grabbed above
+        if q.id in question_ids:
             user_questions.append(responses[q.id])
         else:
             user_questions.append(None)
-    # individual objects of lists are quizblock questions...
     return {
         'user': user,
         'user_questions': user_questions
     }
 
 
-def get_table():
-    all_questions = Question.objects.all()
+
+@render_to('analytics/the_table.html')
+def course_table(request, section_id):
+    questions = []
+    section = Section.objects.get(pk=section_id)
+    if section.get_descendants().count() > 0:
+        course = section.get_descendants()
+        questions = find_questions(course)
+    else:
+        questions = find_questions(section)
+    
     all_users = User.objects.all()
+
     the_table = []
+    heading = generate_heading(questions)
 
-    for u in all_users:
-        the_table.append(get_row(u, all_questions))
-    return the_table
+    for the_user in all_users:
+        the_table.append(generate_row(the_user, section,
+                                      questions))
 
-
-@render_to('analytics/analytics_table.html')
-def quiz_table(request, quiz_id):
-    the_table = []
-    quiz = Quiz.objects.get(pk=quiz_id)
-    quiz_questions = Question.objects.filter(quiz=quiz)
-    for each in quiz_questions:
-        responses = Response.objects.filter(question=each)
-        for response in responses:
-            first_name = response.submission.user.first_name
-            last_name = response.submission.user.last_name
-            email = response.submission.user.email
-            response = response.value
-            question = each.text
-            quiz = quiz
-            row = {"first_name": first_name,
-                   "last_name": last_name,
-                   "email": email,
-                   "response": response,
-                   "question": question,
-                   "quiz": quiz}
-            the_table.append(row)
-    return {'the_table': the_table}
+    return {'heading': heading, 'the_table': the_table, 'section_id' : section_id}
 
 
-@render_to('analytics/analytics_table.html')
-def website_table(request):
-    return {'the_table': get_table()}
+def find_questions(sections):
+    questions = []
+    try:
+        for the_section in sections:
+            for the_pageblock in the_section.pageblock_set.all():
+                if the_pageblock.block().__class__.display_name == 'Quiz':
+                    questions.extend(the_pageblock.block().question_set.all())
+
+    except:
+        the_section = sections
+        for the_pageblock in the_section.pageblock_set.all():
+            if the_pageblock.block().__class__.display_name == 'Quiz':
+                questions.extend(the_pageblock.block().question_set.all())
+
+    return questions
 
 
-@render_to('analytics/analytics_table.html')
-def analytics_table(request):
-    """keep the code in here to a minimum"""
+def generate_heading(all_questions):
+    result = ['Frist Name', 'Last Name', 'username', 'Email']
+    for question in all_questions:
+        try:
+            text = (question.text).encode('ascii', 'ignore')
+        except:
+            text = ""
+        row = ["%d: %s" % (question.id, text)]
+        result.extend(row)
+    return result
+
+
+
+def generate_row(the_user, all_sections, all_questions):
+    responses = responses_for(the_user)
+    user_questions = []
+    question_ids = responses.keys()
+
+    for the_question in all_questions:
+        if the_question.id in question_ids:
+            user_questions.append(responses[the_question.id])
+        else:
+            user_questions.append(None)
+
     return {
-        'the_table': generate_the_table()
+        'the_user': the_user,
+        'user_questions': user_questions,
     }
 
+def generate_csv_row(the_user, all_sections, all_questions):
+    responses = responses_for(the_user)
+    user_questions = []
+    question_ids = responses.keys()
 
-def table_to_csv(request, table):
+    for the_question in all_questions:
+        if the_question.id in question_ids:
+            user_questions.append(responses[the_question.id])
+        else:
+            user_questions.append(None)
+    user_row = []
+    user_row = [the_user.first_name, the_user.last_name, the_user.username, the_user.email]
+    try:
+        for each in user_questions:
+            qrow = each.encode('ascii', 'ignore')
+            user_row.append(qrow)
+    except:
+        for each in user_questions:
+            qrow = each
+            user_row.append(qrow)
+    return user_row
+
+
+
+
+def export_csv(request, section_id):
+    questions = []
+    section = Section.objects.get(pk=section_id)
+    if section.get_descendants().count() > 0:
+        course = section.get_descendants()
+        questions = find_questions(course)
+    else:
+        questions = find_questions(section)    
+    all_users = User.objects.all()
+
     response = HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=wacep.csv'
+    response['Content-Disposition'] = 'attachment; filename=wacep_responses.csv'
     writer = csv.writer(response)
-    for row in table:
-        writer.get_row(row)
+
+    headers = generate_heading(questions)
+    writer.writerow(headers)
+
+    for the_user in all_users:
+        writer.writerow(generate_csv_row(the_user, section,
+                                      questions))
+
+
     return response
 
 
-def csv(request):
-    return table_to_csv(request, get_table())
-
-
-def create_table(request, quiz_id):
-    quiz = Quiz.objects.get(pk=quiz_id)
-    questions = quiz.question_set.all()
-    n = 0
-    header = [n]["first name", "last name", "email"]
-
-    # get the questions of the quiz and stick them in a header
-
-    for q in questions:
-        header.append(q)
-    # get all users who submitted answers
-    submissions = quiz.submission_set.all()
-
-    rest_of_row = []
-    # try first to go by user
-    for s in submissions:
-        rest_of_row.append(s.user.first_name)
-        rest_of_row.append(s.user.last_name)
-        rest_of_row.append(s.user.email)
-        response_set = s.response_set.all()
-        for r in response_set:
-            rest_of_row.append(r.question.text)
-            rest_of_row.append(r.value)
-        header.append([n+1][rest_of_row])
-
-    return render(request,
-                  'analytics/experiment_1.html',
-                  {"header": header})
