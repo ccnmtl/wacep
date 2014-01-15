@@ -5,15 +5,8 @@ urlpatterns = patterns(
         'wacep.analytics.views.export_csv',
         name="export_csv"),
 
-    # url(r'^website_table/$',
-    #     'wacep.analytics.views.website_table',
-    #     name="website_table"),
-
     url(r'^course_table/(?P<section_id>\d+)/$',
         'wacep.analytics.views.course_table',
         name="course_table"),
 
-    # url(r'^quiz/(?P<quiz_id>\d+)/$',
-    #     'wacep.analytics.views.create_table',
-    #     name="create_table"),
 )

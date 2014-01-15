@@ -1,6 +1,6 @@
-# Create your views here.
-# Create your views here.
 import csv
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -41,7 +41,8 @@ def get_row(user, all_questions):
     }
 
 
-
+@login_required
+@staff_member_required
 @render_to('analytics/the_table.html')
 def course_table(request, section_id):
     questions = []
@@ -134,7 +135,8 @@ def generate_csv_row(the_user, all_sections, all_questions):
 
 
 
-
+@login_required
+@staff_member_required
 def export_csv(request, section_id):
     questions = []
     section = Section.objects.get(pk=section_id)
