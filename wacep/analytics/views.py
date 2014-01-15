@@ -53,7 +53,7 @@ def course_table(request, section_id):
     else:
         questions = find_questions(section)
     
-    all_users = User.objects.all()
+    all_users = User.objects.filter(is_staff=False)
 
     the_table = []
     heading = generate_heading(questions)
@@ -145,7 +145,7 @@ def export_csv(request, section_id):
         questions = find_questions(course)
     else:
         questions = find_questions(section)    
-    all_users = User.objects.all()
+    all_users = User.objects.filter(is_staff=False)
 
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=wacep_responses.csv'
