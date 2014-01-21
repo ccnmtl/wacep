@@ -184,3 +184,9 @@ div.scene {
 	height: 35px;
 }
 
+.nav-tabs > .active > a:focus,
+.nav-tabs > li:focus {
+    outline: 0;
+}
+
+ 

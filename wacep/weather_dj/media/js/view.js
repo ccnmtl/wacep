@@ -1,9 +1,9 @@
 WeatherDJ.WeatherDJView = Backbone.View.extend({
     events: {
-        "click .pause_button"   : "pause",
-        "click .play_button"    : "play",
-        "click .show_labels_button"  : "showLabels",
-        "click .hide_labels_button"  : "hideLabels",
+        "click .pause_button": "pause",
+        "click .play_button": "play",
+        "click .show_labels_button": "showLabels",
+        "click .hide_labels_button": "hideLabels",
     },
 
     initialize: function(options) {
