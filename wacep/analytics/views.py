@@ -83,7 +83,7 @@ def find_questions(sections):
 
 
 def generate_heading(all_questions):
-    result = ['Frist Name', 'Last Name', 'username', 'Email']
+    result = ['First Name', 'Last Name', 'username', 'Email']
     for question in all_questions:
         try:
             text = (question.text).encode('ascii', 'ignore')
