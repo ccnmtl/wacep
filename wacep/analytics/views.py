@@ -89,7 +89,7 @@ def generate_heading(all_questions):
             text = (question.text).encode('ascii', 'ignore')
         except:
             text = ""
-        row = ["%d: %s" % (question.id, text)]
+        row = ["%s" % (text)]
         result.extend(row)
     return result
 
