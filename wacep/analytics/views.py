@@ -115,22 +115,25 @@ def generate_csv_row(the_user, all_sections, all_questions):
     responses = responses_for(the_user)
     user_questions = []
     question_ids = responses.keys()
+    user_row = []
 
     for the_question in all_questions:
         if the_question.id in question_ids:
             user_questions.append(responses[the_question.id])
         else:
             user_questions.append(None)
-    user_row = []
+
+    #user_row = []
     user_row = [the_user.first_name, the_user.last_name, the_user.username, the_user.email]
-    try:
-        for each in user_questions:
+    
+    for each in user_questions:
+        try:
             qrow = each.encode('ascii', 'ignore')
             user_row.append(qrow)
-    except:
-        for each in user_questions:
+        except:
             qrow = each
             user_row.append(qrow)
+
     return user_row
 
 
