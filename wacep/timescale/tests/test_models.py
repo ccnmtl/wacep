@@ -1,8 +1,10 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from wacep.timescale.models import GraphingModeInput, YearInput
 from wacep.timescale.models import SeasonInput, InputCombination
 from wacep.timescale.models import ActivityState
-
+from pagetree.models import Hierarchy
+import factory
 
 class TestTimescaleModel(TestCase):
 
@@ -90,3 +92,27 @@ class TestTimescaleModel(TestCase):
              'show_year_details': self.activitystate.show_year_details
 
              })
+
+
+# class TimescaleBlock is a PageTree block - adding tests
+# similar to those from factories in nepi (think Susan wrote?)
+class HierarchyFactory(factory.DjangoModelFactory):
+    FACTORY_FOR = Hierarchy
+    name = "main"
+    base_url = "/"
+
+    @factory.post_generation
+    def populate(self, create, extracted, **kwargs):
+        self.get_root().add_child_section_from_dict(
+            {
+                'label': 'Welcome',
+                'slug': 'welcome',
+                'pageblocks': [
+                    {'label': 'Welcome to your new Site',
+                     'css_extra': '',
+                     'block_type': 'Text Block',
+                     'body': 'You should now use the edit link to add content',
+                     },
+                ],
+                'children': [],
+            })
