@@ -130,16 +130,21 @@ class TestFigureViewerModel(TestCase):
     def test_input_to_json(self):
         result = {
             'name': self.inputcombination.__unicode__(),
-            'show_animate_buttons': self.inputcombination.show_animate_buttons(),
-            'topic_id': self.inputcombination.topic_id if self.inputcombination.topic else None,
-            'season_input_id': (self.inputcombination.season_input.id
+            'show_animate_buttons': 
+                self.inputcombination.show_animate_buttons(),
+            'topic_id': 
+                self.inputcombination.topic_id if self.inputcombination.topic else None,
+            'season_input_id': 
+                (self.inputcombination.season_input.id
                                   if self.inputcombination.season_input else None),
-            'climate_variable_input_id': (self.inputcombination.climate_variable_input_id
+            'climate_variable_input_id': 
+                (self.inputcombination.climate_variable_input_id
                       if self.inputcombination.climate_variable_input_id else None),
             'animation_input_id': (
                        self.inputcombination.animation_input_id
                        if self.inputcombination.animation_input_id else None),
-            'year_input_id': self.inputcombination.year_input.id if self.inputcombination.year_input else None,
+            'year_input_id': self.inputcombination.year_input.id 
+                if self.inputcombination.year_input else None,
             'mode_of_variability_input_id': (
                      self.inputcombination.mode_of_variability_input_id
                       if self.inputcombination.mode_of_variability_input_id else None),
