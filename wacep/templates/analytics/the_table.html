@@ -30,7 +30,7 @@
 <table class="table table-bordered">
         <tr class = "" >
     {% for h in heading %}
-    <td>{{h}}</td>
+    <td>{{h|striptags }}</td>
     {%endfor %}
 </tr>
  {% for t in the_table %}

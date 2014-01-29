@@ -49,6 +49,7 @@ def course_table(request, section_id):
     section = Section.objects.get(pk=section_id)
     if section.get_descendants().count() > 0:
         course = section.get_descendants()
+        #print dir(course[0])
         questions = find_questions(course)
     else:
         questions = find_questions(section)
