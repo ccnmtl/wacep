@@ -1,5 +1,6 @@
 import csv
 from wacep.certificates.models import CertificateCourse, CourseAccess
+from wacep.main.views import get_submodule
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
@@ -50,7 +51,6 @@ def course_table(request, section_id):
     section = Section.objects.get(pk=section_id)
     if section.get_descendants().count() > 0:
         course = section.get_descendants()
-        #print dir(course[0])
         questions = find_questions(course)
     else:
         questions = find_questions(section)
@@ -60,9 +60,6 @@ def course_table(request, section_id):
     find_course_access = CourseAccess.objects.filter(course=find_certificate_course)
     for each in find_course_access:
         all_users.append(each.user)
-    #all_users = User.objects.filter(courses_i_take=find_course_access)
-    #all_users = CourseAccess.user_set.all()
-    #all_users = User.objects.filter(is_staff=False)
 
     the_table = []
     heading = generate_heading(questions)
@@ -91,16 +88,29 @@ def find_questions(sections):
     return questions
 
 
+def new_get_module(section):
+    if section.is_root():
+        return None
+    if section.depth == 2:
+        return section
+    return section.get_ancestors()[1]
+
+
 def generate_heading(all_questions):
-    result = ['First Name', 'Last Name', 'username', 'Email']
+    modules = ["", "", "", ""]
+    questions = ['First Name', 'Last Name', 'username', 'Email']
     for question in all_questions:
+        module_number = get_submodule(question.quiz.pageblocks.all()[0].section)
+        question_number = question.display_number()
+        store = str(module_number) + " " + str(question_number)
+        modules.append(store)
         try:
             text = (question.text).encode('ascii', 'ignore')
         except:
             text = ""
         row = ["%s" % (text)]
-        result.extend(row)
-    return result
+        questions.extend(row)
+    return {'modules' : modules, 'questions' : questions}
 
 
 

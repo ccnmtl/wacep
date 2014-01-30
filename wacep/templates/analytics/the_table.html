@@ -29,10 +29,19 @@
 
 <table class="table table-bordered">
         <tr class = "" >
-    {% for h in heading %}
+    {% for h in heading.modules %}
     <td>{{h|striptags }}</td>
     {%endfor %}
+    
 </tr>
+
+        <tr class = "" >
+{% for x in heading.questions %}
+    <td>{{x|striptags }}</td>
+    {%endfor %}
+</tr>
+
+
  {% for t in the_table %}
   <tr class = "" ><td>{{t.the_user.first_name}}</td><td>{{t.the_user.last_name}}</td><td>{{t.the_user.username}}</td><td>{{t.the_user.email}}</td>{% for e in t.user_questions %}<td>{{e}}</td>{%endfor %}</tr>
  {%endfor %}
