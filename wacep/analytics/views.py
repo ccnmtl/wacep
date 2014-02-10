@@ -7,16 +7,6 @@ from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from pagetree.models import Section
-from quizblock.models import Answer, Question, Submission
-from django.shortcuts import render, render_to_response
-from quizblock.models import Quiz, Response
-from pagetree.models import PageBlock
-from pagetree.models import Hierarchy
-from django.contrib.contenttypes.models import ContentType
-from pagetree.helpers import get_hierarchy, get_section_from_path, \
-    get_module, needs_submit, submitted
-from zipfile import ZipFile
-from django.utils.encoding import smart_str
 
 
 def responses_for(user):
@@ -25,7 +15,6 @@ def responses_for(user):
         for r in s.response_set.all():
             result[r.question.id] = r.value
     return result
-
 
 
 def get_row(user, all_questions):
@@ -57,7 +46,8 @@ def course_table(request, section_id):
 
     all_users = []
     find_certificate_course = CertificateCourse.objects.get(section=section)
-    find_course_access = CourseAccess.objects.filter(course=find_certificate_course)
+    find_course_access = CourseAccess.objects.filter(
+        course=find_certificate_course)
     for each in find_course_access:
         all_users.append(each.user)
 
@@ -68,7 +58,8 @@ def course_table(request, section_id):
         the_table.append(generate_row(the_user, section,
                                       questions))
 
-    return {'heading': heading, 'the_table': the_table, 'section_id' : section_id}
+    return {'heading': heading, 'the_table': the_table,
+            'section_id': section_id}
 
 
 def find_questions(sections):
@@ -100,7 +91,8 @@ def generate_heading(all_questions):
     modules = ["", "", "", ""]
     questions = ['First Name', 'Last Name', 'username', 'Email']
     for question in all_questions:
-        module_number = get_submodule(question.quiz.pageblocks.all()[0].section)
+        module_number = get_submodule(
+            question.quiz.pageblocks.all()[0].section)
         question_number = question.display_number()
         store = str(module_number) + " " + str(question_number)
         modules.append(store)
@@ -110,8 +102,7 @@ def generate_heading(all_questions):
             text = ""
         row = ["%s" % (text)]
         questions.extend(row)
-    return {'modules' : modules, 'questions' : questions}
-
+    return {'modules': modules, 'questions': questions}
 
 
 def generate_row(the_user, all_sections, all_questions):
@@ -130,6 +121,7 @@ def generate_row(the_user, all_sections, all_questions):
         'user_questions': user_questions,
     }
 
+
 def generate_csv_row(the_user, all_sections, all_questions):
     responses = responses_for(the_user)
     user_questions = []
@@ -142,9 +134,9 @@ def generate_csv_row(the_user, all_sections, all_questions):
         else:
             user_questions.append(None)
 
-    #user_row = []
-    user_row = [the_user.first_name, the_user.last_name, the_user.username, the_user.email]
-    
+    user_row = [the_user.first_name, the_user.last_name,
+                the_user.username, the_user.email]
+
     for each in user_questions:
         try:
             qrow = each.encode('ascii', 'ignore')
@@ -156,7 +148,6 @@ def generate_csv_row(the_user, all_sections, all_questions):
     return user_row
 
 
-
 @login_required
 @staff_member_required
 def export_csv(request, section_id):
@@ -166,11 +157,12 @@ def export_csv(request, section_id):
         course = section.get_descendants()
         questions = find_questions(course)
     else:
-        questions = find_questions(section)    
+        questions = find_questions(section)
     all_users = User.objects.filter(is_staff=False)
 
     response = HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=wacep_responses.csv'
+    response['Content-Disposition'] = (
+        'attachment; filename=wacep_responses.csv')
     writer = csv.writer(response)
 
     headers = generate_heading(questions)
@@ -178,9 +170,5 @@ def export_csv(request, section_id):
 
     for the_user in all_users:
         writer.writerow(generate_csv_row(the_user, section,
-                                      questions))
-
-
+                                         questions))
     return response
-
-

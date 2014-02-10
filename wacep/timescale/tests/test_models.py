@@ -1,10 +1,10 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
 from wacep.timescale.models import GraphingModeInput, YearInput
 from wacep.timescale.models import SeasonInput, InputCombination
 from wacep.timescale.models import ActivityState
 from pagetree.models import Hierarchy
 import factory
+
 
 class TestTimescaleModel(TestCase):
 
@@ -54,16 +54,22 @@ class TestTimescaleModel(TestCase):
             {'id': self.year.id,
              'name': self.year.name})
 
-
     def test_input_combination_to_json(self):
         self.to_json = self.inputcombination.to_json()
         self.assertEquals(
             self.to_json,
-            {'season_input_id': (self.inputcombination.season_input.id if self.inputcombination.season_input else None),
-             'graphing_mode_input_id': (self.inputcombination.graphing_mode_input.id if self.inputcombination.graphing_mode_input else None),
-             'year_input_id': (self.inputcombination.year_input.id if self.inputcombination.year_input else None),
-                 'activity_state_id': self.inputcombination.activity_state.id,
-                 'id': self.inputcombination.id})
+            {
+                'season_input_id': (
+                    self.inputcombination.season_input.id
+                    if self.inputcombination.season_input else None),
+                'graphing_mode_input_id': (
+                    self.inputcombination.graphing_mode_input.id
+                    if self.inputcombination.graphing_mode_input else None),
+                'year_input_id': (
+                    self.inputcombination.year_input.id
+                    if self.inputcombination.year_input else None),
+                'activity_state_id': self.inputcombination.activity_state.id,
+                'id': self.inputcombination.id})
 
     def test_activity_state_to_json(self):
         self.to_json = self.activitystate.to_json()
