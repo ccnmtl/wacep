@@ -166,7 +166,8 @@ def export_csv(request, section_id):
     writer = csv.writer(response)
 
     headers = generate_heading(questions)
-    writer.writerow(headers)
+    writer.writerow(headers['modules'])
+    writer.writerow(headers['questions'])
 
     for the_user in all_users:
         writer.writerow(generate_csv_row(the_user, section,
