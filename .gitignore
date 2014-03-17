@@ -16,3 +16,4 @@ x
 chromedriver.log
 ghostdriver.log
 node_modules/
+*.sql
