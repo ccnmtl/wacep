@@ -126,6 +126,7 @@ INSTALLED_APPS = [
     'smoketest',
     'django_extensions',
     'impersonate',
+    'rest_framework',
     'wacep.main',
     'pagetree',
     'pageblocks',
@@ -134,6 +135,7 @@ INSTALLED_APPS = [
     'wacep.figure_viewer',
     'wacep.weather_dj',
     'wacep.certificates',
+    'wacep.forecaster'
 ]
 
 PAGEBLOCKS = [
@@ -232,4 +234,9 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
 }

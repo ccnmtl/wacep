@@ -5,7 +5,6 @@
 
 @media (min-width: 979px) {
   body {
-    padding-top: 60px;
    }
 }
 
@@ -18,7 +17,11 @@
 
 a.brand {width: 100px;}
 
-.navbar-fixed-top .navbar-inner {
+.navbar .navbar-inner {
+
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 
 	background-color: @wacepblue;
 	background-image: -moz-linear-gradient(top, @waceplightblue, @wacepblue);
@@ -163,3 +166,8 @@ background-color: #fff;
 .cases textarea {width: 98%;}
 
 .choke-graph-350px {width: 350px;}
+
+/* Forecast Activity */
+.forecast-step {
+    margin-top: 25px;
+}
