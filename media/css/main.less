@@ -168,11 +168,25 @@ background-color: #fff;
 .choke-graph-350px {width: 350px;}
 
 /* Forecast Activity */
-.forecast-step {
-    margin-top: 25px;
-}
-
-table#hurricane-data {
-
+.forecast {
+    .forecast-step {
+        margin-top: 25px;
+    }
     
+    .pagination a:hover, .pagination .active a {
+        background-color: white;
+        color: #0088cc;
+    }
+    
+    .pagination .disabled span, .pagination .disabled a, .pagination .disabled a:hover {
+        color: #999999;
+        cursor: default;
+        background-color: transparent;
+    }    
+
+    table#hurricane-data {
+        td.storms, td.hurricanes, td.nino {
+            text-align: right;
+        }
+    }
 }

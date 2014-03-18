@@ -14,8 +14,8 @@
         model: ForecastApp.Models.HurricaneYear,
         parse: function(response) {
             return response.results || response;
-        }
-    });
+        } 
+    });   
     
     ForecastApp.Views.AnalyzeView = Backbone.View.extend({
         initialize: function(options) {
@@ -31,17 +31,41 @@
             this.collection.fetch({
                 data: {page_size: 200},
                 processData: true,
-                reset: true});
+                reset: true
+            });
         },
-        renderCharts: function() {
+        render: function() {            
             var years = [];
             var nino = [];
             var storms = [];
+            var hurricanes = [];
+            var nino_versus_storms = [];
             this.collection.forEach(function (hurricane_year) {
                 years.push(hurricane_year.get('year'));
                 nino.push(hurricane_year.get('nino_sst_anomalies'));
                 storms.push(hurricane_year.get('named_storms'));
+                hurricanes.push(hurricane_year.get('hurricanes'));
+                nino_versus_storms.push([hurricane_year.get('nino_sst_anomalies'),
+                                         hurricane_year.get('named_storms')]);                    
             });
+            
+            var context = {
+                'hurricane_data': this.collection.toJSON(),
+                'mean_storms': jStat.mean(storms).toFixed(2),
+                'mean_hurricanes': jStat.mean(hurricanes).toFixed(2),
+                'mean_nino': jStat.mean(nino).toFixed(2),
+                'stdev_storms': jStat.stdev(storms).toFixed(2),
+                'stdev_hurricanes': jStat.stdev(hurricanes).toFixed(2),
+                'stdev_nino': jStat.stdev(nino).toFixed(2)           
+            };
+            var markup = this.template(context);            
+            jQuery(this.el).html(markup);
+            
+            jQuery("div.pagination ul li").removeClass("active");
+            jQuery("li.step-one").addClass("active");
+            
+            jQuery("#hurricane-data").tablesorter({sortList: [[0,0]]})
+
             
             jQuery('#nino-graph').highcharts({
                 chart: {type: 'line'},
@@ -50,7 +74,7 @@
                         tickInterval: Math.round(years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Anomalies'}},
-                series: [{showInLegend: false, data: nino}]
+                series: [{name: "ASO NINO3.4 SST anomalies", showInLegend: false, data: nino}]
             });
             
             jQuery('#storms-graph').highcharts({
@@ -60,19 +84,26 @@
                         tickInterval: Math.round(years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Named Storms'}},
-                series: [{showInLegend: false, data: storms}]
+                series: [{name: "Named Storms", showInLegend: false, data: storms}]
             });
-        },
-        render: function() {
-            var context = { 'hurricane_data': this.collection.toJSON() };
-            var markup = this.template(context);            
-            jQuery(this.el).html(markup);
             
-            jQuery("div.pagination ul li").removeClass("active");
-            jQuery("li.step-one").addClass("active");
-            
-            jQuery("#hurricane-data").tablesorter({sortList: [[0,0]]})
-            this.renderCharts();
+            jQuery('#storms-versus-nino-graph').highcharts({
+                chart: {type: 'scatter'},
+                title: {text: 'Named Storms vs Nino 3.4 (ASO)'},
+                xAxis: {title: {text: 'ASO NINO3.4 SST anomalies'},
+                    plotLines: [{color: '#FF0000', width: 2, value: 0}]},
+                yAxis: {title: {text: 'Named Storms'}},
+                plotOptions: {
+                    scatter: {
+                        tooltip: {
+                            headerFormat: '<b>Named Storms vs Nino 3.4 (ASO)</b><br>',
+                            pointFormat: '{point.y} named storms<br />{point.x} nino 3.4 anomalies'
+                        }
+                    }
+                },
+                series: [{showInLegend: false,
+                          data: nino_versus_storms}]
+            });            
         },
         reset: function() {
             this.collection.reset();
@@ -95,7 +126,7 @@
             jQuery(self.el).html(markup);
             
             jQuery("div.pagination ul li").removeClass("active");
-            jQuery("li.step-two").addClass("active");            
+            jQuery("li.step-two").addClass("active");         
         },
         reset: function() {
             
@@ -178,10 +209,14 @@
             buildView.render();
         },
         validate: function() {
-            validateView.render();
+            if (!jQuery("li.step-three").hasClass("disabled")) {
+                validateView.render();
+            }
         },
         forecast: function() {
-            forecastView.render();
+            if (!jQuery("li.step-four").hasClass("disabled")) {
+                forecastView.render();
+            }
         },
         reset: function() {
             analyzeView.reset();
