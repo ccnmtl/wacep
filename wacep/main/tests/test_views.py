@@ -11,22 +11,6 @@ class BasicAnonTest(TestCase):
     def setUp(self):
         self.c = Client()
 
-    #splash page is being removed.
-    def test_splash_enabled(self):
-        with self.settings(SHOW_SPLASH=True):
-            response = self.c.get("/")
-            self.assertEquals(response.status_code, 301)
-
-    def test_splash_disabled(self):
-        with self.settings(SHOW_SPLASH=False):
-            response = self.c.get("/")
-            self.assertEquals(response.status_code, 301)
-
-    def test_welcome(self):
-        with self.settings(SHOW_SPLASH=False):
-            response = self.c.get("/welcome/")
-            self.assertEquals(response.status_code, 302)
-
     def test_smoketest(self):
         response = self.c.get("/smoketest/")
         self.assertEquals(response.status_code, 200)
@@ -67,11 +51,6 @@ class LoggedInTest(TestCase):
         self.u.set_password("test")
         self.u.save()
         self.c.login(username=self.u.username, password="test")
-
-    def test_splash_enabled(self):
-        with self.settings(SHOW_SPLASH=True):
-            response = self.c.get("/")
-            self.assertEquals(response.status_code, 301)
 
     def test_welcome(self):
         make_test_hierarchy()

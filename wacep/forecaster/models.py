@@ -3,13 +3,13 @@ from rest_framework import serializers, viewsets
 
 
 class HurricaneYear(models.Model):
-    year = models.DateField()
+    year = models.PositiveSmallIntegerField()
     named_storms = models.IntegerField(default=0)
     hurricanes = models.IntegerField(default=0)
     nino_sst_anomalies = models.FloatField(default=0.0)
 
     def __unicode__(self):
-        return self.year
+        return unicode(self.year)
 
     class Meta:
         ordering = ['year']

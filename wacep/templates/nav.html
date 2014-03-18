@@ -4,9 +4,9 @@
 			<ul class="nav">
 				<li>
 			{% if request.user.is_anonymous %}
-				<a class="brand" href="/"><img src="http://waceponline.org/site_media/splash/img/wacep_logo_horizontal.png" /></a>
+				<a class="brand" href="/"><img src="/site_media/img/wacep_logo_horizontal.png" /></a>
 			{%else %}
-				<a class="brand" href="/welcome/"><img src="http://waceponline.org/site_media/splash/img/wacep_logo_horizontal.png" /></a>
+				<a class="brand" href="/welcome/"><img src="/site_media/img/wacep_logo_horizontal.png" /></a>
 			{%endif%}
 				</li>
 				{% block topnavbarleftitems %}{% endblock %}

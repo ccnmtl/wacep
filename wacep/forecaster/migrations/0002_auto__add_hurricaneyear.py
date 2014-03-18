@@ -1,3 +1,4 @@
+# flake8: noqa
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
@@ -11,7 +12,7 @@ class Migration(SchemaMigration):
         # Adding model 'HurricaneYear'
         db.create_table(u'forecaster_hurricaneyear', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('year', self.gf('django.db.models.fields.DateField')()),
+            ('year', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('named_storms', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('hurricanes', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('nino_sst_anomalies', self.gf('django.db.models.fields.FloatField')(default=0.0)),
@@ -31,7 +32,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'named_storms': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'nino_sst_anomalies': ('django.db.models.fields.FloatField', [], {'default': '0.0'}),
-            'year': ('django.db.models.fields.DateField', [], {})
+            'year': ('django.db.models.fields.PositiveSmallIntegerField', [], {})
         }
     }
 

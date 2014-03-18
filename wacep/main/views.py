@@ -6,35 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader
 from wacep.certificates.models import CertificateCourse
 
-from django.conf import settings
-
-
-def splash_or_page(request, path):
-    """ Discontinung this, but keeping for future reference. """
-    show_splash = False
-    try:
-        if settings.SHOW_SPLASH:
-            show_splash = True
-    except AttributeError:
-        show_splash = False
-
-    if show_splash:
-        if request.user.is_anonymous():
-            return splash(request)
-        else:
-            return page(request, path)
-    else:
-        return page(request, path)
-
-
-def splash(request):
-    """ show the splash page."""
-    splash_path = 'splash.html'
-    file_name = splash_path
-    t = loader.get_template(file_name)
-    c = RequestContext(request, {})
-    return HttpResponse(t.render(c))
-
 
 @login_required
 def courses(request):

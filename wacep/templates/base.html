@@ -51,19 +51,20 @@
     {% endblock %}
     
     <div class="container-fluid" id="content">
-    
     	<div class="row-fluid">
-    		
-    		{% block sidebar %}
-    			<div class="span3" id="sidebar">
-    			{% block sidenav %}{% endblock %}
-    			</div>
-    		{% endblock sidebar%}
-    		<div class="span9" id="right-content">
-    		{% block pagetitle %}{% endblock %}
-    		{% block content %}{% endblock %}
-    		{% block content-nav %}{% endblock %}
-            </div>
+            {% block all-content %}
+        		{% block sidebar %}
+        			<div class="span3" id="sidebar">
+        			    {% block sidenav %}{% endblock %}
+        			</div>
+        		{% endblock sidebar%}
+            
+        		<div class="span9" id="right-content">
+        		  {% block pagetitle %}{% endblock %}
+        		  {% block content %}{% endblock %}
+        		  {% block content-nav %}{% endblock %}
+                </div>
+            {% endblock %}
             
           </div>
           
