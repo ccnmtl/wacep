@@ -1,5 +1,5 @@
 from django.db import models
-from rest_framework import serializers, viewsets
+from rest_framework import serializers, viewsets, permissions
 
 
 class HurricaneYear(models.Model):
@@ -24,11 +24,4 @@ class HurricaneYearSerializer(serializers.HyperlinkedModelSerializer):
 # ViewSets define the view behavior.
 class HurricaneYearViewSet(viewsets.ModelViewSet):
     model = HurricaneYear
-
-
-class HurricaneViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = HurricaneYear.objects.all()
-    serializer_class = HurricaneYearSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
