@@ -80,6 +80,7 @@ header#masthead { height: 60px !important; }
 
 .explanation_copy
 {
+	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
 	height: 310px;
@@ -104,8 +105,10 @@ header#masthead { height: 60px !important; }
 {
 	display: none;
 	background-color: white;
-	width: 500px;
-	height: 300px;
+	width: 700px;
+	height: 530px;
+	top: 65px;
+	left: 65px;
 	z-index: 500;
 	border: solid lightblue 3px;
 }
