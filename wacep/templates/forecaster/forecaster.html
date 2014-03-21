@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
 
     <script type="text/template" id="analyze-template">                
-        <a href="#build" class="btn btn-success pull-right">
-            Step 2. Build <i class="icon-chevron-right icon-white"></i>
+        <a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
+            Create Model <i class="icon-chevron-right icon-white"></i>
         </a>
-        <h3>Step 1. Analyze</h3>
+        <h3>Analyze</h3>
 
         <div class="row-fluid">
             <div class="span5">
@@ -59,13 +59,60 @@
             <div>1966-2013: <a href="http://www.climatedatalibrary.cl/expert/SOURCES/.NOAA/.NCDC/.ERSST/.version3b/.anom/T/%281950-2013%29VALUES/T/%28Aug-Oct%29seasonalAverage/Y/%285S%29%285N%29RANGEEDGES/X/%28120W%29%28170W%29RANGEEDGES%5BX/Y%5Daverage/">Aug-Sep-Oct NINO3.4 SST anomalies Celsius</a></div>
         </div>
 
+                
+        <div id="create-model-dialog" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Create Linear Regression Model</h3>
+            </div>
+            <div class="modal-body">
+                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
+                Cum sociis natoque penatibus et magnis dis parturient montes</p>
+
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="inputPredictor">Predictor<br /><p><small>(NINO 3.4 ASO)</small></p></label>
+                        <div class="controls">
+                            <select id="inputPredictor" placeholder="Predictor">
+                            <% for (var i=0; i < hurricane_data.length; i++) { %>
+                                <option value="<%=hurricane_data[i].id%>"><%=hurricane_data[i].year%> &nbsp;<%=hurricane_data[i].nino_sst_anomalies%> anomalies</option>
+                            <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPredictor">Predictand<br /><p><small>Named Storms</small></p></label>
+                        <div class="controls">
+                            <select id="inputPredictand" placeholder="Predictand">
+                            <% for (var i=0; i < hurricane_data.length; i++) { %>
+                                <option value="<%=hurricane_data[i].id%>"><%=hurricane_data[i].year%>  &nbsp;<%=hurricane_data[i].named_storms%> Named Storms</option>
+                            <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputYearsReserved">Years to Reserve<br /><p><small>Number of years to reserve for cross validation</small></p></label>
+                        <div class="controls">
+                            <input id="inputYearsReserved" type="text"
+                             placeholder="<%= hurricane_data.length %> total years" 
+                             type="number" min="1" max="<%= hurricane_data.length %>" />
+                            <span style="display: none" class="help-inline">Enter a number between 1 and <%= hurricane_data.length %></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary">Create</button>
+            </div>        
+        </div>
     </script>
     
     <script type="text/template" id="build-template">
         <a href="#validate" class="btn btn-success pull-right">
-            Step 3. Validate <i class="icon-chevron-right icon-white"></i>
+            Validate <i class="icon-chevron-right icon-white"></i>
         </a>
-        <h3>Step 2. Build</h3>
+        <h3>Linear Regression Model</h3>
         <div class="row-fluid">
             <div class="span12">
                 <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
@@ -73,51 +120,17 @@
                 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
             </div>
         </div>
-
-        <div id="build-dialog" class="modal show fade" tabindex="-1" role="dialog">
-            <form class="form-horizontal">
-                <div class="modal-header">
-                    <h3>Build Linear Regression Model</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="control-group">
-                        <label class="control-label" for="inputPredictor">Predictor</label>
-                        <div class="controls">
-                            <select id="inputPredictor" placeholder="Predictor">
-                            <% for (var i=0; i < hurricane_data.length; i++) { %>
-                                <option value="<%=hurricane_data[i].nino_sst_anomalies%>"><%=hurricane_data[i].nino_sst_anomalies%></option>
-                            <% } %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputPredictor">Predictand</label>
-                        <div class="controls">
-                            <select id="inputPredictand" placeholder="Predictand">
-                            <% for (var i=0; i < hurricane_data.length; i++) { %>
-                                <option value="<%=hurricane_data[i].named_storms%>"><%=hurricane_data[i].named_storms%></option>
-                            <% } %>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#analyze" class="btn">Return to Analysis</a>
-                    <a href="#" class="btn btn-primary">Save</a>
-                </div>
-            </form>
-        </div>   
     </script>
     
     <script type="text/template" id="validate-template">
         <a href="#forecast" class="btn btn-success pull-right">
-            Step 4. Forecast <i class="icon-chevron-right icon-white"></i>
+            Forecast <i class="icon-chevron-right icon-white"></i>
         </a>
-        <h3>Step 3. Cross-Validate</h3>
+        <h3>Cross-Validate</h3>
     </script>
     
     <script type="text/template" id="forecast-template">
-        <h3>Step 4. Forecast</h3>
+        <h3>Forecast</h3>
     </script>
 {% endblock %}
 
@@ -126,10 +139,10 @@
         <h1>Forecaster</h1>
         <div class="pagination pull-left">
           <ul>
-            <li class="step-one"><a href="#analyze">Step 1. Analyze</a></li>
-            <li class="step-two"><a href="#build">Step2. Build Model</a></li>
-            <li class="step-three disabled"><a href="#validate">Step 3. Cross-Validate</a></li>
-            <li class="step-four disabled"><a href="#forecast">Step 4. Forecast</a></li>
+            <li class="step-one"><a href="#analyze">Analyze</a></li>
+            <li class="step-two disabled"><a href="#build">Linear Regression Model</a></li>
+            <li class="step-three disabled"><a href="#validate">Cross-Validate</a></li>
+            <li class="step-four disabled"><a href="#forecast">Forecast</a></li>
           </ul>
         </div>
         
