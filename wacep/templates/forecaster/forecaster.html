@@ -72,29 +72,28 @@
                 <form class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label" for="inputPredictor">Predictor<br /><p><small>(NINO 3.4 ASO)</small></p></label>
-                        <div class="controls">
+                        <!--div class="controls">
                             <select id="inputPredictor" placeholder="Predictor">
                             <% for (var i=0; i < hurricane_data.length; i++) { %>
                                 <option value="<%=hurricane_data[i].id%>"><%=hurricane_data[i].year%> &nbsp;<%=hurricane_data[i].nino_sst_anomalies%> anomalies</option>
                             <% } %>
                             </select>
-                        </div>
+                        </div-->
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputPredictor">Predictand<br /><p><small>Named Storms</small></p></label>
+                        <label class="control-label" for="inputPredictor">Predictand<br /><p><small>Hurricanes or Named Storms</small></p></label>
                         <div class="controls">
                             <select id="inputPredictand" placeholder="Predictand">
-                            <% for (var i=0; i < hurricane_data.length; i++) { %>
-                                <option value="<%=hurricane_data[i].id%>"><%=hurricane_data[i].year%>  &nbsp;<%=hurricane_data[i].named_storms%> Named Storms</option>
-                            <% } %>
+                                <option value="hurricanes">Hurricanes</option>
+                                <option value="named_storms">Named Storms</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputYearsReserved">Years to Reserve<br /><p><small>Number of years to reserve for cross validation</small></p></label>
+                        <label class="control-label" for="inputYearsReserved">Years to Reserve<br /><p><small>Number of years to reserve (defaults to all years)</small></p></label>
                         <div class="controls">
                             <input id="inputYearsReserved" type="text"
-                             placeholder="<%= hurricane_data.length %> total years" 
+                             value="<%= hurricane_data.length %>" 
                              type="number" min="1" max="<%= hurricane_data.length %>" />
                             <span style="display: none" class="help-inline">Enter a number between 1 and <%= hurricane_data.length %></span>
                         </div>
@@ -115,9 +114,29 @@
         <h3>Linear Regression Model</h3>
         <div class="row-fluid">
             <div class="span12">
-                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
-                Cum sociis natoque penatibus et magnis dis parturient montes, 
-                nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                <div>Predictor: Nino 3.4 ASO</div>
+                <div>Predictand: <%= predictand %></div>
+                <div>Reserve Years: <%= yearsReserved %></div>
+                <div>Slope: <%= slope %></div>
+                <div>Intercept: <%= intercept %></div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span5">
+                <table id="hurricane-data" class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr><th>Observation</th><th>Predicted Y</th><th>Residuals</th></tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i=0; i < observations.length; i++) { %>
+                            <tr>
+                                <td class="observation"><%= i + 1 %></td>
+                                <td class="predicted"><%= observations[i].predicted_y %></td>
+                                <td class="residuals"><%= observations[i].residuals %></td>
+                            </tr>
+                        <% } %>                  
+                    </tbody>
+                </table>
             </div>
         </div>
     </script>

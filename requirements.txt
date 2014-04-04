@@ -30,7 +30,6 @@ six==1.2.0
 cssselect==0.8
 BeautifulSoup==3.2.1
 Pillow==1.7.8
-
 factory_boy==2.1.1
 djangowind==0.11.0
 sorl==3.1
@@ -62,4 +61,4 @@ django-pageblocks==0.5.11
 django-quizblock==0.6.13
 django-pagetree_export==0.3
 djangorestframework==2.3.12
-
+numpy==1.7.1

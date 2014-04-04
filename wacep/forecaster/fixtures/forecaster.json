@@ -1,0 +1,492 @@
+[
+{
+    "pk": 2, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 1, 
+        "nino_sst_anomalies": -0.0222, 
+        "hurricanes": 3, 
+        "year": 1968
+    }
+},
+{
+    "pk": 3, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 11, 
+        "nino_sst_anomalies": -0.246154, 
+        "hurricanes": 7, 
+        "year": 1966
+    }
+},
+{
+    "pk": 4, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": -0.465333, 
+        "hurricanes": 6, 
+        "year": 1967
+    }
+},
+{
+    "pk": 5, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": 0.237026, 
+        "hurricanes": 4, 
+        "year": 1968
+    }
+},
+{
+    "pk": 6, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 18, 
+        "nino_sst_anomalies": 0.57659, 
+        "hurricanes": 12, 
+        "year": 1969
+    }
+},
+{
+    "pk": 7, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 10, 
+        "nino_sst_anomalies": -0.922359, 
+        "hurricanes": 5, 
+        "year": 1970
+    }
+},
+{
+    "pk": 8, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 13, 
+        "nino_sst_anomalies": -0.905359, 
+        "hurricanes": 6, 
+        "year": 1971
+    }
+},
+{
+    "pk": 9, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 7, 
+        "nino_sst_anomalies": 1.46038, 
+        "hurricanes": 3, 
+        "year": 1972
+    }
+},
+{
+    "pk": 10, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": -1.48395, 
+        "hurricanes": 4, 
+        "year": 1973
+    }
+},
+{
+    "pk": 11, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 11, 
+        "nino_sst_anomalies": -0.590718, 
+        "hurricanes": 4, 
+        "year": 1974
+    }
+},
+{
+    "pk": 12, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 9, 
+        "nino_sst_anomalies": -1.57256, 
+        "hurricanes": 6, 
+        "year": 1975
+    }
+},
+{
+    "pk": 13, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 10, 
+        "nino_sst_anomalies": 0.475026, 
+        "hurricanes": 6, 
+        "year": 1976
+    }
+},
+{
+    "pk": 14, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 6, 
+        "nino_sst_anomalies": 0.407692, 
+        "hurricanes": 5, 
+        "year": 1977
+    }
+},
+{
+    "pk": 15, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 12, 
+        "nino_sst_anomalies": -0.476154, 
+        "hurricanes": 5, 
+        "year": 1978
+    }
+},
+{
+    "pk": 16, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 9, 
+        "nino_sst_anomalies": 0.223051, 
+        "hurricanes": 5, 
+        "year": 1979
+    }
+},
+{
+    "pk": 17, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 11, 
+        "nino_sst_anomalies": -0.186103, 
+        "hurricanes": 9, 
+        "year": 1980
+    }
+},
+{
+    "pk": 18, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 12, 
+        "nino_sst_anomalies": -0.320564, 
+        "hurricanes": 7, 
+        "year": 1981
+    }
+},
+{
+    "pk": 19, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 6, 
+        "nino_sst_anomalies": 1.41538, 
+        "hurricanes": 2, 
+        "year": 1982
+    }
+},
+{
+    "pk": 20, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 4, 
+        "nino_sst_anomalies": -0.596949, 
+        "hurricanes": 3, 
+        "year": 1983
+    }
+},
+{
+    "pk": 21, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 13, 
+        "nino_sst_anomalies": -0.341231, 
+        "hurricanes": 5, 
+        "year": 1984
+    }
+},
+{
+    "pk": 22, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 11, 
+        "nino_sst_anomalies": -0.566154, 
+        "hurricanes": 7, 
+        "year": 1985
+    }
+},
+{
+    "pk": 23, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 6, 
+        "nino_sst_anomalies": 0.630513, 
+        "hurricanes": 4, 
+        "year": 1986
+    }
+},
+{
+    "pk": 24, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 7, 
+        "nino_sst_anomalies": 1.55962, 
+        "hurricanes": 3, 
+        "year": 1987
+    }
+},
+{
+    "pk": 25, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 12, 
+        "nino_sst_anomalies": -1.33587, 
+        "hurricanes": 5, 
+        "year": 1988
+    }
+},
+{
+    "pk": 26, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 11, 
+        "nino_sst_anomalies": -0.357769, 
+        "hurricanes": 7, 
+        "year": 1989
+    }
+},
+{
+    "pk": 27, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 14, 
+        "nino_sst_anomalies": 0.288077, 
+        "hurricanes": 8, 
+        "year": 1990
+    }
+},
+{
+    "pk": 28, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": 0.824436, 
+        "hurricanes": 4, 
+        "year": 1991
+    }
+},
+{
+    "pk": 29, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 7, 
+        "nino_sst_anomalies": -0.0778, 
+        "hurricanes": 4, 
+        "year": 1992
+    }
+},
+{
+    "pk": 30, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": 0.302128, 
+        "hurricanes": 4, 
+        "year": 1993
+    }
+},
+{
+    "pk": 31, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 7, 
+        "nino_sst_anomalies": 0.637, 
+        "hurricanes": 3, 
+        "year": 1994
+    }
+},
+{
+    "pk": 32, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 19, 
+        "nino_sst_anomalies": -0.524103, 
+        "hurricanes": 11, 
+        "year": 1995
+    }
+},
+{
+    "pk": 33, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 13, 
+        "nino_sst_anomalies": -0.19682, 
+        "hurricanes": 9, 
+        "year": 1996
+    }
+},
+{
+    "pk": 34, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 8, 
+        "nino_sst_anomalies": 2.1491, 
+        "hurricanes": 3, 
+        "year": 1997
+    }
+},
+{
+    "pk": 35, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 14, 
+        "nino_sst_anomalies": -1.07426, 
+        "hurricanes": 10, 
+        "year": 1998
+    }
+},
+{
+    "pk": 36, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 12, 
+        "nino_sst_anomalies": -1.02338, 
+        "hurricanes": 8, 
+        "year": 1999
+    }
+},
+{
+    "pk": 37, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 15, 
+        "nino_sst_anomalies": -0.452744, 
+        "hurricanes": 8, 
+        "year": 2000
+    }
+},
+{
+    "pk": 38, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 15, 
+        "nino_sst_anomalies": 0.0366, 
+        "hurricanes": 9, 
+        "year": 2001
+    }
+},
+{
+    "pk": 39, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 12, 
+        "nino_sst_anomalies": 1.01769, 
+        "hurricanes": 4, 
+        "year": 2002
+    }
+},
+{
+    "pk": 40, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 16, 
+        "nino_sst_anomalies": 0.501359, 
+        "hurricanes": 7, 
+        "year": 2003
+    }
+},
+{
+    "pk": 41, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 15, 
+        "nino_sst_anomalies": 0.843949, 
+        "hurricanes": 9, 
+        "year": 2004
+    }
+},
+{
+    "pk": 42, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 28, 
+        "nino_sst_anomalies": 0.12359, 
+        "hurricanes": 15, 
+        "year": 2005
+    }
+},
+{
+    "pk": 43, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 10, 
+        "nino_sst_anomalies": 0.616231, 
+        "hurricanes": 5, 
+        "year": 2006
+    }
+},
+{
+    "pk": 44, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 15, 
+        "nino_sst_anomalies": -0.752897, 
+        "hurricanes": 6, 
+        "year": 2007
+    }
+},
+{
+    "pk": 45, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 16, 
+        "nino_sst_anomalies": -0.0285, 
+        "hurricanes": 8, 
+        "year": 2008
+    }
+},
+{
+    "pk": 46, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 9, 
+        "nino_sst_anomalies": 0.864077, 
+        "hurricanes": 3, 
+        "year": 2009
+    }
+},
+{
+    "pk": 47, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 19, 
+        "nino_sst_anomalies": -1.35067, 
+        "hurricanes": 12, 
+        "year": 2010
+    }
+},
+{
+    "pk": 48, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 19, 
+        "nino_sst_anomalies": -0.526564, 
+        "hurricanes": 7, 
+        "year": 2011
+    }
+},
+{
+    "pk": 49, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 19, 
+        "nino_sst_anomalies": 0.636359, 
+        "hurricanes": 10, 
+        "year": 2012
+    }
+},
+{
+    "pk": 50, 
+    "model": "forecaster.hurricaneyear", 
+    "fields": {
+        "named_storms": 14, 
+        "nino_sst_anomalies": -0.172179, 
+        "hurricanes": 2, 
+        "year": 2013
+    }
+}
+]
