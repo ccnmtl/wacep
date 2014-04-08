@@ -17,21 +17,6 @@ def responses_for(user):
     return result
 
 
-def get_row(user, all_questions):
-    responses = user_responses(user)
-    user_questions = []
-    question_ids = responses.keys()
-    for q in all_questions:
-        if q.id in question_ids:
-            user_questions.append(responses[q.id])
-        else:
-            user_questions.append(None)
-    return {
-        'user': user,
-        'user_questions': user_questions
-    }
-
-
 @login_required
 @staff_member_required
 @render_to('analytics/the_table.html')

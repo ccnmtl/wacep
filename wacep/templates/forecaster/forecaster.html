@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+{% load compress %}
+
+{% block title %}Forecaster{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
+
+    <script type="text/template" id="analyze-template">                
+        <a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
+            Estimate Model <i class="icon-chevron-right icon-white"></i>
+        </a>
+        <h3>Analyze</h3>
+
+        <div class="row-fluid">
+            <div class="span5">
+                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
+                Cum sociis natoque penatibus et magnis dis parturient montes, 
+                nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr><th>Year</th><th>Named Storms</th><th>Hurricanes</th><th>ASO NINO3.4 SST anomalies</th></tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i=0; i < hurricane_data.length; i++) { %>
+                            <tr>
+                                <td class="year"><%= hurricane_data[i].year %></td>
+                                <td class="text-right"><%= hurricane_data[i].named_storms %></td>
+                                <td class="text-right"><%= hurricane_data[i].hurricanes %></td>
+                                <td class="text-right"><%= hurricane_data[i].nino_sst_anomalies %></td>
+                            </tr>
+                        <% } %>
+                        <tr>
+                            <td><strong>Mean</strong></td>
+                            <td class="text-right"><%= mean_storms %></td>
+                            <td class="text-right"><%= mean_hurricanes %></td>
+                            <td class="text-right"><%= mean_nino %></td>
+                        </tr>
+                        <tr>
+                            <td><strong>StDev</strong></td>
+                            <td class="text-right"><%= stdev_storms %></td>
+                            <td class="text-right"><%= stdev_hurricanes %></td>
+                            <td class="text-right"><%= stdev_nino %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="span7">
+                <div class="well"><div id="nino-graph"></div></div>
+                <div class="well"><div id="storms-graph"></div></div>
+                <div class="well"><div id="storms-versus-nino-graph"></div></div>
+            </div>
+        </div>
+        <div>
+            <h6>Sources</h6>                                                        
+            <div>1966-2012: <a href="http://www.aoml.noaa.gov/hrd/tcfaq/E11.html">Atlantic Storm/Hurricanes from NOAA HURDAT</a></div>
+            <div>2013:  <a href="http://weather.unisys.com/hurricane/atlantic/2013/index.php">Storm/Hurricanes from Unisys</a></div>
+            <div>1966-2013: <a href="http://www.climatedatalibrary.cl/expert/SOURCES/.NOAA/.NCDC/.ERSST/.version3b/.anom/T/%281950-2013%29VALUES/T/%28Aug-Oct%29seasonalAverage/Y/%285S%29%285N%29RANGEEDGES/X/%28120W%29%28170W%29RANGEEDGES%5BX/Y%5Daverage/">Aug-Sep-Oct NINO3.4 SST anomalies Celsius</a></div>
+        </div>
+                
+        <div id="create-model-dialog" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Select Model Parameters</h3>
+            </div>
+            <div class="modal-body">
+                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
+                Cum sociis natoque penatibus et magnis dis parturient montes</p>
+
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="selectedPredictor">Predictor</label>
+                        <div class="controls selectedPredictor">ASO NINO3.4 SST anomalies</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPredictand">Predictand</label>
+                        <div class="controls">
+                            <select id="inputPredictand" placeholder="Predictand">
+                                <option value="hurricanes">Hurricanes</option>
+                                <option value="named_storms">Named Storms</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputYearsReserved">Years to Reserve</label>
+                        <div class="controls">
+                            <input id="inputYearsReserved" type="text"
+                             value="0" type="number"
+                             min="0" max="<%= hurricane_data.length - 1 %>" />
+                            <span style="display: none" class="help-inline">Enter a number between 0 and <%= hurricane_data.length - 1 %></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary">Create</button>
+            </div>        
+        </div>
+    </script>
+    
+    <script type="text/template" id="build-template">
+        <a href="#cross-validate-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
+            Cross-Validate Model <i class="icon-chevron-right icon-white"></i>
+        </a>
+        <h3>Linear Regression Model</h3>
+        <div class="row-fluid">
+            <div class="span5">
+                <dl class="dl-horizontal">
+                    <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
+                    <dt>Predictand</dt><dd><%= predictand %></dd>
+                    <dt>Observations</dt><dd><%= observations.length %> / <%= observations.length + years_reserved %></dd>
+                    <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
+                    <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
+                    <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
+                </dl>
+
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr><th>Observation</th><th>Predicted Y</th><th>Residuals</th></tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i=0; i < observations.length; i++) { %>
+                            <tr>
+                                <td ><%= i + 1 %></td>
+                                <td class="text-right"><%= observations[i].predicted_y %></td>
+                                <td class="text-right"><%= observations[i].residuals %></td>
+                            </tr>
+                        <% } %>
+                        <tr>
+                            <td><strong>Mean</strong></td>
+                            <td class="text-right"><%= mean_predicted_y %></td>
+                            <td class="text-right"><%= mean_residuals %></td>
+                        </tr>
+                        <tr>
+                            <td><strong>StDev</strong></td>
+                            <td class="text-right"><%= stdev_predicted_y %></td>
+                            <td class="text-right"><%= stdev_residuals %></td>
+                        </tr>                  
+                    </tbody>
+                </table>
+            </div>
+            <div class="span7">
+                <div class="well"><div id="actual-v-predicted-graph"></div></div>
+                <div class="well"><div id="actualandpredicted-v-observed-graph"></div></div>
+                <div class="well"><div id="residuals-graph"></div></div>
+            </div>
+        </div>
+
+        <div id="cross-validate-dialog" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Select Cross-Validation Parameters</h3>
+            </div>
+            <div class="modal-body">
+                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
+                Cum sociis natoque penatibus et magnis dis parturient montes</p>
+
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="selectedPredictor">Predictor</label>
+                        <div class="controls selectedPredictor">ASO NINO3.4 SST anomalies</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectedPredictand">Predictand</label>
+                        <div class="controls selectedPredictand"><%= predictand %></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputYearsReserved">Years to Reserve</label>
+                        <div class="controls">
+                            <input id="cvYearsReserved" type="text"
+                             value="10" type="number"
+                             min="0" max="<%= hurricane_data_length - 1 %>" />
+                            <span style="display: none" class="help-inline">Enter a number between 0 and <%= hurricane_data_length - 1 %></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary">Create</button>
+            </div>        
+        </div>
+
+    </script>
+    
+    <script type="text/template" id="validate-template">
+        <a href="#forecast" class="btn btn-success pull-right">
+            Forecast <i class="icon-chevron-right icon-white"></i>
+        </a>
+        <h3>Cross-Validate</h3>
+        <div class="row-fluid">
+            <div class="span5">
+                <dl class="dl-horizontal">
+                    <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
+                    <dt>Predictand</dt><dd><%= predictand %></dd>
+                    <dt>Observations</dt><dd><%= observations.length %> / <%= observations.length + years_reserved %></dd>
+                    <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
+                    <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
+                    <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
+                    <dt>R Squared</dt><dd><%= r_squared %></dd>
+                </dl>
+
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr><th>Observation</th><th>Predicted Y</th><th>Residuals</th></tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i=0; i < observations.length; i++) { %>
+                            <tr>
+                                <td class="observation"><%= i + 1 %></td>
+                                <td class="predicted"><%= observations[i].predicted_y %></td>
+                                <td class="residuals"><%= observations[i].residuals %></td>
+                            </tr>
+                        <% } %>
+                        <tr>
+                            <td><strong>Mean</strong></td>
+                            <td class="text-right"><%= mean_predicted_y %></td>
+                            <td class="text-right"><%= mean_residuals %></td>
+                        </tr>
+                        <tr>
+                            <td><strong>StDev</strong></td>
+                            <td class="text-right"><%= stdev_predicted_y %></td>
+                            <td class="text-right"><%= stdev_residuals %></td>
+                        </tr>                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="span7">
+                <div class="well"><div id="actual-v-predicted-graph"></div></div>
+                <div class="well"><div id="actualandpredicted-v-observed-graph"></div></div>
+                <div class="well"><div id="residuals-graph"></div></div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/template" id="forecast-template">
+        <h3>Forecast</h3>
+        <div class="row-fluid">
+            <div class="span5">
+                <p>Use model to forecast a value for given value of the predictor
+                Use uncertainty model to estimate bounds on the forecast.</p>
+
+                <p>We're interested in the uncertainty of the model predictions.  One way to estimate that
+                is to calculate the average error represented by the variance of the residuals.</p>
+
+                <strong>Residuals St Dev</strong> = <%= stdev_residuals %> 
+                <div><small>Note that this is known as the Standard Error</small></div>
+
+                <p>We can use this variance to fit a normal distribution around our 
+                forecast that represents the uncertainty. Remember that the normal distribution 
+                of the errors is one of the assumptions of regression, and one that 
+                we verify through inspection of the residuals.</p>
+            </div>
+
+            <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="2">Forecast model</th>
+                    <th colspan="4" class="text-center">Forecast Uncertainty Quantiles</th>
+                </tr>
+                <tr>
+                    <th>Predictor value (Nino 3.4)</th>
+                    <th>Forecast (mean)</th>
+                    <th>0.05</th>
+                    <th>0.25</th>
+                    <th>0.75</th>
+                    <th>0.95</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i=0; i < forecast.length; i++) { %>
+                    <tr>
+                        <td class="text-right"><%= forecast[i].predictor %></td>
+                        <td class="text-right"><%= forecast[i].mean %></td>
+                        <td class="text-right"><%= forecast[i]['0.05'] %></td>
+                        <td class="text-right"><%= forecast[i]['0.25'] %></td>
+                        <td class="text-right"><%= forecast[i]['0.75'] %></td>
+                        <td class="text-right"><%= forecast[i]['0.95'] %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+            </table>
+        </div>
+    </script>
+{% endblock %}
+
+{% block all-content %}
+    <div class="span12 forecast">    
+        <h1>Forecaster</h1>
+        <div class="pagination primary pull-left">
+          <ul>
+            <li class="step-one"><a href="#analyze">Analyze</a></li>
+            <li class="step-two disabled"><a href="#build">Linear Regression Model</a></li>
+            <li class="step-three disabled"><a href="#validate">Cross-Validate</a></li>
+            <li class="step-four disabled"><a href="#forecast">Forecast</a></li>
+          </ul>
+        </div>
+        
+        <div class="pagination pull-right">
+          <ul>
+            <li class="help"><a data-toggle="modal" data-target="#help-dialog">Help</a></li>
+            <li class="reset"><a href="#reset">Reset</a></li>
+          </ul>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="forecast-step"></div>
+                
+        <div id="help-dialog" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3 id="myModalLabel">The Forecaster Interactive</h3>
+            </div>
+            <div class="modal-body">
+                <p>Help Text</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>   
+{% endblock %}
+
+{% block js %}
+    <script src="/site_media/js/underscore-min.js" type="text/javascript"></script>
+    <script src="/site_media/js/backbone-min.js" type="text/javascript"></script>
+    <script src="/site_media/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="/site_media/js/highcharts-min.js" type="text/javascript"></script>
+    <script src="/site_media/js/jstat.min.js" type="text/javascript"></script>
+    
+    {% compress js %}
+    <script src="/site_media/js/scrolling_table.js" type="text/javascript"></script>    
+    <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
+    {% endcompress %}
+{% endblock %}

@@ -3,7 +3,6 @@ from django.utils.simplejson import loads
 from django.conf import settings
 from pagetree.models import Hierarchy
 from restclient import GET
-import os
 import os.path
 
 

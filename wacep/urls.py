@@ -22,12 +22,10 @@ urlpatterns = patterns(
     (r'^_pagetree/', include('pagetree.urls')),
     (r'^_quiz/', include('quizblock.urls')),
     (r'analytics/', include('wacep.analytics.urls')),
-    (r'/admin/login/', RedirectView.as_view(url='/admin/')),
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', RedirectView.as_view(url='/welcome/'),
         name='welcome'),
     (r'^password_change/$', 'django.contrib.auth.views.password_change'),
-    (r'^splash/$', 'wacep.main.views.splash'),
     (r'^courses/$', 'wacep.main.views.courses'),
     (r'^munin/', include('munin.urls')),
     (r'^stats/$', TemplateView.as_view(template_name="stats.html")),
@@ -42,8 +40,9 @@ urlpatterns = patterns(
     (r'^_figure_viewer/', include('wacep.figure_viewer.urls')),
     (r'^_certificates/', include('wacep.certificates.urls',
                                  namespace='certificates')),
+    (r'^forecast/?', include('wacep.forecaster.urls')),
     (r'^hydrologic_cycle/?', include('wacep.weather_dj.urls',
                                      namespace='weather_dj')),
     (r'^weatherdj/?', include('wacep.weather_dj.urls')),
-    (r'^(?P<path>.*)$', 'wacep.main.views.page'),
+    (r'^(?P<path>.*)$', 'wacep.main.views.page')
 ) + staticmedia.serve()
