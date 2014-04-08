@@ -1,8 +1,6 @@
 from django.http import HttpResponse
-from django.views.generic import TemplateView
 from django.views.generic.base import View
 from wacep.forecaster.linear_regression import linregress
-from wacep.forecaster.models import HurricaneYear
 import json
 
 
@@ -32,26 +30,17 @@ class JSONResponseMixin(object):
 class LinearRegressionView(JSONResponseMixin, View):
 
     def post(self, request):
-        hurricanes = HurricaneYear.objects.all()
-
         predictor = [float(i) for i in request.POST.getlist('predictor[]')]
         predictand = [int(i) for i in request.POST.getlist('predictand[]')]
 
-        # predictor = Nino 3.4 ASO
-        # predictand = named storms || hurricanes
-        #predictor1 = []  # x
-        #predictand1 = []  # y
-        #for i in range(0, 48):
-        #    predictor1.append(hurricanes[i].nino_sst_anomalies)
-        #    predictand1.append(hurricanes[i].hurricanes)
-
         slope, intercept, r_value, std_err = linregress(predictor, predictand)
+        r_squared = r_value ** 2
 
         context = {
             'slope': slope,
             'intercept': intercept,
-            'r_value': r_value,
             'std_err': std_err,
-            'r_squared': r_value ** 2
+            'r_value': r_value,
+            'r_squared': r_squared
         }
         return self.render_to_json_response(context)

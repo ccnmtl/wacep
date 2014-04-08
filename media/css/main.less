@@ -188,9 +188,31 @@ background-color: #fff;
         background-color: transparent;
     }    
 
-    table#hurricane-data {
-        td.storms, td.hurricanes, td.nino {
-            text-align: right;
-        }
+    td.text-right {
+        text-align: right;
+    }
+
+    td.text-center, th.text-center {
+        text-align: center;
+    }
+    
+    .dl-horizontal dt {
+        float: left;
+        width: 140px;
+        overflow: hidden;
+        clear: left;
+        text-align: left;
+        white-space: nowrap;
+    }    
+    
+    table.regression-statistics {
+        width: 40%;
+    }
+    
+    div.controls.selectedPredictor,
+    div.controls.selectedPredictand {
+        display: block;
+        margin-top: 5px;
+        color: black;
     }
 }
