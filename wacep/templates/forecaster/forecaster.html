@@ -31,6 +31,8 @@
                                 <td class="text-right"><%= hurricane_data[i].nino_sst_anomalies %></td>
                             </tr>
                         <% } %>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
                             <td class="text-right"><%= mean_storms %></td>
@@ -43,7 +45,7 @@
                             <td class="text-right"><%= stdev_hurricanes %></td>
                             <td class="text-right"><%= stdev_nino %></td>
                         </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
             <div class="span7">
@@ -128,6 +130,8 @@
                                 <td class="text-right"><%= observations[i].residuals %></td>
                             </tr>
                         <% } %>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
                             <td class="text-right"><%= mean_predicted_y %></td>
@@ -138,7 +142,7 @@
                             <td class="text-right"><%= stdev_predicted_y %></td>
                             <td class="text-right"><%= stdev_residuals %></td>
                         </tr>                  
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
             <div class="span7">
@@ -199,7 +203,7 @@
                     <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
-                    <dt>R Squared</dt><dd><%= r_squared %></dd>
+                    <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
                 </dl>
 
                 <table class="table table-condensed table-striped table-bordered">
@@ -214,6 +218,8 @@
                                 <td class="residuals"><%= observations[i].residuals %></td>
                             </tr>
                         <% } %>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
                             <td class="text-right"><%= mean_predicted_y %></td>
@@ -224,7 +230,7 @@
                             <td class="text-right"><%= stdev_predicted_y %></td>
                             <td class="text-right"><%= stdev_residuals %></td>
                         </tr>                    
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
             <div class="span7">
@@ -254,19 +260,19 @@
                 we verify through inspection of the residuals.</p>
             </div>
 
-            <table class="table">
+            <table class="table table-condensed table-striped table-bordered">
             <thead>
                 <tr>
-                    <th colspan="2">Forecast model</th>
-                    <th colspan="4" class="text-center">Forecast Uncertainty Quantiles</th>
+                    <th colspan="2" class="text-center sorter-false" >Forecast model</th>
+                    <th colspan="4" class="text-center sorter-false" >Forecast Uncertainty Quantiles</th>
                 </tr>
                 <tr>
-                    <th>Predictor value (Nino 3.4)</th>
-                    <th>Forecast (mean)</th>
-                    <th>0.05</th>
-                    <th>0.25</th>
-                    <th>0.75</th>
-                    <th>0.95</th>
+                    <th class="text-center">Predictor value (Nino 3.4)</th>
+                    <th class="text-center">Forecast (mean)</th>
+                    <th class="text-center">0.05</th>
+                    <th class="text-center">0.25</th>
+                    <th class="text-center">0.75</th>
+                    <th class="text-center">0.95</th>
                 </tr>
             </thead>
             <tbody>

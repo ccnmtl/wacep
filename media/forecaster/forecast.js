@@ -317,6 +317,8 @@
             jQuery("div.pagination ul li").removeClass("active");
             jQuery("li.step-two").removeClass("disabled").addClass("active");
             
+            jQuery("table.table").tablesorter({sortList: [[0,0]]});
+            
             // Graphs
             var graphData = ForecastApp.instance.observations.get_graph_data('year');
             jQuery('#actual-v-predicted-graph').highcharts({
@@ -391,6 +393,8 @@
             jQuery("div.pagination ul li").removeClass("active");
             jQuery("li.step-three").removeClass("disabled").addClass("active");
             
+            jQuery("table.table").tablesorter({sortList: [[0,0]]});
+            
             // Graphs
             var graphData = ForecastApp.instance.crossvalidate.get_graph_data('year');
             jQuery('#actual-v-predicted-graph').highcharts({
@@ -460,6 +464,8 @@
 
             jQuery("div.pagination ul li").removeClass("active");
             jQuery("li.step-four").removeClass("disabled").addClass("active");
+            
+            jQuery("table.table").tablesorter();
         }
     });    
     
