@@ -88,8 +88,9 @@
                         <label class="control-label" for="inputYearsReserved">Years to Reserve</label>
                         <div class="controls">
                             <input id="inputYearsReserved" type="text"
-                             value="0" type="number"
-                             min="0" max="<%= hurricane_data.length - 1 %>" />
+                             value="<%= years_reserved %>"
+                             type="number"
+                             min="1" max="<%= hurricane_data.length - 1 %>" />
                             <span style="display: none" class="help-inline">Enter a number between 0 and <%= hurricane_data.length - 1 %></span>
                         </div>
                     </div>
@@ -103,7 +104,7 @@
     </script>
     
     <script type="text/template" id="build-template">
-        <a href="#cross-validate-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
+        <a href="#validate" role="button" class="btn btn-success pull-right">
             Cross-Validate Model <i class="icon-chevron-right icon-white"></i>
         </a>
         <h3>Linear Regression Model</h3>
@@ -112,7 +113,7 @@
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
                     <dt>Predictand</dt><dd><%= predictand %></dd>
-                    <dt>Observations</dt><dd><%= observations.length %> / <%= observations.length + years_reserved %></dd>
+                    <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
                     <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
@@ -151,42 +152,6 @@
                 <div class="well"><div id="residuals-graph"></div></div>
             </div>
         </div>
-
-        <div id="cross-validate-dialog" class="modal hide fade" tabindex="-1" role="dialog">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">x</button>
-                <h3>Select Cross-Validation Parameters</h3>
-            </div>
-            <div class="modal-body">
-                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
-                Cum sociis natoque penatibus et magnis dis parturient montes</p>
-
-                <form class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label" for="selectedPredictor">Predictor</label>
-                        <div class="controls selectedPredictor">ASO NINO3.4 SST anomalies</div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="selectedPredictand">Predictand</label>
-                        <div class="controls selectedPredictand"><%= predictand %></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputYearsReserved">Years to Reserve</label>
-                        <div class="controls">
-                            <input id="cvYearsReserved" type="text"
-                             value="10" type="number"
-                             min="0" max="<%= hurricane_data_length - 1 %>" />
-                            <span style="display: none" class="help-inline">Enter a number between 0 and <%= hurricane_data_length - 1 %></span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary">Create</button>
-            </div>        
-        </div>
-
     </script>
     
     <script type="text/template" id="validate-template">
@@ -199,34 +164,33 @@
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
                     <dt>Predictand</dt><dd><%= predictand %></dd>
-                    <dt>Observations</dt><dd><%= observations.length %> / <%= observations.length + years_reserved %></dd>
                     <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
                     <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
                 </dl>
-
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
-                        <tr><th>Observation</th><th>Predicted Y</th><th>Residuals</th></tr>
+                        <tr><th>Year</th><th>Observed</th><th>Predicted</th><th>Residuals</th></tr>
                     </thead>
                     <tbody>
                         <% for (var i=0; i < observations.length; i++) { %>
                             <tr>
-                                <td class="observation"><%= i + 1 %></td>
-                                <td class="predicted"><%= observations[i].predicted_y %></td>
+                                <td class="year"><%= observations[i].year %></td>
+                                <td class="predictand"><%= observations[i].predictand %></td>
+                                <td class="predicted_y"><%= observations[i].predicted_y %></td>
                                 <td class="residuals"><%= observations[i].residuals %></td>
                             </tr>
                         <% } %>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td><strong>Mean</strong></td>
+                            <td><strong>Mean</strong></td><td />
                             <td class="text-right"><%= mean_predicted_y %></td>
                             <td class="text-right"><%= mean_residuals %></td>
                         </tr>
                         <tr>
-                            <td><strong>StDev</strong></td>
+                            <td><strong>StDev</strong></td><td />
                             <td class="text-right"><%= stdev_predicted_y %></td>
                             <td class="text-right"><%= stdev_residuals %></td>
                         </tr>                    
@@ -235,8 +199,6 @@
             </div>
             <div class="span7">
                 <div class="well"><div id="actual-v-predicted-graph"></div></div>
-                <div class="well"><div id="actualandpredicted-v-observed-graph"></div></div>
-                <div class="well"><div id="residuals-graph"></div></div>
             </div>
         </div>
     </script>
