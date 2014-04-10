@@ -112,7 +112,7 @@
             <div class="span5">
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
-                    <dt>Predictand</dt><dd><%= predictand %></dd>
+                    <dt>Predictand</dt><dd><%= predictand_label %></dd>
                     <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
@@ -163,7 +163,7 @@
             <div class="span5">
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
-                    <dt>Predictand</dt><dd><%= predictand %></dd>
+                    <dt>Predictand</dt><dd><%= predictand_label %></dd>
                     <dt>Years Reserved</dt><dd><%= years_reserved %></dd>
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
@@ -207,30 +207,55 @@
         <h3>Forecast</h3>
         <div class="row-fluid">
             <div class="span5">
-                <p>Use model to forecast a value for given value of the predictor
-                Use uncertainty model to estimate bounds on the forecast.</p>
-
-                <p>We're interested in the uncertainty of the model predictions.  One way to estimate that
-                is to calculate the average error represented by the variance of the residuals.</p>
-
-                <strong>Residuals St Dev</strong> = <%= stdev_residuals %> 
-                <div><small>Note that this is known as the Standard Error</small></div>
-
-                <p>We can use this variance to fit a normal distribution around our 
-                forecast that represents the uncertainty. Remember that the normal distribution 
-                of the errors is one of the assumptions of regression, and one that 
-                we verify through inspection of the residuals.</p>
+                Forecast for the entire available data set. Is that correct?
+                <dl class="dl-horizontal">
+                    <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
+                    <dt>Predictand</dt><dd><%= predictand_label %></dd>
+                    <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
+                    <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
+                    <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
+                    <dt>Residuals St Dev</dt><dd><%= stdev_residuals %></dd>
+                </dl>
+            </div>
+            <div class="span7">
+                <table class="table table-condensed table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center sorter-false" >Forecast model</th>
+                        <th colspan="4" class="text-center sorter-false" >Forecast Uncertainty Quantiles</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Predictor</th>
+                        <th class="text-center">Forecast (mean)</th>
+                        <th class="text-center">0.05</th>
+                        <th class="text-center">0.25</th>
+                        <th class="text-center">0.75</th>
+                        <th class="text-center">0.95</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i=0; i < forecast.length; i++) { %>
+                        <tr>
+                            <td class="text-right"><%= forecast[i].predictor.toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i].mean.toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i]['0.05'].toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i]['0.25'].toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i]['0.75'].toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i]['0.95'].toFixed(2) %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+                </table>
             </div>
 
+            <div>Forecast applied across the data set</div>
+            <div>5-95% Error range = <%= forecast_error_range.toFixed(2) %></div>
             <table class="table table-condensed table-striped table-bordered">
             <thead>
                 <tr>
-                    <th colspan="2" class="text-center sorter-false" >Forecast model</th>
-                    <th colspan="4" class="text-center sorter-false" >Forecast Uncertainty Quantiles</th>
-                </tr>
-                <tr>
-                    <th class="text-center">Predictor value (Nino 3.4)</th>
-                    <th class="text-center">Forecast (mean)</th>
+                    <th>Year</th>
+                    <th>Predictor</th>
+                    <th>Forecast (mean)</th>
                     <th class="text-center">0.05</th>
                     <th class="text-center">0.25</th>
                     <th class="text-center">0.75</th>
@@ -238,18 +263,18 @@
                 </tr>
             </thead>
             <tbody>
-                <% for (var i=0; i < forecast.length; i++) { %>
+                <% for (var i=0; i < observations.length; i++) { %>
                     <tr>
-                        <td class="text-right"><%= forecast[i].predictor %></td>
-                        <td class="text-right"><%= forecast[i].mean %></td>
-                        <td class="text-right"><%= forecast[i]['0.05'] %></td>
-                        <td class="text-right"><%= forecast[i]['0.25'] %></td>
-                        <td class="text-right"><%= forecast[i]['0.75'] %></td>
-                        <td class="text-right"><%= forecast[i]['0.95'] %></td>
+                        <td><%= observations[i].year %></td>
+                        <td class="text-right"><%= observations[i].predictor.toFixed(2) %></td>
+                        <td class="text-right"><%= observations[i].forecast_mean.toFixed(2) %></td>
+                        <td class="text-right"><%= observations[i]['quantiles']['0.05'].toFixed(2) %></td>
+                        <td class="text-right"><%= observations[i]['quantiles']['0.25'].toFixed(2) %></td>
+                        <td class="text-right"><%= observations[i]['quantiles']['0.75'].toFixed(2) %></td>
+                        <td class="text-right"><%= observations[i]['quantiles']['0.95'].toFixed(2) %></td>
                     </tr>
                 <% } %>
             </tbody>
-            </table>
         </div>
     </script>
 {% endblock %}
