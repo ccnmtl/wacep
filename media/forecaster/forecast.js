@@ -298,7 +298,7 @@
             }
             
             ForecastApp.instance.predictand = jQuery('select#inputPredictand').val();
-            ForecastApp.instance.years_reserved = reserve;
+            ForecastApp.instance.years_reserved = parseInt(reserve, 10);
             
             // set aside the analysis set
             var years = ForecastApp.instance.hurricanes.length - ForecastApp.instance.years_reserved;
@@ -449,6 +449,8 @@
         render: function() {
             var ctx = ForecastApp.instance.forecast_model.get_context();
             ctx.predictand_label = ForecastApp.instance.predictand;
+            ctx.startIdx = ForecastApp.instance.hurricanes.length - ForecastApp.instance.years_reserved;
+            ctx.years_reserved = ForecastApp.instance.years_reserved;
             
             var forecast = [
                 {predictor: ctx.stdev_residuals / 2},
@@ -472,6 +474,51 @@
             jQuery("li.step-four").removeClass("disabled").addClass("active");
             
             jQuery("table.table").tablesorter();
+            
+            // graph
+            var years = [];
+            var boxplot_data = [];
+            var predictand = [];
+            var predicted_y = [];
+            for (i=ctx.startIdx; i < (ctx.startIdx + ctx.years_reserved); i++) {
+                var observation = ForecastApp.instance.forecast_model.at(i);
+                years.push(observation.get('year'));
+                predictand.push(observation.get('predictand'));
+                predicted_y.push(observation.get('predicted_y'));
+                
+                var data = [];
+                var uncertainty = observation.get('quantiles');                
+                data.push(uncertainty['0.05']);
+                data.push(uncertainty['0.25']);
+                data.push(observation.get('forecast_mean'));
+                data.push(uncertainty['0.75']);
+                data.push(uncertainty['0.95']);
+                boxplot_data.push(data);
+            }
+            jQuery('#predictand-with-uncertainty').highcharts({
+                chart: {},
+                title: {text: 'Forecasted Predictand with Uncertainty'},
+                xAxis: {
+                    categories: years,
+                    title: {text: 'Years'}
+                },
+                yAxis: {
+                   title: {text: 'Forecasted'}
+                },
+                series: [{
+                    name: 'Observations',
+                    type: 'boxplot',
+                    data: boxplot_data
+                }, {
+                    name: 'Observed',
+                    type: 'scatter',
+                    data: predictand
+                }, {
+                    name: 'Predicted',
+                    type: 'line',
+                    data: predicted_y
+                }]
+            });
         }
     });    
     
