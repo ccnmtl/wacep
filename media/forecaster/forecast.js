@@ -56,6 +56,7 @@
             var storms = [];
             var hurricanes = [];
             var nino_versus_storms = [];
+            var nino_versus_hurricanes = [];
             this.forEach(function (hurricane_year) {
                 years.push(hurricane_year.get('year'));
                 nino.push(hurricane_year.get('nino_sst_anomalies'));
@@ -63,6 +64,8 @@
                 hurricanes.push(hurricane_year.get('hurricanes'));
                 nino_versus_storms.push([hurricane_year.get('nino_sst_anomalies'),
                                          hurricane_year.get('named_storms')]);                    
+                nino_versus_hurricanes.push([hurricane_year.get('nino_sst_anomalies'),
+                                             hurricane_year.get('hurricanes')]);                    
             });                
             
             // Provide some analysis on each data point
@@ -71,7 +74,8 @@
                 'storms': storms,
                 'hurricanes': hurricanes,
                 'nino': nino,
-                'nino_versus_storms': nino_versus_storms, 
+                'nino_versus_storms': nino_versus_storms,
+                'nino_versus_hurricanes': nino_versus_hurricanes,
                 'hurricane_data': this.toJSON(),
                 'mean_storms': jStat.mean(storms).toFixed(2),
                 'mean_hurricanes': jStat.mean(hurricanes).toFixed(2),
@@ -133,10 +137,10 @@
                 all_residuals.push(residuals);
             });
             
-            this.mean_predicted_y = jStat.mean(all_predicted_y).toFixed(3);
-            this.mean_residuals = jStat.mean(all_residuals).toFixed(3);
-            this.stdev_predicted_y = jStat.stdev(all_predicted_y).toFixed(3);
-            this.stdev_residuals = jStat.stdev(all_residuals).toFixed(3);   
+            this.mean_predicted_y = jStat.mean(all_predicted_y).toFixed(2);
+            this.mean_residuals = jStat.mean(all_residuals).toFixed(2);
+            this.stdev_predicted_y = jStat.stdev(all_predicted_y).toFixed(2);
+            this.stdev_residuals = jStat.stdev(all_residuals).toFixed(2);   
         },
         create_model: function(view) {
             var self = this;
@@ -163,13 +167,12 @@
                              });
             }
         },
-        update_model: function(view, slope, intercept, r_value) {
+        update_model: function(slope, intercept, r_value) {
             // use pre-existing slope & intercept to set the predicted_y
             this.slope = slope;
             this.intercept = intercept;
             this.r_value = r_value;
             this.apply_model();
-            view.trigger("render");
         },
         year_comparator: function(item) {
             return item.get('year');
@@ -215,13 +218,18 @@
     
     ForecastApp.Views.AnalyzeView = Backbone.View.extend({
         events: {
-            "click #create-model-dialog .btn-primary": 'createModel'
+            "click #create-model-dialog .btn-primary": 'createModel',
+            "click ul.nav a": 'changeTab'
         },
         initialize: function(options) {
-            _.bindAll(this, "render", "show", "createModel");
+            _.bindAll(this, "render", "show", "createModel", "changeTab");
 
             this.template =
                 _.template(jQuery("#analyze-template").html());
+        },
+        changeTab: function(evt) {
+            evt.preventDefault();
+            jQuery(evt.target).tab('show');
         },
         show: function() {
             if (ForecastApp.instance.hurricanes === undefined) {
@@ -260,34 +268,37 @@
                           showInLegend: false, data: context.nino}]
             });
             
-            jQuery('#storms-graph').highcharts({
+            jQuery('#predictand-graph').highcharts({
                 chart: {type: 'line'},
-                title: {text: 'Named Storms'},
+                title: {text: 'Predictand Over Time'},
                 xAxis: {categories: context.years,
                         tickInterval: Math.round(context.years.length / 8),
                         title: {text: 'Year'}},
-                yAxis: {title: {text: 'Named Storms'}},
-                series: [{animation: false, name: "Named Storms",
-                          showInLegend: false, data: context.storms}]
+                yAxis: {id:"predictand_count", title: {text: 'Count'}, min: 0},
+                plotOptions: {series: {animation: false}},
+                series: [{animation: false, name: "Named Storms", data: context.storms},
+                         {animation: false, name: "Hurricanes", data: context.hurricanes}]
             });
             
-            jQuery('#storms-versus-nino-graph').highcharts({
+            jQuery('#predictand-versus-nino-graph').highcharts({
                 chart: {type: 'scatter'},
-                title: {text: 'Named Storms vs Nino 3.4 (ASO)'},
+                title: {text: 'Predictand vs Nino 3.4 (ASO)'},
                 xAxis: {title: {text: 'ASO NINO3.4 SST anomalies'},
                         plotLines: [{color: '#FF0000', width: 2, value: 0}]},
-                yAxis: {title: {text: 'Named Storms'}},
+                yAxis: {title: {text: 'Count'}},
                 plotOptions: {
                     scatter: {
                         tooltip: {
-                            headerFormat: '<b>Named Storms vs Nino 3.4 (ASO)</b><br>',
-                            pointFormat: '{point.y} named storms<br />{point.x} nino 3.4 anomalies'
+                            headerFormat: '<b>Predictand vs Nino 3.4 (ASO)</b><br>',
+                            pointFormat: '{point.y} predictand<br />{point.x} nino 3.4 anomalies'
                         }
                     }
                 },
-                series: [{animation: false, showInLegend: false,
-                          data: context.nino_versus_storms}]
+                series: [{animation: false, name: "Named Storms", data: context.nino_versus_storms},
+                          {animation: false, name: "Hurricanes", data: context.nino_versus_hurricanes}]
             });
+            
+            jQuery('ul.nav a:first').tab('show');
         },
         createModel: function() {
             var reserve = jQuery('input#inputYearsReserved').val();
@@ -357,7 +368,7 @@
             var graphData = ForecastApp.instance.regression_model.get_context('year');
             jQuery('#actual-v-predicted-graph').highcharts({
                 chart: {type: 'line'},
-                title: {text: 'Predictand  vs. Predicted Y'},
+                title: {text: 'Observed  vs. Estimated'},
                 xAxis: {categories: graphData.years,
                         tickInterval: Math.round(graphData.years.length / 8),
                         title: {text: 'Year'}},
@@ -378,7 +389,7 @@
             graphData = ForecastApp.instance.regression_model.get_context('predictor');
             jQuery('#actualandpredicted-v-observed-graph').highcharts({
                chart: {type: 'scatter'},
-               title: {text: 'Scatter plot of Predictand and Predicted Y vs Predictor'},
+               title: {text: 'Observed and Estimated vs Predictor'},
                xAxis: {categories: graphData.predictor,
                        title: {text: 'Predictor'},
                        tickInterval: Math.round(graphData.predictor.length / 8)},
@@ -402,10 +413,10 @@
         },
         show: function() {
             ForecastApp.instance.crossvalidate.update_model(
-                this,
                 ForecastApp.instance.regression_model.slope,
                 ForecastApp.instance.regression_model.intercept,
                 ForecastApp.instance.regression_model.r_value);
+            ForecastApp.instance.forecast_model.create_model(this);
         },  
         render: function() {
             var ctx = ForecastApp.instance.crossvalidate.get_context();
@@ -422,17 +433,48 @@
             jQuery("table.table").tablesorter({sortList: [[0,0]]});
             
             // Graphs
-            var graphData = ForecastApp.instance.crossvalidate.get_context('year');
-            jQuery('#actual-v-predicted-graph').highcharts({
-                chart: {type: 'line'},
-                title: {text: 'Observed  vs. Predicted'},
-                xAxis: {categories: graphData.years,
-                        tickInterval: Math.round(graphData.years.length / 8),
-                        title: {text: 'Year'}},
-                yAxis: {title: {text: 'Count'}},
-                series: [{animation: false, name: 'Predictand', data: graphData.predictand},
-                         {animation: false, name: 'Predicted Y', data: graphData.predicted_y}]
-            });         
+            var startIdx = ForecastApp.instance.hurricanes.length - ForecastApp.instance.years_reserved;
+            var years_reserved = ForecastApp.instance.years_reserved;
+                        
+            var years = [];
+            var boxplot_data = [];
+            for (i= startIdx; i < (startIdx + years_reserved); i++) {
+                var observation = ForecastApp.instance.forecast_model.at(i);
+                years.push(observation.get('year'));
+                
+                var data = [];
+                var uncertainty = observation.get('quantiles');               
+                data.push(uncertainty['0.05']);
+                data.push(uncertainty['0.25']);
+                data.push(observation.get('forecast_mean'));
+                data.push(uncertainty['0.75']);
+                data.push(uncertainty['0.95']);
+                boxplot_data.push(data);
+            }
+            jQuery('#predictand-with-uncertainty').highcharts({
+                chart: {},
+                title: {text: 'Observed vs. Estimated with Uncertainty'},
+                xAxis: {
+                    categories: years,
+                    title: {text: 'Years'}
+                },
+                yAxis: {
+                   title: {text: 'Forecasted'}
+                },
+                series: [{
+                    name: 'Uncertainty',
+                    type: 'boxplot',
+                    data: boxplot_data
+                }, {
+                    name: 'Observed',
+                    type: 'scatter',
+                    data: ctx.predictand
+                }, {
+                    name: 'Predicted',
+                    type: 'line',
+                    data: ctx.predicted_y
+                }]
+            });     
         }        
     });
     
@@ -444,7 +486,7 @@
                 _.template(jQuery("#forecast-template").html());
         },
         show: function() {
-            ForecastApp.instance.forecast_model.create_model(this);
+            this.render();
         },
         render: function() {
             var ctx = ForecastApp.instance.forecast_model.get_context();
@@ -474,51 +516,7 @@
             jQuery("li.step-four").removeClass("disabled").addClass("active");
             
             jQuery("table.table").tablesorter();
-            
-            // graph
-            var years = [];
-            var boxplot_data = [];
-            var predictand = [];
-            var predicted_y = [];
-            for (i=ctx.startIdx; i < (ctx.startIdx + ctx.years_reserved); i++) {
-                var observation = ForecastApp.instance.forecast_model.at(i);
-                years.push(observation.get('year'));
-                predictand.push(observation.get('predictand'));
-                predicted_y.push(observation.get('predicted_y'));
-                
-                var data = [];
-                var uncertainty = observation.get('quantiles');                
-                data.push(uncertainty['0.05']);
-                data.push(uncertainty['0.25']);
-                data.push(observation.get('forecast_mean'));
-                data.push(uncertainty['0.75']);
-                data.push(uncertainty['0.95']);
-                boxplot_data.push(data);
-            }
-            jQuery('#predictand-with-uncertainty').highcharts({
-                chart: {},
-                title: {text: 'Forecasted Predictand with Uncertainty'},
-                xAxis: {
-                    categories: years,
-                    title: {text: 'Years'}
-                },
-                yAxis: {
-                   title: {text: 'Forecasted'}
-                },
-                series: [{
-                    name: 'Observations',
-                    type: 'boxplot',
-                    data: boxplot_data
-                }, {
-                    name: 'Observed',
-                    type: 'scatter',
-                    data: predictand
-                }, {
-                    name: 'Predicted',
-                    type: 'line',
-                    data: predicted_y
-                }]
-            });
+
         }
     });    
     
