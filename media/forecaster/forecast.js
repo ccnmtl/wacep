@@ -48,6 +48,20 @@
         comparator: function(item) {
             return item.get('year');
         },
+        extremes: function(attr) {
+            var min = 0;
+            var max = 0;
+            this.forEach(function (hurricane_year) {
+                var value = hurricane_year.get(attr);
+                if (value < min) {
+                    min = value;
+                }
+                if (value > max) {
+                    max = value;
+                }
+            });
+            return {'min': min, 'max': max};
+        },
         get_context: function() {
             // Highcharts requires arrays of data for each graph
             // Construct time series arrays for each data point
@@ -270,11 +284,11 @@
             
             jQuery('#predictand-graph').highcharts({
                 chart: {type: 'line'},
-                title: {text: 'Predictand Over Time'},
+                title: {text: 'Observed Over Time'},
                 xAxis: {categories: context.years,
                         tickInterval: Math.round(context.years.length / 8),
                         title: {text: 'Year'}},
-                yAxis: {id:"predictand_count", title: {text: 'Count'}, min: 0},
+                yAxis: {title: {text: 'Count'}, min: 0},
                 plotOptions: {series: {animation: false}},
                 series: [{animation: false, name: "Named Storms", data: context.storms},
                          {animation: false, name: "Hurricanes", data: context.hurricanes}]
@@ -282,15 +296,15 @@
             
             jQuery('#predictand-versus-nino-graph').highcharts({
                 chart: {type: 'scatter'},
-                title: {text: 'Predictand vs Nino 3.4 (ASO)'},
+                title: {text: 'Observed vs Nino 3.4 (ASO)'},
                 xAxis: {title: {text: 'ASO NINO3.4 SST anomalies'},
                         plotLines: [{color: '#FF0000', width: 2, value: 0}]},
                 yAxis: {title: {text: 'Count'}},
                 plotOptions: {
                     scatter: {
                         tooltip: {
-                            headerFormat: '<b>Predictand vs Nino 3.4 (ASO)</b><br>',
-                            pointFormat: '{point.y} predictand<br />{point.x} nino 3.4 anomalies'
+                            headerFormat: '<b>Observed vs Nino 3.4 (ASO)</b><br>',
+                            pointFormat: '{point.y} observed<br />{point.x} nino 3.4 anomalies'
                         }
                     }
                 },
@@ -302,7 +316,7 @@
         },
         createModel: function() {
             var reserve = jQuery('input#inputYearsReserved').val();
-            if (reserve === undefined || reserve < 0 || reserve > ForecastApp.instance.hurricanes.length - 1) {
+            if (reserve === undefined || reserve < 1 || reserve > ForecastApp.instance.hurricanes.length / 2) {
                 jQuery('input#inputYearsReserved').parents('div.control-group').addClass("error");
                 jQuery('input#inputYearsReserved').next().show();
                 return;
@@ -373,8 +387,8 @@
                         tickInterval: Math.round(graphData.years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{animation: false, name: 'Predictand', data: graphData.predictand},
-                         {animation: false, name: 'Predicted Y', data: graphData.predicted_y}]
+                series: [{animation: false, name: 'Observed', data: graphData.predictand},
+                         {animation: false, name: 'Estimated', data: graphData.predicted_y}]
             });
             
             jQuery('#residuals-graph').highcharts({
@@ -394,8 +408,8 @@
                        title: {text: 'Predictor'},
                        tickInterval: Math.round(graphData.predictor.length / 8)},
                yAxis: {title: {text: 'Count'}},
-               series: [{animation: false, name: 'Predictand', data: graphData.predictand},
-                        {animation: false, name: 'Predicted Y', data: graphData.predicted_y}]
+               series: [{animation: false, name: 'Observed', data: graphData.predictand},
+                        {animation: false, name: 'Estimated', data: graphData.predicted_y}]
             });
         },
         crossValidate: function() {
@@ -479,11 +493,48 @@
     });
     
     ForecastApp.Views.ForecastView = Backbone.View.extend({
+        events: {
+            "click #change-nino-value": 'updateSlideValue'
+        },
         initialize: function(options) {
-            _.bindAll(this, "render");
+            _.bindAll(this, "render", "render_custom_forecast", "slideValue", "updateSlideValue", "slideTooltip");
             this.on('render', this.render);
+            this.on('render-custom-forecast', this.render_custom_forecast);
             this.template =
                 _.template(jQuery("#forecast-template").html());
+            this.custom_forecast_template =
+                _.template(jQuery("#custom-forecast-template").html());
+        },
+        get_forecast: function(model, predictor) {
+            var ctx = {};
+            var mean = model.slope * predictor + model.intercept;            
+            for (var i=0; i < ForecastApp.instance.quantiles.length; i++) {
+                var q = ForecastApp.instance.quantiles[i];
+                ctx['' + q] = mean +  jStat.normal.inv(q, 0, model.stdev_residuals);
+            }
+            ctx.mean = mean;
+            ctx.predictor = predictor;
+            return ctx;
+        },
+        updateSlideValue: function(evt, ui) {
+            var model = ForecastApp.instance.forecast_model.get_context();
+            var value = parseFloat(jQuery("#nino-value").val());
+            
+            if (isNaN(value) || value < this.slider.data('slider').min || value > this.slider.data('slider').max) {
+                jQuery('#nino-value').siblings("div.help-inline").show();
+            } else {
+                jQuery('#nino-value').siblings("div.help-inline").hide();          
+                this.slider.slider('setValue', value);                
+            }
+            this.trigger('render-custom-forecast');
+        },
+        slideValue: function(evt, ui) {
+            var value = this.slider.data('slider').getValue();
+            jQuery("#nino-value").val(value.toFixed(2));
+            this.trigger('render-custom-forecast');
+        },
+        slideTooltip: function(value) {
+            return value.toFixed(2);
         },
         show: function() {
             this.render();
@@ -493,6 +544,7 @@
             ctx.predictand_label = ForecastApp.instance.predictand;
             ctx.startIdx = ForecastApp.instance.hurricanes.length - ForecastApp.instance.years_reserved;
             ctx.years_reserved = ForecastApp.instance.years_reserved;
+            ctx.extremes = ForecastApp.instance.hurricanes.extremes('nino_sst_anomalies');
             
             var forecast = [
                 {predictor: ctx.stdev_residuals / 2},
@@ -500,12 +552,7 @@
                 {predictor: 0},
             ];
             for (var i=0; i < forecast.length; i++) {
-                forecast[i].mean = ctx.slope * forecast[i].predictor + ctx.intercept;
-                for (var j=0; j < ForecastApp.instance.quantiles.length; j++) {
-                    var q = ForecastApp.instance.quantiles[j];
-                    forecast[i]['' + q] = forecast[i].mean + 
-                        jStat.normal.inv(q, 0, ctx.stdev_residuals);  
-                }
+                forecast[i] = this.get_forecast(ctx, forecast[i].predictor); 
             }
             ctx.forecast = forecast;
             
@@ -516,9 +563,30 @@
             jQuery("li.step-four").removeClass("disabled").addClass("active");
             
             jQuery("table.table").tablesorter();
-
+            
+            this.slider = jQuery("#nino-value-slider").slider({
+                value: 0,
+                min: ctx.extremes.min,
+                max: ctx.extremes.max,
+                orientation: 'vertical',
+                step: 0.01,
+                formater: this.slideTooltip
+            });
+            jQuery("#nino-value-slider").slider().on("slide", this.slideValue);
+            
+            this.trigger('render-custom-forecast');
+        },
+        render_custom_forecast: function() {
+            var predictor = this.slider.data('slider').getValue();
+            var model = ForecastApp.instance.forecast_model.get_context();
+            var ctx = {
+                forecast: this.get_forecast(model, predictor)
+            };
+            
+            var markup = this.custom_forecast_template(ctx);            
+            jQuery(this.el).find("div.custom-forecast").html(markup);
         }
-    });    
+    });
     
     var analyzeView = new ForecastApp.Views.AnalyzeView({
         el: jQuery("div.forecast-step")

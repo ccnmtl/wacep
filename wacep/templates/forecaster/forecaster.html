@@ -5,6 +5,7 @@
 
 {% block extrahead %}
     <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
+    <link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" />
 
     <script type="text/template" id="analyze-template">                
         <a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
@@ -102,8 +103,8 @@
                             <input id="inputYearsReserved" type="text"
                              value="<%= years_reserved %>"
                              type="number"
-                             min="1" max="<%= hurricane_data.length - 1 %>" />
-                            <span style="display: none" class="help-inline">Enter a number between 0 and <%= hurricane_data.length - 1 %></span>
+                             min="1" max="<%= hurricane_data.length / 2 %>" />
+                            <span style="display: none" class="help-inline">Enter a number between 1 and <%= hurricane_data.length / 2 %></span>
                         </div>
                     </div>
                 </form>
@@ -259,6 +260,56 @@
                 </table>
             </div>
         </div>
+        <div class="row-fluid">
+            <div class="span5">
+                <form class="form-inline">
+                    <div class="control-group">
+                        <label class="control-label" for="inputYearsReserved">Nino 3.4 (ASO)</label>
+                        <div class="controls">
+                            <input type="text" value="0" id="nino-value" />
+                            <input type="button" id="change-nino-value" class="btn btn-primary" value="Update Value" />
+                            <div style="display: none" class="help-inline error">Enter a number between <%= extremes.min.toFixed(2) %> and <%= extremes.max.toFixed(2) %></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="span7"></div>
+        </div>
+        <div class="row-fluid">
+            <div class="span2">
+                <input id="nino-value-slider" type="text" class="span2" style="display: none" />
+            </div>
+            <div class="span5 custom-forecast">
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/template" id="custom-forecast-template">
+        <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th colspan="2" class="text-center sorter-false">Forecast model</th>
+                <th colspan="4" class="text-center sorter-false">Forecast Uncertainty Quantiles</th>
+            </tr>
+            <tr>
+                <th class="text-center">Predictor</th>
+                <th class="text-center">Forecast (mean)</th>
+                <th class="text-center">0.05</th>
+                <th class="text-center">0.25</th>
+                <th class="text-center">0.75</th>
+                <th class="text-center">0.95</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-right"><%= forecast.predictor.toFixed(2) %></td>
+                <td class="text-right"><%= forecast.mean.toFixed(2) %></td>
+                <td class="text-right"><%= forecast['0.05'].toFixed(2) %></td>
+                <td class="text-right"><%= forecast['0.25'].toFixed(2) %></td>
+                <td class="text-right"><%= forecast['0.75'].toFixed(2) %></td>
+                <td class="text-right"><%= forecast['0.95'].toFixed(2) %></td>
+            </tr>
+        </tbody>
     </script>
 {% endblock %}
 
@@ -306,8 +357,9 @@
     <script src="/site_media/js/highcharts-more-min.js" type="text/javascript"></script>
     <script src="/site_media/js/jstat.min.js" type="text/javascript"></script>
     
+    
     {% compress js %}
-    <script src="/site_media/js/scrolling_table.js" type="text/javascript"></script>    
-    <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
+        <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
+        <script src="/site_media/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script>
     {% endcompress %}
 {% endblock %}
