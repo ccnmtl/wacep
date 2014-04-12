@@ -7,9 +7,10 @@
         Models: {},
         Views: {},
         Router: {},
+        Math: {},
         
         instance: {
-            'hurricanes': undefined, // HurricaneYearCollection
+            'hurricanes': undefined, // HurricaneYearCollection from server
             'router': undefined,
             
             // data set selection
@@ -17,9 +18,10 @@
             'predictand': 'hurricanes',
             'years_reserved': 10,
 
+            // collections created at each example step
             'observations': undefined,
             'crossvalidate': undefined,
-            'quantiles': [0.05, 0.25, 0.75, 0.95]
+            'forecast_model': undefined,
         },
         reset: function() {
             this.hurricanes= undefined; // HurricaneYearCollection
@@ -33,6 +35,21 @@
             this.observations = undefined;
             this.crossvalidate = undefined;
         }
+    };
+    
+    ForecastApp.Math.quantiles = [0.05, 0.25, 0.75, 0.95];
+    
+    ForecastApp.Math.predicted_y = function(slope, intercept, predictor) {
+        return slope * predictor + intercept;
+    };
+
+    ForecastApp.Math.uncertainty = function(model, predicted_y) {
+        var ctx = {};        
+        for (var i=0; i < ForecastApp.Math.quantiles.length; i++) {
+            var q = ForecastApp.Math.quantiles[i];
+            ctx['' + q] = predicted_y +  jStat.normal.inv(q, 0, model.stdev_residuals);
+        }
+        return ctx;
     };
     
     ForecastApp.Models.HurricaneYear = Backbone.Model.extend({
@@ -123,16 +140,8 @@
         apply_forecast: function() {
             var self = this;
             self.forEach(function(observation) {
-                var mean = self.slope * observation.get('predictor') + self.intercept;
-                observation.set('forecast_mean', mean);
-                
-                var q = {};
-                for (var i=0; i < ForecastApp.instance.quantiles.length; i++) {
-                    var quantile = ForecastApp.instance.quantiles[i];
-                    q['' + quantile] = mean + 
-                        jStat.normal.inv(quantile, 0, self.stdev_residuals);  
-                }
-                observation.set('quantiles', q);
+                var ctx = ForecastApp.Math.uncertainty(self, observation.get('predicted_y'));
+                observation.set('quantiles', ctx);
             });
             self.forecast_error_range = jStat.normal.inv(0.05, 0, self.stdev_residuals); 
         },
@@ -142,7 +151,7 @@
             var all_residuals = [];
             
             this.forEach(function(observation) {
-                var predicted_y = self.slope * observation.get('predictor') + self.intercept;
+                var predicted_y = ForecastApp.Math.predicted_y(self.slope, self.intercept, observation.get('predictor')); 
                 var residuals = predicted_y - observation.get('predictand');
                 observation.set('predicted_y', predicted_y);
                 observation.set('residuals', residuals);
@@ -460,7 +469,7 @@
                 var uncertainty = observation.get('quantiles');               
                 data.push(uncertainty['0.05']);
                 data.push(uncertainty['0.25']);
-                data.push(observation.get('forecast_mean'));
+                data.push(observation.get('predicted_y'));
                 data.push(uncertainty['0.75']);
                 data.push(uncertainty['0.95']);
                 boxplot_data.push(data);
@@ -505,17 +514,6 @@
             this.custom_forecast_template =
                 _.template(jQuery("#custom-forecast-template").html());
         },
-        get_forecast: function(model, predictor) {
-            var ctx = {};
-            var mean = model.slope * predictor + model.intercept;            
-            for (var i=0; i < ForecastApp.instance.quantiles.length; i++) {
-                var q = ForecastApp.instance.quantiles[i];
-                ctx['' + q] = mean +  jStat.normal.inv(q, 0, model.stdev_residuals);
-            }
-            ctx.mean = mean;
-            ctx.predictor = predictor;
-            return ctx;
-        },
         updateSlideValue: function(evt, ui) {
             var model = ForecastApp.instance.forecast_model.get_context();
             var value = parseFloat(jQuery("#nino-value").val());
@@ -546,15 +544,15 @@
             ctx.years_reserved = ForecastApp.instance.years_reserved;
             ctx.extremes = ForecastApp.instance.hurricanes.extremes('nino_sst_anomalies');
             
-            var forecast = [
-                {predictor: ctx.stdev_residuals / 2},
-                {predictor: -(ctx.stdev_residuals / 2)},
-                {predictor: 0},
-            ];
-            for (var i=0; i < forecast.length; i++) {
-                forecast[i] = this.get_forecast(ctx, forecast[i].predictor); 
+            var predictors = [ctx.stdev_residuals / 2, -(ctx.stdev_residuals / 2), 0];
+            ctx.forecast = [];
+            for (var i=0; i < predictors.length; i++) {
+                var predicted_y = ForecastApp.Math.predicted_y(ctx.slope, ctx.intercept, predictors[i]);
+                var model = ForecastApp.Math.uncertainty(ctx, predicted_y);
+                model.predictor = predictors[i];
+                model.predicted_y = predicted_y;
+                ctx.forecast.push(model);
             }
-            ctx.forecast = forecast;
             
             var markup = this.template(ctx);            
             jQuery(this.el).html(markup);
@@ -577,11 +575,13 @@
             this.trigger('render-custom-forecast');
         },
         render_custom_forecast: function() {
-            var predictor = this.slider.data('slider').getValue();
             var model = ForecastApp.instance.forecast_model.get_context();
-            var ctx = {
-                forecast: this.get_forecast(model, predictor)
-            };
+            var predictor = this.slider.data('slider').getValue();            
+            var predicted_y = ForecastApp.Math.predicted_y(model.slope, model.intercept, predictor);
+
+            var ctx = {forecast: ForecastApp.Math.uncertainty(model, predicted_y)};
+            ctx.forecast.predictor = predictor;
+            ctx.forecast.predicted_y = predicted_y;
             
             var markup = this.custom_forecast_template(ctx);            
             jQuery(this.el).find("div.custom-forecast").html(markup);

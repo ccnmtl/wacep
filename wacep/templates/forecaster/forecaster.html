@@ -233,12 +233,12 @@
                 <table class="table table-condensed table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="2" class="text-center sorter-false" >Forecast model</th>
-                        <th colspan="4" class="text-center sorter-false" >Forecast Uncertainty Quantiles</th>
+                        <th colspan="2" class="text-center sorter-false">Forecast model</th>
+                        <th colspan="4" class="text-center sorter-false">Forecast Uncertainty Quantiles</th>
                     </tr>
                     <tr>
                         <th class="text-center">Predictor</th>
-                        <th class="text-center">Forecast (mean)</th>
+                        <th class="text-center">Estimated</th>
                         <th class="text-center">0.05</th>
                         <th class="text-center">0.25</th>
                         <th class="text-center">0.75</th>
@@ -249,7 +249,7 @@
                     <% for (var i=0; i < forecast.length; i++) { %>
                         <tr>
                             <td class="text-right"><%= forecast[i].predictor.toFixed(2) %></td>
-                            <td class="text-right"><%= forecast[i].mean.toFixed(2) %></td>
+                            <td class="text-right"><%= forecast[i].predicted_y.toFixed(2) %></td>
                             <td class="text-right"><%= forecast[i]['0.05'].toFixed(2) %></td>
                             <td class="text-right"><%= forecast[i]['0.25'].toFixed(2) %></td>
                             <td class="text-right"><%= forecast[i]['0.75'].toFixed(2) %></td>
@@ -293,7 +293,7 @@
             </tr>
             <tr>
                 <th class="text-center">Predictor</th>
-                <th class="text-center">Forecast (mean)</th>
+                <th class="text-center">Estimated</th>
                 <th class="text-center">0.05</th>
                 <th class="text-center">0.25</th>
                 <th class="text-center">0.75</th>
@@ -303,7 +303,7 @@
         <tbody>
             <tr>
                 <td class="text-right"><%= forecast.predictor.toFixed(2) %></td>
-                <td class="text-right"><%= forecast.mean.toFixed(2) %></td>
+                <td class="text-right"><%= forecast.predicted_y.toFixed(2) %></td>
                 <td class="text-right"><%= forecast['0.05'].toFixed(2) %></td>
                 <td class="text-right"><%= forecast['0.25'].toFixed(2) %></td>
                 <td class="text-right"><%= forecast['0.75'].toFixed(2) %></td>
