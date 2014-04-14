@@ -525,6 +525,7 @@
             var ctx = ForecastApp.instance.crossvalidate.get_context();
             ctx.years_reserved = ForecastApp.instance.years_reserved;
             ctx.hurricane_data_length = ForecastApp.instance.hurricanes.length;
+            ctx.forecast = ForecastApp.instance.forecast_model.get_context();
             
             var markup = this.template(ctx);
             jQuery(this.el).html(markup);
