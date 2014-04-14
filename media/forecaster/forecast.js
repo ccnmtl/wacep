@@ -402,7 +402,7 @@
             
             var rows = data.split('\n');
             if (rows.length < 20) {
-                jQuery("#data-error").html("The predictand must cover at least 20 years. The pasted data only has " + a.length + " years.").show();
+                jQuery("#data-error").html("The predictand must cover at least 20 years. The pasted data only has " + rows.length + " years.").show();
                 return;
             }
             
@@ -413,12 +413,16 @@
                 var cols = rows[i].split('\t');
                 var year = parseInt(cols[0].trim(), 10);
                 
-                if (isNaN(year) || year < extremes.min || year > extremes.max) {
+                if (isNaN(year)) {
                     jQuery("#data-error").html("The predictand year " + year + " is invalid.").show();
                     return;
                 }
+                if (year < extremes.min || year > extremes.max) {
+                    jQuery("#data-error").html("The predictand year " + year + " is out of the range " + extremes.min + "-" + extremes.max + ".").show();
+                    return;
+                }
                 if (last_year !== undefined && year !== (last_year + 1)) {
-                    jQuery("#data-error").html("The predictand year " + year + " is not contiguous.").show();
+                    jQuery("#data-error").html("The predictand year " + year + " is not contiguous to the previous year " + last_year + ".<br />Please sort your data by year.").show();
                     return;
                 }
                 last_year = year;
