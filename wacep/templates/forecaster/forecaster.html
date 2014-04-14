@@ -19,9 +19,21 @@
                 Cum sociis natoque penatibus et magnis dis parturient montes, 
                 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
 
+                <a href="#add-predictand-dialog" role="button" class="btn btn-default pull-right" data-toggle="modal">
+                    Add Predictand
+                </a>
+                <div style="clear: both"></div>
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
-                        <tr><th>Year</th><th>Named Storms</th><th>Hurricanes</th><th>ASO NINO3.4 SST anomalies</th></tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Named Storms</th>
+                            <th>Hurricanes</th>
+                            <th>NINO 3.4 (ASO)</th>
+                            <% if (custom_name) { %>
+                                <td class="text-right"><%= custom_name %></td>
+                            <% } %>
+                        </tr>
                     </thead>
                     <tbody>
                         <% for (var i=0; i < hurricane_data.length; i++) { %>
@@ -30,21 +42,30 @@
                                 <td class="text-right"><%= hurricane_data[i].named_storms %></td>
                                 <td class="text-right"><%= hurricane_data[i].hurricanes %></td>
                                 <td class="text-right"><%= hurricane_data[i].nino_sst_anomalies.toFixed(2) %></td>
+                                <% if (custom_name) { %>
+                                    <td class="text-right"><%= hurricane_data[i].custom.toFixed(2) %></td>
+                                <% } %>
                             </tr>
                         <% } %>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
-                            <td class="text-right"><%= mean_storms %></td>
-                            <td class="text-right"><%= mean_hurricanes %></td>
-                            <td class="text-right"><%= mean_nino %></td>
+                            <td class="text-right"><%= mean_storms.toFixed(2) %></td>
+                            <td class="text-right"><%= mean_hurricanes.toFixed(2) %></td>
+                            <td class="text-right"><%= mean_nino.toFixed(2) %></td>
+                            <% if (custom_name) { %>
+                                <td class="text-right"><%= mean_custom.toFixed(2) %></td>
+                            <% } %>
                         </tr>
                         <tr>
                             <td><strong>StDev</strong></td>
-                            <td class="text-right"><%= stdev_storms %></td>
-                            <td class="text-right"><%= stdev_hurricanes %></td>
-                            <td class="text-right"><%= stdev_nino %></td>
+                            <td class="text-right"><%= stdev_storms.toFixed(2) %></td>
+                            <td class="text-right"><%= stdev_hurricanes.toFixed(2) %></td>
+                            <td class="text-right"><%= stdev_nino.toFixed(2) %></td>
+                            <% if (custom_name) { %>
+                                <td class="text-right"><%= stdev_custom.toFixed(2) %></td>
+                            <% } %>
                         </tr>
                     </tfoot>
                 </table>
@@ -94,6 +115,9 @@
                             <select id="inputPredictand" placeholder="Predictand">
                                 <option value="hurricanes">Hurricanes</option>
                                 <option value="named_storms">Named Storms</option>
+                                <% if (custom_name) { %>
+                                    <option value="custom"><%= custom_name%></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
@@ -113,6 +137,41 @@
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 <button class="btn btn-primary">Create</button>
             </div>        
+        </div>
+
+        <div id="add-predictand-dialog" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Add Predictand</h3>
+            </div>
+            <div class="modal-body">
+                <p>Personalize this interactive by pasting in data for a custom predictand.</p>
+                <form>
+                    <fieldset>
+                        <label>Predictand Name</label>
+                        <input type="text" name="new-predictand-name" />
+                        <span style="display: none" class="help-inline error">Enter a name for the predictand.</span>
+                    </fieldset>
+                    <br />
+                    <fieldset>
+                        <label>Predictand Data</label>
+                        <ul class="small">
+                            <li>Data must be <b>pasted</b> from a spreadsheet like Excel or Google spreadsheet.
+                            <li>Data must cover 20 or more contiguous years</li>
+                            <li>Data must be between <%= extremes.min %>-<%= extremes.max %>.</li>
+                            <li>Data must be sorted by years ascending.</li> 
+                            <li>Data must consist of two columns: year, value.
+                        </ul>
+
+                        <textarea id="pasted-data" placeholder="Paste data here."></textarea>
+                        <span id="data-error" style="display: none" class="help-inline error"></span>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary">Create</button>
+            </div>
         </div>
     </script>
     
@@ -148,13 +207,13 @@
                     <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
-                            <td class="text-right"><%= mean_predicted_y %></td>
-                            <td class="text-right"><%= mean_residuals %></td>
+                            <td class="text-right"><%= mean_predicted_y.toFixed(2) %></td>
+                            <td class="text-right"><%= mean_residuals.toFixed(2) %></td>
                         </tr>
                         <tr>
                             <td><strong>StDev</strong></td>
-                            <td class="text-right"><%= stdev_predicted_y %></td>
-                            <td class="text-right"><%= stdev_residuals %></td>
+                            <td class="text-right"><%= stdev_predicted_y.toFixed(2) %></td>
+                            <td class="text-right"><%= stdev_residuals.toFixed(2) %></td>
                         </tr>                  
                     </tfoot>
                 </table>
@@ -199,13 +258,13 @@
                     <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td><td />
-                            <td class="text-right"><%= mean_predicted_y %></td>
-                            <td class="text-right"><%= mean_residuals %></td>
+                            <td class="text-right"><%= mean_predicted_y.toFixed(2) %></td>
+                            <td class="text-right"><%= mean_residuals.toFixed(2) %></td>
                         </tr>
                         <tr>
                             <td><strong>StDev</strong></td><td />
-                            <td class="text-right"><%= stdev_predicted_y %></td>
-                            <td class="text-right"><%= stdev_residuals %></td>
+                            <td class="text-right"><%= stdev_predicted_y.toFixed(2) %></td>
+                            <td class="text-right"><%= stdev_residuals.toFixed(2) %></td>
                         </tr>                    
                     </tfoot>
                 </table>
@@ -226,7 +285,7 @@
                     <dt>Slope</dt><dd><%= slope.toFixed(3) %></dd>
                     <dt>Intercept</dt><dd><%= intercept.toFixed(3) %></dd>
                     <dt>R Squared</dt><dd><%= r_squared.toFixed(3) %></dd>
-                    <dt>Residuals St Dev</dt><dd><%= stdev_residuals %></dd>
+                    <dt>Residuals St Dev</dt><dd><%= stdev_residuals.toFixed(3) %></dd>
                 </dl>
             </div>
             <div class="span7">
