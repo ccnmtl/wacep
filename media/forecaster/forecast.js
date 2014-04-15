@@ -27,6 +27,9 @@
     };
     
     ForecastApp.Math.quantiles = [0.05, 0.25, 0.75, 0.95];
+    ForecastApp.Math.distribution_quantiles = [
+        0.001, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+        0.7, 0.8, 0.9, 0.95, 0.99, 0.999];
     
     ForecastApp.Math.predicted_y = function(slope, intercept, predictor) {
         // y = mx + b
@@ -38,6 +41,19 @@
         for (var i=0; i < ForecastApp.Math.quantiles.length; i++) {
             var q = ForecastApp.Math.quantiles[i];
             ctx['' + q] = predicted_y +  jStat.normal.inv(q, 0, stdev_residuals);
+        }
+        return ctx;
+    };
+    
+    ForecastApp.Math.distribution = function(predictor, stdev_residuals) {
+        var ctx = {};     
+        for (var i=0; i < ForecastApp.Math.distribution_quantiles.length; i++) {
+            var q = ForecastApp.Math.distribution_quantiles[i];
+            var inv_norm = jStat.normal.inv(q, predictor, stdev_residuals);
+            ctx['' + q] = {
+                'inv_norm': inv_norm,
+                'norm': jStat.normal.pdf(inv_norm, predictor, stdev_residuals)
+            };
         }
         return ctx;
     };
@@ -290,7 +306,7 @@
                         tickInterval: Math.round(context.years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Anomalies'}},
-                series: [{animation: false, name: "ASO NINO3.4 SST anomalies",
+                series: [{name: "ASO NINO3.4 SST anomalies",
                           showInLegend: false, data: context.nino}]
             });
             
@@ -300,8 +316,10 @@
                            {name: "Hurricanes", data: context.nino_vs_hurricanes}];
                 
             if (ForecastApp.inst.hurricanes.custom_name) {
-                series1.push({animation: false, name: ForecastApp.inst.hurricanes.custom_name, data: context.custom});
-                series2.push({animation: false, name: ForecastApp.inst.hurricanes.custom_name, data: context.nino_vs_custom});
+                series1.push({name: ForecastApp.inst.hurricanes.custom_name,
+                    data: context.custom});
+                series2.push({name: ForecastApp.inst.hurricanes.custom_name,
+                    data: context.nino_vs_custom});
             }
             
             jQuery('#predictand-graph').highcharts({
@@ -458,15 +476,15 @@
                         tickInterval: Math.round(ctx.years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{animation: false, name: 'Observed', data: ctx.predictand},
-                         {animation: false, name: 'Estimated', data: ctx.predicted_y}]
+                series: [{name: 'Observed', data: ctx.predictand},
+                         {name: 'Estimated', data: ctx.predicted_y}]
             });
             
             jQuery('#residuals-graph').highcharts({
                 chart: {type: 'scatter'},
                 title: {text: 'Residuals'},
                 yAxis: {plotLines: [{color: '#FF0000', width: 2, value: 0}]},
-                series: [{animation: false, name: 'Residuals', data: ctx.residuals}]               
+                series: [{name: 'Residuals', data: ctx.residuals}]               
              });
             
             jQuery('#actualandpredicted-v-observed-graph').highcharts({
@@ -474,8 +492,8 @@
                title: {text: 'Observed and Estimated vs Predictor'},
                xAxis: {title: {text: 'Predictor'}},
                yAxis: {title: {text: 'Count'}},
-               series: [{animation: false, name: 'Observed', data: ctx.predictor_vs_predictand},
-                        {animation: false, name: 'Estimated', data: ctx.predictor_vs_predicted_y}]
+               series: [{name: 'Observed', data: ctx.predictor_vs_predictand},
+                        {name: 'Estimated', data: ctx.predictor_vs_predicted_y}]
             });
         }
     });
@@ -559,9 +577,9 @@
             
             if (isNaN(value) || value < this.slider.data('slider').min || 
                     value > this.slider.data('slider').max) {
-                jQuery('#nino-value').siblings("div.help-inline").show();
+                jQuery(this.el).find(".help-inline.error").show();
             } else {
-                jQuery('#nino-value').siblings("div.help-inline").hide();          
+                jQuery(this.el).find(".help-inline.error").hide();          
                 this.slider.slider('setValue', value);                
             }
             this.trigger('render-custom-forecast');
@@ -605,7 +623,6 @@
                 value: 0,
                 min: ctx.extremes.min,
                 max: ctx.extremes.max,
-                orientation: 'vertical',
                 step: 0.01,
                 formater: this.slideTooltip
             });
@@ -615,15 +632,34 @@
         },
         render_custom_forecast: function() {
             var model = ForecastApp.inst.forecast_model.get_context();
-            var predictor = this.slider.data('slider').getValue();            
-            var predicted_y = ForecastApp.Math.predicted_y(model.slope, model.intercept, predictor);
+            var predictor = this.slider.data('slider').getValue();
+            var dist = ForecastApp.Math.distribution(predictor, model.stdev_residuals); 
 
-            var ctx = {forecast: ForecastApp.Math.uncertainty(predicted_y, model.stdev_residuals)};
-            ctx.forecast.predictor = predictor;
-            ctx.forecast.predicted_y = predicted_y;
-            
+            var ctx = {dist: dist};            
             var markup = this.custom_forecast_template(ctx);            
             jQuery(this.el).find("div.custom-forecast").html(markup);
+            
+            var data = [];
+            
+            var keys = Object.keys(dist);
+            for (var i= 0; i < keys.length; i++) {
+                data.push([dist[keys[i]].inv_norm, dist[keys[i]].norm]);
+            }
+
+            if (this.graph === undefined) {
+                jQuery('#custom-forecast-graph').highcharts({
+                    chart: {type: 'spline'},
+                    title: {text: 'Prediction Value and Uncertainty Range'},
+                    xAxis: {min: -10, max: 10,
+                        title: {text: 'Quantile'},
+                        plotLines: [{color: '#FF0000', width: 2, value: 0}]},
+                    yAxis: {min: 0, max: 0.2},
+                    series: [{name: "Prediction Value", data: data}]
+                });
+                this.graph = jQuery('#custom-forecast-graph').highcharts();
+            } else {
+                this.graph.series[0].update({data: data});
+            }
         }
     });
     
