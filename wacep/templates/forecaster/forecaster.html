@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" />
     
 	<style>
-	.pagination li {font-weight: bold;}
+	.pagination {font-weight: bold;}
 	li.disabled .check {display: none;}
 	.check {color: green;}
 	</style>
@@ -17,7 +17,7 @@
     
 		<h2>Phase 1: Initial Analysis</h2>
 		<div class="row-fluid">
-			<div class="span8">
+			<div class="span7">
 				<p>
 				<strong>
 				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
@@ -26,9 +26,9 @@
 				</strong>
 				</p>
 			</div>
-			<div class="span4">
+			<div class="span5">
 				<a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
-				Next Step: Estimate Your Model <i class="icon-chevron-right icon-white"></i>
+				<strong>Next Step:</strong> Estimate your model. <i class="icon-chevron-right icon-white"></i>
 				</a>
 			</div>
 		</div>
@@ -201,7 +201,7 @@
     
         <h2>Phase 2: Linear Regression Model</h2>
 		<div class="row-fluid">
-			<div class="span8">
+			<div class="span7">
 				<p>
 				<strong>
 				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
@@ -210,9 +210,9 @@
 				</strong>
 				</p>
 			</div>
-			<div class="span4">
+			<div class="span5">
       <a href="#validate" role="button" class="btn btn-success pull-right">
-            Next Step: Cross-Validate Your Model <i class="icon-chevron-right icon-white"></i>
+            <strong>Next Step:</strong> Cross-validate your model. <i class="icon-chevron-right icon-white"></i>
         </a>
 			</div>
 		</div>
@@ -271,7 +271,7 @@
     
         <h2>Phase 3: Cross-Validation</h2>
 		<div class="row-fluid">
-			<div class="span8">
+			<div class="span7">
 				<p>
 				<strong>
 				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
@@ -280,9 +280,9 @@
 				</strong>
 				</p>
 			</div>
-			<div class="span4">
+			<div class="span5">
        <a href="#forecast" class="btn btn-success pull-right">
-            Next Step: Create Your Forecast <i class="icon-chevron-right icon-white"></i>
+            <strong>Next Step:</strong> Create your forecast. <i class="icon-chevron-right icon-white"></i>
         </a>
 			</div>
 		</div>
@@ -360,7 +360,7 @@
     
       <h2>Phase 4: Complete Forecast</h2>
 		<div class="row-fluid">
-			<div class="span8">
+			<div class="span7">
 				<p>
 				<strong>
 				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
@@ -369,7 +369,7 @@
 				</strong>
 				</p>
 			</div>
-			<div class="span4">
+			<div class="span5">
 			</div>
 		</div>
 		<hr />
@@ -469,11 +469,11 @@
     
 	<div class="row-fluid">
         
-		<div class="span10">
+		<div class="span9">
 			<h1>Forecaster</h1>
 		</div>
         
-        <div class="span2">
+        <div class="span3">
 			<div class="pull-right">
 				<a class="btn"  type="button" data-toggle="modal" data-target="#help-dialog">Help</a>
 				<a class="btn btn-danger" type="button" data-toggle="modal" data-target="#reset-dialog">Reset</a>
@@ -483,12 +483,14 @@
 	</div>
         
 	<div class="row-fluid">
-		<ul  class="pagination">
-			<li class="step-one"><a href="#analyze">Phase 1: Initial Analysis <span class="check">&radic;</span></a></li>
-			<li class="step-two disabled"><a href="#build">Phase 2: Linear Regression Model <span class="check">&radic;</span></a></li>
+		<div class="pagination pagination-centered">
+		<ul>
+			<li class="step-one"><a href="#analyze">Phase 1: Analysis <span class="check">&radic;</span></a></li>
+			<li class="step-two disabled"><a href="#build">Phase 2: Model <span class="check">&radic;</span></a></li>
 			<li class="step-three disabled"><a href="#validate">Phase 3: Cross-Validation <span class="check">&radic;</span></a></li>
-			<li class="step-four disabled"><a href="#forecast">Phase 4: Complete Forecast <span class="check">&radic;</span></a></li>
+			<li class="step-four disabled"><a href="#forecast">Phase 4: Forecast <span class="check">&radic;</span></a></li>
 		</ul>
+		</div>
 	</div>
 	
 	<div class="forecast-step"></div>
