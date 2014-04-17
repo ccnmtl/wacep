@@ -6,23 +6,44 @@
 {% block extrahead %}
     <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
     <link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" />
-
-    <script type="text/template" id="analyze-template">                
-        <a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
-            Estimate Model <i class="icon-chevron-right icon-white"></i>
-        </a>
-        <h2>Analyze</h2>
-
+    
+	<style>
+	.pagination {font-weight: bold;}
+	li.disabled .check {display: none;}
+	.check {color: green;}
+	</style>
+	
+    <script type="text/template" id="analyze-template">
+    
+		<h2>Phase 1: Initial Analysis</h2>
+		<div class="row-fluid">
+			<div class="span7">
+				<p>
+				<strong>
+				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
+				Cum sociis natoque penatibus et magnis dis parturient montes, 
+				nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+				</strong>
+				</p>
+			</div>
+			<div class="span5">
+				<a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
+				<strong>Next Step:</strong> Estimate your model. <i class="icon-chevron-right icon-white"></i>
+				</a>
+			</div>
+		</div>
+		<hr />
+ 	
         <div class="row-fluid">
             <div class="span5">
-                <p>Nullam quis risus eget urna mollis ornare vel eu leo. 
-                Cum sociis natoque penatibus et magnis dis parturient montes, 
-                nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-
-                <a href="#add-predictand-dialog" role="button" class="btn btn-default pull-right" data-toggle="modal">
-                    Add Predictand
+            
+			<h3>Table Title</h3>
+	                <a href="#add-predictand-dialog" role="button" class="btn btn-default pull-right" data-toggle="modal">
+                    Add a Predictand Column (Optional)
                 </a>
-                <div style="clear: both"></div>
+		
+		
+                 <div style="clear: both"></div>
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
                         <tr>
@@ -74,16 +95,16 @@
                 <div class="well"><div id="nino-graph"></div></div>
                 <div class="well">
                     <div id="predictand-graph"></div>
-                    <div class="alert alert-success fade in graphhelp">
+                    <div class="alert alert-warning fade in graphhelp">
                         <button type="button" class="close" data-dismiss="alert">x</button>
-                        <strong>Too much data?</strong> Hide and show a data series by clicking on its name in the legend
+                        <strong>Too much information?</strong> Hide and show the visualization of a data series by clicking on its name in the legend.
                     </div>
                 </div>
                 <div class="well">
                     <div id="predictand-vs-nino-graph"></div>
-                    <div class="alert alert-success fade in graphhelp">
+                    <div class="alert alert-warning fade in graphhelp">
                         <button type="button" class="close" data-dismiss="alert">x</button>
-                        <strong>Too much data?</strong> Hide and show a data series by clicking on its name in the legend
+                        <strong>Too much information?</strong> Hide and show the visualization of a data series by clicking on its name in the legend.
                     </div>
                 </div>
             </div>
@@ -176,12 +197,32 @@
     </script>
     
     <script type="text/template" id="build-template">
-        <a href="#validate" role="button" class="btn btn-success pull-right">
-            Cross-Validate Model <i class="icon-chevron-right icon-white"></i>
+    
+    
+        <h2>Phase 2: Linear Regression Model</h2>
+		<div class="row-fluid">
+			<div class="span7">
+				<p>
+				<strong>
+				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
+				Cum sociis natoque penatibus et magnis dis parturient montes, 
+				nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+				</strong>
+				</p>
+			</div>
+			<div class="span5">
+      <a href="#validate" role="button" class="btn btn-success pull-right">
+            <strong>Next Step:</strong> Cross-validate your model. <i class="icon-chevron-right icon-white"></i>
         </a>
-        <h2>Linear Regression Model</h2>
-        <div class="row-fluid">
+			</div>
+		</div>
+		<hr />
+    
+    
+    
+          <div class="row-fluid">
             <div class="span5">
+			<h3>Table Title</h3>
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
                     <dt>Predictand</dt><dd><%= predictand_label %></dd>
@@ -227,12 +268,29 @@
     </script>
     
     <script type="text/template" id="validate-template">
-        <a href="#forecast" class="btn btn-success pull-right">
-            Forecast <i class="icon-chevron-right icon-white"></i>
+    
+        <h2>Phase 3: Cross-Validation</h2>
+		<div class="row-fluid">
+			<div class="span7">
+				<p>
+				<strong>
+				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
+				Cum sociis natoque penatibus et magnis dis parturient montes, 
+				nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+				</strong>
+				</p>
+			</div>
+			<div class="span5">
+       <a href="#forecast" class="btn btn-success pull-right">
+            <strong>Next Step:</strong> Create your forecast. <i class="icon-chevron-right icon-white"></i>
         </a>
-        <h2>Cross-Validate</h2>
-        <div class="row-fluid">
+			</div>
+		</div>
+		<hr />
+
+         <div class="row-fluid">
             <div class="span5">
+			<h3>Table Title</h3>
                 <dl class="dl-horizontal">
                     <dt>Predictor</dt><dd>Nino 3.4 ASO</dd>
                     <dt>Predictand</dt><dd><%= predictand_label %></dd>
@@ -272,7 +330,7 @@
             <div class="span7">
                 <div class="well"><div id="predictand-with-uncertainty"></div></div>
 
-
+			<h3>Table Title</h3>
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
                         <tr><th>Set</th><th>Estimated Mean</th><th>Estimated Stdev</th><th>Residuals Mean</th><th>Residuals StDev</tr>
@@ -299,7 +357,24 @@
     </script>
     
     <script type="text/template" id="forecast-template">
-        <h2>Forecast</h2>
+    
+      <h2>Phase 4: Complete Forecast</h2>
+		<div class="row-fluid">
+			<div class="span7">
+				<p>
+				<strong>
+				Instructions: Nullam quis risus eget urna mollis ornare vel eu leo. 
+				Cum sociis natoque penatibus et magnis dis parturient montes, 
+				nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+				</strong>
+				</p>
+			</div>
+			<div class="span5">
+			</div>
+		</div>
+		<hr />
+    
+     
         <div class="row-fluid">
             <div class="span5">
                 <dl class="dl-horizontal">
@@ -390,31 +465,40 @@
 {% endblock %}
 
 {% block all-content %}
-    <div class="span12 forecast">    
-        <h1>Forecaster</h1>
-        <div class="pagination primary pull-left">
-          <ul>
-            <li class="step-one"><a href="#analyze">Analyze</a></li>
-            <li class="step-two disabled"><a href="#build">Linear Regression Model</a></li>
-            <li class="step-three disabled"><a href="#validate">Cross-Validate</a></li>
-            <li class="step-four disabled"><a href="#forecast">Forecast</a></li>
-          </ul>
-        </div>
+<div class="forecast">
+    
+	<div class="row-fluid">
         
-        <div class="pagination pull-right">
-          <ul>
-            <li class="help"><a data-toggle="modal" data-target="#help-dialog">Help</a></li>
-            <li class="reset"><a href="#reset">Reset</a></li>
-          </ul>
+		<div class="span9">
+			<h1>Forecaster</h1>
+		</div>
+        
+        <div class="span3">
+			<div class="pull-right">
+				<a class="btn"  type="button" data-toggle="modal" data-target="#help-dialog">Help</a>
+				<a class="btn btn-danger" type="button" data-toggle="modal" data-target="#reset-dialog">Reset</a>
+			</div>
         </div>
-
-        <div class="clearfix"></div>
-        <div class="forecast-step"></div>
+ 
+	</div>
+        
+	<div class="row-fluid">
+		<div class="pagination pagination-centered">
+		<ul>
+			<li class="step-one"><a href="#analyze">Phase 1: Analysis <span class="check">&radic;</span></a></li>
+			<li class="step-two disabled"><a href="#build">Phase 2: Model <span class="check">&radic;</span></a></li>
+			<li class="step-three disabled"><a href="#validate">Phase 3: Cross-Validation <span class="check">&radic;</span></a></li>
+			<li class="step-four disabled"><a href="#forecast">Phase 4: Forecast <span class="check">&radic;</span></a></li>
+		</ul>
+		</div>
+	</div>
+	
+	<div class="forecast-step"></div>
                 
         <div id="help-dialog" class="modal hide" tabindex="-1" role="dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">x</button>
-                <h3 id="myModalLabel">The Forecaster Interactive</h3>
+                <h3 id="myModalLabel">Help</h3>
             </div>
             <div class="modal-body">
                 <p>Help Text</p>
@@ -423,6 +507,24 @@
                 <button class="btn" data-dismiss="modal">Close</button>
             </div>
         </div>   
+        
+        
+        <div id="reset-dialog" class="modal hide" tabindex="-1" role="dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3 id="myModalLabel">Reset Forecaster</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? This will overwrite all of your work and will send you back to Phase 1.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"  href="#reset">Reset everything!</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>   
+        
+        
+        
 {% endblock %}
 
 {% block js %}
