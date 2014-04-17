@@ -327,7 +327,7 @@
                 chart: {type: 'scatter'},
                 title: {text: 'Observed vs Nino 3.4 (ASO)'},
                 xAxis: {title: {text: 'ASO NINO3.4 SST anomalies'},
-                        plotLines: [{color: '#000000', width: 2, value: 0}]},
+                        plotLines: [{color: '#000000', width: 1, value: 0}]},
                 yAxis: {title: {text: 'Count'}},
                 plotOptions: {
                     scatter: {
@@ -475,7 +475,7 @@
             jQuery('#residuals-graph').highcharts({
                 chart: {type: 'scatter'},
                 title: {text: 'Residuals'},
-                yAxis: {plotLines: [{color: '#FF0000', width: 2, value: 0}]},
+                yAxis: {plotLines: [{color: '#000000', width: 1, value: 0}]},
                 series: [{name: 'Residuals', data: ctx.residuals}]               
              });
             
@@ -678,9 +678,15 @@
             'build': 'build',
             'validate': 'validate',
             'forecast': 'forecast',
-            'reset': 'reset',
             'help': 'help'
         },
+        initialize: function () {
+            jQuery('#reset').click(function (e) {
+                ForecastApp.initialize();
+                jQuery("div.pagination.primary ul li").addClass("disabled").removeClass("active");
+                ForecastApp.inst.router.navigate('analyze', {trigger: true});
+            });
+        },        
         analyze: function() {
             analyzeView.show();
         },
@@ -715,11 +721,6 @@
             } else {
                 forecastView.show();
             }
-        },
-        reset: function() {
-            ForecastApp.initialize();
-            jQuery("div.pagination.primary ul li").removeClass("active").addClass("disabled");
-            this.navigate('analyze', {trigger: true});
         }
     });
     

@@ -169,12 +169,20 @@ background-color: #fff;
 
 /* Forecast Activity */
 .forecast {
+
     .forecast-step {
         margin-top: 25px;
         
         a.btn-success {
             margin-bottom: 10px;
         }
+    }
+
+    .pagination {
+        font-weight: bold;
+        .check {
+            color: green;
+        }    
     }
     
     .pagination a:hover, .pagination .active a {
@@ -186,6 +194,10 @@ background-color: #fff;
         color: #999999;
         cursor: default;
         background-color: transparent;
+        
+        .check {
+            display: none;
+        }
     }    
 
     td.text-right {
