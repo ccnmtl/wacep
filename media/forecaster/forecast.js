@@ -21,15 +21,15 @@
             this.inst.forecast_model = undefined;
             
             if (!this.inst.hasOwnProperty('router')) {
-                this.inst.router = new ForecastApp.Router(); 
+                this.inst.router = new ForecastApp.Router();
             }
         }
     };
     
     ForecastApp.Math.quantiles = [0.05, 0.25, 0.75, 0.95];
     ForecastApp.Math.distribution_quantiles = [
-        0.001, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
-        0.7, 0.8, 0.9, 0.95, 0.99, 0.999];
+        0.001, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5,
+        0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 0.999];
     
     ForecastApp.Math.predicted_y = function(slope, intercept, predictor) {
         // y = mx + b
@@ -62,7 +62,7 @@
         url: '/forecast/api/hurricane/'
     });
     
-    ForecastApp.Models.HurricaneYearCollection = Backbone.Collection.extend({
+    ForecastApp.Models.HurricaneYears = Backbone.Collection.extend({
         url: '/forecast/api/hurricane/',
         model: ForecastApp.Models.HurricaneYear,
         parse: function(response) {
@@ -79,6 +79,15 @@
                 }
             }
         },
+        copy_attrs: function(attrs) {
+            var keys = Object.keys(attrs);
+            this.forEach(function (item) {
+                for (var i=0; i < keys.length; i++) {
+                    var value = item.get(attrs[keys[i]]);
+                    item.set(keys[i], value);
+                }
+            });
+        },
         extremes: function(attr) {
             var min, max;
             this.forEach(function (hurricane_year) {
@@ -94,7 +103,7 @@
             });
             return {'min': min, 'max': max};
         },
-        get_context: function() {
+        get_analyze_context: function() {
             // Highcharts requires arrays of data for each graph
             // Construct time series arrays for each data point
             var years = [];
@@ -105,19 +114,19 @@
             var nino_vs_hurricanes = [];
             var custom = [];
             var nino_vs_custom = [];
-            this.forEach(function (hurricane_year) {
-                years.push(hurricane_year.get('year'));
-                nino.push(hurricane_year.get('nino_sst_anomalies'));
-                storms.push(hurricane_year.get('named_storms'));
-                hurricanes.push(hurricane_year.get('hurricanes'));
-                nino_vs_storms.push([hurricane_year.get('nino_sst_anomalies'),
-                                         hurricane_year.get('named_storms')]);                    
-                nino_vs_hurricanes.push([hurricane_year.get('nino_sst_anomalies'),
-                                             hurricane_year.get('hurricanes')]);
-                custom.push(hurricane_year.get('custom'));
-                nino_vs_custom.push([hurricane_year.get('nino_sst_anomalies'),
-                                         hurricane_year.get('custom')]);
-            });                
+            this.forEach(function (item) {
+                years.push(item.get('year'));
+                nino.push(item.get('nino_sst_anomalies'));
+                storms.push(item.get('named_storms'));
+                hurricanes.push(item.get('hurricanes'));
+                nino_vs_storms.push([item.get('nino_sst_anomalies'),
+                                         item.get('named_storms')]);                    
+                nino_vs_hurricanes.push([item.get('nino_sst_anomalies'),
+                                             item.get('hurricanes')]);
+                custom.push(item.get('custom'));
+                nino_vs_custom.push([item.get('nino_sst_anomalies'),
+                                         item.get('custom')]);
+            });
             
             // Provide some analysis on each data point
             return {
@@ -140,15 +149,6 @@
                 'stdev_custom': jStat.stdev(custom),
                 'custom_name': this.custom_name
             };
-        }
-    });
-    
-    ForecastApp.Models.Observation = Backbone.Model.extend({});
-
-    ForecastApp.Models.ObservationCollection = Backbone.Collection.extend({
-        model: ForecastApp.Models.Observation,
-        comparator: function(item) {
-            return item.get('year');
         },
         get_predictand_label: function() {
             if (ForecastApp.inst.predictand === 'custom') {
@@ -157,15 +157,6 @@
                 return 'Named Storms';
             } else {
                 return 'Hurricanes';
-            }
-        },
-        build: function (startIdx, endIdx) {
-            for (var i=startIdx; i < endIdx; i++) {
-                var dt = ForecastApp.inst.hurricanes.at(i);
-                this.add(new ForecastApp.Models.Observation({
-                    year: dt.get('year'),
-                    predictor: dt.get('nino_sst_anomalies'),
-                    predictand: dt.get(ForecastApp.inst.predictand)}));
             }
         },
         apply_model: function(slope, intercept, r_value) {
@@ -177,11 +168,12 @@
             var all_predicted_y = [];
             var all_residuals = [];
             
-            this.forEach(function(observation) {
-                var predicted_y = ForecastApp.Math.predicted_y(self.slope, self.intercept, observation.get('predictor')); 
-                var residuals = predicted_y - observation.get('predictand');
-                observation.set('predicted_y', predicted_y);
-                observation.set('residuals', residuals);
+            this.forEach(function(item) {
+                var predicted_y = ForecastApp.Math.predicted_y(
+                    self.slope, self.intercept, item.get('predictor')); 
+                var residuals = predicted_y - item.get('predictand');
+                item.set('predicted_y', predicted_y);
+                item.set('residuals', residuals);
                 
                 all_predicted_y.push(predicted_y);
                 all_residuals.push(residuals);
@@ -193,11 +185,11 @@
             this.stdev_residuals = jStat.stdev(all_residuals);
 
             // forecast: requires stdev_residuals be set before attempting
-            this.forEach(function(observation) {
-                observation.set('quantiles', ForecastApp.Math.uncertainty(
-                    observation.get('predicted_y'), self.stdev_residuals));
+            this.forEach(function(item) {
+                item.set('quantiles', ForecastApp.Math.uncertainty(
+                    item.get('predicted_y'), self.stdev_residuals));
             });
-            this.forecast_error_range = jStat.normal.inv(0.05, 0, this.stdev_residuals); 
+            this.error_range = jStat.normal.inv(0.05, 0, this.stdev_residuals); 
         },
         create_model: function(view) {
             var self = this;
@@ -215,7 +207,8 @@
                             {predictor: predictor,
                              predictand: predictand},
                             function(data) {
-                                 self.apply_model(data.slope, data.intercept, data.r_value);
+                                 self.apply_model(data.slope,
+                                     data.intercept, data.r_value);
                                  view.trigger("render");
                              });
             }
@@ -224,7 +217,7 @@
             // use pre-existing slope & intercept to set the predicted_y
             this.apply_model(slope, intercept, r_value);
         },
-        get_context: function() {
+        get_model_context: function() {
             var ctx = {
                 'observations': this.toJSON(),
                 'slope': this.slope,
@@ -235,7 +228,7 @@
                 'mean_residuals': this.mean_residuals,
                 'stdev_predicted_y': this.stdev_predicted_y,
                 'stdev_residuals': this.stdev_residuals,
-                'forecast_error_range': this.forecast_error_range,
+                'error_range': this.error_range,
                 'predictand_label': this.get_predictand_label(),
                 predictor: [],
                 predictand: [],
@@ -245,16 +238,16 @@
                 predictor_vs_predictand: [],
                 predictor_vs_predicted_y: []};
 
-            this.forEach(function(observation) {
-                ctx.years.push(observation.get('year'));
-                ctx.predictor.push(observation.get('predictor'));
-                ctx.predictand.push(observation.get('predictand'));
-                ctx.predicted_y.push(observation.get('predicted_y'));
-                ctx.residuals.push(observation.get('residuals'));
-                ctx.predictor_vs_predictand.push([observation.get('predictor'),
-                                                  observation.get('predictand')]);
-                ctx.predictor_vs_predicted_y.push([observation.get('predictor'),
-                                                   observation.get('predicted_y')]);
+            this.forEach(function(item) {
+                ctx.years.push(item.get('year'));
+                ctx.predictor.push(item.get('predictor'));
+                ctx.predictand.push(item.get('predictand'));
+                ctx.predicted_y.push(item.get('predicted_y'));
+                ctx.residuals.push(item.get('residuals'));
+                ctx.predictor_vs_predictand.push([item.get('predictor'),
+                                                  item.get('predictand')]);
+                ctx.predictor_vs_predicted_y.push([item.get('predictor'),
+                                                   item.get('predicted_y')]);
             });
             
             return ctx;
@@ -268,13 +261,11 @@
         },
         initialize: function(options) {
             _.bindAll(this, "render", "show", "createModel", 'addPredictand');
-
-            this.template =
-                _.template(jQuery("#analyze-template").html());
+            this.template = _.template(jQuery("#analyze-template").html());
         },
         show: function() {
             if (ForecastApp.inst.hurricanes === undefined) {
-                ForecastApp.inst.hurricanes = new ForecastApp.Models.HurricaneYearCollection();            
+                ForecastApp.inst.hurricanes = new ForecastApp.Models.HurricaneYears();            
                 ForecastApp.inst.hurricanes.on("reset", this.render);
 
                 ForecastApp.inst.hurricanes.fetch({
@@ -287,12 +278,11 @@
             }
         },
         render: function() {
-            var context = ForecastApp.inst.hurricanes.get_context();
+            var context = ForecastApp.inst.hurricanes.get_analyze_context();
             context.years_reserved = ForecastApp.inst.years_reserved;
             context.extremes = ForecastApp.inst.hurricanes.extremes('year');
             
-            var markup = this.template(context);            
-            jQuery(this.el).html(markup);
+            jQuery(this.el).html(this.template(context));
             
             jQuery("div.pagination ul li").removeClass("active");
             jQuery("li.step-one").removeClass("disabled").addClass("active");
@@ -337,7 +327,7 @@
                 chart: {type: 'scatter'},
                 title: {text: 'Observed vs Nino 3.4 (ASO)'},
                 xAxis: {title: {text: 'ASO NINO3.4 SST anomalies'},
-                        plotLines: [{color: '#FF0000', width: 2, value: 0}]},
+                        plotLines: [{color: '#000000', width: 2, value: 0}]},
                 yAxis: {title: {text: 'Count'}},
                 plotOptions: {
                     scatter: {
@@ -361,19 +351,21 @@
             ForecastApp.inst.predictand = jQuery('select#inputPredictand').val();
             ForecastApp.inst.years_reserved = parseInt(reserve, 10);
             
+            ForecastApp.inst.hurricanes.copy_attrs({
+                predictor: ForecastApp.inst.predictor,
+                predictand: ForecastApp.inst.predictand});
+            
             // set aside the analysis set
             var years = ForecastApp.inst.hurricanes.length - ForecastApp.inst.years_reserved;
-            ForecastApp.inst.regression_model = new ForecastApp.Models.ObservationCollection();
-            ForecastApp.inst.regression_model.build(0, years);
-
-            ForecastApp.inst.crossvalidate = new ForecastApp.Models.ObservationCollection();
-            ForecastApp.inst.crossvalidate.build(years, ForecastApp.inst.hurricanes.length);
-
-            ForecastApp.inst.forecast_model = new ForecastApp.Models.ObservationCollection();
-            ForecastApp.inst.forecast_model.build(0, ForecastApp.inst.hurricanes.length);
+            ForecastApp.inst.regression_model = new ForecastApp.Models.HurricaneYears(
+                    ForecastApp.inst.hurricanes.slice(0, years));
+            ForecastApp.inst.crossvalidate = new ForecastApp.Models.HurricaneYears(
+                    ForecastApp.inst.hurricanes.slice(years, ForecastApp.inst.hurricanes.length));
+            ForecastApp.inst.forecast_model = new ForecastApp.Models.HurricaneYears(
+                    ForecastApp.inst.hurricanes.slice(0, ForecastApp.inst.hurricanes.length)); 
 
             jQuery('#create-model-dialog').modal('hide');
-            
+
             ForecastApp.inst.router.navigate('build', {trigger: true});
         },
         addPredictand: function(evt) {
@@ -400,7 +392,7 @@
             
             var extremes = ForecastApp.inst.hurricanes.extremes('year');            
             var last_year;
-            var collection = new ForecastApp.Models.HurricaneYearCollection();            
+            var collection = new ForecastApp.Models.HurricaneYears();            
             for (var i=0; i < rows.length; i++) {
                 var cols = rows[i].split('\t');
                 var year = parseInt(cols[0].trim(), 10);
@@ -456,7 +448,7 @@
             ForecastApp.inst.regression_model.create_model(this);
         },
         render: function() {
-            var ctx = ForecastApp.inst.regression_model.get_context();
+            var ctx = ForecastApp.inst.regression_model.get_model_context();
             ctx.years_reserved = ForecastApp.inst.years_reserved;
             ctx.hurricane_data_length = ForecastApp.inst.hurricanes.length;
 
@@ -514,10 +506,10 @@
             ForecastApp.inst.forecast_model.create_model(this);
         },  
         render: function() {
-            var ctx = ForecastApp.inst.crossvalidate.get_context();
+            var ctx = ForecastApp.inst.crossvalidate.get_model_context();
             ctx.years_reserved = ForecastApp.inst.years_reserved;
             ctx.hurricane_data_length = ForecastApp.inst.hurricanes.length;
-            ctx.forecast = ForecastApp.inst.forecast_model.get_context();
+            ctx.forecast = ForecastApp.inst.forecast_model.get_model_context();
             
             var markup = this.template(ctx);
             jQuery(this.el).html(markup);
@@ -572,7 +564,7 @@
                 _.template(jQuery("#custom-forecast-template").html());
         },
         updateSlideValue: function(evt, ui) {
-            var model = ForecastApp.inst.forecast_model.get_context();
+            var model = ForecastApp.inst.forecast_model.get_model_context();
             var value = parseFloat(jQuery("#nino-value").val());
             
             if (isNaN(value) || value < this.slider.data('slider').min || 
@@ -596,7 +588,7 @@
             this.render();
         },
         render: function() {
-            var ctx = ForecastApp.inst.forecast_model.get_context();
+            var ctx = ForecastApp.inst.forecast_model.get_model_context();
             ctx.startIdx = ForecastApp.inst.hurricanes.length - ForecastApp.inst.years_reserved;
             ctx.years_reserved = ForecastApp.inst.years_reserved;
             ctx.extremes = ForecastApp.inst.hurricanes.extremes('nino_sst_anomalies');
@@ -631,7 +623,7 @@
             this.trigger('render-custom-forecast');
         },
         render_custom_forecast: function() {
-            var model = ForecastApp.inst.forecast_model.get_context();
+            var model = ForecastApp.inst.forecast_model.get_model_context();
             var predictor = this.slider.data('slider').getValue();
             var dist = ForecastApp.Math.distribution(predictor, model.stdev_residuals); 
 
