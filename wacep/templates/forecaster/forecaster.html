@@ -5,7 +5,8 @@
 
 {% block extrahead %}
     <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
-    <link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" />
+    <!-- link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" /-->
+    <link rel="stylesheet" href="/site_media/jquery/css/jquery-ui-1.9.1.custom.min.css" />
     
     <script type="text/template" id="analyze-template">    
 		<h2>Phase 1: Initial Analysis</h2>
@@ -415,9 +416,12 @@
                         <label class="control-label" for="inputYearsReserved">Nino 3.4 (ASO) value</label>
                         <input type="text" value="0" id="nino-value" class="input-small"/>
                         <input type="button" id="change-nino-value" class="btn btn-primary" value="Set" />
+                        <br />
+                        <div id="nino-value-slider"></div>
+                        <div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>
                     </form>
                     
-                    <input id="nino-value-slider" type="text" style="display: none" />
+                    
 
                     <div class="row-fluid probabilistic-forecast">
                         <div class="span5 custom-forecast"></div>
@@ -523,6 +527,7 @@
     
     {% compress js %}
         <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
-        <script src="/site_media/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="/site_media/jquery/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+        <!--script src="/site_media/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script-->
     {% endcompress %}
 {% endblock %}

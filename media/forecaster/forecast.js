@@ -213,10 +213,6 @@
                              });
             }
         },
-        update_model: function(slope, intercept, r_value) {
-            // use pre-existing slope & intercept to set the predicted_y
-            this.apply_model(slope, intercept, r_value);
-        },
         get_model_context: function() {
             var ctx = {
                 'observations': this.toJSON(),
@@ -499,7 +495,7 @@
             this.on('render', this.render);
         },
         show: function() {
-            ForecastApp.inst.crossvalidate.update_model(
+            ForecastApp.inst.crossvalidate.apply_model(
                 ForecastApp.inst.regression_model.slope,
                 ForecastApp.inst.regression_model.intercept,
                 ForecastApp.inst.regression_model.r_value);
@@ -566,18 +562,19 @@
         updateSlideValue: function(evt, ui) {
             var model = ForecastApp.inst.forecast_model.get_model_context();
             var value = parseFloat(jQuery("#nino-value").val());
+            var min = jQuery("#nino-value-slider").slider("option", "min");
+            var max = jQuery("#nino-value-slider").slider("option", "max");
             
-            if (isNaN(value) || value < this.slider.data('slider').min || 
-                    value > this.slider.data('slider').max) {
+            if (isNaN(value) || value < min || value > max) {
                 jQuery(this.el).find(".help-inline.error").show();
             } else {
                 jQuery(this.el).find(".help-inline.error").hide();          
-                this.slider.slider('setValue', value);                
+                jQuery("#nino-value-slider").slider("value", value);               
             }
             this.trigger('render-custom-forecast');
         },
         slideValue: function(evt, ui) {
-            var value = this.slider.data('slider').getValue();
+            var value = jQuery("#nino-value-slider").slider("value");
             jQuery("#nino-value").val(value.toFixed(2));
             this.trigger('render-custom-forecast');
         },
@@ -611,7 +608,7 @@
             
             jQuery("table.table").tablesorter();
             
-            this.slider = jQuery("#nino-value-slider").slider({
+            jQuery("#nino-value-slider").slider({
                 value: 0,
                 min: ctx.extremes.min,
                 max: ctx.extremes.max,
@@ -624,7 +621,7 @@
         },
         render_custom_forecast: function() {
             var model = ForecastApp.inst.forecast_model.get_model_context();
-            var predictor = this.slider.data('slider').getValue();
+            var predictor = jQuery("#nino-value-slider").slider("value");
             var dist = ForecastApp.Math.distribution(predictor, model.stdev_residuals); 
 
             var ctx = {dist: dist};            
