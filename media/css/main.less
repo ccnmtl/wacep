@@ -268,6 +268,43 @@ background-color: #fff;
             width: 400px;
             display: inline-block;
             margin-top: 26px;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            -khtml-border-radius: 0px;
+            border-radius: 0px;
+            
+            .ui-slider-tick-mark {
+                display: inline-block;
+                width: 1px;
+                background: #aaa;
+                height: 6px;
+                position: absolute;
+                top: 10px;
+                margin-left: -1px;
+            }
+        }
+        
+        #nino-value-slider-labels {
+            width: 400px;
+            display: inline-block;
+            position: relative;
+            
+            .ui-slider-tick-label {
+                display: inline-block;
+                position: absolute;
+                top: -10px;
+                margin-left: -1px;
+            }
+            
+            .min {
+                left: 0%;
+            }
+            .mid {
+                left: 50.5%;
+            }
+            .max {
+                left: 93%;
+            }
         }
         
         table {

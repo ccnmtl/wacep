@@ -300,7 +300,7 @@
                            {name: "Hurricanes", data: context.hurricanes}];
             var series2 = [{name: "Named Storms", data: context.nino_vs_storms},
                            {name: "Hurricanes", data: context.nino_vs_hurricanes}];
-                
+
             if (ForecastApp.inst.hurricanes.custom_name) {
                 series1.push({name: ForecastApp.inst.hurricanes.custom_name,
                     data: context.custom});
@@ -351,7 +351,7 @@
                 predictor: ForecastApp.inst.predictor,
                 predictand: ForecastApp.inst.predictand});
             
-            // set aside the analysis set
+            // parse up the analysis sets
             var years = ForecastApp.inst.hurricanes.length - ForecastApp.inst.years_reserved;
             ForecastApp.inst.regression_model = new ForecastApp.Models.HurricaneYears(
                     ForecastApp.inst.hurricanes.slice(0, years));
@@ -551,7 +551,7 @@
         },
         initialize: function(options) {
             _.bindAll(this, "render", "render_custom_forecast", "slideValue",
-                      "updateSlideValue", "slideTooltip");
+                      "updateSlideValue", "sliderTicks");
             this.on('render', this.render);
             this.on('render-custom-forecast', this.render_custom_forecast);
             this.template =
@@ -574,17 +574,27 @@
             this.trigger('render-custom-forecast');
         },
         slideValue: function(evt, ui) {
-            var value = jQuery("#nino-value-slider").slider("value");
-            jQuery("#nino-value").val(value.toFixed(2));
+            jQuery("#nino-value").val(ui.value.toFixed(2));
             this.trigger('render-custom-forecast');
         },
-        slideTooltip: function(value) {
-            return value.toFixed(2);
+        sliderTicks: function(el) {
+            var max =  jQuery(el).slider("option", "max");    
+            var min =  jQuery(el).slider("option", "min");    
+            var spacing =  100 / (max - min);
+
+            jQuery(el).find('.ui-slider-tick-mark').remove();
+            for (var i = 0; i < max-min ; i++) {
+                jQuery('<span class="ui-slider-tick-mark"></span>').css('left', (spacing * i) +  '%').appendTo(jQuery(el)); 
+            }
+            
+            jQuery('<span class="ui-slider-tick-mark"></span>').css('left', '100.2%').appendTo(jQuery(el));
         },
         show: function() {
             this.render();
         },
         render: function() {
+            var self = this;
+
             var ctx = ForecastApp.inst.forecast_model.get_model_context();
             ctx.startIdx = ForecastApp.inst.hurricanes.length - ForecastApp.inst.years_reserved;
             ctx.years_reserved = ForecastApp.inst.years_reserved;
@@ -613,7 +623,9 @@
                 min: ctx.extremes.min,
                 max: ctx.extremes.max,
                 step: 0.01,
-                formater: this.slideTooltip
+                create: function(event, ui) {
+                    self.sliderTicks(event.target);
+                }
             });
             jQuery("#nino-value-slider").slider().on("slide", this.slideValue);
             

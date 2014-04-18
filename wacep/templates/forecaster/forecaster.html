@@ -5,7 +5,6 @@
 
 {% block extrahead %}
     <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
-    <!-- link rel="stylesheet" href="/site_media/bootstrap-slider/css/slider.css" /-->
     <link rel="stylesheet" href="/site_media/jquery/css/jquery-ui-1.9.1.custom.min.css" />
     
     <script type="text/template" id="analyze-template">    
@@ -418,10 +417,12 @@
                         <input type="button" id="change-nino-value" class="btn btn-primary" value="Set" />
                         <br />
                         <div id="nino-value-slider"></div>
-                        <div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>
+                        <br />
+                        <div id="nino-value-slider-labels">
+                            <span class="ui-slider-tick-label label min"><%= extremes.min.toFixed(2) %></span>
+                            <span class="ui-slider-tick-label label max"><%= extremes.max.toFixed(2) %></span>
+                        </div>
                     </form>
-                    
-                    
 
                     <div class="row-fluid probabilistic-forecast">
                         <div class="span5 custom-forecast"></div>
@@ -528,6 +529,5 @@
     {% compress js %}
         <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
         <script src="/site_media/jquery/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
-        <!--script src="/site_media/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script-->
     {% endcompress %}
 {% endblock %}
