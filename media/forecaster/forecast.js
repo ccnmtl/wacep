@@ -633,6 +633,7 @@
             jQuery('<span class="ui-slider-tick-mark"></span>').css('left', '100.2%').appendTo(jQuery(el));
         },
         show: function() {
+            this.graph = undefined;
             this.render();
         },
         render: function() {
