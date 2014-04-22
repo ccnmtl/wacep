@@ -1,13 +1,16 @@
 (function() {
     window.ForecastApp = {
         Colors: {
-            'nino_sst_anomalies': 'green', 
-            'named_storms':  "red", 
-            'hurricanes': 'blue', 
-            'custom': 'pink', 
-            'estimated': 'orange', 
-            'residuals': 'magenta',         
-            'uncertainty': 'purple' 
+            'nino_sst_anomalies': '#3399ff', /*light blue*/
+            
+            'named_storms':  "#ff0000", /*red*/
+            'hurricanes': '#3300ff', /*dark blue*/
+            'custom': '#009900', /*green*/
+            
+            'estimated': '#ff33ff', /*magenta*/
+            'residuals': '#ff9900', /*gold*/  
+            
+            'uncertainty': '#993399'  /*purple*/
         },            
         Models: {},
         Views: {},
