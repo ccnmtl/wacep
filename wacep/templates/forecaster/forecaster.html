@@ -223,12 +223,13 @@
 
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
-                        <tr><th>Observation</th><th>Estimated</th><th>Residuals</th></tr>
+                        <tr><th>Year</th><th>Observed</th><th>Estimated</th><th>Residuals</th></tr>
                     </thead>
                     <tbody>
                         <% for (var i=0; i < observations.length; i++) { %>
                             <tr>
-                                <td ><%= i + 1 %></td>
+                                <td><%= observations[i].year %></td>
+                                <td class="text-right"><%= observations[i].predictand.toFixed(2) %></td>
                                 <td class="text-right"><%= observations[i].predicted_y.toFixed(2) %></td>
                                 <td class="text-right"><%= observations[i].residuals.toFixed(2) %></td>
                             </tr>
@@ -237,11 +238,13 @@
                     <tfoot>
                         <tr>
                             <td><strong>Mean</strong></td>
+                            <td class="text-right"><%= mean_predictand.toFixed(2) %></td>                            
                             <td class="text-right"><%= mean_predicted_y.toFixed(2) %></td>
                             <td class="text-right"><%= mean_residuals.toFixed(2) %></td>
                         </tr>
                         <tr>
                             <td><strong>StDev</strong></td>
+                            <td class="text-right"><%= stdev_predictand.toFixed(2) %></td>
                             <td class="text-right"><%= stdev_predicted_y.toFixed(2) %></td>
                             <td class="text-right"><%= stdev_residuals.toFixed(2) %></td>
                         </tr>                  

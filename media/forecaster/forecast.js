@@ -1,5 +1,17 @@
 (function() {
     window.ForecastApp = {
+        Colors: {
+            'nino_sst_anomalies': '#90ED7D',
+
+            'named_storms':  "#7CB5EC",
+            'hurricanes': '#434348',
+            'custom': '#F7A35C',
+            
+            'estimated': '#F15C80',
+            
+            'residuals': '#8085E9',           
+            'uncertainty': '#999999'  
+        },            
         Models: {},
         Views: {},
         Router: {},
@@ -159,6 +171,9 @@
                 return 'Hurricanes';
             }
         },
+        get_predictand_color: function() {
+            return ForecastApp.Colors[ForecastApp.inst.predictand];
+        },
         apply_model: function(slope, intercept, r_value) {
             var self = this;
             this.slope = slope;
@@ -167,6 +182,7 @@
 
             var all_predicted_y = [];
             var all_residuals = [];
+            var all_predictands = [];
             
             this.forEach(function(item) {
                 var predicted_y = ForecastApp.Math.predicted_y(
@@ -177,10 +193,13 @@
                 
                 all_predicted_y.push(predicted_y);
                 all_residuals.push(residuals);
+                all_predictands.push(item.get('predictand'));
             });
             
+            this.mean_predictand = jStat.mean(all_predictands);
             this.mean_predicted_y = jStat.mean(all_predicted_y);
             this.mean_residuals = jStat.mean(all_residuals);
+            this.stdev_predictand = jStat.stdev(all_predictands);            
             this.stdev_predicted_y = jStat.stdev(all_predicted_y);
             this.stdev_residuals = jStat.stdev(all_residuals);
 
@@ -220,16 +239,19 @@
                 'intercept': this.intercept,
                 'r_value': this.r_value,
                 'r_squared': Math.pow(this.r_value, 2),
+                'mean_predictand': this.mean_predictand,                
                 'mean_predicted_y': this.mean_predicted_y,
                 'mean_residuals': this.mean_residuals,
+                'stdev_predictand': this.stdev_predictand,                
                 'stdev_predicted_y': this.stdev_predicted_y,
                 'stdev_residuals': this.stdev_residuals,
                 'error_range': this.error_range,
                 'predictand_label': this.get_predictand_label(),
+                'predictand_color': this.get_predictand_color(),
                 predictor: [],
                 predictand: [],
                 predicted_y: [],
-                residuals: [],
+                residuals_vs_year: [],
                 years: [],
                 predictor_vs_predictand: [],
                 predictor_vs_predicted_y: []};
@@ -239,7 +261,8 @@
                 ctx.predictor.push(item.get('predictor'));
                 ctx.predictand.push(item.get('predictand'));
                 ctx.predicted_y.push(item.get('predicted_y'));
-                ctx.residuals.push(item.get('residuals'));
+                ctx.residuals_vs_year.push([item.get('year'),
+                                            item.get('residuals')]);
                 ctx.predictor_vs_predictand.push([item.get('predictor'),
                                                   item.get('predictand')]);
                 ctx.predictor_vs_predicted_y.push([item.get('predictor'),
@@ -293,19 +316,24 @@
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Anomalies'}},
                 series: [{name: "ASO NINO3.4 SST anomalies",
+                          color: ForecastApp.Colors.nino_sst_anomalies, 
                           showInLegend: false, data: context.nino}]
             });
             
-            var series1 = [{name: "Named Storms", data: context.storms},
-                           {name: "Hurricanes", data: context.hurricanes}];
-            var series2 = [{name: "Named Storms", data: context.nino_vs_storms},
-                           {name: "Hurricanes", data: context.nino_vs_hurricanes}];
+            var series1 = [{name: "Named Storms", data: context.storms,
+                            color: ForecastApp.Colors.named_storms},
+                           {name: "Hurricanes", data: context.hurricanes,
+                            color: ForecastApp.Colors.hurricanes}];
+            var series2 = [{name: "Named Storms", data: context.nino_vs_storms,
+                            color: ForecastApp.Colors.named_storms},
+                           {name: "Hurricanes", data: context.nino_vs_hurricanes,
+                            color: ForecastApp.Colors.hurricanes}];
 
             if (ForecastApp.inst.hurricanes.custom_name) {
                 series1.push({name: ForecastApp.inst.hurricanes.custom_name,
-                    data: context.custom});
+                    data: context.custom, color: ForecastApp.Colors.custom});
                 series2.push({name: ForecastApp.inst.hurricanes.custom_name,
-                    data: context.nino_vs_custom});
+                    data: context.nino_vs_custom, color: ForecastApp.Colors.custom});
             }
             
             jQuery('#predictand-graph').highcharts({
@@ -464,15 +492,22 @@
                         tickInterval: Math.round(ctx.years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{name: 'Observed', data: ctx.predictand},
-                         {name: 'Estimated', data: ctx.predicted_y}]
+                series: [{name: 'Observed', data: ctx.predictand,
+                          color: ctx.predictand_color},
+                         {name: 'Estimated', data: ctx.predicted_y,
+                          color: ForecastApp.Colors.estimated}]
             });
             
             jQuery('#residuals-graph').highcharts({
                 chart: {type: 'scatter'},
                 title: {text: 'Residuals'},
+                xAxis: {categories: ctx.years,
+                    tickInterval: Math.round(ctx.years.length / 8),
+                    title: {text: 'Year'}},                
                 yAxis: {plotLines: [{color: '#000000', width: 1, value: 0}]},
-                series: [{name: 'Residuals', data: ctx.residuals}]               
+                series: [{name: 'Residuals', showInLegend: false,
+                    data: ctx.residuals_vs_year,
+                    color: ForecastApp.Colors.residuals}]   
              });
             
             jQuery('#actualandpredicted-v-observed-graph').highcharts({
@@ -480,8 +515,10 @@
                title: {text: 'Observed and Estimated vs Predictor'},
                xAxis: {title: {text: 'Predictor'}},
                yAxis: {title: {text: 'Count'}},
-               series: [{name: 'Observed', data: ctx.predictor_vs_predictand},
-                        {name: 'Estimated', data: ctx.predictor_vs_predicted_y}]
+               series: [{name: 'Observed', data: ctx.predictor_vs_predictand,
+                         color: ctx.predictand_color},
+                        {name: 'Estimated', data: ctx.predictor_vs_predicted_y,
+                         color: ForecastApp.Colors.estimated}]
             });
         }
     });
@@ -516,7 +553,8 @@
             jQuery("table.table").tablesorter({sortList: [[0,0]]});
             
             // Graphs
-            var startIdx = ForecastApp.inst.hurricanes.length - ForecastApp.inst.years_reserved;
+            var startIdx = ForecastApp.inst.hurricanes.length -
+                ForecastApp.inst.years_reserved;
                         
             var years = [];
             var boxplot_data = [];
@@ -538,9 +576,14 @@
                 title: {text: 'Observed vs. Estimated with Uncertainty'},
                 xAxis: {categories: years, title: {text: 'Years'}},
                 yAxis: {title: {text: 'Forecasted'}},
-                series: [{name: 'Uncertainty', type: 'boxplot', data: boxplot_data}, 
-                         {name: 'Observed', type: 'scatter', data: ctx.predictand}, 
-                         {name: 'Predicted', type: 'line', data: ctx.predicted_y}]
+                series: [{name: 'Uncertainty', type: 'boxplot',
+                         data: boxplot_data,
+                         color: ForecastApp.Colors.uncertainty}, 
+                         {name: 'Observed', type: 'scatter',
+                          data: ctx.predictand, color: ctx.predictand_color}, 
+                         {name: 'Estimated', type: 'line',
+                          data: ctx.predicted_y,
+                          color: ForecastApp.Colors.estimated}]
             });     
         }        
     });
@@ -653,9 +696,10 @@
                     title: {text: 'Prediction Value and Uncertainty Range'},
                     xAxis: {min: -10, max: 10,
                         title: {text: 'Quantile'},
-                        plotLines: [{color: '#FF0000', width: 2, value: 0}]},
+                        plotLines: [{color: '#C0C0C0', width: 1, value: 0}]},
                     yAxis: {min: 0, max: 0.2},
-                    series: [{name: "Prediction Value", data: data}]
+                    series: [{name: "Prediction Value", data: data,
+                              color: ForecastApp.Colors.estimated}]
                 });
                 this.graph = jQuery('#custom-forecast-graph').highcharts();
             } else {
