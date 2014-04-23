@@ -57,14 +57,19 @@
         return ctx;
     };
     
-    ForecastApp.Math.distribution = function(predictor, stdev_residuals) {
-        var ctx = {};     
+    ForecastApp.Math.distribution = function(predictor, stdev_residuals,
+                                             slope, intercept) {
+        var ctx = {
+           mean: ForecastApp.Math.predicted_y(slope, intercept, predictor),
+           dist: {}
+        };
         for (var i=0; i < ForecastApp.Math.distribution_quantiles.length; i++) {
             var q = ForecastApp.Math.distribution_quantiles[i];
-            var inv_norm = jStat.normal.inv(q, predictor, stdev_residuals);
-            ctx['' + q] = {
+            var inv_norm = jStat.normal.inv(q, ctx.mean, stdev_residuals);
+            ctx.dist['' + q] = {
+                'estimated': inv_norm/** + ctx.mean**/,
                 'inv_norm': inv_norm,
-                'norm': jStat.normal.pdf(inv_norm, predictor, stdev_residuals)
+                'norm': jStat.normal.pdf(inv_norm, ctx.mean, stdev_residuals)
             };
         }
         return ctx;
@@ -504,7 +509,7 @@
                 xAxis: {categories: ctx.years,
                     tickInterval: Math.round(ctx.years.length / 8),
                     title: {text: 'Year'}},                
-                yAxis: {plotLines: [{color: '#000000', width: 1, value: 0}]},
+                yAxis: {plotLines: [{color: '#000000', width: 1, value: 0}], title: {text: 'Count'}},
                 series: [{name: 'Residuals', showInLegend: false,
                     data: ctx.residuals_vs_year,
                     color: ForecastApp.Colors.residuals}]   
@@ -543,6 +548,7 @@
             ctx.years_reserved = ForecastApp.inst.years_reserved;
             ctx.hurricane_data_length = ForecastApp.inst.hurricanes.length;
             ctx.forecast = ForecastApp.inst.forecast_model.get_model_context();
+            ctx.regression_model = ForecastApp.inst.regression_model.get_model_context();
             
             var markup = this.template(ctx);
             jQuery(this.el).html(markup);
@@ -575,7 +581,7 @@
                 chart: {},
                 title: {text: 'Observed vs. Estimated with Uncertainty'},
                 xAxis: {categories: years, title: {text: 'Years'}},
-                yAxis: {title: {text: 'Forecasted'}},
+                yAxis: {title: {text: 'Count'}},
                 series: [{name: 'Uncertainty', type: 'boxplot',
                          data: boxplot_data,
                          color: ForecastApp.Colors.uncertainty}, 
@@ -678,28 +684,31 @@
         render_custom_forecast: function() {
             var model = ForecastApp.inst.forecast_model.get_model_context();
             var predictor = jQuery("#nino-value-slider").slider("value");
-            var dist = ForecastApp.Math.distribution(predictor, model.stdev_residuals); 
+            var ctx = ForecastApp.Math.distribution(predictor,
+                model.stdev_residuals, model.slope, model.intercept); 
 
-            var ctx = {dist: dist};            
             var markup = this.custom_forecast_template(ctx);            
             jQuery(this.el).find("div.custom-forecast").html(markup);
             
+            jQuery(this.el).find("span#custom-forecast-predicted").html(ctx.mean.toFixed(2));
+            
             var data = [];
             
-            var keys = Object.keys(dist);
+            var keys = Object.keys(ctx.dist);
             for (var i= 0; i < keys.length; i++) {
-                data.push([dist[keys[i]].inv_norm, dist[keys[i]].norm]);
+                data.push([ctx.dist[keys[i]].estimated, ctx.dist[keys[i]].norm]);
             }
 
             if (this.graph === undefined) {
                 jQuery('#custom-forecast-graph').highcharts({
                     chart: {type: 'spline'},
-                    title: {text: 'Prediction Value and Uncertainty Range'},
-                    xAxis: {min: -10, max: 10,
-                        title: {text: 'Quantile'},
+                    title: {text: 'Prediction & Uncertainty Range'},
+                    xAxis: {min: -17, max: 17,
+                        title: {text: 'Count'},
+                        tickInterval: 2,                        
                         plotLines: [{color: '#C0C0C0', width: 1, value: 0}]},
-                    yAxis: {min: 0, max: 0.2},
-                    series: [{name: "Prediction Value", data: data,
+                    yAxis: {min: 0, max: 0.2, title: {text: 'Probability Density'}},
+                    series: [{name: "Prediction Range", data: data,
                               color: ForecastApp.Colors.estimated}]
                 });
                 this.graph = jQuery('#custom-forecast-graph').highcharts();
