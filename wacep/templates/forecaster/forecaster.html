@@ -413,24 +413,36 @@
                     <h3>Probabilistic Forecast</h3>
                      
                     <form class="form-inline">
+                    
                         <div style="display: none" class="help-inline error">Enter a number between <%= extremes.min.toFixed(2) %> and <%= extremes.max.toFixed(2) %></div>
-                        <label class="control-label" for="inputYearsReserved">Nino 3.4 (ASO) value</label>
-                        <input type="text" value="0" id="nino-value" class="input-small"/>
+                        <label class="control-label" for="inputYearsReserved"><strong>Nino 3.4 (ASO) Value</strong></label>
+                        <input type="text" value="0" id="nino-value" class="input-small" />
                         <input type="button" id="change-nino-value" class="btn btn-primary" value="Set" />
-                        &nbsp;&nbsp; Prediction: <span id="custom-forecast-predicted"></span>
-                        <br />
-                        <div id="nino-value-slider"></div>
-                        <br />
-                        <div id="nino-value-slider-labels">
+                       
+                       <br />
+                       
+                       <div id="nino-value-slider"></div>
+                       
+                       <br />
+                       
+                       <div id="nino-value-slider-labels">
                             <span class="ui-slider-tick-label label min"><%= extremes.min.toFixed(2) %></span>
                             <span class="ui-slider-tick-label label max"><%= extremes.max.toFixed(2) %></span>
                         </div>
+                    
+                    	<br />
+                    	
+                    	 <div>
+                    	 
+					</div>
+					
                     </form>
 
                     <div class="row-fluid probabilistic-forecast">
-                        <div class="span3 custom-forecast"></div>
+                        <div class="span3"><div class="custom-forecast"></div></div>
                         <div class="span9">
-                            <div class="well"><div id="custom-forecast-graph"></div></div>
+                     		 <span class="label label-inverse pull-left" style="padding: 5px;">Prediction = <span class="badge badge-important" id="custom-forecast-predicted"></span></span>
+                      		<div id="custom-forecast-graph"></div>
                         </div>
                     </div>
                 </div>
@@ -456,6 +468,7 @@
             <% } %>
         </tbody>
     </script>
+    <style>svg {font-family: arial, helvetica, sans-serif !important;}</style>
 {% endblock %}
 
 {% block all-content %}
