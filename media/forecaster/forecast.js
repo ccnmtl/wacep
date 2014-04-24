@@ -67,7 +67,7 @@
             var q = ForecastApp.Math.distribution_quantiles[i];
             var inv_norm = jStat.normal.inv(q, ctx.mean, stdev_residuals);
             ctx.dist['' + q] = {
-                'estimated': inv_norm/** + ctx.mean**/,
+                'estimated': inv_norm + ctx.mean,
                 'inv_norm': inv_norm,
                 'norm': jStat.normal.pdf(inv_norm, ctx.mean, stdev_residuals)
             };
@@ -685,8 +685,10 @@
             var model = ForecastApp.inst.forecast_model.get_model_context();
             var predictor = jQuery("#nino-value-slider").slider("value");
             var ctx = ForecastApp.Math.distribution(predictor,
-                model.stdev_residuals, model.slope, model.intercept); 
-
+                model.stdev_residuals, model.slope, model.intercept);
+            
+            var extremes = ForecastApp.inst.forecast_model.extremes('nino_sst_anomalies');
+            
             var markup = this.custom_forecast_template(ctx);            
             jQuery(this.el).find("div.custom-forecast").html(markup);
             
@@ -700,10 +702,20 @@
             }
 
             if (this.graph === undefined) {
+                var min_dist = ForecastApp.Math.distribution(extremes.min,
+                    model.stdev_residuals, model.slope, model.intercept).dist;
+                var max_dist = ForecastApp.Math.distribution(extremes.max,
+                    model.stdev_residuals, model.slope, model.intercept).dist;
+                
+                var graph_min = min_dist['0.001'].estimated < max_dist['0.001'].estimated ? 
+                    min_dist['0.001'].estimated : max_dist['0.001'].estimated;
+                var graph_max = min_dist['0.999'].estimated > max_dist['0.999'].estimated ?
+                    min_dist['0.999'].estimated : max_dist['0.999'].estimated;
+                
                 jQuery('#custom-forecast-graph').highcharts({
                     chart: {type: 'spline'},
                     title: {text: 'Prediction & Uncertainty Range'},
-                    xAxis: {min: -17, max: 17,
+                    xAxis: {min: graph_min - 1, max: graph_max + 1,
                         title: {text: 'Count'},
                         tickInterval: 2,                        
                         plotLines: [{color: '#C0C0C0', width: 1, value: 0}]},
