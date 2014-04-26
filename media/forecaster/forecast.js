@@ -67,7 +67,6 @@
             var q = ForecastApp.Math.distribution_quantiles[i];
             var inv_norm = jStat.normal.inv(q, ctx.mean, stdev_residuals);
             ctx.dist['' + q] = {
-                'estimated': inv_norm + ctx.mean,
                 'inv_norm': inv_norm,
                 'norm': jStat.normal.pdf(inv_norm, ctx.mean, stdev_residuals)
             };
@@ -698,7 +697,7 @@
             
             var keys = Object.keys(ctx.dist);
             for (var i= 0; i < keys.length; i++) {
-                data.push([ctx.dist[keys[i]].estimated, ctx.dist[keys[i]].norm]);
+                data.push([ctx.dist[keys[i]].inv_norm, ctx.dist[keys[i]].norm]);
             }
 
             if (this.graph === undefined) {
@@ -707,10 +706,10 @@
                 var max_dist = ForecastApp.Math.distribution(extremes.max,
                     model.stdev_residuals, model.slope, model.intercept).dist;
                 
-                var graph_min = min_dist['0.001'].estimated < max_dist['0.001'].estimated ? 
-                    min_dist['0.001'].estimated : max_dist['0.001'].estimated;
-                var graph_max = min_dist['0.999'].estimated > max_dist['0.999'].estimated ?
-                    min_dist['0.999'].estimated : max_dist['0.999'].estimated;
+                var graph_min = min_dist['0.001'].inv_norm < max_dist['0.001'].inv_norm ? 
+                    min_dist['0.001'].inv_norm : max_dist['0.001'].inv_norm;
+                var graph_max = min_dist['0.999'].inv_norm > max_dist['0.999'].inv_norm ?
+                    min_dist['0.999'].inv_norm : max_dist['0.999'].inv_norm;
                 
                 jQuery('#custom-forecast-graph').highcharts({
                     chart: {type: 'spline'},
