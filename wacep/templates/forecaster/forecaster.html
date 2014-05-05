@@ -11,11 +11,39 @@
 		<h2>Phase 1: Initial Analysis</h2>
 		<div class="row-fluid">
 			<div class="span7">
+
+					
 				<p>
-				<strong>
-					Instructions: The graphs below use data from the table to show data versus time. Inspect the data and figures to make sense of the interrelations between them. The summary statistics provide mean and standard deviation of each time series and correlation between them. To upload your own set of predictand data, click on the "Add a Predictand Column" and follow the prompts. 
-				</strong>
+				In this part of the exercise, we’ll perform some basic observation and compare the occurrence of names storms and hurricanes with ENSO trends. 
 				</p>
+				
+				<p>
+				Recall that a predictor is the quantities or categories used to explain the expected value of the predictand, or the quantities or categories to be forecasted. Here, the predictand is the occurrence of name storms/hurricanes, though you are also able to upload your own predictand data if you so choose. The predictor is NINO3.4, an index used to describe sea surface temperature (SST) anomalies in the region bounded by 5°N to 5°S, from 170°W to 120°W. 
+				</p>
+				
+				<p>
+				Keep in mind that conditions with an NINO3.4 value of -0.5 to 0.5 are considered neutral (non-ENSO) years. Conditions with a NINO3.4 value of greater than or equal to 0.5 are considered El Niño years. A NINO3.4 value of less than or equal to -0.5 are considered La Niña years. NINO3.4 data specifically from the ASO (August-September-October) period is used due to the fact that it has the highest correlation with Caribbean storms. Our dataset begins in 1996.					
+				</p>
+			<p>
+				 The graphs below use data from the table to show data versus time. Inspect the data and figures to make sense of the interrelations between them. The summary statistics provide mean and standard deviation of each time series and correlation between them. 
+				</p>
+
+<p>
+There are three graphs. 
+</p>
+
+<ul>
+<li>Top Graph -  variability of NINO3.4 values over time.</li>
+
+<li>Middle Graph - the occurrence of named storms/hurricanes over time.</li>
+
+<li>Bottom Graph - the occurrence of named storms/hurricanes with the </li>corresponding NINO3.4 value for that year. 
+</ul>
+
+<p>
+To upload your own set of predictand data, click on the "Add a Predictand Column" and follow the prompts. 
+</p>
+
 			</div>
 			<div class="span5">
 				<a href="#create-model-dialog" role="button" class="btn btn-success pull-right" data-toggle="modal">
@@ -112,8 +140,17 @@
                 <h3>Select Model Parameters</h3>
             </div>
             <div class="modal-body">
-                <p>Select a Predictand and a number of years to reserve for cross validation.</p>
+ 
+<p>
+<strong>Predictors and predictands: </strong>Go ahead and input your model parameters. The predictor is set as ASO NINO3.4 SST anomalies. For the predictand, you can select hurricanes, names storms, or the data you input earlier.
+</p>
 
+<p>
+<strong>Reserving data:</strong> When you make a prediction for the future, you are predicting data that your model hasn’t seen before. By reserving, or leaving out, data you’re able to compare the model results with the reserved data and evaluate the model’s performance when it’s being used to make an actual forecast. Once you’ve selected your parameters, select the years you wish to reserve. Reserving 10 years, for example, leaves you with enough data to create a decent model while also providing you with data to use later on in the exercise.
+</p>
+
+ 
+ 
                 <form class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label" for="selectedPredictor">Predictor</label>
@@ -203,11 +240,38 @@
         <h2>Phase 2: Linear Regression Model</h2>
 		<div class="row-fluid">
 			<div class="span7">
-				<p>
-				<strong>
-				Instructions: Compare model results with observations in time series form. Now use your model to evaluate it's performance with the reserved data. Note that I forgot to reserve data in the earlier steps, so now I'm going to redo the regression while holding out the last 10 years.
-				</strong>
-				</p>
+
+<p>
+In Phase 1 we started to explore the relationship between ENSO and hurricanes/named storms. Now let's compare model results with observations in a time series and evaluate the residual values.
+</p>
+
+<p>
+Regression model takes the form of a line with two parameters (predictand and predictor), slope and intercept. In the current example, the resulting model (equation of the line) is: Storms = 5.82 - 1.03*Nino3.4(ASO)  We use this equation on each of the data points we have, and compare the estimated number of storms with the actual number.
+</p>
+
+<p>
+There are three graphs:
+</p>
+
+<ul>
+<li>
+Top Graph - A comparison of the observed and estimated number of storms over time. You may notice that the observed and predicted trends follow a similar pattern, but the magnitude is not accurate. This is common model challenge, also in the case of seasonal forecasting. One issue with a regression model is that with regression is that it tends to predict values close to the mean, whereas the observed values are actually more widely spread.
+</li>
+
+<li>
+Middle Graph - A comparison the observed and estimated number of storms as they relate to the predictor. The regression model follows a negative trend as the NINO3.4 value increases. Though the observed values are not as regular, you can see that they also follow a generally negative trend.
+</li>
+
+<li>
+Bottom Graph - Finally, we plot the residuals to inspect whether they are consistent with our assumption that they are normally distributed and identically and independently distributed. The residuals graph shows the difference between what was predicted and what occurred; a count of -2 for example means that 2 fewer than what was predicted actually occurred. The closer the residual value is to 0, the more accurate the model.
+</li>
+</ul>
+
+<p>
+Here the residuals look reasonable, although you may notice that there tends to be more positive values for the later data and more negative values for the early values.  Also the scatter appears a bit wider in the later data; it is therefore a bit questionable whether the fit is good and whether the linear model is appropriate.
+</p>
+
+
 			</div>
 			<div class="span5">
                 <a href="#validate" role="button" class="btn btn-success pull-right">
@@ -280,11 +344,15 @@
         <h2>Phase 3: Cross-Validation</h2>
 		<div class="row-fluid">
 			<div class="span7">
-				<p>
-				<strong>
-				Instructions: Use the model to forecast a value for a given value of the predictor. Use the uncertainty model to estimate bounds on the forecast. We're interested in the uncertainty of the model predictions.  One way to estimate that is to calculate the average error represented by the variance of the residuals.
-				</strong>
-				</p>
+
+			<p>
+			Now let's compare the model's original performance and its performance under the reserved years. We've trained the model using all the data years and will cross-validate using the same regression equation and the 10 years you reserved.  
+			</p>
+			
+			<p>
+			Graph - This box and whisker plot illustrates the observed values, the estimated values, and their uncertainty over time. 
+			</p>
+
 			</div>
 			<div class="span5">
                 <a href="#forecast" class="btn btn-success pull-right">
@@ -376,11 +444,16 @@
       <h2>Phase 4: Complete Forecast</h2>
 		<div class="row-fluid">
 			<div class="span7">
-				<p>
-				<strong>
-				Instructions: We can use this variance to fit a normal distribution around our forecast that represents the uncertainty. Remember that the normal distribution of the errors is one of the assumptions of regression, and one that we verify through inspection of the residuals. 
-				</strong>
-				</p>
+
+
+<p>
+We now use the regression model to forecast a predictand value (the number of storms) given the value of the predictor. Note that here we are interested in the uncertainty of the model predictions.  One way to estimate that is to calculate the average error represented by the variance of the residuals. We use the uncertainty model to estimate bounds on the forecast. 
+</p>
+
+<p>
+The plot below shows a curve centered on the predicted number of storms. The x-axis is the predicted number of storms (count) and the y-axis is probability density. The mean is the highest point on the curve with the greatest probability, and points along the curve indicate the prediction range.
+</p>
+
 			</div>
 			<div class="span5">
 			</div>
@@ -473,7 +546,7 @@
         
         <div class="span3">
 			<div class="pull-right">
-				<a class="btn"  type="button" data-toggle="modal" data-target="#help-dialog">Help</a>
+				<a class="btn"  type="button" data-toggle="modal" data-target="#help-dialog">Overview</a>
 				<a class="btn btn-danger" type="button" data-toggle="modal" data-target="#reset-dialog">Reset</a>
 			</div>
         </div>
@@ -498,16 +571,100 @@
         <div id="help-dialog" class="modal hide" tabindex="-1" role="dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">x</button>
-                <h3 id="myModalLabel">Help</h3>
+                <h3 id="myModalLabel">Overview</h3>
             </div>
             <div class="modal-body">
-                <p>Help Text</p>
+            
+				<h3>About the Activity</h3>
+				
+			<p>
+			In this four-phase exercise, we aim to give you a sense for the different steps involved in the generation of a basic climate forecast. We analyze thirty years of data that reflects ENSO and hurricane/named storm activity throughout the Atlantic Basin in the Caribbean. Data is sourced from 1966-2012 Atlantic Storm/Hurricanes from <a href="http://www.aoml.noaa.gov/hrd/tcfaq/E11.html" target="_blank">NOAA HURDAT</a>, 2013 storm/hurricanes from <a href="http://weather.unisys.com/hurricane/atlantic/2013/index.php" target="_blank">Unisys</a>, and 1966-2013 Aug-Sep-Oct NINO3.4 SST anomalies from the International Research Institute for Climate and Society. 
+			</p>
+			
+			<p>
+			The first phase, "Initial Analysis," allows you to observe ENSO trends over time, hurricane occurrence over time, and the relationship between ENSO and hurricane data. 
+			</p>
+			
+			<p>
+			For the second phase, "Linear Regression Model," you create a model and note the observed and estimated hurricane occurrence over time, the relationship between the observed and estimated hurricane occurrence data with ENSO, and the residual hurricane occurrence values over time.
+			</p>
+			
+			<p>
+			In the third phase, "Cross-validation," you explore the model's uncertainty. The basic idea is to simulate the exact forecast procedure for periods of the past and evaluate how well these simulated forecasts would have performed compared to the actual observations.
+			</p>
+			
+			<p>
+			In the fourth and final phase, "Complete Forecast," you actually produce the forecast, using the model to generate a predictand value given a particular predictor value. Here, we also illustrate the uncertainty of the model predictions.  
+			</p>
+			
+			<p>
+			Please note that this exercise is a mechanism for explaining the concepts behind the development of a climate forecast. It should be understood as a theoretical exercise, not as a tool for application. 
+			</p>
+            
+				<h3>About Hurricanes in the Caribbean
+				</h3>
+				
+				<p>
+				According to the Hurricane Research Division of the US National Oceanic and Atmospheric Administration "a tropical cyclone [or hurricane] is the generic term for a non-frontal synoptic scale low-pressure system over tropical or sub-tropical waters with organized convection (i.e. thunderstorm activity) and definite cyclonic surface wind circulation." Most hurricanes dissipate before making landfall. However, those that do reach populated areas have the potential to cause immense destruction, resulting in death, loss of livelihood, and the destruction of property.
+				</p>
+				
+				<p>
+				More specifically, hurricanes can play a major role in impacting the water sector and water managers in the Caribbean. When Hurricane Dean passed over Barbados in 2007, for example, the storm disrupted a significant part of the island's water supply network, not through direct damage to supply and distribution infrastructure but indirectly through the impact of the electricity supply network.  All pumping stations and booster pumps are connected to the electricity grid and therefore could not operate until power was restored.  
+				</p>
+				
+				<p>
+				Later on, as Hurricane Tomas hit St Lucia in 2010, precipitation caused by the storm triggered a series of landslides, including one into the John Compton Dam.  These disrupted both the pumping station and the main transmission pipeline, such that water from the dam could not be extracted and the water supply was interrupted for several weeks. The landslide into the John Compton Dam also reduced the available storage volume as silt and debris emptied into the reservoir.  Because of this reduced storage availability, St Lucia now experiences a very severe water supply crisis &mdash; the reservoir's water supply is critical and de-silting is thus complicated. 
+				</p>
+				
+				 <div class="row-fluid" style="text-align: center;">
+				 <img style="width: 369px;" src="/site_media/img/dam.jpg" />
+				</div>
+				<p style="text-align: center;">
+				<i>Impacts of Hurricane Tomas on the John Compton Dam in 2010 (<a href="http://www.stlucianewsonline.com/wp-content/uploads/2014/03/dam.jpg" target="_blank">Source</a>) </i>
+				</p>
+				
+				<p>
+				The Hurricane Research Division identifies several key components to the development of hurricanes in the Atlantic Basin including:
+				</p>
+				
+				<ol>
+				<li>Sea surface temperature: Warm waters (at least 26.5&ordm;C) provide the heat needed to power emerging storms.</li>
+				
+				<li>Moist mid-troposphere: This facilitates the development of thunderstorm activity.</li>
+				
+				<li>Pre-existing vorticity and convergence: This provides the context for hurricane development.</li>
+				
+				<li>Vertical wind shear: Vertical wind shear can be defined as "the magnitude of wind change with height." Intense vertical wind shear disrupts the emerging hurricane and can prevent its development. If a hurricane has already formed, strong vertical shear can diminish or eliminate the hurricane by interfering with the organization of deep convection around the cyclone center. Conversely, lessened vertical wind shear between the surface and the upper troposphere allows for the evolution of the storm.</li>
+				
+				</ol>
+				
+				<p>
+				Below, NOAA illustrates conditions in 2013, which have been associated with strong hurricane seasons in the past:
+				</p>
+				
+				 <div class="row-fluid" style="text-align: center;">
+				 <img src="/site_media/img/hurricanemap.jpg" />
+				</div>
+				<p></p>
+				
+				<p>
+				Research has shown that El Ni&ntilde;o Southern Oscillation (ENSO) plays an important role in affecting vertical wind shear, as well as temperature at the Earth's surface and in the troposphere. This in turn is linked with hurricane activity throughout the Atlantic Basin.
+				</p>
+				
+				<p>
+				As we discussed in Module, 2, research shows that the warm El Ni&ntilde;o phase of the ENSO is associated with decreased hurricane activity in the Atlantic. Meanwhile, cooler La Ni&ntilde;a events, which reduce vertical wind shear and increase vorticity, are associated with an increased probability of hurricane landfalls (Klotzbach, 2011). Tartaglione el al. (2003) specifically looked at the northern, eastern, and western regions of the Caribbean and determined that storms are significantly less frequent during El Ni&ntilde;o years in the north, though there was not a significant change in storm frequency elsewhere throughout the region. 
+				</p>
+				
+				<p>
+				With the knowledge that ENSO plays a role in hurricane development in the Atlantic Basin, we can then begin to think about the possibility of forecasting hurricanes using ENSO information. That is, if we can predict an ENSO event, can we use this to predict the occurrence of a hurricane in the Caribbean? Let's continue on to the exercise to further explore this idea. 
+				</p>
+                
+                
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal">Close</button>
             </div>
         </div>   
-        
         
         <div id="reset-dialog" class="modal hide" tabindex="-1" role="dialog">
             <div class="modal-header">
