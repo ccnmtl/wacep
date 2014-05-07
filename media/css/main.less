@@ -171,6 +171,10 @@ background-color: #fff;
 .forecast {
 
     .forecast-step {
+        h2 {
+            margin-bottom: 10px;
+        }
+        
         margin-top: 25px;
         
         a.btn-success {
@@ -252,6 +256,13 @@ background-color: #fff;
     li.help a {
         cursor: pointer;
     }
+    
+    .in.collapse+a.btn.showdetails:before {
+        content: 'Hide Details';
+    }
+    .collapse+a.btn.showdetails:before {
+        content: 'Show Details';
+    }    
     
     div.probabilisic-forecast {
         text-align: center;

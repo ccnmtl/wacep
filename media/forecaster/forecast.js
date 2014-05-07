@@ -275,7 +275,22 @@
             
             return ctx;
         }
-    });    
+    });
+    
+    ForecastApp.Views.OverviewView = Backbone.View.extend({
+        initialize: function(options) {
+            _.bindAll(this, "render");
+            this.template = _.template(jQuery("#overview-template").html());
+        },
+        show: function() {
+            this.render();
+        },
+        render: function() {
+            jQuery(this.el).html(this.template({}));
+            jQuery("div.pagination ul li").removeClass("active");
+            jQuery("li.step-zero").removeClass("disabled").addClass("active");
+        }
+    });
     
     ForecastApp.Views.AnalyzeView = Backbone.View.extend({
         events: {
@@ -728,7 +743,11 @@
             }
         }
     });
-    
+
+    var overviewView = new ForecastApp.Views.OverviewView({
+        el: jQuery("div.forecast-step")
+    });
+
     var analyzeView = new ForecastApp.Views.AnalyzeView({
         el: jQuery("div.forecast-step")
     });
@@ -747,7 +766,8 @@
 
     ForecastApp.Router = Backbone.Router.extend({
         routes: {
-            '': 'analyze',
+            '': 'overview',
+            'overview': 'overview',
             'analyze': 'analyze',
             'build': 'build',
             'validate': 'validate',
@@ -758,16 +778,19 @@
             jQuery('#reset').click(function (e) {
                 ForecastApp.initialize();
                 jQuery("div.pagination.primary ul li").addClass("disabled").removeClass("active");
-                ForecastApp.inst.router.navigate('analyze', {trigger: true});
+                ForecastApp.inst.router.navigate('overview', {trigger: true});
             });
-        },        
+        },
+        overview: function() {
+            overviewView.show();
+        },
         analyze: function() {
             analyzeView.show();
         },
         build: function() {
             if (ForecastApp.inst.regression_model === undefined ||
                     ForecastApp.inst.regression_model.length < 1) {
-                this.navigate('analyze', {trigger: true});
+                this.navigate('overview', {trigger: true});
             } else {
                 buildView.show();
             }
@@ -775,7 +798,7 @@
         validate: function() {
             if (ForecastApp.inst.regression_model === undefined ||
                     ForecastApp.inst.regression_model.length < 1) {
-                this.navigate('analyze', {trigger: true});
+                this.navigate('overview', {trigger: true});
             } else if (ForecastApp.inst.crossvalidate === undefined ||
                        ForecastApp.inst.crossvalidate.length < 1) {
                 this.navigate('build', {trigger: true});
@@ -786,7 +809,7 @@
         forecast: function() {
             if (ForecastApp.inst.regression_model === undefined ||
                     ForecastApp.inst.regression_model.length < 1) {
-                this.navigate('analyze', {trigger: true});
+                this.navigate('overview', {trigger: true});
             } else if (ForecastApp.inst.crossvalidate === undefined ||
                        ForecastApp.inst.crossvalidate.length < 1) {
                 this.navigate('build', {trigger: true});
