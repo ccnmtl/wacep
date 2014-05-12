@@ -43,7 +43,6 @@ NOSE_ARGS = [
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pylint',
     'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.django_tests',
     'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pyflakes',
 )
@@ -105,15 +104,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'django.contrib.markup',
     'django.contrib.messages',
     'django.contrib.staticfiles',  # maybe?
-    'staticmedia',
     'sorl.thumbnail',
     'django.contrib.admin',
     'tagging',
     'typogrify',
-    'munin',
     'south',
     'django_nose',
     'compressor',
@@ -135,7 +131,8 @@ INSTALLED_APPS = [
     'wacep.figure_viewer',
     'wacep.weather_dj',
     'wacep.certificates',
-    'wacep.forecaster'
+    'wacep.forecaster',
+    'django_markwhat',
 ]
 
 PAGEBLOCKS = [
@@ -170,13 +167,11 @@ if 'harvest' in sys.argv:
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
     'debug_toolbar.panels.headers.HeaderDebugPanel',
     'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
 )
 
 STATSD_CLIENT = 'statsd.client'

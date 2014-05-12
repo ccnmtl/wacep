@@ -1,9 +1,6 @@
 from django.contrib import admin
 from wacep.certificates.models import Certificate, CertificateCourse
 from wacep.certificates.models import CourseAccess
-from django.contrib.auth.models import User
-from django.contrib.auth.admin import UserAdmin
-from django.template.defaultfilters import slugify
 
 
 class CertificateAdmin(admin.ModelAdmin):
@@ -42,13 +39,3 @@ def duct_tape_certificate_function(course, user_obj, function_name):
     certificate_function.__name__ = function_name
     certificate_function.allow_tags = True
     setattr(user_obj, function_name, certificate_function)
-
-function_names = []
-for course in CertificateCourse.objects.all():
-    tmp = slugify(course.section).replace('-', '_').title()
-    tmp = '%d: %s...' % (course.order_rank, tmp[0:5])
-    function_name = str(tmp)
-    duct_tape_certificate_function(course, User, function_name)
-    function_names.append(function_name)
-
-UserAdmin.list_display += tuple(function_names)

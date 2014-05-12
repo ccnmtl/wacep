@@ -92,8 +92,8 @@ class ActivityState (models.Model):
 
     image_filename = models.CharField(max_length=256, default='', blank=True)
     legend_filename = models.CharField(max_length=256, default='', blank=True)
-    show_left_side = models.BooleanField()
-    show_year_details = models.BooleanField()
+    show_left_side = models.BooleanField(default=False)
+    show_year_details = models.BooleanField(default=False)
 
     order_rank = models.IntegerField(default=0, null=True, blank=True)
     text = models.TextField(blank=True, default='')

@@ -1,10 +1,9 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 from django.views.generic import TemplateView
 import os.path
 admin.autodiscover()
-import staticmedia
 from django.views.generic import RedirectView
 
 site_media_root = os.path.join(os.path.dirname(__file__), "../media")
@@ -27,7 +26,6 @@ urlpatterns = patterns(
         name='welcome'),
     (r'^password_change/$', 'django.contrib.auth.views.password_change'),
     (r'^courses/$', 'wacep.main.views.courses'),
-    (r'^munin/', include('munin.urls')),
     (r'^stats/$', TemplateView.as_view(template_name="stats.html")),
     (r'smoketest/', include('smoketest.urls')),
     (r'^site_media/(?P<path>.*)$',
@@ -45,4 +43,4 @@ urlpatterns = patterns(
                                      namespace='weather_dj')),
     (r'^weatherdj/?', include('wacep.weather_dj.urls')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page')
-) + staticmedia.serve()
+)
