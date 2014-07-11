@@ -180,8 +180,13 @@ div.scene {
 
 /* table */
 
+.weather_dj_table {
+	width: 700px !important;
+}
+
 .weather_dj_table tr {
 	height: 35px;
+	background-color: #fff;
 }
 
 .nav-tabs > .active > a:focus,
