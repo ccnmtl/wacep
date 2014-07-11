@@ -1,109 +1,135 @@
-<h1>
-About This Interactive
-</h1>
+<a name="top"></a>
 
+<h1>Overview</h1>
 
-<ul>
-<li><a href="#streamflow">Streamflow</a></li>
-<li><a href="#scene">Scene View</a></li>
-<li><a href="#graph">Graph View</a></li>
-<li><a href="#table">Table View </a></li>
-</ul>
+<hr />
+
+<ol>
+<li><a href="#streamflow">Streamflow: The Basics</a></li>
+<li><a href="#hydrologic">Hydrologic Modeling</a></li>
+<li><a href="#equations">Equations and Variables</a></li>
+</ol>
 
 <hr />
 
 <a name="streamflow"></a>
-<h2>
-Streamflow 
-</h2>
+<h2>Streamflow: The Basics</h2>
 
 <p>
-Streamflow, or discharge, is the volume of water that moves over a particular point over a fixed period of time. 
-It is expressed as volume per second (e.g. m3/sec), and reflects the amount of water that runs off the land surface plus that which drains 
-from the groundwater supply. The following factors play a role in affecting streamflow, and those in italics are illustrated by this 
-module's interactive <a href="#note">model<sup>1</sup></a>: 
+Streamflow, or discharge, is the volume of water that moves over a particular point over a fixed period of time. It is expressed as volume per second (e.g. m3/sec), and reflects the amount of water that runs off the land surface plus that which drains from the groundwater supply. The following factors play a role in affecting streamflow, and those in italics are illustrated by this module's interactive model:
 </p>
 
-<h3>
-Natural factors: 
-</h3>
+<h3>Natural factors:</h3>
 
 <ul>
-<li>Runoff from rainfall and snowmelt </li>
-<li>Evaporation from soil and surface-water bodies </li>
-<li>Transpiration by vegetation </li>
-<li>Ground-water discharge from aquifers </li>
-<li>Ground-water recharge from surface-water bodies </li>
-<li>Sedimentation of lakes and wetlands </li>
-<li>Formation or dissipation of glaciers, snowfields, and permafrost </li>
+<li>Runoff from rainfall and snowmelt</li>
+<li>Evaporation from soil and surface-water bodies</li>
+<li>Transpiration by vegetation</li>
+<li>Ground-water discharge from aquifers</li>
+<li>Ground-water recharge from surface-water bodies</li>
+<li>Sedimentation of lakes and wetlands</li>
+<li>Formation or dissipation of glaciers, snowfields, and permafrost</li>
 </ul>
 
-
-<h3>
-Anthropogenic factors: 
-</h3>
+<h3>Anthropogenic factors:</h3>
 
 <ul>
-<li>Surface-water withdrawals and trans-basin diversions </li>
-<li>River-flow regulation for hydropower and navigation </li>
-<li>Construction, removal, and sedimentation of reservoirs and storm water detention ponds </li>
-<li>Stream channelization and levee construction </li>
-<li>Drainage or restoration of wetlands </li>
-<li>Land-use changes such as urbanization that alter rates of erosion, infiltration, overland flow, or evapotranspiration </li>
-<li>Wastewater outfalls </li>
-<li>Irrigation wastewater return flow </li>
+<li>Surface-water withdrawals and trans-basin diversions</li>
+<li>River-flow regulation for hydropower and navigation</li>
+<li>Construction, removal, and sedimentation of reservoirs and storm water detention ponds</li>
+<li>Stream channelization and levee construction</li>
+<li>Drainage or restoration of wetlands</li>
+<li>Land-use changes such as urbanization that alter rates of erosion, infiltration, overland flow, or evapotranspiration</li>
+<li>Wastewater outfalls</li>
+<li>Irrigation wastewater return flow</li>
 </ul>
 
-<a name="scene"></a>
-<h2>
-Scene View
-</h2>
+<p><a href="#top">Top</a></p>
+
+<hr />
+
+<a name="hydrologic"></a>
+<h2>Hydrologic Modeling</h2>
 
 <p>
-The image tab shows a visualization of the equations that describe the movement of water as it travels from the atmosphere through the surface, into a stream, and back up into the atmosphere. You are able to adjust several variables, and then observe how changes to one variable in turn affect the rest of the system. Use the start/stop button in the lower left corner to start and stop the animation. 
+In its most basic sense, a model can be defined as a combination of equations that simulate the workings of a system. In a hydrological model, the equations represent the passage of water through the hydrologic cycle and the effect of the physical landscape. Of course, changes in one part of the water cycle result in changes to the rest of the system. We can similarly change different variables in the model equation to represent the changes experienced in reality.
 </p>
 
 <p>
-Variable "a" represents perviousness, or the ease with which water infiltrates the land surface. Concrete, for example, is a much less pervious surface type than soil. 
+Hydrologic models are typically used for two purposes. The most common use is to provide estimates of streamflow that will occur in the future (streamflow forecasts) or in places where we do not have streamflow data. The second major use is to estimate the effect of changes to the land surface or to the climate on streamflow. The models provide information about both the volume of streamflow (how much?) and the timing of streamflow (when does the peak flow occur?).
+</p>
+
+<p><a href="#top">Top</a></p>
+
+<hr />
+
+<a name="equations"></a>
+<h2>Equations and Variables</h2>
+
+<p>
+The model user here is the "abc" model developed by Myron Fiering, Harvard University. The exercise is based on material created by Richard Vogel, Tufts University, and Patrick Ray, University of Massachusetts.
 </p>
 
 <p>
-Variable "b" represents evapotranspiration, which reflects 1) the water absorbed by the roots of plants and released through leaves into the atmosphere and 2) the water that evaporates directly from soil moisture into the atmosphere. Note that due to the Pt - bPt - aPt = Direct Runoff to River equation (introduced in Part 1 of Module 3), evapotranspiration + perviousness can never exceed 100. 1 
+The following equations will be used to demonstrate the simple conceptual hydrologic model:
+</p>
+
+<h3>Land:</h3>
+
+<p>
+Rain - Evapotranspiration - Infiltration = Pt - bPt - aPt = Direct Runoff to River
+</p>
+
+<h3>Mass Balance on Groundwater (GW):
+</h3>
+
+<p>
+GW today = GW yesterday + Rain Infiltration today - GW Outflow to River yesterday Gt = Gt-1 + aPt - cGt-1
+</p>
+
+<h3>River Discharge:</h3>
+
+<p>
+Qt = Pt(1-a-b) + cGt-1
+</p>
+
+
+<h3>Evapotranspiration (A function of temperature):</h3>
+
+<p>
+ET = bPt where b =f(T)
 </p>
 
 <p>
-Variable "c" reflects the ease with which groundwater flows, which is dependent on a number of factors but is largely dependent on the porosity of the soil. 
+Also note the following variable definitions:
 </p>
 
 <p>
-Variable "r" reflects rainfall frequency, which ranges from very few events to very many. This should not be confused with rainfall intensity. In cases when the frequency of rainfall is higher, you will see that precipitation events occur more often and that those events exhibit high and low levels of intensity. In cases with the frequency of rainfall is low, you will see fewer occurring events, and those will also fluctuate in their intensity. 
+Pt = precipitation during time interval t
 </p>
 
 <p>
-To view labels of each process happening throughout the system, click on "show labels". 
+Gt = groundwater storage at the end of time interval t
 </p>
-
-<a name="graph"></a>
-<h2>
-Graph View
-</h2>
 
 <p>
-The graph tab shows the same data illustrated in the animated image tab. You can see that streamflow trends closely depend on those of precipitation, groundwater flow, and runoff. Slide your mouse over the lines of the graph to view the value of a particular point. 
+Qt = streamflow during time interval t leaving the watershed
 </p>
-
-<a name="table"></a>
-<h2>
-Table View
-</h2>
 
 <p>
-The table reflects the same data illustrated by both the image tab and the graph tab, only this time the information is shown in a chart.
+cGt-1 = groundwater contribution to streamflow (or baseflow) during time interval t
 </p>
 
-<a name="note"></a>
 <p>
-<em>
-<sup>1</sup> This list sourced from the <a href="http://ga.water.usgs.gov/edu/watercyclestreamflow.html" target="_blank">United State Geological Survey (USGS)</a>. 
-</em>
+bPt = evapotranspiration (ET) during time interval t (assumes ET only depends on the supply of moisture, and ignores the equally important influence of energy)
 </p>
+
+<p>
+Tt = average temperature during time interval t
+</p>
+
+<p>
+e = saturation vapor pressure at the mean daily temperature
+</p>
+
+<p><a href="#top">Top</a></p>

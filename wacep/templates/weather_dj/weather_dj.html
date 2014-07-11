@@ -1,20 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="en">
+	
 	<head>
+	
 		<link href="/hydrologic_cycle/media/css/weather_dj.css" rel="stylesheet" type="text/css">
-        <script type="text/javascript" src="/site_media/jquery/js/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="/site_media/jquery/js/jquery-ui-1.9.1.custom.min.js"></script>
 		<link href="/site_media/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 		<link href="/site_media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
-        
+		
+		<script type="text/javascript" src="/site_media/jquery/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="/site_media/jquery/js/jquery-ui-1.9.1.custom.min.js"></script>
+		
 		<script src="/site_media/js/underscore-min.js" type="text/javascript" ></script>		
 		<script src="/site_media/js/backbone-min.js" type="text/javascript" ></script>
-        <script src="/site_media/bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
+		<script src="/site_media/bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
 		<script src="/site_media/js/highcharts-min.js" type="text/javascript" ></script>
+		<script src="/site_media/js/scrolling_table.js" type="text/javascript" ></script>
+		
 		<script src="/hydrologic_cycle/media/js/svg.min.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/weather_dj.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/engine.js" type="text/javascript" ></script>
-		<script src="/site_media/js/scrolling_table.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/observers/observer.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/observers/table.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/observers/graph.js" type="text/javascript" ></script>
@@ -22,42 +27,125 @@
 		<script src="/hydrologic_cycle/media/js/observers/scene_settings.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/view.js" type="text/javascript" ></script>
 		<script src="/hydrologic_cycle/media/js/setup.js" type="text/javascript" ></script> 
+		
+		<style>
+		.tab-pane {position: relative;}
+		.tab-help {position: absolute; z-index: 1; right: -260px; width: 200px; height: 360px; display: block-inline; text-align: left;  overflow: auto; background-color: #fff;}
+		</style>
+		
 	</head>
+	
 	<body>
+	
 		<div class="weather_dj_container">
 
 			<div id="tabs" class="tabbable">
-			  <ul class="nav nav-tabs" >
-			    <li class="active"><a href="#scene_tab" data-toggle="tab">Scene</a></li>
-			    <li><a href="#graph_tab" data-toggle="tab">Graph</a></li>
-			    <li><a href="#table_tab" data-toggle="tab">Table</a></li>
-			    <li><a href="#help_tab"  data-toggle="tab">Help</a></li>
-			  </ul>
-              <div class="tab-content">
-    			  <div id="scene_tab" class="tab-pane tab_box well active">
-					<div class="scene">
-                        <div style="clear: both"></div>
-						<button class="btn btn-info   show_labels_button">
-                            <i class="icon-large icon-info-sign icon-white"></i> show labels
-                        </button>
-						<button class="btn btn-info hide_labels_button">
-								<i class="icon-large icon-info-sign icon-white"></i>
-								hide labels</button>
-					</div>
-    			  </div>
-    			  <div id="graph_tab" class="tab-pane tab_box well">
-    			  		<div class="graph" ></div>
-    			  </div>
-    			  <div id="table_tab" class="tab-pane tab_box well">
-    				  	<span class="table_span"></span>
-    			  </div>
-    			  <div id="help_tab" class="tab-pane help_tab tab_box well">
-    			  		{%include "weather_dj/weather_dj_help.html"%}
-    			  </div>
-              </div>
-           </div>
+			
+				<ul class="nav nav-tabs">
+				
+					<li class="active"><a href="#help_tab"  data-toggle="tab">Overview</a></li>
+					
+					<li><a href="#scene_tab" data-toggle="tab">Scene View</a></li>
+					
+					<li><a href="#graph_tab" data-toggle="tab">Graph View</a></li>
+					
+					<li><a href="#table_tab" data-toggle="tab">Table View</a></li>
+				
+				</ul>
+			  
+				<div class="tab-content">
+				
+					<div id="help_tab" class="tab-pane help_tab tab_box well">
+						{%include "weather_dj/weather_dj_help.html"%}
+					</div>	
+					
+					<div id="scene_tab" class="tab-pane tab_box well active">
+							
+						<div class="well tab-help">
+						
+							<h4>Scene View</h4>
+							
+							<p>
+							The scene view shows a visualization of the equations that describe the movement of water as it travels from the atmosphere through the surface, into a stream, and back up into the atmosphere. You are able to adjust several variables, and then observe how changes to one variable in turn affect the rest of the system. Use the start/stop button in the lower left corner to start and stop the animation.
+							</p>
+							
+							<p>
+							Variable "a" represents perviousness, or the ease with which water infiltrates the land surface. Concrete, for example, is a much less pervious surface type than soil.
+							</p>
+							
+							<p>
+							Variable "b" represents evapotranspiration, which reflects 1) the water absorbed by the roots of plants and released through leaves into the atmosphere and 2) the water that evaporates directly from soil moisture into the atmosphere. Note that due to the Pt - bPt - aPt = Direct Runoff to River equation, evapotranspiration + perviousness can never exceed 100. 
+							</p>
+							
+							<p>
+							Variable "c" reflects the ease with which groundwater flows, which is dependent on a number of factors but is largely dependent on the porosity of the soil.
+							</p>
+							
+							<p>
+							Variable "r" reflects rainfall frequency, which ranges from very few events to very many. This should not be confused with rainfall intensity. In cases when the frequency of rainfall is higher, you will see that precipitation events occur more often and that those events exhibit high and low levels of intensity. In cases with the frequency of rainfall is low, you will see fewer occurring events, and those will also fluctuate in their intensity.
+							</p>
+							
+							<p>
+							To view labels of each process happening throughout the system, click on "show labels".
+							</p>
 
-		   <div class = "sliders well jquery_sliders" >
+						</div>
+							
+						<div class="scene">
+							
+							<div style="clear: both"></div>
+							
+							<button class="btn btn-info show_labels_button">
+								<i class="icon-large icon-info-sign icon-white"></i> Show Labels
+							</button>
+							
+							<button class="btn btn-info hide_labels_button">
+								<i class="icon-large icon-info-sign icon-white"></i> Hide Labels
+							</button>
+							
+						</div>
+						
+					</div>
+					
+					<div id="graph_tab" class="tab-pane tab_box well">
+					
+						<div class="well tab-help">
+						
+						<h4>Graph View</h4>
+
+						<p>
+						The graph view shows the same data illustrated in the scene view. The difference is that you can see that streamflow trends closely depend on those of precipitation, groundwater flow, and runoff. Slide your mouse over the lines of the graph to view the value of a particular point.
+						</p>
+						
+						
+						</div>
+						
+						<div class="graph" ></div>
+						
+					</div>
+				
+					<div id="table_tab" class="tab-pane tab_box well">
+					
+						<div class="well tab-help">
+						
+						<h4>Table View</h4>
+
+						<p>
+						The table view reflects the same data illustrated by both the scene view and the graph view, only this time the information is shown in a table format. 
+						</p>
+
+						
+						</div>
+
+						<span class="table_span"></span>
+						
+					</div>
+				
+				</div>
+              
+           	</div>
+
+			<div class="sliders well jquery_sliders" >
 				<div class="span1">
 					<button class="btn btn-success play_button"><i class="icon-large icon-play icon-white"></i></button>
 					<button class="btn btn-info pause_button"><i class="icon-large icon-pause icon-white"></i></button>
@@ -88,6 +176,9 @@
 					<div class="slider r" ></div>
 				</div>
 			</div>
+			
 		</div>
+	
 	</body>
+
 </html>
