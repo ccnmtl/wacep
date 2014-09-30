@@ -52,6 +52,7 @@ PROJECT_APPS = [
     'wacep.figure_viewer',
     'wacep.timescale',
     'wacep.weather_dj',
+    'wacep.weatherroulette',
 ]
 
 ALLOWED_HOSTS = ['localhost', '.ccnmtl.columbia.edu']
@@ -133,6 +134,7 @@ INSTALLED_APPS = [
     'wacep.weather_dj',
     'wacep.certificates',
     'wacep.forecaster',
+    'wacep.weatherroulette',
     'django_markwhat',
 ]
 
@@ -233,7 +235,18 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_RENDERER_CLASSES': (
+        'wacep.weatherroulette.renderers.EmberJSONRenderer',
+        #'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
     'PAGINATE_BY': 10,
-    'PAGINATE_BY_PARAM': 'page_size'
+    'PAGINATE_BY_PARAM': 'page_size',
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }

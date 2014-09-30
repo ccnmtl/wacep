@@ -1,0 +1,118 @@
+<div class="roulette-section">
+    <h1 class="roulette-game-title">{{displayName}}</h1>
+    <h4>About This Game: {{description}}</h4>
+</div>
+
+{{#if alertContent}}
+<div class="roulette-section">
+{{view "alert"}}
+</div>
+{{/if}}
+
+<div class="roulette-section">
+    <div class="roulette-forecast well">
+
+        <h4>Current Year: {{currentYear}}</h4>
+
+        <div>
+            Forecast (Assumed) Rainfall:
+            <strong class="roulette-wet"
+                >{{currentRound.aboveForecast}}% Wet</strong>
+            <strong class="roulette-normal"
+                    >{{currentRound.normalForecast}}% Normal</strong>
+            <strong class="roulette-dry"
+                >{{currentRound.belowForecast}}% Dry</strong>
+        </div>
+        {{#if isCurrentYearCompleted}}
+            <div class="roulette-observed">
+                <div>
+                    Observed (Actual) Rainfall:
+                    <strong class="roulette-dry">Dry</strong>
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+</div>
+
+<div class="roulette-section">
+    <div class="col-md-3 roulette-box roulette-bg-wet" id="left">
+        <div class="roulette-climage-img">
+            <img src="img/umbrella.png" height="100" />
+        </div>
+        <div>Umbrellas</div>
+        <div>Above Normal Rain</div>
+        {{view "purchase-input"
+            value=umbrellasToBuyPercentage
+            disabled=isCurrentYearCompleted
+            content=allocatedPercentage}} %
+    </div>
+    <div class="col-md-3 roulette-box roulette-bg-normal">
+        <div class="roulette-climage-img">
+            <img src="img/shirt.png" height="100" />
+        </div>
+        <div>Shirts</div>
+        <div>Near Normal</div>
+        {{view "purchase-input"
+            value=shirtsToBuyPercentage
+            disabled=isCurrentYearCompleted
+            content=allocatedPercentage}} %
+    </div>
+    <div class="col-md-3 roulette-box roulette-bg-dry">
+        <div class="roulette-climage-img">
+            <img src="img/hat.png" height="100" />
+        </div>
+        <div>Hats</div>
+        <div>Below Normal Rain</div>
+       {{view "purchase-input"
+            value=hatsToBuyPercentage
+            disabled=isCurrentYearCompleted
+            content=allocatedPercentage}} %
+    </div>
+    <div class="col-md-3 roulette-box roulette-box-info" id="right">
+    
+        <div class="roulette-box-top">
+            {{#if isCurrentYearCompleted}}
+                <h4>Current year: {{currentYear}}</h4>
+                <div>Inventory: ${{currentInventory}}</div>
+            {{else}}
+                <h4>Invest in {{currentYear}}</h4>
+                <div>Total Inventory to be allocated:</div>
+                <div>${{allocatedMoney}} of ${{currentInventory}}</div>
+                <div>({{allocatedPercentage}}% of 100%)</div>
+            {{/if}}
+        </div>
+
+        <div class="roulette-box-bottom">
+            {{#if isCurrentYearCompleted}}
+                {{#unless isCurrentYearLastYear}}
+                <button
+                    {{action 'goToYear' nextYear}}
+                    type="button"
+                    class="btn btn-success">Next Round: {{nextYear}}</button>
+                {{/unless}}
+            {{else}}
+                <button
+                    {{action 'invest'}}
+                    {{bind-attr disabled=isEverythingNotAllocated}}
+                    type="button"
+                    class="btn btn-success">Invest in {{currentYear}}</button>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+
+<div class="roulette-section">
+    {{outlet spreadsheet}}
+</div>
+
+<div class="roulette-section">
+    {{view 'puzzle-graph'}}
+</div>
+
+{{#if isShowingSecretPlayer}}
+    <div class="roulette-section">
+        {{outlet secret-player-spreadsheet}}
+    </div>
+{{/if}}

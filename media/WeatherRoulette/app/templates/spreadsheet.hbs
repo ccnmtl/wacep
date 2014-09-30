@@ -1,0 +1,71 @@
+<div class="roulette-spreadsheet">
+    <h4>Expanded View of {{currentYear}}</h4>
+    <table class="table">
+        <thead>
+            <th>Years</th>
+            <th></th>
+            {{#each year in years}}
+            <th>{{year}}</th>
+            {{/each}}
+        </thead>
+        <tbody>
+        <tr>
+            <td>Forecast</td>
+            <td class="roulette-bg-wet">Above Normal Rain</td>
+            {{#each forecast in aboveForecasts}}
+                <td class="roulette-bg-wet-light">{{forecast}}%</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td></td>
+            <td class="roulette-bg-normal">Near Normal</td>
+            {{#each forecast in normalForecasts}}
+                <td class="roulette-bg-normal-light">{{forecast}}%</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td></td>
+            <td class="roulette-bg-dry">Below Normal Rain</td>
+            {{#each forecast in belowForecasts}}
+                <td class="roulette-bg-dry-light">{{forecast}}%</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>Observation</td>
+            <td></td>
+            {{#each observation in puzzleObservations}}
+                <td class="roulette-bg-wet">{{observation}}</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>Investment %</td>
+            <td class="roulette-bg-wet">Above Normal Rain</td>
+            {{#each percentage in percentagesOfUmbrellasBought}}
+                <td class="roulette-bg-wet-light">{{percentage}}%</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td></td>
+            <td class="roulette-bg-normal">Near Normal</td>
+            {{#each percentage in percentagesOfShirtsBought}}
+                <td class="roulette-bg-normal-light">{{percentage}}%</td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td></td>
+            <td class="roulette-bg-dry">Below Normal Rain</td>
+            {{#each percentage in percentagesOfHatsBought}}
+                <td class="roulette-bg-dry-light">{{percentage}}%</td>
+            {{/each}}
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Money at End of Round</td>
+                {{#each amount in endOfRoundInventories}}
+                    <td>${{amount}}</td>
+                {{/each}}
+            </tr>
+        </tfoot>
+    </table>
+</div>

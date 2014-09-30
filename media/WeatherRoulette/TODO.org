@@ -1,0 +1,26 @@
+* TODO add back investment incomplete alert
+* TODO Fix rounding problems that sometimes prevent investing
+* TODO graph should make more sense initially
+* TODO animate new forecasts
+* TODO Make the top Forecast Banner more relevant
+** TODO add intro text for first round
+* TODO autofocus input on next round button.
+* *
+=Weather Roulette Admin=
+* TODO 11. System should show graphical representation of how participants
+  performed against one another in rounds of a game, and among the 3 games.
+  -- Where in the UI does this fit in? Is this in the "Manage" section?
+* TODO 13. System should have an ad hoc capability for entering in new or
+  editing data sets of seasonal forecasts.
+* TODO 18. System should allow for exporting of participant data in csv.
+  File format.
+* TODO 26. System should not have all 3 games activated and available for
+  participants, only the practice game.
+  -- When will the 2 other games be activated for the user to play? Will that
+  be when the practice game is completed, or does an administrator activate the
+  game?
+
+  Note: I have not added the requirements for admin console to the list.
+  That will be a separate PMT task.
+
+  action item URL: https://dmt.ccnmtl.columbia.edu/item/97189/

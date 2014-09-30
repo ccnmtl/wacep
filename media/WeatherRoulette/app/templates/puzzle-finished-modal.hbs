@@ -1,0 +1,20 @@
+{{#modal-dialog}}
+    <div class="roulette-modal-header">
+        <h4>Game Completed</h4>
+    </div>
+    <div class="roulette-modal-body">
+        <p>
+            Congratulations! You completed the game with ${{currentInventory}}.
+        </p>
+        {{#if hasSecretPlayer}}
+            <p>
+                See the secret player at the bottom of the page for the optimal
+                betting strategy.
+            </p>
+        {{/if}}
+    </div>
+    <div class="roulette-modal-footer">
+        <a class="btn btn-primary" {{action "closeModal"}}>OK</a>
+        <a class="btn btn-primary" {{action "closeModal"}}>Play next game</a>
+    </div>
+{{/modal-dialog}}
