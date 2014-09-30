@@ -178,7 +178,7 @@ STATSD_CLIENT = 'statsd.client'
 STATSD_PREFIX = 'wacep'
 STATSD_HOST = '127.0.0.1'
 STATSD_PORT = 8125
-STATSD_PATCHES = ['django_statsd.patches.db', ]
+STATSD_PATCHES = []
 
 THUMBNAIL_SUBDIR = "thumbs"
 EMAIL_SUBJECT_PREFIX = "[wacep] "
