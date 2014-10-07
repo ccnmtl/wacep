@@ -11,6 +11,8 @@
 <h1 class="pageheader">{{ flatpage.title }}</h1>
 {% endblock %}
 
-{% block content %}
-{{ flatpage.content}}
+{% block all-content %}
+<div class="span12" id="right-content">
+    {{ flatpage.content}}
+</div>
 {% endblock %}

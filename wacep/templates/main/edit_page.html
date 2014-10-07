@@ -3,7 +3,10 @@
 {% load bootstrap %}
 {% load render %}
 {% block title %}{{section.label}} (edit){% endblock %}
+
 {% block js %}
+
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 
 {% compress css %}
 <style type="text/css">
@@ -15,8 +18,24 @@
 	}
 	#children li span { position: absolute; margin-left: -1.3em; }
 	.dragging {background-color: #fee;}
+       
+   .edit-menu-3 {
+       margin-left: 20px;
+   } 
+   .edit-menu-4 {
+       margin-left: 40px;
+   } 
+   .edit-menu-5 {
+       margin-left: 60px;
+   } 
+   .edit-menu-6 {
+       margin-left: 80px;
+   }      
 	</style>
 {% endcompress %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 
 {% compress js %}
 <script type="text/javascript">
@@ -93,21 +112,6 @@ $(function() {
 {% endblock %}
 
 
-{% block sidenav %}
-	<!-- ###### Secondary Navigation ###### -->
-			<h3>Sections</h3>
-{% with "/edit" as menu_base %}
-{% include "main/menu.html" %}
-{% endwith %}
-
-{% endblock %}
-
-{% block navrightextra %}
-<li><a href="{{section.get_absolute_url}}" class="btn-success">view page</a></li>
-{% endblock %}
-
-
-
 {% block primarynav %}
 
 <div class="navbar" id="primarynav">
@@ -147,19 +151,39 @@ $(function() {
 </div>
 {% endblock %}
 
-{% block content %}
+{% block all-content %}
+<div class="span12">
+
 <h1>{{ section.label }}</h1>
 
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#edit-blocks-tab" data-toggle="tab">Edit Blocks</a></li>
+    <li {% if is_root %}class="active"{% endif%}>
+        <a href="#content-tree" data-toggle="tab">Hierarchy</a>
+    </li>
+    <li {% if not is_root %}class="active"{% endif%}>
+        <a href="#edit-blocks-tab" data-toggle="tab">Edit Blocks</a>
+    </li>
   <li><a href="#children-tab" data-toggle="tab">Children</a></li>
   <li><a href="#add-pageblock-tab" data-toggle="tab">Add Pageblock</a></li>
   <li><a href="#edit-page-tab" data-toggle="tab">Edit Section</a></li>
   <li><a href="#history-tab" data-toggle="tab">History</a></li>
+    <li><a href="#move-section-tab" data-toggle="tab">Move Section</a></li>    
 </ul>
 
 <div class="tab-content">
-
+     <div id="content-tree" class="tab-pane {% if section.is_root %}active{% endif%}">
+         {% with section.hierarchy as hierarchy %}
+         <div style="margin-top: 5px; margin-left: 5px;">
+            <h3>{{hierarchy.name}}</h3>
+            <a href="{{root.get_edit_url}}"><b>{{hierarchy.get_root.name}}</b></a>
+                {% for s in hierarchy.get_root.get_descendants %}
+                    <div class="edit-menu-{{s.depth}}">             
+                        <a href="{{s.get_edit_url}}">{{s.label}}{% ifequal s section %} <i class="icon-hand-left"></i>{% endifequal %}</a>
+                    </div>
+                {% endfor %}
+         </div>
+         {% endwith %}
+    </div>
 
 <div id="edit-blocks-tab" class="tab-pane active"/>
 {% if section.pageblock_set.count %}
@@ -344,6 +368,19 @@ method="post">
 </form>
 
 </div>
+
+<div id="move-section-tab" class="tab-pane">
+    <form action="{% url 'move-section' section.id %}" method="post">{% csrf_token %}        
+        <fieldset>
+            <legend>Move "{{section.label}}" Section To...</legend>
+            <p>
+                {{ section.move_form.as_p }}
+                <input value="Move" class="default" name="_move" type="submit">
+            </p>
+        </fieldset>
+    </form>
+</div>
+
 
 <div id="history-tab" class="tab-pane">
 
