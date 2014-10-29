@@ -58,7 +58,9 @@ export default Em.Route.extend({
                     Em.debug('firstYear is ' + firstYear);
                     var difference = currentYear - firstYear;
                     Em.debug('difference is ' + difference);
-                    if (difference !== results.moves.get('length')) {
+                    if (
+                        Math.abs(difference - results.moves.get('length')) > 1
+                    ) {
                         Em.debug('resetting');
                         controller.resetGame();
                     }
