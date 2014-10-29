@@ -93,7 +93,7 @@
 
         <div class="roulette-box-bottom">
             {{#if isCurrentYearCompleted}}
-                {{#unless isCurrentYearLastYear}}
+                {{#unless isPuzzleCompleted}}
                 <button
                     {{action 'goToYear' nextYear}}
                     type="button"
