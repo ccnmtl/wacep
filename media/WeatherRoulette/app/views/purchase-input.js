@@ -8,9 +8,9 @@ export default Ember.TextField.extend({
     attributeBindings: ['value'],
     change: function(e) {
         // Don't let the user allocate more than 100%
-        var allocatedPercentage = this.get('content');
-        if (allocatedPercentage > 100) {
-            this.set('value', 100 - (allocatedPercentage - e.target.value));
+        var inputSum = this.get('content');
+        if (inputSum > 100) {
+            this.set('value', 100 - (inputSum - e.target.value));
         }
     }
 });

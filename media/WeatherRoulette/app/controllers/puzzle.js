@@ -85,6 +85,16 @@ export default Em.ObjectController.extend({
         return Math.round(n);
     }.property('umbrellasToBuyPercentage', 'currentInventory'),
 
+    inputArray: Em.computed.collect(
+        'hatsToBuyPercentage',
+        'shirtsToBuyPercentage',
+        'umbrellasToBuyPercentage'
+    ),
+    inputArrayInt: Em.computed.map('inputArray', function(n) {
+        return parseInt(n, 10);
+    }),
+    inputSum: Em.computed.sum('inputArrayInt'),
+
     // Array of items to buy
     allItemsToBuy: Em.computed.collect(
         'hatsToBuy', 'shirtsToBuy', 'umbrellasToBuy'),
