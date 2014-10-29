@@ -48,24 +48,6 @@ export default Em.Route.extend({
                 puzzleRounds: model.get('puzzleRounds'),
                 moves: gameState.get('moves')
             };
-
-            promises.push(Em.RSVP.hash(myPromises)
-                .then(function(results) {
-                    var currentYear = gameState.get('currentRound.year');
-                    var firstYear = results.puzzleRounds.sortBy('year')
-                        .get('firstObject.year');
-                    Em.debug('currentYear is ' + currentYear);
-                    Em.debug('firstYear is ' + firstYear);
-                    var difference = currentYear - firstYear;
-                    Em.debug('difference is ' + difference);
-                    if (
-                        Math.abs(difference - results.moves.get('length')) > 1
-                    ) {
-                        Em.debug('resetting');
-                        controller.resetGame();
-                    }
-                })
-            );
         }
 
 
@@ -89,6 +71,15 @@ export default Em.Route.extend({
                                 model.get('startingInventory'));
                             gameState.set('currentInventory',
                                 model.get('startingInventory'));
+                        } else {
+                            // Make sure the moves match up with the puzzle
+                            var puzzleId = model.get('id');
+                            var moveRoundId = moves.get('firstObject')._data.puzzle_round;
+                            if (!model.get('puzzleRounds.@each.id').contains(moveRoundId+'')) {
+                                Em.debug('puzzle id mismatch. resetting.');
+                                Em.debug(model.get('puzzleRounds.@each.id').toArray());
+                                controller.resetGame();
+                            }
                         }
                     });
                 });
