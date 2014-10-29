@@ -39,8 +39,6 @@ export default Em.Route.extend({
         // moves are tied to the GameState.
         var gameState = this.controllerFor('application').get('model');
 
-        gameState.set('currentPuzzle', model);
-
         if (gameState.get('currentRound.puzzle.id') !== model.get('id')) {
             gameState.set('currentRound', null);
         } else {

@@ -13,7 +13,6 @@ class Migration(SchemaMigration):
         db.create_table(u'weatherroulette_gamestate', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
-            ('current_puzzle', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['weatherroulette.Puzzle'], null=True)),
             ('current_round', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['weatherroulette.PuzzleRound'], null=True)),
             ('current_inventory', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -44,9 +43,9 @@ class Migration(SchemaMigration):
         # Adding model 'Puzzle'
         db.create_table(u'weatherroulette_puzzle', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('display_name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('display_name', self.gf('django.db.models.fields.TextField')()),
             ('slug', self.gf('autoslug.fields.AutoSlugField')(unique_with=(), max_length=50, populate_from='display_name')),
-            ('description', self.gf('django.db.models.fields.TextField')()),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('is_locked', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('has_secret_player', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('starting_inventory', self.gf('django.db.models.fields.PositiveIntegerField')(default=300)),
@@ -128,7 +127,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'GameState'},
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'current_inventory': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-            'current_puzzle': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['weatherroulette.Puzzle']", 'null': 'True'}),
             'current_round': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['weatherroulette.PuzzleRound']", 'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
@@ -152,8 +150,8 @@ class Migration(SchemaMigration):
         u'weatherroulette.puzzle': {
             'Meta': {'ordering': "['display_name']", 'object_name': 'Puzzle'},
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'display_name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'display_name': ('django.db.models.fields.TextField', [], {}),
             'has_secret_player': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_locked': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

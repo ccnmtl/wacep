@@ -11,7 +11,6 @@ class GameState(models.Model):
     """
     user = models.ForeignKey(User, unique=True)
 
-    current_puzzle = models.ForeignKey('Puzzle', null=True)
     current_round = models.ForeignKey('PuzzleRound', null=True)
 
     # Money for current round
@@ -21,8 +20,7 @@ class GameState(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return unicode('Game state for user: %s, puzzle: %s' %
-                       (self.user, self.current_puzzle))
+        return unicode('Game state for user: %s' % self.user)
 
 
 class Move(models.Model):
@@ -76,9 +74,9 @@ class Puzzle(models.Model):
     solve.
     """
 
-    display_name = models.CharField(max_length=255, unique=True)
+    display_name = models.TextField()
     slug = AutoSlugField(populate_from='display_name')
-    description = models.TextField()
+    description = models.TextField(blank=True)
     is_locked = models.BooleanField(default=False)
     has_secret_player = models.BooleanField(default=False)
     starting_inventory = models.PositiveIntegerField(default=300)

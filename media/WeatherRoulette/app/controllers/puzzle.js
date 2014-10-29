@@ -302,7 +302,6 @@ export default Em.ObjectController.extend({
         this.resetItems();
 
         var gameState = this.get('gameState');
-        gameState.set('currentPuzzle', this.get('model'));
         gameState.set('currentRound',
             this.get('puzzleRounds').sortBy('year').get('firstObject'));
 
