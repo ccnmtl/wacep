@@ -60,5 +60,6 @@ urlpatterns = patterns(
     (r'^hydrologic_cycle/?', include('wacep.weather_dj.urls',
                                      namespace='weather_dj')),
     (r'^weatherdj/?', include('wacep.weather_dj.urls')),
+    (r'^weatherroulette/?', include('wacep.weatherroulette.urls')),
     (r'^(?P<path>.*)$', 'wacep.main.views.page')
 )

@@ -1,0 +1,35 @@
+{{#modal-dialog action="closeModal"}}
+    <div class="roulette-modal-header">
+        <h4>Select a Game</h4>
+    </div>
+    <div class="roulette-modal-body">
+        <ul class="roulette-puzzle-list">
+            {{#each puzzle in content}}
+                {{#puzzle-list-item puzzle=puzzle selected=selectedPuzzle}}
+                    <a href="#" {{action 'selectPuzzle' puzzle
+                        }}>{{puzzle.displayName}}</a>
+                    &ndash; {{puzzle.description}}
+                {{/puzzle-list-item}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class="roulette-modal-footer">
+        <button {{action "closeModal"}}
+            class="btn btn-default">
+            Cancel
+        </button>
+
+        {{#if selectedPuzzle}}
+            <button {{action "playPuzzle" selectedPuzzle}}
+                class="btn btn-primary">
+                Play
+            </button>
+        {{else}}
+            <button
+                disabled="disabled"
+                class="btn btn-primary">
+                Play
+            </button>
+        {{/if}}
+    </div>
+{{/modal-dialog}}

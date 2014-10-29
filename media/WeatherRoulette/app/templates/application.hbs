@@ -1,0 +1,34 @@
+{{outlet modal}}
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            {{#link-to 'index' class="navbar-brand"}}Weather Roulette{{/link-to}}
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" {{action 'openModal' 'about-modal'}}>
+                    About
+                </a>
+            </li>
+            <li>
+                <a href="#" {{action 'openModal' 'rules-modal'}}>
+                    Rules
+                </a>
+            </li>
+            <li>
+                <a href="#" {{action 'openModal' 'games-modal'}}>
+                    Games
+                </a>
+            </li>
+            <li class="disabled">
+                <a>
+                    Manage
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{{outlet}}
