@@ -54,7 +54,6 @@ class MoveSerializer(serializers.ModelSerializer):
         if data is not None and root in data:
             data = data[root]
             data['game_state'] = data['game_state_id']
-            data['puzzle'] = data['puzzle_id']
             data['puzzle_round'] = data['puzzle_round_id']
 
         return super(MoveSerializer, self).from_native(data, files)

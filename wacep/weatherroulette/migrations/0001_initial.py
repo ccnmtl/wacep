@@ -24,7 +24,6 @@ class Migration(SchemaMigration):
         db.create_table(u'weatherroulette_move', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('game_state', self.gf('django.db.models.fields.related.ForeignKey')(related_name='move_ids', to=orm['weatherroulette.GameState'])),
-            ('puzzle', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['weatherroulette.Puzzle'])),
             ('puzzle_round', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['weatherroulette.PuzzleRound'])),
             ('year', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('hats', self.gf('django.db.models.fields.PositiveIntegerField')()),
@@ -139,7 +138,6 @@ class Migration(SchemaMigration):
             'game_state': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'move_ids'", 'to': u"orm['weatherroulette.GameState']"}),
             'hats': ('django.db.models.fields.PositiveIntegerField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'puzzle': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['weatherroulette.Puzzle']"}),
             'puzzle_round': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['weatherroulette.PuzzleRound']"}),
             'shirts': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'starting_inventory': ('django.db.models.fields.PositiveIntegerField', [], {}),

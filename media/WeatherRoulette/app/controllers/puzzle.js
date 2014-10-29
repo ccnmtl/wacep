@@ -227,7 +227,6 @@ export default Em.ObjectController.extend({
 
         var move = this.get('store').createRecord('move', {
             gameState: this.get('controllers.application.model'),
-            puzzle: this.get('model'),
             puzzleRound: this.get('currentRound'),
             year: this.get('currentYear'),
             hats: this.get('hatsToBuy'),

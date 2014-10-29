@@ -9,7 +9,6 @@ var Move = DS.Model.extend({
     umbrellas: DS.attr('number'),
     startingInventory: DS.attr('number'),
     endingInventory: DS.attr('number'),
-    puzzle: DS.belongsTo('puzzle'),
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date')
 });

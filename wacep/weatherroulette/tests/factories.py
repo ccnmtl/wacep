@@ -46,7 +46,6 @@ class MoveFactory(factory.django.DjangoModelFactory):
         model = Move
 
     game_state = factory.SubFactory(GameStateFactory)
-    puzzle = factory.SubFactory(PuzzleFactory)
     puzzle_round = factory.SubFactory(PuzzleRoundFactory)
     year = 1998
     hats = 80

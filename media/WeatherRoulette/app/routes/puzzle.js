@@ -54,7 +54,10 @@ export default Em.Route.extend({
                     var currentYear = gameState.get('currentRound.year');
                     var firstYear = results.puzzleRounds.sortBy('year')
                         .get('firstObject.year');
+                    Em.debug('currentYear is ' + currentYear);
+                    Em.debug('firstYear is ' + firstYear);
                     var difference = currentYear - firstYear;
+                    Em.debug('difference is ' + difference);
                     if (difference !== results.moves.get('length')) {
                         Em.debug('resetting');
                         controller.resetGame();

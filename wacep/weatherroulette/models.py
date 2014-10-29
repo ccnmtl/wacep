@@ -28,7 +28,6 @@ class Move(models.Model):
     A Move represents what the user chose to buy for one round.
     """
     game_state = models.ForeignKey('GameState', related_name='move_ids')
-    puzzle = models.ForeignKey('Puzzle')
     puzzle_round = models.ForeignKey('PuzzleRound')
     year = models.PositiveSmallIntegerField()
     hats = models.PositiveIntegerField()
@@ -83,11 +82,11 @@ class Puzzle(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
-        return unicode(self.display_name)
-
     class Meta:
         ordering = ['display_name']
+
+    def __unicode__(self):
+        return unicode(self.display_name)
 
 
 class PuzzleRound(models.Model):
@@ -113,8 +112,8 @@ class PuzzleRound(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
-        return unicode(self.year)
-
     class Meta:
         ordering = ['year']
+
+    def __unicode__(self):
+        return unicode(self.year)
