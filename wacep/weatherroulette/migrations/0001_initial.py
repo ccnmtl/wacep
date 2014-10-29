@@ -1,4 +1,3 @@
-# flake8: noqa
 # -*- coding: utf-8 -*-
 from south.utils import datetime_utils as datetime
 from south.db import db
@@ -36,8 +35,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'weatherroulette', ['Move'])
 
-        # Adding unique constraint on 'Move', fields ['game_state', 'year']
-        db.create_unique(u'weatherroulette_move', ['game_state_id', 'year'])
+        # Adding unique constraint on 'Move', fields ['game_state', 'puzzle_round']
+        db.create_unique(u'weatherroulette_move', ['game_state_id', 'puzzle_round_id'])
 
         # Adding model 'Puzzle'
         db.create_table(u'weatherroulette_puzzle', (
@@ -69,8 +68,8 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'Move', fields ['game_state', 'year']
-        db.delete_unique(u'weatherroulette_move', ['game_state_id', 'year'])
+        # Removing unique constraint on 'Move', fields ['game_state', 'puzzle_round']
+        db.delete_unique(u'weatherroulette_move', ['game_state_id', 'puzzle_round_id'])
 
         # Deleting model 'GameState'
         db.delete_table(u'weatherroulette_gamestate')
@@ -132,7 +131,7 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         },
         u'weatherroulette.move': {
-            'Meta': {'unique_together': "(('game_state', 'year'),)", 'object_name': 'Move'},
+            'Meta': {'unique_together': "(('game_state', 'puzzle_round'),)", 'object_name': 'Move'},
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'ending_inventory': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'game_state': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'move_ids'", 'to': u"orm['weatherroulette.GameState']"}),

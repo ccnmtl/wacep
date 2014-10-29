@@ -39,7 +39,7 @@ class Move(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('game_state', 'year',)
+        unique_together = ('game_state', 'puzzle_round')
 
     def __unicode__(self):
         return unicode('Move for %s' % (self.year))
