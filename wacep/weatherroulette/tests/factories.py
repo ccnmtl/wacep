@@ -24,7 +24,7 @@ class PuzzleRoundFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = PuzzleRound
 
-    year = factory.Sequence(lambda n: "%d%d%d%d" % (n, n, n, n))
+    year = 1999
     puzzle = factory.SubFactory(PuzzleFactory)
     below_forecast = 20
     normal_forecast = 20
