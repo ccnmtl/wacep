@@ -1,6 +1,34 @@
 <div class="roulette-section">
     <h1 class="roulette-game-title">{{displayName}}</h1>
-    <h4>About This Game: {{description}}</h4>
+    <h4>{{description}}</h4>
+</div>
+
+<div class="roulette-section">
+    <div class="roulette-forecast well">
+
+        <h4>Let's Invest in {{currentYear}}!</h4>
+
+        <p>
+            As a clothing retailer, you have to strategically invest in your annual inventory. The rainfall forecast (inferred amount) for {{currentYear}} is:
+            <strong class="roulette-wet"
+                >{{currentRound.aboveForecast}}% Wet</strong>
+                &bull;
+            <strong class="roulette-normal"
+                    >{{currentRound.normalForecast}}% Normal</strong>
+                &bull;
+            <strong class="roulette-dry"
+                >{{currentRound.belowForecast}}% Dry</strong>
+        </p>
+        
+        {{#if isCurrentYearCompleted}}
+            <div class="roulette-observed">
+                <p>
+               You now have <strong>${{currentInventory}}</strong> because the rainfall observation (actual amount) for {{currentYear}} was: <strong>{{observation}}</strong>. How did you do? 
+                </p>
+            </div>
+        {{/if}}
+
+    </div>
 </div>
 
 {{#if alertContent}}
@@ -8,32 +36,6 @@
 {{view "alert"}}
 </div>
 {{/if}}
-
-<div class="roulette-section">
-    <div class="roulette-forecast well">
-
-        <h4>Current Year: {{currentYear}}</h4>
-
-        <div>
-            Forecast (Assumed) Rainfall:
-            <strong class="roulette-wet"
-                >{{currentRound.aboveForecast}}% Wet</strong>
-            <strong class="roulette-normal"
-                    >{{currentRound.normalForecast}}% Normal</strong>
-            <strong class="roulette-dry"
-                >{{currentRound.belowForecast}}% Dry</strong>
-        </div>
-        {{#if isCurrentYearCompleted}}
-            <div class="roulette-observed">
-                <div>
-                    Observed (Actual) Rainfall:
-                    <strong class="roulette-dry">Dry</strong>
-                </div>
-            </div>
-        {{/if}}
-
-    </div>
-</div>
 
 <div class="roulette-section">
     <div class="col-md-3 roulette-box roulette-bg-wet" id="left">
@@ -45,7 +47,8 @@
         {{view "purchase-input"
             value=umbrellasToBuyPercentage
             disabled=isCurrentYearCompleted
-            content=allocatedPercentage}} %
+            content=allocatedPercentage
+            autofocus="autofocus"}} %
     </div>
     <div class="col-md-3 roulette-box roulette-bg-normal">
         <div class="roulette-climage-img">
@@ -73,13 +76,11 @@
     
         <div class="roulette-box-top">
             {{#if isCurrentYearCompleted}}
-                <h4>Current year: {{currentYear}}</h4>
-                <div>Inventory: ${{currentInventory}}</div>
+                <div>Inventory invested in {{currentYear}}</div>
+                <div>New Total: ${{currentInventory}}</div>
             {{else}}
-                <h4>Invest in {{currentYear}}</h4>
-                <div>Total Inventory to be allocated:</div>
-                <div>${{allocatedMoney}} of ${{currentInventory}}</div>
-                <div>({{allocatedPercentage}}% of 100%)</div>
+                <div>Total inventory to be allocated for investing in {{currentYear}}:</div>
+                <div>${{allocatedMoney}} of ${{currentInventory}} ({{allocatedPercentage}}% of 100%)</div>
             {{/if}}
         </div>
 
