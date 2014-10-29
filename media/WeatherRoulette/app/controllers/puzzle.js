@@ -17,6 +17,21 @@ export default Em.ObjectController.extend({
     alertContent: 'Allocate your amounts towards inventory. ' +
         'When you are finished, click on "Invest" to see the observation.',
 
+    currentObservationCssClass: function() {
+        var s = '';
+        var obs = this.get('currentRound.rainfallObservation');
+
+        if (obs === 'Above') {
+            s = 'roulette-wet';
+        } else if (obs === 'Normal') {
+            s = 'roulette-normal';
+        } else if (obs === 'Below') {
+            s = 'roulette-dry';
+        }
+
+        return s;
+    }.property('currentRound.rainfallObservation'),
+
     nextYear: function() {
         return this.get('currentYear') + 1;
     }.property('currentYear'),

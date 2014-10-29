@@ -9,7 +9,9 @@
         <h4>Let's Invest in {{currentYear}}!</h4>
 
         <p>
-            As a clothing retailer, you have to strategically invest in your annual inventory. The rainfall forecast (inferred amount) for {{currentYear}} is:
+            As a clothing retailer, you have to strategically invest in your
+            annual inventory. The rainfall forecast (inferred amount) for
+            {{currentYear}} is:
             <strong class="roulette-wet"
                 >{{currentRound.aboveForecast}}% Wet</strong>
                 &bull;
@@ -23,7 +25,12 @@
         {{#if isCurrentYearCompleted}}
             <div class="roulette-observed">
                 <p>
-               You now have <strong>${{currentInventory}}</strong> because the rainfall observation (actual amount) for {{currentYear}} was: <strong>{{observation}}</strong>. How did you do? 
+                    You now have <strong>${{currentInventory}}</strong> because
+                    the rainfall observation (actual amount) for
+                    {{currentYear}} was: <strong
+                        {{bind-attr class=currentObservationCssClass}}
+                        >{{currentRound.rainfallObservation}}</strong>.
+                        How did you do?
                 </p>
             </div>
         {{/if}}
