@@ -64,25 +64,33 @@ export default Em.ObjectController.extend({
         }
     }.observes('currentInventory'),
 
+    calculatePercentage: function(percentage, total) {
+        var n = percentage * (total / 100);
+        return Math.round(n);
+    },
+
     hatsToBuyPercentage: 0,
     hatsToBuy: function() {
-        var n = this.get('hatsToBuyPercentage') *
-            (this.get('currentInventory') / 100);
-        return Math.round(n);
+        return this.calculatePercentage(
+            this.get('hatsToBuyPercentage'),
+            this.get('currentInventory')
+        );
     }.property('hatsToBuyPercentage', 'currentInventory'),
 
     shirtsToBuyPercentage: 0,
     shirtsToBuy: function() {
-        var n = this.get('shirtsToBuyPercentage') *
-            (this.get('currentInventory') / 100);
-        return Math.round(n);
+        return this.calculatePercentage(
+            this.get('shirtsToBuyPercentage'),
+            this.get('currentInventory')
+        );
     }.property('shirtsToBuyPercentage', 'currentInventory'),
 
     umbrellasToBuyPercentage: 0,
     umbrellasToBuy: function() {
-        var n = this.get('umbrellasToBuyPercentage') *
-            (this.get('currentInventory') / 100);
-        return Math.round(n);
+        return this.calculatePercentage(
+            this.get('umbrellasToBuyPercentage'),
+            this.get('currentInventory')
+        );
     }.property('umbrellasToBuyPercentage', 'currentInventory'),
 
     inputArray: Em.computed.collect(

@@ -2,8 +2,6 @@
 * TODO Fix rounding problems that sometimes prevent investing
 * TODO graph should make more sense initially
 * TODO animate new forecasts
-* TODO Make the top Forecast Banner more relevant
-** TODO add intro text for first round
 * TODO autofocus input on next round button.
 * *
 =Weather Roulette Admin=

@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:puzzle', 'PuzzleController', {
-    needs: ['controller:application']
+    needs: ['controller:application', 'model:game-state']
 });
 
 test('it exists', function() {
@@ -20,20 +20,35 @@ test('resetItems clears the inputs', function() {
         umbrellasToBuyPercentage: 44
     });
 
-    ok(controller.get('hatsToBuyPercentage') === 22);
-    ok(controller.get('shirtsToBuyPercentage') === 33);
-    ok(controller.get('umbrellasToBuyPercentage') === 44);
+    equal(controller.get('hatsToBuyPercentage'), 22);
+    equal(controller.get('shirtsToBuyPercentage'), 33);
+    equal(controller.get('umbrellasToBuyPercentage'), 44);
 
     controller.resetItems();
-    ok(controller.get('hatsToBuyPercentage') === 0);
-    ok(controller.get('shirtsToBuyPercentage') === 0);
-    ok(controller.get('umbrellasToBuyPercentage') === 0);
+    equal(controller.get('hatsToBuyPercentage'), 0);
+    equal(controller.get('shirtsToBuyPercentage'), 0);
+    equal(controller.get('umbrellasToBuyPercentage'), 0);
 });
 
 test('showAlertIfBankrupt is accurate', function() {
     var controller = this.subject();
 
-    ok(controller.showAlertIfBankrupt(0) === true);
-    ok(controller.showAlertIfBankrupt(-50) === true);
-    ok(controller.showAlertIfBankrupt(500) === false);
+    equal(controller.showAlertIfBankrupt(0), true);
+    equal(controller.showAlertIfBankrupt(-50), true);
+    equal(controller.showAlertIfBankrupt(500), false);
+});
+
+/*test('hatsToBuy is accurate', function() {
+    var controller = this.subject();
+    controller.set('gameState', this.store.createRecord('game-state'));
+    controller.set('currentInventory', 90);
+    controller.set('hatsToBuyPercentage', 33);
+
+    ok(controller.get('hatsToBuy') === 29);
+});*/
+
+test('calculatePercentage is accurate', function() {
+    var controller = this.subject();
+    equal(controller.calculatePercentage(50, 100), 50);
+    equal(controller.calculatePercentage(33, 90), 30);
 });
