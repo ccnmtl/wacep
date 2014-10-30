@@ -183,17 +183,38 @@ export default Em.ObjectController.extend({
         'moves.length', 'puzzleRounds.length'),
 
     belowForecasts: function() {
+        var forecastsToShow = this.get('moves.length');
+        if (!this.get('isCurrentYearCompleted')) {
+            forecastsToShow += 1;
+        }
         return this.get('allBelowForecasts')
-            .slice(0, this.get('moves.length') + 1);
-    }.property('allBelowForecasts.@each', 'moves.length'),
+            .slice(0, forecastsToShow);
+    }.property(
+        'allBelowForecasts.@each', 'moves.length',
+        'isCurrentYearCompleted'
+    ),
     normalForecasts: function() {
+        var forecastsToShow = this.get('moves.length');
+        if (!this.get('isCurrentYearCompleted')) {
+            forecastsToShow += 1;
+        }
         return this.get('allNormalForecasts')
-            .slice(0, this.get('moves.length') + 1);
-    }.property('allNormalForecasts.@each', 'moves.length'),
+            .slice(0, forecastsToShow);
+    }.property(
+        'allNormalForecasts.@each', 'moves.length',
+        'isCurrentYearCompleted'
+    ),
     aboveForecasts: function() {
+        var forecastsToShow = this.get('moves.length');
+        if (!this.get('isCurrentYearCompleted')) {
+            forecastsToShow += 1;
+        }
         return this.get('allAboveForecasts')
-            .slice(0, this.get('moves.length') + 1);
-    }.property('allAboveForecasts.@each', 'moves.length'),
+            .slice(0, forecastsToShow);
+    }.property(
+        'allAboveForecasts.@each', 'moves.length',
+        'isCurrentYearCompleted'
+    ),
 
     puzzleObservations: function() {
         return this.get('allPuzzleObservations')
