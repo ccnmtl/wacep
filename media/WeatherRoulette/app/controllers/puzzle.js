@@ -14,8 +14,7 @@ export default Em.ObjectController.extend({
 
     alertTrigger: false,
     alertType: 'info',
-    alertContent: 'Allocate your amounts towards inventory. ' +
-        'When you are finished, click on "Invest" to see the observation.',
+    alertContent: null,
 
     currentObservationCssClass: function() {
         var s = '';
