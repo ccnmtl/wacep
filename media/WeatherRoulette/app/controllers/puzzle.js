@@ -111,7 +111,19 @@ export default Em.ObjectController.extend({
         return parseInt(n, 10);
     }),
 
-    allocatedMoney: Em.computed.sum('allItemsToBuyInt'),
+    allocatedMoney: function() {
+        var sum = 0;
+        this.get('allItemsToBuyInt').forEach(function(n) {
+            sum += n;
+        });
+
+        var currentInventory = this.get('currentInventory');
+        if (sum > currentInventory) {
+            sum = currentInventory;
+        }
+
+        return sum;
+    }.property('allItemsToBuyInt', 'currentInventory'),
 
     allocatedPercentage: function() {
         var currentInventory = this.get('currentInventory');

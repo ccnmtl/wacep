@@ -1,5 +1,4 @@
 * TODO add back investment incomplete alert
-* TODO Fix rounding problems that sometimes prevent investing
 * TODO graph should make more sense initially
 * *
 =Weather Roulette Admin=
