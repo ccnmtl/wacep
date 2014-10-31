@@ -3,11 +3,6 @@
 * TODO graph should make more sense initially
 * TODO animate new forecasts
 * TODO autofocus input on next round button.
-* TODO Puzzle bug:
-  In practice game, make one move. Go to next round.
-  Click Games, Practice game, click Play.
-  CurrentYear will be the second round (2001), but there will be no existing
-  moves in the GameState.
 * *
 =Weather Roulette Admin=
 * TODO 11. System should show graphical representation of how participants
