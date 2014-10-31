@@ -341,11 +341,12 @@ export default Em.ObjectController.extend({
     deleteMoves: function() {
         Em.debug('controller:puzzle deleteMoves');
 
-        if (this.get('puzzleRounds')) {
+        var puzzleRounds = this.get('puzzleRounds');
+        if (puzzleRounds) {
             var gameState = this.get('gameState');
             gameState.set(
                 'currentRound',
-                this.get('puzzleRounds').sortBy('year').get('firstObject'));
+                puzzleRounds.sortBy('year').get('firstObject'));
         }
 
 
