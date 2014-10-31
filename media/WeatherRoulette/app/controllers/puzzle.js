@@ -123,7 +123,7 @@ export default Em.ObjectController.extend({
         return Math.round(n);
     }.property('allocatedMoney', 'currentInventory'),
 
-    isEverythingAllocated: Em.computed.equal('allocatedPercentage', 100),
+    isEverythingAllocated: Em.computed.equal('inputSum', 100),
     isEverythingNotAllocated: Em.computed.not('isEverythingAllocated'),
 
     isCurrentYearCompleted: function() {
