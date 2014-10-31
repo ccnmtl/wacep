@@ -4,7 +4,7 @@ test: ./node_modules ./bower_components
 	${EMBER} test
 
 dist: ./node_modules ./bower_components
-	${EMBER} build
+	${EMBER} build --environment=production
 
 clean:
 	rm -rf node_modules bower_components dist tmp
