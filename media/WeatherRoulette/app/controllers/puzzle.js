@@ -139,9 +139,14 @@ export default Em.ObjectController.extend({
     isEverythingNotAllocated: Em.computed.not('isEverythingAllocated'),
 
     isCurrentYearCompleted: function() {
-        return !!this.get('moves').findBy(
-            'year', this.get('currentYear'));
+        var moves = this.get('moves');
+        if (!moves || !moves.get('firstObject.year')) {
+            Em.debug('no moves, returning false');
+            return false;
+        }
+        return !!moves.findBy('year', this.get('currentYear'));
     }.property('moves.@each.year', 'currentYear'),
+    isCurrentYearNotCompleted: Em.computed.not('isCurrentYearCompleted'),
 
     hatsBought: Em.computed.mapBy('moves', 'hats'),
     shirtsBought: Em.computed.mapBy('moves', 'shirts'),

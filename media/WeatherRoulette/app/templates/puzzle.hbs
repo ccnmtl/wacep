@@ -6,16 +6,7 @@
 
 <div class="roulette-section roulette-betting-area">
     <div class="col-md-4"><div class="roulette-forecast well">
-        {{#if isCurrentYearCompleted}}
-            <div class="roulette-observed">
-                <p>The rainfall observation (actual amount) for {{currentYear}} was:</p>
-                <h4 {{bind-attr class=currentObservationCssClass}}
-                    ><strong>{{currentRound.rainfallObservation}}</strong></h4>
-                <p>
-                    You now have <strong>${{currentInventory}}</strong>. How did you do?
-                </p>
-            </div>
-        {{else}}
+        {{#if isCurrentYearNotCompleted}}
             <h4>Let's Invest in {{currentYear}}!</h4>
 
             <p>
@@ -32,6 +23,15 @@
                         >{{currentRound.belowForecast}}% Dry</strong>
                 </div>
             </p>
+        {{else}}
+            <div class="roulette-observed">
+                <p>The rainfall observation (actual amount) for {{currentYear}} was:</p>
+                <h4 {{bind-attr class=currentObservationCssClass}}
+                    ><strong>{{currentRound.rainfallObservation}}</strong></h4>
+                <p>
+                    You now have <strong>${{currentInventory}}</strong>. How did you do?
+                </p>
+            </div>
         {{/if}}
     </div></div>
     <div class="col-md-2 roulette-box roulette-bg-wet" id="left">
