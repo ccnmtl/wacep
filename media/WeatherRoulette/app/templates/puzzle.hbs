@@ -6,36 +6,32 @@
 
 <div class="roulette-section roulette-betting-area">
     <div class="col-md-4"><div class="roulette-forecast well">
-        <h4>Let's Invest in {{currentYear}}!</h4>
-
-        <p>
-            As a clothing retailer, you have to strategically invest in your
-            annual inventory.
-            <div class="roulette-forecast-now">
-                The rainfall forecast (inferred amount) for
-                {{currentYear}} is:
-                <strong class="roulette-wet"
-                    >{{currentRound.aboveForecast}}% Wet</strong>
-                    &bull;
-                <strong class="roulette-normal"
-                    >{{currentRound.normalForecast}}% Normal</strong>
-                    &bull;
-                <strong class="roulette-dry"
-                    >{{currentRound.belowForecast}}% Dry</strong>
-            </div>
-        </p>
-        
         {{#if isCurrentYearCompleted}}
             <div class="roulette-observed">
+                <p>The rainfall observation (actual amount) for {{currentYear}} was:</p>
+                <h4 {{bind-attr class=currentObservationCssClass}}
+                    ><strong>{{currentRound.rainfallObservation}}</strong></h4>
                 <p>
-                    You now have <strong>${{currentInventory}}</strong> because
-                    the rainfall observation (actual amount) for
-                    {{currentYear}} was: <strong
-                        {{bind-attr class=currentObservationCssClass}}
-                        >{{currentRound.rainfallObservation}}</strong>.
-                        How did you do?
+                    You now have <strong>${{currentInventory}}</strong>. How did you do?
                 </p>
             </div>
+        {{else}}
+            <h4>Let's Invest in {{currentYear}}!</h4>
+
+            <p>
+                As a clothing retailer, you have to strategically invest in your
+                annual inventory.
+                <div class="roulette-forecast-now">
+                    The rainfall forecast (inferred amount) for
+                    {{currentYear}} is:
+                    <strong class="roulette-wet"
+                        >{{currentRound.aboveForecast}}% Wet</strong> &bull;
+                    <strong class="roulette-normal"
+                        >{{currentRound.normalForecast}}% Normal</strong> &bull;
+                    <strong class="roulette-dry"
+                        >{{currentRound.belowForecast}}% Dry</strong>
+                </div>
+            </p>
         {{/if}}
     </div></div>
     <div class="col-md-2 roulette-box roulette-bg-wet" id="left">
