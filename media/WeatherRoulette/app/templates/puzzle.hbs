@@ -10,16 +10,19 @@
 
         <p>
             As a clothing retailer, you have to strategically invest in your
-            annual inventory.<br /> The rainfall forecast (inferred amount) for
-            {{currentYear}} is:
-            <strong class="roulette-wet"
-                >{{currentRound.aboveForecast}}% Wet</strong>
-                &bull;
-            <strong class="roulette-normal"
+            annual inventory.
+            <div class="roulette-forecast-now">
+                The rainfall forecast (inferred amount) for
+                {{currentYear}} is:
+                <strong class="roulette-wet"
+                    >{{currentRound.aboveForecast}}% Wet</strong>
+                    &bull;
+                <strong class="roulette-normal"
                     >{{currentRound.normalForecast}}% Normal</strong>
-                &bull;
-            <strong class="roulette-dry"
-                >{{currentRound.belowForecast}}% Dry</strong>
+                    &bull;
+                <strong class="roulette-dry"
+                    >{{currentRound.belowForecast}}% Dry</strong>
+            </div>
         </p>
         
         {{#if isCurrentYearCompleted}}

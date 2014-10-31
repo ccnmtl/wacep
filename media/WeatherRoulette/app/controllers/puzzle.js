@@ -258,6 +258,9 @@ export default Em.ObjectController.extend({
 
         this.set('alertContent', null);
         gameState.set('currentRound', newRound);
+
+        Em.$('.roulette-forecast-now').effect('shake');
+
         return gameState.save()
             .catch(function(error) {
                 console.error('gameState save failed', error);
