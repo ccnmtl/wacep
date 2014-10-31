@@ -1,8 +1,6 @@
 * TODO add back investment incomplete alert
 * TODO Fix rounding problems that sometimes prevent investing
 * TODO graph should make more sense initially
-* TODO animate new forecasts
-* TODO autofocus input on next round button.
 * *
 =Weather Roulette Admin=
 * TODO 11. System should show graphical representation of how participants
