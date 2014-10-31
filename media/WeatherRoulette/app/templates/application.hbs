@@ -3,7 +3,17 @@
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            {{#link-to 'index' class="navbar-brand"}}Weather Roulette{{/link-to}}
+            {{#link-to 'index' class="navbar-brand"}}
+            WACEP Weather Roulette
+            {{/link-to}}
+
+            {{#if currentPuzzle}}
+                <div class="navbar-brand disabled" style="color:#777;"
+                    >&ndash;</div>
+                {{#link-to 'puzzle' currentPuzzle class="navbar-brand"}}
+                {{currentPuzzle.displayName}}
+                {{/link-to}}
+            {{/if}}
         </div>
 
         <ul class="nav navbar-nav navbar-right">

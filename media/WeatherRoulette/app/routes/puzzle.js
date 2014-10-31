@@ -7,6 +7,9 @@ import Em from 'ember';
  */
 export default Em.Route.extend({
     actions: {
+        loading: function() {
+            Em.debug('route:puzzle loading');
+        },
         showBankruptAlert: function() {
             return this.render('puzzle-bankrupt-modal', {
                 into: 'application',
@@ -24,7 +27,8 @@ export default Em.Route.extend({
     },
 
     model: function(params, transition) {
-        if (this.controllerFor('application').get('isAuthorized')) {
+        var applicationController = this.controllerFor('application');
+        if (applicationController.get('isAuthorized')) {
             return this._super(params, transition);
         }
     },
@@ -32,6 +36,10 @@ export default Em.Route.extend({
     setupController: function(controller, model) {
         Em.debug('route:puzzle setupController');
         this._super(controller, model);
+
+        var applicationController = this.controllerFor('application');
+        applicationController.set('currentPuzzle', model);
+
         var promises = [];
 
         // When setting up the puzzle controller, we'll need the puzzle rounds
