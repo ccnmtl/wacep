@@ -269,6 +269,7 @@ export default Em.ObjectController.extend({
         var newRound = this.get('puzzleRounds').findBy('year', newYear);
 
         this.set('alertContent', null);
+        this.resetItems();
         gameState.set('currentRound', newRound);
 
         Em.$('.roulette-forecast-now').effect('shake');
@@ -310,7 +311,6 @@ export default Em.ObjectController.extend({
         return move.save()
             .then(function(move) {
                 // success
-                me.resetItems();
                 me.set('currentInventory', move.get('endingInventory'));
                 return me.get('gameState').save();
             }, function(reason) {
