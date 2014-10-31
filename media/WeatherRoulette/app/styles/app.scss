@@ -116,8 +116,11 @@ ul.roulette-puzzle-list {
 }
 
 .roulette-section {
-    padding-top: 10px;
     clear: both;
+
+    &.roulette-betting-area {
+        margin-top: 40px;
+    }
     
 	#left 
 	{
@@ -190,6 +193,10 @@ ul.roulette-puzzle-list {
 
         th, td {
             border: none;
+            padding: 4px;
+            &:first-child {
+                padding-left: 8px;
+            }
         }
 
         th,

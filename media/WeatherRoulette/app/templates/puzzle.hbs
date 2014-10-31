@@ -1,11 +1,11 @@
+{{#if alertContent}}
 <div class="roulette-section">
-    <h1 class="roulette-game-title">Weather Roulette</h1>
-    <h4>{{displayName}}: {{description}}</h4>
+{{view "alert"}}
 </div>
+{{/if}}
 
-<div class="roulette-section">
-    <div class="roulette-forecast well">
-
+<div class="roulette-section roulette-betting-area">
+    <div class="col-md-4"><div class="roulette-forecast well">
         <h4>Let's Invest in {{currentYear}}!</h4>
 
         <p>
@@ -37,18 +37,8 @@
                 </p>
             </div>
         {{/if}}
-
-    </div>
-</div>
-
-{{#if alertContent}}
-<div class="roulette-section">
-{{view "alert"}}
-</div>
-{{/if}}
-
-<div class="roulette-section roulette-betting-area">
-    <div class="col-md-3 roulette-box roulette-bg-wet" id="left">
+    </div></div>
+    <div class="col-md-2 roulette-box roulette-bg-wet" id="left">
         <div class="roulette-climage-img">
             <img src="img/umbrella.png" height="100" />
         </div>
@@ -60,7 +50,7 @@
             content=inputSum
             autofocus="autofocus"}} %
     </div>
-    <div class="col-md-3 roulette-box roulette-bg-normal">
+    <div class="col-md-2 roulette-box roulette-bg-normal">
         <div class="roulette-climage-img">
             <img src="img/shirt.png" height="100" />
         </div>
@@ -71,7 +61,7 @@
             disabled=isCurrentYearCompleted
             content=inputSum}} %
     </div>
-    <div class="col-md-3 roulette-box roulette-bg-dry">
+    <div class="col-md-2 roulette-box roulette-bg-dry">
         <div class="roulette-climage-img">
             <img src="img/hat.png" height="100" />
         </div>
@@ -82,15 +72,19 @@
             disabled=isCurrentYearCompleted
             content=inputSum}} %
     </div>
-    <div class="col-md-3 roulette-box roulette-box-info" id="right">
+    <div class="col-md-2 roulette-box roulette-box-info" id="right">
     
         <div class="roulette-box-top">
             {{#if isCurrentYearCompleted}}
                 <div>Inventory invested in {{currentYear}}</div>
                 <div>New Total: ${{currentInventory}}</div>
             {{else}}
-                <div>Total inventory to be allocated for investing in {{currentYear}}:</div>
-                <div>${{allocatedMoney}} of ${{currentInventory}} ({{allocatedPercentage}}% of 100%)</div>
+                <div>Inventory in {{currentYear}}:</div>
+                <div>
+                    ${{allocatedMoney}} of ${{currentInventory}}
+                    <br />
+                    ({{allocatedPercentage}}% of 100%)
+                </div>
             {{/if}}
         </div>
 
