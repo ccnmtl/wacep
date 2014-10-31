@@ -3,15 +3,17 @@
         <h4>Select a Game</h4>
     </div>
     <div class="roulette-modal-body">
-        <ul class="roulette-puzzle-list">
+        <div class="roulette-puzzle-list">
             {{#each puzzle in content}}
                 {{#puzzle-list-item puzzle=puzzle selected=selectedPuzzle}}
-                    <a href="#" {{action 'selectPuzzle' puzzle
-                        }}>{{puzzle.displayName}}</a>
-                    &ndash; {{puzzle.description}}
+                    <label>
+                        <input type="radio" name="roulette-game-button">
+                        <strong>{{puzzle.displayName}}</strong>
+                        &ndash; {{puzzle.description}}
+                    </label>
                 {{/puzzle-list-item}}
             {{/each}}
-        </ul>
+        </div>
     </div>
     <div class="roulette-modal-footer">
         <button {{action "closeModal"}}
