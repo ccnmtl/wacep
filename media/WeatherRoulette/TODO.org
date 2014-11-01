@@ -1,6 +1,8 @@
 * TODO add back investment incomplete alert
 * TODO graph should make more sense initially
 * TODO bug: going bankrupt on the last round is recognized as finished
+* TODO secret player / forecast betting
+* TODO handle return key in inputs
 * *
 =Weather Roulette Admin=
 * TODO 11. System should show graphical representation of how participants
