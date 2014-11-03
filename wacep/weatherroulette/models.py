@@ -84,7 +84,7 @@ class Puzzle(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['display_name']
+        ordering = ['id']
 
     def __unicode__(self):
         return unicode(self.display_name)
