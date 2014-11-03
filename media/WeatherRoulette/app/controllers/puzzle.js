@@ -31,6 +31,21 @@ export default Em.ObjectController.extend({
         return s;
     }.property('currentRound.rainfallObservation'),
 
+    currentObservationText: function() {
+        var s = '';
+        var obs = this.get('currentRound.rainfallObservation');
+
+        if (obs === 'Above') {
+            s = 'rainy';
+        } else if (obs === 'Normal') {
+            s = 'average';
+        } else if (obs === 'Below') {
+            s = 'dry';
+        }
+
+        return s;
+    }.property('currentRound.rainfallObservation'),
+
     nextYear: function() {
         return this.get('currentYear') + 1;
     }.property('currentYear'),

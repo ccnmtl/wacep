@@ -9,8 +9,10 @@
                     <label>
                         {{radio-button name='roulette-game-button' value=puzzle
                             groupValue=selectedPuzzle}}
-                        <strong>{{puzzle.displayName}}</strong>
-                        &ndash; {{puzzle.description}}
+                            <strong>{{puzzle.displayName}}</strong>
+                            {{#if puzzle.description}}
+                                &ndash; {{puzzle.description}}
+                            {{/if}}
                     </label>
                 </div>
             {{/each}}

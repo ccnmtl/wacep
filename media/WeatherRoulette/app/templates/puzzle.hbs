@@ -10,8 +10,7 @@
             <h4>Let's Invest in {{currentYear}}!</h4>
 
             <p>
-                As a clothing retailer, you have to strategically invest in your
-                annual inventory.
+                The seasonal forecast gives a {{currentRound.aboveForecast}}% chance of above-average rainfall, a {{currentRound.normalForecast}}% chance of average rainfall, and a {{currentRound.belowForecast}}% chance of below-average rainfall (see table below). Now it's time for you to invest in your goods for the coming season. You currently have ${{currentInventory}}, please use the interface below to invest in umbrellas, shirts, and/or sun hats.
                 <div class="roulette-forecast-now">
                     The rainfall forecast (inferred amount) for
                     {{currentYear}} is:
@@ -25,11 +24,11 @@
             </p>
         {{else}}
             <div class="roulette-observed">
-                <p>The rainfall observation (actual amount) for {{currentYear}} was:</p>
-                <h4 {{bind-attr class=currentObservationCssClass}}
-                    ><strong>{{currentRound.rainfallObservation}}</strong></h4>
                 <p>
-                    You now have <strong>${{currentInventory}}</strong>. How did you do?
+                    The season turned out to be <strong
+                        {{bind-attr class=currentObservationCssClass}}>{{currentObservationText}}</strong>.
+                        Based on your investments, you sold X (number of) (umbrellas/shirts/sun hats) and you (made/lost) $X.
+                        You now have <strong>${{currentInventory}}</strong> with which to invest in next year's goods.
                 </p>
             </div>
         {{/if}}

@@ -3,13 +3,18 @@
         <h4>Game Completed</h4>
     </div>
     <div class="roulette-modal-body">
+        {{#if isPracticeGame}}
+            <p>
+                Congratulations! You've successfully completed the practice game. If you have questions about how this game worked, re-read the rules and try the practice game again. Please take this chance to think about what you learned so you can apply it to the full game. If you go bankrupt in the full game, you will not be able to restart and the game will be over.
+            </p>
+        {{else}}
         <p>
             Congratulations! You completed the game with ${{currentInventory}}.
         </p>
+        {{/if}}
         {{#if hasSecretPlayer}}
             <p>
-                See the secret player at the bottom of the page for the optimal
-                betting strategy.
+                The optimal strategy for this game is shown in table below. As you can see, the way to get the most reliable growth of profit is to distribute your wholesale purchases proportional to the forecast. For example, if the forecast calls for 20% below-average, 30% average, and 50% above average, the optimal strategy would entail the purchase (given a starting bank of $100) of $20 of sun-hats, $30 of t-shirts, and $50 of umbrellas. Although you may never have a huge profit, you are distributing your risk such that you will also likely never go bankrupt.
             </p>
         {{/if}}
     </div>
