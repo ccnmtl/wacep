@@ -8,6 +8,16 @@ import Em from 'ember';
 export default Em.ObjectController.extend({
     needs: ['application'],
 
+    actions: {
+        invest: function() {
+            return this.invest();
+        },
+
+        goToYear: function(newYear) {
+            return this.goToYear(newYear);
+        }
+    },
+
     gameState: Em.computed.alias('controllers.application.model'),
     currentRound: Em.computed.alias('gameState.currentRound'),
     currentYear: Em.computed.alias('currentRound.year'),
@@ -238,35 +248,6 @@ export default Em.ObjectController.extend({
     }.property('allObservationGraphValues',
         'moves.length', 'puzzleRounds.length'),
 
-    /**
-     * Pad the input array with nulls, for the remaining slots up to
-     * totalLength
-     *
-     * array: An Ember array
-     * totalLength: an integer
-     */
-    padArrayForAllRounds: function(a, totalLength) {
-        var currentLength = a.get('length');
-        var paddedArray = [];
-
-        a.forEach(function(item) {
-            paddedArray.push(item);
-        });
-
-        for (
-            var i = 0; i < totalLength - currentLength; i++
-        ) {
-            paddedArray.push(null);
-        }
-
-        return paddedArray;
-    },
-
-    hideFutureRounds: function(dataForAllRounds, nRoundsToShow) {
-        var a = dataForAllRounds.slice(0, nRoundsToShow);
-        return this.padArrayForAllRounds(a, dataForAllRounds.get('length'));
-    },
-
     belowForecasts: function() {
         var forecastsToShow = this.get('moves.length');
         if (!this.get('isCurrentYearCompleted')) {
@@ -306,14 +287,33 @@ export default Em.ObjectController.extend({
             this.get('allPuzzleObservations'), this.get('moves.length'));
     }.property('allPuzzleObservations.@each', 'moves.length'),
 
-    actions: {
-        invest: function() {
-            return this.invest();
-        },
+    /**
+     * Pad the input array with nulls, for the remaining slots up to
+     * totalLength
+     *
+     * array: An Ember array
+     * totalLength: an integer
+     */
+    padArrayForAllRounds: function(a, totalLength) {
+        var currentLength = a.get('length');
+        var paddedArray = [];
 
-        goToYear: function(newYear) {
-            return this.goToYear(newYear);
+        a.forEach(function(item) {
+            paddedArray.push(item);
+        });
+
+        for (
+            var i = 0; i < totalLength - currentLength; i++
+        ) {
+            paddedArray.push(null);
         }
+
+        return paddedArray;
+    },
+
+    hideFutureRounds: function(dataForAllRounds, nRoundsToShow) {
+        var a = dataForAllRounds.slice(0, nRoundsToShow);
+        return this.padArrayForAllRounds(a, dataForAllRounds.get('length'));
     },
 
     /**
@@ -403,7 +403,9 @@ export default Em.ObjectController.extend({
             if (me.get('isCurrentYearLastYear')) {
                 Em.debug('on last year');
             }
-            if (me.get('isPuzzleCompleted')) {
+            if (me.showAlertIfBankrupt(me.get('currentInventory'))) {
+                return false;
+            } else if (me.get('isPuzzleCompleted')) {
                 Em.debug('puzzle is done!');
                 me.send('showPuzzleFinishedModal');
             }
@@ -454,6 +456,11 @@ export default Em.ObjectController.extend({
     resetGame: function() {
         Em.debug('controller:puzzle resetGame');
         this.resetItems();
+        this.setProperties({
+            alertTrigger: false,
+            alertContent: '',
+            alertType: 'info'
+        });
 
         var gameState = this.get('gameState');
         gameState.set('currentRound',

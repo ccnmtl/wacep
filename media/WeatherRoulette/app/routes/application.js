@@ -43,16 +43,16 @@ export default Em.Route.extend({
             var puzzleController = this.controllerFor('puzzle');
             var gameState = puzzleController.get('gameState');
 
+            var me = this;
             // Delete the global GameState's moves
-            puzzleController.deleteMoves();
+            return puzzleController.resetGame().then(function() {
+                // Set the new inventory
+                gameState.set(
+                    'currentInventory', puzzle.get('startingInventory'));
 
-            // Set the new inventory
-            gameState.set(
-                'currentInventory', puzzle.get('startingInventory'));
-
-            this.transitionTo('puzzle', puzzle);
-            this.send('closeModal');
-            return true;
+                me.transitionTo('puzzle', puzzle);
+                me.send('closeModal');
+            });
         }
     },
 
