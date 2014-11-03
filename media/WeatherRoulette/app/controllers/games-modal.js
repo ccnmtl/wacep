@@ -25,5 +25,8 @@ export default Em.ArrayController.extend({
     model: function() {
         Em.debug('controller:games-modal model');
         return this.get('store').find('puzzle');
-    }.property()
+    }.property(),
+
+    sortProperties: ['id'],
+    sortAscending: true
 });
