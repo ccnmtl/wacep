@@ -11,7 +11,8 @@ export default Em.TextField.extend({
         // Don't let the user allocate more than 100%
         var inputSum = this.get('content');
         if (inputSum > 100) {
-            this.set('value', 100 - (inputSum - e.target.value));
+            var newVal = 100 - (inputSum - e.target.value);
+            this.set('value', newVal);
         }
     },
 
@@ -26,7 +27,8 @@ export default Em.TextField.extend({
 
         // User's input didn't parse to a valid value, so change it.
         if (newValue > 100) {
-            newValue = 100;
+            Em.$(e.target).trigger('change');
+            return;
         } else if (
             newValue < 0 || !isFinite(newValue)
         ) {
