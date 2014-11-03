@@ -16,35 +16,27 @@ export default Em.ObjectController.extend({
     alertType: 'info',
     alertContent: null,
 
-    currentObservationCssClass: function() {
-        var s = '';
+    // Dynamic text for when the player completes a round.
+    currentObservationTextObject: function() {
+        var o = {};
         var obs = this.get('currentRound.rainfallObservation');
 
         if (obs === 'Above') {
-            s = 'roulette-wet';
+            o.cssClass = 'roulette-wet';
+            o.text = 'rainy';
+            o.soldItemType = 'umbrellas';
         } else if (obs === 'Normal') {
-            s = 'roulette-normal';
+            o.cssClass = 'roulette-normal';
+            o.text = 'average';
+            o.soldItemType = 'shirts';
         } else if (obs === 'Below') {
-            s = 'roulette-dry';
+            o.cssClass = 'roulette-dry';
+            o.text = 'dry';
+            o.soldItemType = 'sun hats';
         }
 
-        return s;
-    }.property('currentRound.rainfallObservation'),
-
-    currentObservationText: function() {
-        var s = '';
-        var obs = this.get('currentRound.rainfallObservation');
-
-        if (obs === 'Above') {
-            s = 'rainy';
-        } else if (obs === 'Normal') {
-            s = 'average';
-        } else if (obs === 'Below') {
-            s = 'dry';
-        }
-
-        return s;
-    }.property('currentRound.rainfallObservation'),
+        return o;
+    }.property('currentRound', 'currentRound.rainfallObservation'),
 
     nextYear: function() {
         return this.get('currentYear') + 1;

@@ -26,9 +26,13 @@
             <div class="roulette-observed">
                 <p>
                     The season turned out to be <strong
-                        {{bind-attr class=currentObservationCssClass}}>{{currentObservationText}}</strong>.
-                        Based on your investments, you sold X (number of) (umbrellas/shirts/sun hats) and you (made/lost) $X.
-                        You now have <strong>${{currentInventory}}</strong> with which to invest in next year's goods.
+                        {{bind-attr class=currentObservationTextObject.cssClass}}
+                        >{{currentObservationTextObject.text}}</strong>.
+                        Based on your investments, you sold X (number of)
+                        {{currentObservationTextObject.soldItemType}}
+                        and you (made/lost) $X.
+                        You now have <strong>${{currentInventory}}</strong>
+                        with which to invest in next year's goods.
                 </p>
             </div>
         {{/if}}
