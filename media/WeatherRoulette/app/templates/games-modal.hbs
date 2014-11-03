@@ -5,13 +5,14 @@
     <div class="roulette-modal-body">
         <div class="roulette-puzzle-list">
             {{#each puzzle in content}}
-                {{#puzzle-list-item puzzle=puzzle selected=selectedPuzzle}}
+                <div class="radio">
                     <label>
-                        <input type="radio" name="roulette-game-button">
+                        {{radio-button name='roulette-game-button' value=puzzle
+                            groupValue=selectedPuzzle}}
                         <strong>{{puzzle.displayName}}</strong>
                         &ndash; {{puzzle.description}}
                     </label>
-                {{/puzzle-list-item}}
+                </div>
             {{/each}}
         </div>
     </div>

@@ -15,13 +15,15 @@ export default Em.ArrayController.extend({
             return true;
         },
         selectPuzzle: function(puzzle) {
+            Em.debug('controller:games-modal selectPuzzle');
             return this.set('selectedPuzzle', puzzle);
         }
     },
 
-    selectedPuzzle: Em.computed.alias('model.firstObject'),
+    selectedPuzzle: null,
 
     model: function() {
+        Em.debug('controller:games-modal model');
         return this.get('store').find('puzzle');
     }.property()
 });
