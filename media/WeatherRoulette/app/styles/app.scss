@@ -42,9 +42,10 @@ a {
     border-bottom: 1px solid #e5e5e5;
 }
 .roulette-modal-body {
-    max-height: 100%;
+    max-height: 320px;
     height: 85%;
     position: relative;
+    overflow-y: auto;
 }
 .roulette-modal-footer {
     text-align: right;

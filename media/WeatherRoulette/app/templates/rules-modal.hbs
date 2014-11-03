@@ -4,8 +4,48 @@
     </div>
     <div class="roulette-modal-body">
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            You are a store owner who specializes in the seasonal supplies of umbrellas, shirts, and sun-hats. You can buy each of these supplies from the wholesaler for $1 each, and you sell each item for $3. You are provided a seasonal forecast that you can use to help you decide how many of each supply to purchase.
         </p>
+
+        <p>
+            Seasonal forecasts indicate the probability that temperatures or rainfall in a region will fall into one of three categories – above-normal, below-normal or near-normal — during a specified period. The three categories are defined using historical climate data in the region. All the past years are ranked in order of rainfall (or temperature) and one-third are placed into each category to create a distribution. Thus the default probability for any one of the categories is 33.3%. If climate models indicate that patterns for an upcoming season are likely to cause more or less rainfall (or higher or lower temperature), scientists adjust the probabilities for each category in the seasonal forecast. For this game, we will only look at rainfall forecasts.
+        </p>
+
+        <p>
+            Your customers are practical, so you can only sell items that help customers with the weather:<br />
+            If rainfall during a given year is "above-normal" you can sell only umbrellas.<br />
+            If rainfall during the year is "normal" you can sell only shirts.<br />
+            If rainfall is "below-normal" you can sell only sun hats.<br />
+        </p>
+
+        <p>
+            You customers are also fashion-conscious and demand the latest trends in your goods each year, so you cannot keep in your inventory anything that you do not sell in a given year. You therefore begin each year with zero inventory.
+        </p>
+
+        <p>
+            The government will take as tax any money you do not use to stock your store (or lend to shop owners that have gone bust). You therefore must spend everything you have to stock your store at the beginning of the season.
+        </p>
+
+        <p>
+            Finally, profits or losses at the end of a season will carry over to the next year. If you go bankrupt during a year, the game will end. The goal is to develop a sensible strategy for investment allocation such that you maximize profit without engaging in risky investments that may result in heavy losses.
+        </p>
+
+        <p>
+            In the first round, you will start with $100.
+        </p>
+
+        <p>
+            Example:<br />
+            You have $100, and based on the seasonal forecast you decide to buy: 50 umbrellas, 30 shirts, and 20 sun hats. Rainfall turns out to be above-normal. You therefore sell 50 umbrellas at $3 each, and so now have $150 for next year's supplies.
+        </p>
+
+        <p>
+            Note:<br />
+            If you buy equal numbers of umbrellas, shirts, and hats, you will break even.
+            You can maximize your expected profit by spending all your money on the one item you think is most likely to sell. BUT, this means you will have a VERY small chance of making a massive profit, and a VERY high chance of going bankrupt! So invest wisely.
+            You have no information as to whether the forecasts are good or bad or whether there is a trend in the forecasts.
+        </p>
+
     </div>
     <div class="roulette-modal-footer">
         <button {{action "closeModal"}}
