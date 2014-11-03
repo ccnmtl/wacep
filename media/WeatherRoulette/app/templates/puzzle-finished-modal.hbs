@@ -19,6 +19,7 @@
             </p>
         {{/if}}
 
+        {{#unless isPracticeGame}}
         <div class="roulette-lessons-learned">
             <h3>Lessons Learned</h3>
             <p>
@@ -38,6 +39,7 @@
                 {{{lessonsLearned}}}
             {{/if}}
         </div>
+        {{/unless}}
     </div>
     <div class="roulette-modal-footer">
         <a class="btn btn-primary" {{action "closeModal"}}>OK</a>
