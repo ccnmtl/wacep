@@ -4,6 +4,7 @@ import Em from 'ember';
 var Puzzle = DS.Model.extend({
     displayName: DS.attr('string'),
     slug: DS.attr('string'),
+    lessonsLearned: DS.attr('string'),
     description: DS.attr('string'),
     isLocked: DS.attr('boolean'),
     hasSecretPlayer: DS.attr('boolean'),
@@ -11,6 +12,8 @@ var Puzzle = DS.Model.extend({
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date'),
     puzzleRounds: DS.hasMany('puzzle-round', {async: true}),
+
+    isPracticeGame: Em.computed.equal('displayName', 'Practice Game'),
 
     // Spreadsheet properties
     years: Em.computed.mapBy('puzzleRounds', 'year'),
