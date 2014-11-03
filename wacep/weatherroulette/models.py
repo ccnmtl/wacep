@@ -79,7 +79,7 @@ class Puzzle(models.Model):
     lessons_learned = models.TextField(blank=True)
     is_locked = models.BooleanField(default=False)
     has_secret_player = models.BooleanField(default=False)
-    starting_inventory = models.PositiveIntegerField(default=300)
+    starting_inventory = models.PositiveIntegerField(default=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

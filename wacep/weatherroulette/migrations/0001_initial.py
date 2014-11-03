@@ -47,7 +47,7 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('is_locked', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('has_secret_player', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('starting_inventory', self.gf('django.db.models.fields.PositiveIntegerField')(default=300)),
+            ('starting_inventory', self.gf('django.db.models.fields.PositiveIntegerField')(default=100)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
@@ -154,7 +154,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_locked': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique_with': '()', 'max_length': '50', 'populate_from': "'display_name'"}),
-            'starting_inventory': ('django.db.models.fields.PositiveIntegerField', [], {'default': '300'}),
+            'starting_inventory': ('django.db.models.fields.PositiveIntegerField', [], {'default': '100'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         u'weatherroulette.puzzleround': {
