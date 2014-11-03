@@ -71,6 +71,8 @@
                     <td class="border roulette-bg-wet-light">
                         {{#if investment}}
                             {{investment}}%
+                        {{else}}
+                            {{umbrellasToBuyPercentage}}%
                         {{/if}}
                     </td>
                 {{/each}}
@@ -82,6 +84,8 @@
                     <td class="roulette-bg-normal-light">
                         {{#if investment}}
                             {{investment}}%
+                        {{else}}
+                            {{shirtsToBuyPercentage}}%
                         {{/if}}
                     </td>
                 {{/each}}
@@ -93,6 +97,8 @@
                     <td class="roulette-bg-dry-light">
                         {{#if investment}}
                             {{investment}}%
+                        {{else}}
+                            {{hatsToBuyPercentage}}%
                         {{/if}}
                     </td>
                 {{/each}}
