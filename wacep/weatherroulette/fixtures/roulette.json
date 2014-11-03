@@ -15,6 +15,7 @@
         "fields": {
             "display_name": "Simon's Game",
             "slug": "simons-game",
+            "lessons_learned": "<p>The forecasts and observations are drawn from a real operational set of forecasts and observations, but the location and years are not revealed so that the participants cannot use any prior knowledge.</p><p>For Discussion:<br /> Prior to the game, no information as to whether the forecasts were good or bad. Were the forecasts any good? What type of information on the quality of the forecasts would have useful? Was there any of forecast \"hedging\"? If so, how did this impact the usefulness of the forecasts?</p>",
             "is_locked": true,
             "has_secret_player": true,
             "created_at": "2014-10-07T15:43:59.807Z",
@@ -27,6 +28,7 @@
         "fields": {
             "display_name": "WACEP Game 1",
             "slug": "wacep-game-1",
+            "lessons_learned": "<p>The water sector generally plans for the worst-case scenario, and there are opportunity costs associated with doing so. However, bad outcomes for the water sector can be catastrophic, so in that sense it is often logical to plan for the worst case. In the game there is an assumed linear utility curve, a dollar gained is equal to a dollar lost in terms of impact. But in practice, failures are much more impactful than successes.</p>",
             "is_locked": true,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
@@ -38,6 +40,7 @@
         "fields": {
             "display_name": "WACEP Game 2",
             "slug": "wacep-game-2",
+            "lessons_learned": "<p>The drying trend presented in this game is consistent with the long-term climate change projections for the Caribbean. Even with this trend, interannual and decadal scale climate variations will influence the climate in a given season.</p><p>The influence of long-term climate change on the end of stationarity and reliability underscores that water resources planning must be flexible, use forecasts at a range of timescales, and incorporate knowledge from multiple disciplines. Seasonal forecasts such as those demonstrated in this game are just one component in water resources decision-making.</p><p>Finally, the water sector generally plans for the worst-case scenario, and there are opportunity costs associated with doing so. However, bad outcomes for the water sector can be catastrophic, so in that sense it is often logical to plan for the worst case. In the game there is an assumed linear utility curve, a dollar gained is equal to a dollar lost in terms of impact. But in practice, failures are much more impactful than successes.</p>",
             "is_locked": true,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"

@@ -76,6 +76,7 @@ class Puzzle(models.Model):
     display_name = models.TextField()
     slug = AutoSlugField(populate_from='display_name')
     description = models.TextField(blank=True)
+    lessons_learned = models.TextField(blank=True)
     is_locked = models.BooleanField(default=False)
     has_secret_player = models.BooleanField(default=False)
     starting_inventory = models.PositiveIntegerField(default=300)
