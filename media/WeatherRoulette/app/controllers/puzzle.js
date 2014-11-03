@@ -463,8 +463,11 @@ export default Em.ObjectController.extend({
         });
 
         var gameState = this.get('gameState');
-        gameState.set('currentRound',
-            this.get('puzzleRounds').sortBy('year').get('firstObject'));
+        if (this.get('puzzleRounds')) {
+            gameState.set(
+                'currentRound',
+                this.get('puzzleRounds').sortBy('year').get('firstObject'));
+        }
 
         return Em.RSVP.all([
             this.deleteMoves(),
