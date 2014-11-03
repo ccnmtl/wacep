@@ -1,68 +1,123 @@
 <div class="roulette-spreadsheet">
     <table class="table">
         <thead>
-            <th></th>
-            <th></th>
+            <tr>
             {{#each year in years}}
-            <th>{{year}}</th>
+                <th colspan="4">{{year}}</th>
             {{/each}}
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Forecast</td>
-            <td class="roulette-bg-wet">Above Normal Rain</td>
-            {{#each forecast in aboveForecasts}}
-                <td class="roulette-bg-wet-light">{{forecast}}%</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td></td>
-            <td class="roulette-bg-normal">Near Normal</td>
-            {{#each forecast in normalForecasts}}
-                <td class="roulette-bg-normal-light">{{forecast}}%</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td></td>
-            <td class="roulette-bg-dry">Below Normal Rain</td>
-            {{#each forecast in belowForecasts}}
-                <td class="roulette-bg-dry-light">{{forecast}}%</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td>Observation</td>
-            <td></td>
-            {{#each observation in puzzleObservations}}
-                <td class="">{{observation}}</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td>Investment %</td>
-            <td class="roulette-bg-wet">Above Normal Rain</td>
-            {{#each percentage in percentagesOfUmbrellasBought}}
-                <td class="roulette-bg-wet-light">{{percentage}}%</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td></td>
-            <td class="roulette-bg-normal">Near Normal</td>
-            {{#each percentage in percentagesOfShirtsBought}}
-                <td class="roulette-bg-normal-light">{{percentage}}%</td>
-            {{/each}}
-        </tr>
-        <tr>
-            <td></td>
-            <td class="roulette-bg-dry">Below Normal Rain</td>
-            {{#each percentage in percentagesOfHatsBought}}
-                <td class="roulette-bg-dry-light">{{percentage}}%</td>
-            {{/each}}
-        </tr>
+            <tr>
+                {{#each money in startingInventoriesPadded}}
+                    <td colspan="2">My Original Total</td>
+                    <td colspan="2" class="roulette-spreadsheet-lightgrey">
+                        {{#if money}}
+                            ${{money}}
+                        {{else}}
+                            ${{currentInventory}}
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each forecast in aggregatedForecasts}}
+                    <td colspan="2" class="border">Forecast</td>
+                    {{#if forecast}}
+                        <td colspan="2" class="border roulette-bg-wet">{{forecast}}</td>
+                    {{else}}
+                        <td colspan="2" class="border roulette-bg-lightgrey"></td>
+                    {{/if}}
+
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each forecast in aboveForecasts}}
+                    <td colspan="2" class="border">Forecast Breakdown</td>
+                    <td class="border roulette-bg-wet">Above Normal/Wet</td>
+                    <td class="border roulette-bg-wet-light">
+                        {{#if forecast}}
+                            {{forecast}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each forecast in normalForecasts}}
+                    <td colspan="2"></td>
+                    <td class="roulette-bg-normal">Normal/Average</td>
+                    <td class="roulette-bg-normal-light">
+                        {{#if forecast}}
+                            {{forecast}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each forecast in belowForecasts}}
+                    <td colspan="2"></td>
+                    <td class="roulette-bg-dry">Below Normal/Dry</td>
+                    <td class="roulette-bg-dry-light">
+                        {{#if forecast}}
+                            {{forecast}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each investment in umbrellasBoughtPadded}}
+                    <td colspan="2" class="border">My Investment Breakdown</td>
+                    <td class="border roulette-bg-wet">Above Normal/Wet</td>
+                    <td class="border roulette-bg-wet-light">
+                        {{#if investment}}
+                            {{investment}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each investment in shirtsBoughtPadded}}
+                    <td colspan="2"></td>
+                    <td class="roulette-bg-normal">Normal/Average</td>
+                    <td class="roulette-bg-normal-light">
+                        {{#if investment}}
+                            {{investment}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each investment in hatsBoughtPadded}}
+                    <td colspan="2"></td>
+                    <td class="roulette-bg-dry">Below Normal/Dry</td>
+                    <td class="roulette-bg-dry-light">
+                        {{#if investment}}
+                            {{investment}}%
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each observation in puzzleObservations}}
+                    <td colspan="2" class="border">Observation</td>
+                    {{#if observation}}
+                        <td colspan="2" class="border">{{observation}}</td>
+                    {{else}}
+                        <td colspan="2" class="border roulette-bg-lightgrey">
+                        </td>
+                    {{/if}}
+                {{/each}}
+            </tr>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2">Money at End of Round</td>
-                {{#each amount in endOfRoundInventories}}
-                    <td>${{amount}}</td>
+                {{#each money in endingInventoriesPadded}}
+                    <td colspan="2" class="border">My New Total</td>
+                    <td colspan="2" class="border roulette-bg-lightgrey">
+                        {{#if money}}
+                            ${{money}}
+                        {{/if}}
+                    </td>
                 {{/each}}
             </tr>
         </tfoot>

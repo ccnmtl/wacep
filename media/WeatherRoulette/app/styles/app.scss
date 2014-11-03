@@ -3,24 +3,24 @@ html, body {
 }
 
 a {
-	color: black;
+    color: black;
 
-	&:hover {
-		color: #444;
+    &:hover {
+        color: #444;
     }
 }
 
 .roulette-modal-dialog {
-	position: relative;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	margin: 30px auto;
-	width: 600px;
-	background-color: #fff;
-	border-radius: 4px;
-	z-index: 9;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 30px auto;
+    width: 600px;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 9;
 }
 
 .roulette-modal {
@@ -52,7 +52,7 @@ a {
 }
 
 .roulette-box-info {
-	background-color: #333;
+    background-color: #333;
 
     .roulette-box-top,
     .roulette-box-bottom {
@@ -90,6 +90,10 @@ a {
     color: black;
 }
 
+.roulette-bg-lightgrey {
+    background-color: lighten(#333, 20%);
+}
+
 .roulette-dry {
     color: saddlebrown;
 }
@@ -122,26 +126,26 @@ ul.roulette-puzzle-list {
     &.roulette-betting-area {
         margin-top: 40px;
     }
-    
-	#left 
-	{
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-	}
 
-	#right 
-	{
-	-webkit-border-top-right-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-topright: 5px;
-	-moz-border-radius-bottomright: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	}
+    #left
+    {
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    }
+
+    #right
+    {
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    }
 
     .alert {
         margin-bottom: 0;
@@ -153,7 +157,7 @@ ul.roulette-puzzle-list {
         text-align: center;
         padding: 10px;
         height: 194px;
-					
+
         input {
             text-align: center;
             width: 80px;
@@ -198,6 +202,17 @@ ul.roulette-puzzle-list {
             padding: 4px;
             &:first-child {
                 padding-left: 8px;
+            }
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: right;
+            &.border {
+                border-top: 1px solid black;
             }
         }
 
