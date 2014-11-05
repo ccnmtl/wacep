@@ -87,6 +87,7 @@ export default Em.ObjectController.extend({
     tableWetData: Em.computed.map('tableYearData', function(item, idx) {
         return {
             forecast: this.get('allAboveForecasts').objectAt(idx),
+            isActual: true,
             investment: 100,
             invReturn: 300,
             isCurrentYear: this.get('currentYear') === item.get('year')
@@ -95,6 +96,7 @@ export default Em.ObjectController.extend({
     tableNormalData: Em.computed.map('tableYearData', function(item, idx) {
         return {
             forecast: this.get('allNormalForecasts').objectAt(idx),
+            isActual: true,
             investment: 100,
             invReturn: 300,
             isCurrentYear: this.get('currentYear') === item.get('year')
@@ -103,6 +105,7 @@ export default Em.ObjectController.extend({
     tableDryData: Em.computed.map('tableYearData', function(item, idx) {
         return {
             forecast: this.get('allBelowForecasts').objectAt(idx),
+            isActual: true,
             investment: 100,
             invReturn: 300,
             isCurrentYear: this.get('currentYear') === item.get('year')

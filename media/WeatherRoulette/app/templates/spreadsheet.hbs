@@ -17,8 +17,12 @@
             </tr>
             <tr class="roulette-wet-row">
                 {{#each obj in tableWetData}}
-                    <td class="roulette-bg-wet-light">
+                    <td {{bind-attr
+                        class="obj.isActual:roulette-actual :roulette-bg-wet-light"}}>
                         {{obj.forecast}}%
+                        {{#if obj.isActual}}
+                            <span class="roulette-actual-check">✓</span>
+                        {{/if}}
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
@@ -38,8 +42,12 @@
             </tr>
             <tr class="roulette-normal-row">
                 {{#each obj in tableNormalData}}
-                    <td class="roulette-bg-normal-light">
+                    <td {{bind-attr
+                        class="obj.isActual:roulette-actual :roulette-bg-normal-light"}}>
                         {{obj.forecast}}%
+                        {{#if obj.isActual}}
+                            <span class="roulette-actual-check">✓</span>
+                        {{/if}}
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
@@ -59,8 +67,12 @@
             </tr>
             <tr class="roulette-dry-row">
                 {{#each obj in tableDryData}}
-                    <td class="roulette-bg-dry-light">
+                    <td {{bind-attr
+                        class="obj.isActual:roulette-actual :roulette-bg-dry-light"}}>
                         {{obj.forecast}}%
+                        {{#if obj.isActual}}
+                            <span class="roulette-actual-check">✓</span>
+                        {{/if}}
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}

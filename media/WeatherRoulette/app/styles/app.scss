@@ -218,6 +218,12 @@ ul.roulette-puzzle-list {
             &.roulette-return {
                 border-right: 1px solid white;
             }
+            &.roulette-actual {
+                font-weight: bold;
+            }
+            .roulette-actual-check {
+                float: right;
+            }
         }
 
         th,
