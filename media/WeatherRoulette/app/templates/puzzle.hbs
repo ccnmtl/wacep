@@ -10,17 +10,15 @@
             <h4>Let's Invest in {{currentYear}}!</h4>
 
             <p>
-                The seasonal forecast gives a {{currentRound.aboveForecast}}% chance of above-average rainfall, a {{currentRound.normalForecast}}% chance of average rainfall, and a {{currentRound.belowForecast}}% chance of below-average rainfall (see table below). Now it's time for you to invest in your goods for the coming season. You currently have ${{currentInventory}}, please use the interface below to invest in umbrellas, shirts, and/or sun hats.
-                <div class="roulette-forecast-now">
-                    The rainfall forecast (inferred amount) for
-                    {{currentYear}} is:
-                    <strong class="roulette-wet"
-                        >{{currentRound.aboveForecast}}% Wet</strong> &bull;
-                    <strong class="roulette-normal"
-                        >{{currentRound.normalForecast}}% Normal</strong> &bull;
-                    <strong class="roulette-dry"
-                        >{{currentRound.belowForecast}}% Dry</strong>
-                </div>
+                The seasonal forecast gives a
+                <strong class="roulette-wet">{{currentRound.aboveForecast}}%</strong>
+                chance of above-average rainfall, a
+                <strong class="roulette-normal">{{currentRound.normalForecast}}%</strong>
+                chance of average rainfall, and a
+                <strong class="roulette-dry">{{currentRound.belowForecast}}%</strong>
+                chance of below-average rainfall (see table below). Now it's time for you to invest in your goods for the coming season. You currently have
+                <strong>${{currentInventory}}</strong>,
+                please use the interface below to invest in umbrellas, shirts, and/or sun hats.
             </p>
         {{else}}
             <div class="roulette-observed">
