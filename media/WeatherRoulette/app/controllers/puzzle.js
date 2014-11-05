@@ -171,15 +171,26 @@ export default Em.ObjectController.extend({
     hatsBought: Em.computed.mapBy('moves', 'hats'),
     shirtsBought: Em.computed.mapBy('moves', 'shirts'),
     umbrellasBought: Em.computed.mapBy('moves', 'umbrellas'),
+
     startingInventories: Em.computed.mapBy('moves', 'startingInventory'),
     startingInventoriesPadded: function() {
-        return this.padArrayForAllRounds(
+        var array = this.padArrayForAllRounds(
             this.get('startingInventories'),
             this.get('puzzleRounds.length'));
+
+        // For the current round, we'll list the current inventory here.
+        var nullIndex = array.indexOf(null);
+        if (nullIndex >= 0) {
+            array[nullIndex] = this.get('currentInventory');
+        }
+
+        return array;
     }.property(
         'startingInventories.@each',
-        'puzzleRounds.length'
+        'puzzleRounds.length',
+        'currentInventory'
     ),
+
     endingInventories: Em.computed.mapBy('moves', 'endingInventory'),
     endingInventoriesPadded: function() {
         return this.padArrayForAllRounds(
