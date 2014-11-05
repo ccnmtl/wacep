@@ -3,133 +3,39 @@
         <thead>
             <tr>
             {{#each year in years}}
-                <th colspan="4">{{year}}</th>
+                <th colspan="3">{{year}}</th>
             {{/each}}
             </tr>
         </thead>
         <tbody>
-            <tr>
-                {{#each money in startingInventoriesPadded}}
-                    <td colspan="2">My Original Total</td>
-                    <td colspan="2" class="roulette-spreadsheet-lightgrey">
-                        {{#if money}}
-                            ${{money}}
-                        {{/if}}
-                    </td>
+            <tr class="roulette-legend-row">
+                {{#each year in years}}
+                    <td>?</td>
+                    <td>Inv.</td>
+                    <td class="roulette-return">$</td>
                 {{/each}}
             </tr>
-            <tr>
-                {{#each forecast in aggregatedForecasts}}
-                    <td colspan="2" class="border">Forecast</td>
-                    {{#if forecast}}
-                        <td colspan="2" class="border roulette-bg-wet">{{forecast}}</td>
-                    {{else}}
-                        <td colspan="2" class="border roulette-bg-lightgrey"></td>
-                    {{/if}}
-
+            <tr class="roulette-wet-row">
+                {{#each year in years}}
+                    <td class="roulette-bg-wet-light">25%</td>
+                    <td class="roulette-investment">$100</td>
+                    <td class="roulette-return">$300</td>
                 {{/each}}
             </tr>
-            <tr>
-                {{#each forecast in aboveForecasts}}
-                    <td colspan="2" class="border">Forecast Breakdown</td>
-                    <td class="border roulette-bg-wet">Above Normal/Wet</td>
-                    <td class="border roulette-bg-wet-light">
-                        {{#if forecast}}
-                            {{forecast}}%
-                        {{/if}}
-                    </td>
+            <tr class="roulette-normal-row">
+                {{#each year in years}}
+                    <td class="roulette-bg-normal-light">25%</td>
+                    <td class="roulette-investment">$100</td>
+                    <td class="roulette-return">$0</td>
                 {{/each}}
             </tr>
-            <tr>
-                {{#each forecast in normalForecasts}}
-                    <td colspan="2"></td>
-                    <td class="roulette-bg-normal">Normal/Average</td>
-                    <td class="roulette-bg-normal-light">
-                        {{#if forecast}}
-                            {{forecast}}%
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each forecast in belowForecasts}}
-                    <td colspan="2"></td>
-                    <td class="roulette-bg-dry">Below Normal/Dry</td>
-                    <td class="roulette-bg-dry-light">
-                        {{#if forecast}}
-                            {{forecast}}%
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each obj in umbrellasBoughtForSpreadsheet}}
-                    <td colspan="2" class="border">My Investment Breakdown</td>
-                    <td class="border roulette-bg-wet">Above Normal/Wet</td>
-                    <td class="border roulette-bg-wet-light">
-                        {{#if obj.isCurrentRound}}
-                            {{umbrellasToBuyPercentage}}%
-                        {{else}}
-                            {{#if obj.val}}
-                                {{obj.val}}%
-                            {{/if}}
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each obj in shirtsBoughtForSpreadsheet}}
-                    <td colspan="2"></td>
-                    <td class="roulette-bg-normal">Normal/Average</td>
-                    <td class="roulette-bg-normal-light">
-                        {{#if obj.isCurrentRound}}
-                            {{shirtsToBuyPercentage}}%
-                        {{else}}
-                            {{#if obj.val}}
-                                {{obj.val}}%
-                            {{/if}}
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each obj in hatsBoughtForSpreadsheet}}
-                    <td colspan="2"></td>
-                    <td class="roulette-bg-dry">Below Normal/Dry</td>
-                    <td class="roulette-bg-dry-light">
-                        {{#if obj.isCurrentRound}}
-                            {{hatsToBuyPercentage}}%
-                        {{else}}
-                            {{#if obj.val}}
-                                {{obj.val}}%
-                            {{/if}}
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each observation in puzzleObservations}}
-                    <td colspan="2" class="border">Observation</td>
-                    {{#if observation}}
-                        <td colspan="2" class="border">{{observation}}</td>
-                    {{else}}
-                        <td colspan="2" class="border roulette-bg-lightgrey">
-                        </td>
-                    {{/if}}
+            <tr class="roulette-dry-row">
+                {{#each year in years}}
+                    <td class="roulette-bg-dry-light">50%</td>
+                    <td class="roulette-investment">$200</td>
+                    <td class="roulette-return">$0</td>
                 {{/each}}
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                {{#each money in endingInventoriesPadded}}
-                    <td colspan="2" class="border">My New Total</td>
-                    <td colspan="2" class="border roulette-bg-lightgrey">
-                        {{#if money}}
-                            ${{money}}
-                        {{/if}}
-                    </td>
-                {{/each}}
-            </tr>
-        </tfoot>
     </table>
 </div>

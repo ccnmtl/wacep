@@ -35,6 +35,12 @@
                         with which to invest in next year's goods.
                 </p>
             </div>
+            {{#unless isPuzzleCompleted}}
+                <button
+                    {{action 'goToYear' nextYear}}
+                    type="button"
+                    class="btn btn-success">Next Round: {{nextYear}}</button>
+            {{/unless}}
         {{/if}}
     </div></div>
     <div class="col-md-2 roulette-box roulette-bg-wet" id="left">
@@ -88,20 +94,13 @@
         </div>
 
         <div class="roulette-box-bottom">
-            {{#if isCurrentYearCompleted}}
-                {{#unless isPuzzleCompleted}}
-                <button
-                    {{action 'goToYear' nextYear}}
-                    type="button"
-                    class="btn btn-success">Next Round: {{nextYear}}</button>
-                {{/unless}}
-            {{else}}
+            {{#unless isCurrentYearCompleted}}
                 <button
                     {{action 'invest'}}
                     {{bind-attr disabled=isEverythingNotAllocated}}
                     type="button"
                     class="btn btn-success">Invest in {{currentYear}}</button>
-            {{/if}}
+            {{/unless}}
         </div>
     </div>
 </div>
