@@ -201,18 +201,30 @@ export default Em.ObjectController.extend({
         'puzzleRounds.length'
     ),
 
-    hatsBoughtPadded: function() {
-        return this.padArrayForAllRounds(
+    hatsBoughtForSpreadsheet: function() {
+        var paddedArray = this.padArrayForAllRounds(
             this.get('hatsBought'), this.get('puzzleRounds.length'));
-    }.property('hatsBought.@each', 'puzzleRounds.length'),
-    shirtsBoughtPadded: function() {
-        return this.padArrayForAllRounds(
+        return this.convertPaddedArrayToCurrentRoundArray(
+            paddedArray, this.get('isCurrentYearCompleted'));
+    }.property(
+        'hatsBought.@each', 'puzzleRounds.length', 'isCurrentYearCompleted'),
+    shirtsBoughtForSpreadsheet: function() {
+        var paddedArray = this.padArrayForAllRounds(
             this.get('shirtsBought'), this.get('puzzleRounds.length'));
-    }.property('shirtsBought.@each', 'puzzleRounds.length'),
-    umbrellasBoughtPadded: function() {
-        return this.padArrayForAllRounds(
+        return this.convertPaddedArrayToCurrentRoundArray(
+            paddedArray, this.get('isCurrentYearCompleted'));
+    }.property(
+        'shirtsBought.@each', 'puzzleRounds.length', 'isCurrentYearCompleted'),
+    umbrellasBoughtForSpreadsheet: function() {
+        var paddedArray = this.padArrayForAllRounds(
             this.get('umbrellasBought'), this.get('puzzleRounds.length'));
-    }.property('umbrellasBought.@each', 'puzzleRounds.length'),
+        return this.convertPaddedArrayToCurrentRoundArray(
+            paddedArray, this.get('isCurrentYearCompleted'));
+    }.property(
+        'umbrellasBought.@each',
+        'puzzleRounds.length',
+        'isCurrentYearCompleted'
+    ),
 
     // I wish I could use Em.computed.map() for these, but I need to observe
     // the attributes, e.g. moves.@each.hats, not just moves.@each.
@@ -320,6 +332,41 @@ export default Em.ObjectController.extend({
         }
 
         return paddedArray;
+    },
+
+    /**
+     * Convert a padded array like this:
+     *   [100, 100, null]
+     * to something like this:
+     *   [
+     *     {val: 100, isCurrentRound: false},
+     *     {val: 100, isCurrentRound: false},
+     *     {val: null, isCurrentRound: true}
+     *   ]
+     */
+    convertPaddedArrayToCurrentRoundArray: function(
+        paddedArray, isCurrentYearCompleted
+    ) {
+        var newArray = [];
+        var seenNull = false;
+
+        for (var i=0; i < paddedArray.length; i++) {
+            var isCurrentRound = false;
+
+            if (!isCurrentYearCompleted &&
+                seenNull === false && paddedArray[i] === null
+               ) {
+                seenNull = true;
+                isCurrentRound = true;
+            }
+
+            newArray.push({
+                val: paddedArray[i],
+                isCurrentRound: isCurrentRound
+            });
+        }
+
+        return newArray;
     },
 
     hideFutureRounds: function(dataForAllRounds, nRoundsToShow) {

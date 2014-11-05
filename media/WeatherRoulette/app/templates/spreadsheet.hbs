@@ -63,40 +63,46 @@
                 {{/each}}
             </tr>
             <tr>
-                {{#each investment in umbrellasBoughtPadded}}
+                {{#each obj in umbrellasBoughtForSpreadsheet}}
                     <td colspan="2" class="border">My Investment Breakdown</td>
                     <td class="border roulette-bg-wet">Above Normal/Wet</td>
                     <td class="border roulette-bg-wet-light">
-                        {{#if investment}}
-                            {{investment}}%
-                        {{else}}
+                        {{#if obj.isCurrentRound}}
                             {{umbrellasToBuyPercentage}}%
+                        {{else}}
+                            {{#if obj.val}}
+                                {{obj.val}}%
+                            {{/if}}
                         {{/if}}
                     </td>
                 {{/each}}
             </tr>
             <tr>
-                {{#each investment in shirtsBoughtPadded}}
+                {{#each obj in shirtsBoughtForSpreadsheet}}
                     <td colspan="2"></td>
                     <td class="roulette-bg-normal">Normal/Average</td>
                     <td class="roulette-bg-normal-light">
-                        {{#if investment}}
-                            {{investment}}%
-                        {{else}}
+                        {{#if obj.isCurrentRound}}
                             {{shirtsToBuyPercentage}}%
+                        {{else}}
+                            {{#if obj.val}}
+                                {{obj.val}}%
+                            {{/if}}
                         {{/if}}
                     </td>
                 {{/each}}
             </tr>
             <tr>
-                {{#each investment in hatsBoughtPadded}}
+                {{#each obj in hatsBoughtForSpreadsheet}}
                     <td colspan="2"></td>
                     <td class="roulette-bg-dry">Below Normal/Dry</td>
                     <td class="roulette-bg-dry-light">
-                        {{#if investment}}
-                            {{investment}}%
-                        {{else}}
+                        {{#if obj.isCurrentRound}}
                             {{hatsToBuyPercentage}}%
+                        {{else}}
+                            {{#if obj.val}}
+                                {{obj.val}}%
+                            {{/if}}
                         {{/if}}
                     </td>
                 {{/each}}
