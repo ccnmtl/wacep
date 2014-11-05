@@ -11,7 +11,7 @@
             <tr class="roulette-legend-row">
                 {{#each tableYearData}}
                     <td>?</td>
-                    <td>Investment</td>
+                    <td>I</td>
                     <td class="roulette-return">$</td>
                 {{/each}}
             </tr>
@@ -24,7 +24,7 @@
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
-                            {{umbrellasToBuy}}
+                            ${{umbrellasToBuy}}
                         {{else}}
                             {{obj.investment}}
                         {{/if}}
@@ -38,16 +38,56 @@
             </tr>
             <tr class="roulette-normal-row">
                 {{#each obj in tableNormalData}}
-                    <td class="roulette-bg-normal-light">25%</td>
-                    <td class="roulette-investment">$100</td>
-                    <td class="roulette-return">$0</td>
+                    <td class="roulette-bg-normal-light">
+                        {{#if obj.forecast}}
+                            {{obj.forecast}}%
+                        {{/if}}
+                    </td>
+                    <td class="roulette-investment">
+                        {{#if obj.isCurrentYear}}
+                            ${{shirtsToBuy}}
+                        {{else}}
+                            {{obj.investment}}
+                        {{/if}}
+                    </td>
+                    <td class="roulette-return">
+                        {{#if obj.invReturn}}
+                            ${{obj.invReturn}}
+                        {{/if}}
+                    </td>
                 {{/each}}
             </tr>
             <tr class="roulette-dry-row">
                 {{#each obj in tableDryData}}
-                    <td class="roulette-bg-dry-light">50%</td>
-                    <td class="roulette-investment">$200</td>
-                    <td class="roulette-return">$0</td>
+                    <td class="roulette-bg-dry-light">
+                        {{#if obj.forecast}}
+                            {{obj.forecast}}%
+                        {{/if}}
+                    </td>
+                    <td class="roulette-investment">
+                        {{#if obj.isCurrentYear}}
+                            ${{hatsToBuy}}
+                        {{else}}
+                            {{obj.investment}}
+                        {{/if}}
+                    </td>
+                    <td class="roulette-return">
+                        {{#if obj.invReturn}}
+                            ${{obj.invReturn}}
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr class="roulette-total-row">
+                {{#each obj in tableTotalData}}
+                    <td>
+                    </td>
+                    <td class="roulette-investment">
+                        $300
+                    </td>
+                    <td class="roulette-return">
+                        ${{obj.invReturnTotal}}
+                    </td>
                 {{/each}}
             </tr>
         </tbody>

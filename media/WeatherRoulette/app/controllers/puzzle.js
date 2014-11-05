@@ -102,6 +102,11 @@ export default Em.ObjectController.extend({
             isCurrentYear: true
         }];
     }.property(),
+    tableTotalData: function() {
+        return [{
+            invReturnTotal: 600
+        }];
+    }.property(),
 
     currentInventoryObserver: function() {
         if (this.get('currentInventory') <= 0) {
