@@ -9,28 +9,42 @@
         </thead>
         <tbody>
             <tr class="roulette-legend-row">
-                {{#each year in years}}
+                {{#each tableYearData}}
                     <td>?</td>
-                    <td>Inv.</td>
+                    <td>Investment</td>
                     <td class="roulette-return">$</td>
                 {{/each}}
             </tr>
             <tr class="roulette-wet-row">
-                {{#each year in years}}
-                    <td class="roulette-bg-wet-light">25%</td>
-                    <td class="roulette-investment">$100</td>
-                    <td class="roulette-return">$300</td>
+                {{#each obj in tableWetData}}
+                    <td class="roulette-bg-wet-light">
+                        {{#if obj.forecast}}
+                            {{obj.forecast}}%
+                        {{/if}}
+                    </td>
+                    <td class="roulette-investment">
+                        {{#if obj.isCurrentYear}}
+                            {{umbrellasToBuy}}
+                        {{else}}
+                            {{obj.investment}}
+                        {{/if}}
+                    </td>
+                    <td class="roulette-return">
+                        {{#if obj.invReturn}}
+                            ${{obj.invReturn}}
+                        {{/if}}
+                    </td>
                 {{/each}}
             </tr>
             <tr class="roulette-normal-row">
-                {{#each year in years}}
+                {{#each obj in tableNormalData}}
                     <td class="roulette-bg-normal-light">25%</td>
                     <td class="roulette-investment">$100</td>
                     <td class="roulette-return">$0</td>
                 {{/each}}
             </tr>
             <tr class="roulette-dry-row">
-                {{#each year in years}}
+                {{#each obj in tableDryData}}
                     <td class="roulette-bg-dry-light">50%</td>
                     <td class="roulette-investment">$200</td>
                     <td class="roulette-return">$0</td>

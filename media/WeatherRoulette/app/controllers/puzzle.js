@@ -75,6 +75,34 @@ export default Em.ObjectController.extend({
     currentInventory: Em.computed.alias('gameState.currentInventory'),
     moves: Em.computed.alias('gameState.moves'),
 
+    tableYearData: function() {
+        return [2000];
+    }.property(),
+    tableWetData: function() {
+        return [{
+            forecast: 25,
+            investment: 100,
+            invReturn: 300,
+            isCurrentYear: true
+        }];
+    }.property(),
+    tableNormalData: function() {
+        return [{
+            forecast: 25,
+            investment: 100,
+            invReturn: 0,
+            isCurrentYear: true
+        }];
+    }.property(),
+    tableDryData: function() {
+        return [{
+            forecast: 50,
+            investment: 100,
+            invReturn: 0,
+            isCurrentYear: true
+        }];
+    }.property(),
+
     currentInventoryObserver: function() {
         if (this.get('currentInventory') <= 0) {
             Em.debug('controller:puzzle currentInventoryObserver - bankrupt!');
