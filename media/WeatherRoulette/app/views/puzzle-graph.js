@@ -42,14 +42,28 @@ export default Em.View.extend({
                 text: null
             },
             xAxis: {
-                labels: {
-                    enabled: true
-                },
                 categories: this.get('controller.years')
             },
             yAxis: {
+                floor: 0,
+                min: 0,
+                ceiling: 2,
+                max: 2,
                 labels: {
-                    enabled: false
+                    formatter: function() {
+                        var s = '';
+
+                        if (this.value === 0) {
+                            s = 'Dry';
+                        } else if (this.value === 1) {
+                            s = 'Norm.';
+                        } else if (this.value === 2) {
+                            s = 'Wet';
+                        }
+
+                        return s;
+                    },
+                    step: 1
                 },
                 title: {
                     text: null

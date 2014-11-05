@@ -18,9 +18,7 @@
             <tr class="roulette-wet-row">
                 {{#each obj in tableWetData}}
                     <td class="roulette-bg-wet-light">
-                        {{#if obj.forecast}}
-                            {{obj.forecast}}%
-                        {{/if}}
+                        {{obj.forecast}}%
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
@@ -30,8 +28,10 @@
                         {{/if}}
                     </td>
                     <td class="roulette-return">
-                        {{#if obj.invReturn}}
-                            ${{obj.invReturn}}
+                        {{#if obj.isCurrentYear}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.invReturn}}
+                            {{/if}}
                         {{/if}}
                     </td>
                 {{/each}}
@@ -39,9 +39,7 @@
             <tr class="roulette-normal-row">
                 {{#each obj in tableNormalData}}
                     <td class="roulette-bg-normal-light">
-                        {{#if obj.forecast}}
-                            {{obj.forecast}}%
-                        {{/if}}
+                        {{obj.forecast}}%
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
@@ -51,18 +49,14 @@
                         {{/if}}
                     </td>
                     <td class="roulette-return">
-                        {{#if obj.invReturn}}
-                            ${{obj.invReturn}}
-                        {{/if}}
+                        ${{obj.invReturn}}
                     </td>
                 {{/each}}
             </tr>
             <tr class="roulette-dry-row">
                 {{#each obj in tableDryData}}
                     <td class="roulette-bg-dry-light">
-                        {{#if obj.forecast}}
-                            {{obj.forecast}}%
-                        {{/if}}
+                        {{obj.forecast}}%
                     </td>
                     <td class="roulette-investment">
                         {{#if obj.isCurrentYear}}
@@ -72,9 +66,7 @@
                         {{/if}}
                     </td>
                     <td class="roulette-return">
-                        {{#if obj.invReturn}}
-                            ${{obj.invReturn}}
-                        {{/if}}
+                        ${{obj.invReturn}}
                     </td>
                 {{/each}}
             </tr>
