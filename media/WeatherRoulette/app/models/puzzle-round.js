@@ -19,11 +19,11 @@ var PuzzleRound = DS.Model.extend({
 
         var val = rainfallObservation.toLowerCase();
 
-        if (val === 'below') {
+        if (val === 'dry') {
             return 0;
         } else if (val === 'normal') {
             return 1;
-        } else if (val === 'above') {
+        } else if (val === 'wet') {
             return 2;
         } else {
             return -1;
