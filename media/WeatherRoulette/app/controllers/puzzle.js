@@ -27,8 +27,6 @@ export default Em.ObjectController.extend({
     alertType: 'info',
     alertContent: null,
 
-    aggregatedForecasts: [],
-
     // Dynamic text for when the player completes a round.
     currentObservationTextObject: function() {
         var o = {};
@@ -103,9 +101,16 @@ export default Em.ObjectController.extend({
     }),
     tableNormalData: Em.computed.map('tableYearData', function(item, idx) {
         var isCurrentYear = this.get('currentYear') === item.get('year');
+        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
+        var isActual = false;
+        if (!isCurrentYear || isCurrentYearCompleted) {
+            isActual =
+                this.get('allPuzzleObservations').objectAt(idx) === 'Normal';
+        }
+
         return {
             forecast: this.get('allNormalForecasts').objectAt(idx),
-            isActual: false,
+            isActual: isActual,
             investment: 100,
             invReturn: 300,
             isCurrentYear: isCurrentYear
@@ -113,9 +118,16 @@ export default Em.ObjectController.extend({
     }),
     tableDryData: Em.computed.map('tableYearData', function(item, idx) {
         var isCurrentYear = this.get('currentYear') === item.get('year');
+        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
+        var isActual = false;
+        if (!isCurrentYear || isCurrentYearCompleted) {
+            isActual =
+                this.get('allPuzzleObservations').objectAt(idx) === 'Dry';
+        }
+
         return {
             forecast: this.get('allDryForecasts').objectAt(idx),
-            isActual: false,
+            isActual: isActual,
             investment: 100,
             invReturn: 300,
             isCurrentYear: isCurrentYear
