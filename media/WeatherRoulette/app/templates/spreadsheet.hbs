@@ -24,7 +24,7 @@
                         {{#if obj.isCurrentYear}}
                             ${{umbrellasToBuy}}
                         {{else}}
-                            {{obj.investment}}
+                            ${{obj.investment}}
                         {{/if}}
                     </td>
                     <td class="roulette-return">
@@ -45,7 +45,7 @@
                         {{#if obj.isCurrentYear}}
                             ${{shirtsToBuy}}
                         {{else}}
-                            {{obj.investment}}
+                            ${{obj.investment}}
                         {{/if}}
                     </td>
                     <td class="roulette-return">
@@ -66,7 +66,7 @@
                         {{#if obj.isCurrentYear}}
                             ${{hatsToBuy}}
                         {{else}}
-                            {{obj.investment}}
+                            ${{obj.investment}}
                         {{/if}}
                     </td>
                     <td class="roulette-return">
@@ -86,10 +86,8 @@
                         $300
                     </td>
                     <td class="roulette-return">
-                        {{#if obj.isCurrentYear}}
-                            {{#if isCurrentYearCompleted}}
-                                ${{obj.invReturnTotal}}
-                            {{/if}}
+                        {{#if obj.invReturnTotal}}
+                            ${{obj.invReturnTotal}}
                         {{/if}}
                     </td>
                 {{/each}}

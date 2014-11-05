@@ -77,38 +77,43 @@ export default Em.ObjectController.extend({
     moves: Em.computed.alias('gameState.moves'),
 
     tableYearData: function() {
-        return [2000];
-    }.property(),
-    tableWetData: function() {
-        return [{
-            forecast: 25,
+        var movesLength = this.get('moves.length');
+        var length = movesLength;
+        if (!this.get('isCurrentYearCompleted')) {
+            length += 1;
+        }
+        return this.get('puzzleRounds').slice(0, length);
+    }.property('puzzleRounds', 'isCurrentYearCompleted'),
+    tableWetData: Em.computed.map('tableYearData', function(item, idx) {
+        return {
+            forecast: this.get('allAboveForecasts').objectAt(idx),
             investment: 100,
             invReturn: 300,
-            isCurrentYear: true
-        }];
-    }.property(),
-    tableNormalData: function() {
-        return [{
-            forecast: 25,
+            isCurrentYear: this.get('currentYear') === item.get('year')
+        };
+    }),
+    tableNormalData: Em.computed.map('tableYearData', function(item, idx) {
+        return {
+            forecast: this.get('allNormalForecasts').objectAt(idx),
             investment: 100,
-            invReturn: 0,
-            isCurrentYear: true
-        }];
-    }.property(),
-    tableDryData: function() {
-        return [{
-            forecast: 50,
+            invReturn: 300,
+            isCurrentYear: this.get('currentYear') === item.get('year')
+        };
+    }),
+    tableDryData: Em.computed.map('tableYearData', function(item, idx) {
+        return {
+            forecast: this.get('allBelowForecasts').objectAt(idx),
             investment: 100,
-            invReturn: 0,
-            isCurrentYear: true
-        }];
-    }.property(),
-    tableTotalData: function() {
-        return [{
+            invReturn: 300,
+            isCurrentYear: this.get('currentYear') === item.get('year')
+        };
+    }),
+    tableTotalData: Em.computed.map('tableYearData', function(item) {
+        return {
             invReturnTotal: 600,
-            isCurrentYear: true
-        }];
-    }.property(),
+            isCurrentYear: this.get('currentYear') === item.get('year')
+        };
+    }),
 
     currentInventoryObserver: function() {
         if (this.get('currentInventory') <= 0) {
@@ -197,64 +202,12 @@ export default Em.ObjectController.extend({
     }.property('moves.@each.year', 'currentYear'),
     isCurrentYearNotCompleted: Em.computed.not('isCurrentYearCompleted'),
 
-
     hatsBought: Em.computed.mapBy('moves', 'hats'),
     shirtsBought: Em.computed.mapBy('moves', 'shirts'),
     umbrellasBought: Em.computed.mapBy('moves', 'umbrellas'),
 
     startingInventories: Em.computed.mapBy('moves', 'startingInventory'),
-    startingInventoriesPadded: function() {
-        var array = this.padArrayForAllRounds(
-            this.get('startingInventories'),
-            this.get('puzzleRounds.length'));
-
-        // For the current round, we'll list the current inventory here.
-        var nullIndex = array.indexOf(null);
-        if (nullIndex >= 0) {
-            array[nullIndex] = this.get('currentInventory');
-        }
-
-        return array;
-    }.property(
-        'startingInventories.@each',
-        'puzzleRounds.length',
-        'currentInventory'
-    ),
-
     endingInventories: Em.computed.mapBy('moves', 'endingInventory'),
-    endingInventoriesPadded: function() {
-        return this.padArrayForAllRounds(
-            this.get('endingInventories'),
-            this.get('puzzleRounds.length'));
-    }.property(
-        'endingInventories.@each',
-        'puzzleRounds.length'
-    ),
-
-    hatsBoughtForSpreadsheet: function() {
-        var paddedArray = this.padArrayForAllRounds(
-            this.get('hatsBought'), this.get('puzzleRounds.length'));
-        return this.convertPaddedArrayToCurrentRoundArray(
-            paddedArray, this.get('isCurrentYearCompleted'));
-    }.property(
-        'hatsBought.@each', 'puzzleRounds.length', 'isCurrentYearCompleted'),
-    shirtsBoughtForSpreadsheet: function() {
-        var paddedArray = this.padArrayForAllRounds(
-            this.get('shirtsBought'), this.get('puzzleRounds.length'));
-        return this.convertPaddedArrayToCurrentRoundArray(
-            paddedArray, this.get('isCurrentYearCompleted'));
-    }.property(
-        'shirtsBought.@each', 'puzzleRounds.length', 'isCurrentYearCompleted'),
-    umbrellasBoughtForSpreadsheet: function() {
-        var paddedArray = this.padArrayForAllRounds(
-            this.get('umbrellasBought'), this.get('puzzleRounds.length'));
-        return this.convertPaddedArrayToCurrentRoundArray(
-            paddedArray, this.get('isCurrentYearCompleted'));
-    }.property(
-        'umbrellasBought.@each',
-        'puzzleRounds.length',
-        'isCurrentYearCompleted'
-    ),
 
     // I wish I could use Em.computed.map() for these, but I need to observe
     // the attributes, e.g. moves.@each.hats, not just moves.@each.
@@ -292,48 +245,9 @@ export default Em.ObjectController.extend({
         var values =
             this.get('allObservationGraphValues').slice(0, movesLength);
 
-        // pad the rest of this array with nulls
-        for (var i = 0; i < totalLength - movesLength; i++) {
-            values.push(null);
-        }
-
-        return values;
-    }.property('allObservationGraphValues',
-        'moves.length', 'puzzleRounds.length'),
-
-    belowForecasts: function() {
-        var forecastsToShow = this.get('moves.length');
-        if (!this.get('isCurrentYearCompleted')) {
-            forecastsToShow += 1;
-        }
-        return this.hideFutureRounds(
-            this.get('allBelowForecasts'), forecastsToShow);
+        return this.padArrayForAllRounds(values, totalLength);
     }.property(
-        'allBelowForecasts.@each', 'moves.length',
-        'isCurrentYearCompleted'
-    ),
-    normalForecasts: function() {
-        var forecastsToShow = this.get('moves.length');
-        if (!this.get('isCurrentYearCompleted')) {
-            forecastsToShow += 1;
-        }
-        return this.hideFutureRounds(
-            this.get('allNormalForecasts'), forecastsToShow);
-    }.property(
-        'allNormalForecasts.@each', 'moves.length',
-        'isCurrentYearCompleted'
-    ),
-    aboveForecasts: function() {
-        var forecastsToShow = this.get('moves.length');
-        if (!this.get('isCurrentYearCompleted')) {
-            forecastsToShow += 1;
-        }
-        return this.hideFutureRounds(
-            this.get('allAboveForecasts'), forecastsToShow);
-    }.property(
-        'allAboveForecasts.@each', 'moves.length',
-        'isCurrentYearCompleted'
-    ),
+        'allObservationGraphValues', 'moves.length', 'puzzleRounds.length'),
 
     puzzleObservations: function() {
         return this.hideFutureRounds(
