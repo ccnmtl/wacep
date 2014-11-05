@@ -88,10 +88,9 @@ export default Em.ObjectController.extend({
         var isCurrentYear = this.get('currentYear') === item.get('year');
         var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
         var isActual = false;
-        if (true ||
-            isCurrentYear && isCurrentYearCompleted
-           ) {
-            isActual = this.get('allPuzzleObservations').objectAt(idx) === 'Wet';
+        if (!isCurrentYear || isCurrentYearCompleted) {
+            isActual =
+                this.get('allPuzzleObservations').objectAt(idx) === 'Wet';
         }
 
         return {
