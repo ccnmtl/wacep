@@ -34,7 +34,7 @@ export default Em.ObjectController.extend({
         var o = {};
         var obs = this.get('currentRound.rainfallObservation');
 
-        if (obs === 'Above') {
+        if (obs === 'Wet') {
             o.cssClass = 'roulette-wet';
             o.text = 'rainy';
             o.soldItemType = 'umbrellas';
@@ -42,7 +42,7 @@ export default Em.ObjectController.extend({
             o.cssClass = 'roulette-normal';
             o.text = 'average';
             o.soldItemType = 'shirts';
-        } else if (obs === 'Below') {
+        } else if (obs === 'Dry') {
             o.cssClass = 'roulette-dry';
             o.text = 'dry';
             o.soldItemType = 'sun hats';
@@ -85,30 +85,41 @@ export default Em.ObjectController.extend({
         return this.get('puzzleRounds').slice(0, length);
     }.property('puzzleRounds', 'isCurrentYearCompleted'),
     tableWetData: Em.computed.map('tableYearData', function(item, idx) {
+        var isCurrentYear = this.get('currentYear') === item.get('year');
+        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
+        var isActual = false;
+        if (true ||
+            isCurrentYear && isCurrentYearCompleted
+           ) {
+            isActual = this.get('allPuzzleObservations').objectAt(idx) === 'Wet';
+        }
+
         return {
-            forecast: this.get('allAboveForecasts').objectAt(idx),
-            isActual: true,
+            forecast: this.get('allWetForecasts').objectAt(idx),
+            isActual: isActual,
             investment: 100,
             invReturn: 300,
-            isCurrentYear: this.get('currentYear') === item.get('year')
+            isCurrentYear: isCurrentYear
         };
     }),
     tableNormalData: Em.computed.map('tableYearData', function(item, idx) {
+        var isCurrentYear = this.get('currentYear') === item.get('year');
         return {
             forecast: this.get('allNormalForecasts').objectAt(idx),
-            isActual: true,
+            isActual: false,
             investment: 100,
             invReturn: 300,
-            isCurrentYear: this.get('currentYear') === item.get('year')
+            isCurrentYear: isCurrentYear
         };
     }),
     tableDryData: Em.computed.map('tableYearData', function(item, idx) {
+        var isCurrentYear = this.get('currentYear') === item.get('year');
         return {
-            forecast: this.get('allBelowForecasts').objectAt(idx),
-            isActual: true,
+            forecast: this.get('allDryForecasts').objectAt(idx),
+            isActual: false,
             investment: 100,
             invReturn: 300,
-            isCurrentYear: this.get('currentYear') === item.get('year')
+            isCurrentYear: isCurrentYear
         };
     }),
     tableTotalData: Em.computed.map('tableYearData', function(item) {
@@ -252,11 +263,6 @@ export default Em.ObjectController.extend({
     }.property(
         'allObservationGraphValues', 'moves.length', 'puzzleRounds.length'),
 
-    puzzleObservations: function() {
-        return this.hideFutureRounds(
-            this.get('allPuzzleObservations'), this.get('moves.length'));
-    }.property('allPuzzleObservations.@each', 'moves.length'),
-
     /**
      * Pad the input array with nulls, for the remaining slots up to
      * totalLength
@@ -279,41 +285,6 @@ export default Em.ObjectController.extend({
         }
 
         return paddedArray;
-    },
-
-    /**
-     * Convert a padded array like this:
-     *   [100, 100, null]
-     * to something like this:
-     *   [
-     *     {val: 100, isCurrentRound: false},
-     *     {val: 100, isCurrentRound: false},
-     *     {val: null, isCurrentRound: true}
-     *   ]
-     */
-    convertPaddedArrayToCurrentRoundArray: function(
-        paddedArray, isCurrentYearCompleted
-    ) {
-        var newArray = [];
-        var seenNull = false;
-
-        for (var i=0; i < paddedArray.length; i++) {
-            var isCurrentRound = false;
-
-            if (!isCurrentYearCompleted &&
-                seenNull === false && paddedArray[i] === null
-               ) {
-                seenNull = true;
-                isCurrentRound = true;
-            }
-
-            newArray.push({
-                val: paddedArray[i],
-                isCurrentRound: isCurrentRound
-            });
-        }
-
-        return newArray;
     },
 
     hideFutureRounds: function(dataForAllRounds, nRoundsToShow) {

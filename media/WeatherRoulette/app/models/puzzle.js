@@ -19,11 +19,11 @@ var Puzzle = DS.Model.extend({
     years: Em.computed.mapBy('puzzleRounds', 'year'),
 
     allObservationGraphValues: Em.computed.mapBy(
-        'puzzleRounds','observationGraphValue'),
+        'puzzleRounds', 'observationGraphValue'),
 
-    allBelowForecasts: Em.computed.mapBy('puzzleRounds', 'belowForecast'),
+    allDryForecasts: Em.computed.mapBy('puzzleRounds', 'belowForecast'),
     allNormalForecasts: Em.computed.mapBy('puzzleRounds', 'normalForecast'),
-    allAboveForecasts: Em.computed.mapBy('puzzleRounds', 'aboveForecast'),
+    allWetForecasts: Em.computed.mapBy('puzzleRounds', 'aboveForecast'),
     allPuzzleObservations: Em.computed.mapBy(
         'puzzleRounds', 'rainfallObservation')
 });

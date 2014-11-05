@@ -29,7 +29,7 @@ class PuzzleRoundFactory(factory.django.DjangoModelFactory):
     below_forecast = 20
     normal_forecast = 20
     above_forecast = 60
-    rainfall_observation = 'Above'
+    rainfall_observation = 'Wet'
 
 
 class GameStateFactory(factory.django.DjangoModelFactory):

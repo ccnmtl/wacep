@@ -53,7 +53,7 @@
         "fields": {
             "puzzle": 1,
             "year": 2000,
-            "rainfall_observation": "Above",
+            "rainfall_observation": "Wet",
             "below_forecast": 15,
             "normal_forecast": 30,
             "above_forecast": 55,
@@ -67,7 +67,7 @@
         "fields": {
             "puzzle": 1,
             "year": 2001,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 45,
             "normal_forecast": 35,
             "above_forecast": 20,
@@ -96,7 +96,7 @@
         "fields": {
             "puzzle": 4,
             "year": 1998,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -110,7 +110,7 @@
         "fields": {
             "puzzle": 4,
             "year": 1999,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -124,7 +124,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2000,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -138,7 +138,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2001,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -152,7 +152,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2002,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -166,7 +166,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2003,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -180,7 +180,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2004,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -194,7 +194,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2005,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -222,7 +222,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2007,
-            "rainfall_observation": "Above",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -237,7 +237,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1898,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -251,7 +251,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1899,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -265,7 +265,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1900,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -279,7 +279,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1901,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -293,7 +293,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1902,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -307,7 +307,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1903,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -321,7 +321,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1904,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -335,7 +335,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1905,
-            "rainfall_observation": "Below",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -363,7 +363,7 @@
         "fields": {
             "puzzle": 3,
             "year": 1907,
-            "rainfall_observation": "Above",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,

@@ -36,7 +36,7 @@ PuzzleRound.reopenClass({
         {
             id: 1,
             year: 1997,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -46,7 +46,7 @@ PuzzleRound.reopenClass({
         {
             id: 2,
             year: 1998,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -56,7 +56,7 @@ PuzzleRound.reopenClass({
         {
             id: 3,
             year: 1999,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -66,7 +66,7 @@ PuzzleRound.reopenClass({
         {
             id: 4,
             year: 2000,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -76,7 +76,7 @@ PuzzleRound.reopenClass({
         {
             id: 5,
             year: 2001,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -86,7 +86,7 @@ PuzzleRound.reopenClass({
         {
             id: 6,
             year: 2002,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -96,7 +96,7 @@ PuzzleRound.reopenClass({
         {
             id: 7,
             year: 1898,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -106,7 +106,7 @@ PuzzleRound.reopenClass({
         {
             id: 8,
             year: 1899,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -116,7 +116,7 @@ PuzzleRound.reopenClass({
         {
             id: 9,
             year: 1900,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -126,7 +126,7 @@ PuzzleRound.reopenClass({
         {
             id: 10,
             year: 1901,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,
@@ -136,7 +136,7 @@ PuzzleRound.reopenClass({
         {
             id: 11,
             year: 1902,
-            rainfallObservation: 'Above',
+            rainfallObservation: 'Wet',
             belowForecast: 10,
             normalForecast: 10,
             aboveForecast: 80,

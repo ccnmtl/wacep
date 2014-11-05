@@ -50,11 +50,11 @@ class Move(models.Model):
         new_inv = self.starting_inventory - self.hats - self.shirts - \
             self.umbrellas
 
-        if self.puzzle_round.rainfall_observation == 'Above':
+        if self.puzzle_round.rainfall_observation == 'Wet':
             new_inv += (self.umbrellas * 3)
         elif self.puzzle_round.rainfall_observation == 'Normal':
             new_inv += (self.shirts * 3)
-        elif self.puzzle_round.rainfall_observation == 'Below':
+        elif self.puzzle_round.rainfall_observation == 'Dry':
             new_inv += (self.hats * 3)
 
         self.ending_inventory = new_inv
@@ -99,9 +99,9 @@ class PuzzleRound(models.Model):
     year = models.PositiveSmallIntegerField()
 
     RAINFALL_CHOICES = (
-        ('Below', 'Below'),
+        ('Dry', 'Dry'),
         ('Normal', 'Normal'),
-        ('Above', 'Above')
+        ('Wet', 'Wet')
     )
     rainfall_observation = models.CharField(
         max_length=255, choices=RAINFALL_CHOICES)
