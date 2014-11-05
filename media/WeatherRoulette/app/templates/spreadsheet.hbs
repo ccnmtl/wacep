@@ -49,7 +49,11 @@
                         {{/if}}
                     </td>
                     <td class="roulette-return">
-                        ${{obj.invReturn}}
+                        {{#if obj.isCurrentYear}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.invReturn}}
+                            {{/if}}
+                        {{/if}}
                     </td>
                 {{/each}}
             </tr>
@@ -66,7 +70,11 @@
                         {{/if}}
                     </td>
                     <td class="roulette-return">
-                        ${{obj.invReturn}}
+                        {{#if obj.isCurrentYear}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.invReturn}}
+                            {{/if}}
+                        {{/if}}
                     </td>
                 {{/each}}
             </tr>
@@ -78,7 +86,11 @@
                         $300
                     </td>
                     <td class="roulette-return">
-                        ${{obj.invReturnTotal}}
+                        {{#if obj.isCurrentYear}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.invReturnTotal}}
+                            {{/if}}
+                        {{/if}}
                     </td>
                 {{/each}}
             </tr>

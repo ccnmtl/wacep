@@ -46,9 +46,3 @@ test('showAlertIfBankrupt is accurate', function() {
 
     ok(controller.get('hatsToBuy') === 29);
 });*/
-
-test('calculatePercentage is accurate', function() {
-    var controller = this.subject();
-    equal(controller.calculatePercentage(50, 100), 50);
-    equal(controller.calculatePercentage(33, 90), 30);
-});

@@ -1,4 +1,5 @@
 import Em from 'ember';
+import calculatePercentage from 'weather-roulette/utils/calculate-percentage';
 
 /**
  * controller:puzzle
@@ -104,7 +105,8 @@ export default Em.ObjectController.extend({
     }.property(),
     tableTotalData: function() {
         return [{
-            invReturnTotal: 600
+            invReturnTotal: 600,
+            isCurrentYear: true
         }];
     }.property(),
 
@@ -115,14 +117,9 @@ export default Em.ObjectController.extend({
         }
     }.observes('currentInventory'),
 
-    calculatePercentage: function(percentage, total) {
-        var n = percentage * (total / 100);
-        return Math.round(n);
-    },
-
     hatsToBuyPercentage: 0,
     hatsToBuy: function() {
-        return this.calculatePercentage(
+        return calculatePercentage(
             this.get('hatsToBuyPercentage'),
             this.get('currentInventory')
         );
@@ -130,7 +127,7 @@ export default Em.ObjectController.extend({
 
     shirtsToBuyPercentage: 0,
     shirtsToBuy: function() {
-        return this.calculatePercentage(
+        return calculatePercentage(
             this.get('shirtsToBuyPercentage'),
             this.get('currentInventory')
         );
@@ -138,7 +135,7 @@ export default Em.ObjectController.extend({
 
     umbrellasToBuyPercentage: 0,
     umbrellasToBuy: function() {
-        return this.calculatePercentage(
+        return calculatePercentage(
             this.get('umbrellasToBuyPercentage'),
             this.get('currentInventory')
         );
