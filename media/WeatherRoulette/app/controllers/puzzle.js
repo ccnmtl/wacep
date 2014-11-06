@@ -74,6 +74,47 @@ export default Em.ObjectController.extend({
     currentInventory: Em.computed.alias('gameState.currentInventory'),
     moves: Em.computed.alias('gameState.moves'),
 
+    /**
+     * 'type' is either 'Wet', 'Normal', or 'Dry'.
+     */
+    getTableRowData: function(
+        item, idx, type, isCurrentYearCompleted
+    ) {
+        var itemsName = '';
+        if (type === 'Wet') {
+            itemsName = 'umbrellas';
+        } else if (type === 'Normal') {
+            itemsName = 'shirts';
+        } else if (type === 'Dry') {
+            itemsName = 'hats';
+        }
+
+        var o = {
+            forecast: this.get('all'+type+'Forecasts').objectAt(idx),
+            isActual: false,
+            investment: null,
+            invReturn: null,
+            isCurrentYear: this.get('currentYear') === item.get('year')
+        };
+
+        if (!o.isCurrentYear || isCurrentYearCompleted) {
+            o.isActual =
+                this.get('allPuzzleObservations').objectAt(idx) === type;
+        }
+
+        var move = this.get('moves').objectAt(idx);
+        if (move) {
+            o.investment = move.get(itemsName);
+            if (o.isActual) {
+                o.invReturn = o.investment * 3;
+            } else {
+                o.invReturn = 0;
+            }
+        }
+
+        return o;
+    },
+
     tableYearData: function() {
         var movesLength = this.get('moves.length');
         var length = movesLength;
@@ -81,57 +122,18 @@ export default Em.ObjectController.extend({
             length += 1;
         }
         return this.get('puzzleRounds').slice(0, length);
-    }.property('puzzleRounds', 'isCurrentYearCompleted'),
+    }.property('puzzleRounds', 'isCurrentYearCompleted', 'moves.length'),
     tableWetData: Em.computed.map('tableYearData', function(item, idx) {
-        var isCurrentYear = this.get('currentYear') === item.get('year');
-        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
-        var isActual = false;
-        if (!isCurrentYear || isCurrentYearCompleted) {
-            isActual =
-                this.get('allPuzzleObservations').objectAt(idx) === 'Wet';
-        }
-
-        return {
-            forecast: this.get('allWetForecasts').objectAt(idx),
-            isActual: isActual,
-            investment: 100,
-            invReturn: 300,
-            isCurrentYear: isCurrentYear
-        };
+        return this.getTableRowData(
+            item, idx, 'Wet', this.get('isCurrentYearCompleted'));
     }),
     tableNormalData: Em.computed.map('tableYearData', function(item, idx) {
-        var isCurrentYear = this.get('currentYear') === item.get('year');
-        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
-        var isActual = false;
-        if (!isCurrentYear || isCurrentYearCompleted) {
-            isActual =
-                this.get('allPuzzleObservations').objectAt(idx) === 'Normal';
-        }
-
-        return {
-            forecast: this.get('allNormalForecasts').objectAt(idx),
-            isActual: isActual,
-            investment: 100,
-            invReturn: 300,
-            isCurrentYear: isCurrentYear
-        };
+        return this.getTableRowData(
+            item, idx, 'Normal', this.get('isCurrentYearCompleted'));
     }),
     tableDryData: Em.computed.map('tableYearData', function(item, idx) {
-        var isCurrentYear = this.get('currentYear') === item.get('year');
-        var isCurrentYearCompleted = this.get('isCurrentYearCompleted');
-        var isActual = false;
-        if (!isCurrentYear || isCurrentYearCompleted) {
-            isActual =
-                this.get('allPuzzleObservations').objectAt(idx) === 'Dry';
-        }
-
-        return {
-            forecast: this.get('allDryForecasts').objectAt(idx),
-            isActual: isActual,
-            investment: 100,
-            invReturn: 300,
-            isCurrentYear: isCurrentYear
-        };
+        return this.getTableRowData(
+            item, idx, 'Dry', this.get('isCurrentYearCompleted'));
     }),
     tableTotalData: Em.computed.map('tableYearData', function(item) {
         return {
