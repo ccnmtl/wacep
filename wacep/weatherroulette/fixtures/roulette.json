@@ -109,7 +109,7 @@
         "fields": {
             "puzzle": 4,
             "year": 1998,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -123,7 +123,7 @@
         "fields": {
             "puzzle": 4,
             "year": 1999,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -137,7 +137,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2000,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -165,7 +165,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2002,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Normal",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -179,7 +179,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2003,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -193,7 +193,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2004,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Normal",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -207,7 +207,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2005,
-            "rainfall_observation": "Dry",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
@@ -221,7 +221,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2006,
-            "rainfall_observation": "Normal",
+            "rainfall_observation": "Wet",
             "below_forecast": 10,
             "normal_forecast": 80,
             "above_forecast": 10,
@@ -235,7 +235,7 @@
         "fields": {
             "puzzle": 4,
             "year": 2007,
-            "rainfall_observation": "Wet",
+            "rainfall_observation": "Dry",
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
