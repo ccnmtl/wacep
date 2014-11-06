@@ -41,6 +41,8 @@
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
                             {{/if}}
+                        {{else}}
+                            ${{obj.invReturn}}
                         {{/if}}
                     </td>
                 {{/each}}
@@ -71,6 +73,8 @@
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
                             {{/if}}
+                        {{else}}
+                            ${{obj.invReturn}}
                         {{/if}}
                     </td>
                 {{/each}}
@@ -101,6 +105,8 @@
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
                             {{/if}}
+                        {{else}}
+                            ${{obj.invReturn}}
                         {{/if}}
                     </td>
                 {{/each}}
@@ -112,7 +118,11 @@
                     <td title="Investment total"
                         class="roulette-investment roulette-bg-lightlightgrey">
                         {{#if obj.isCurrentYear}}
-                            ${{allocatedMoney}}
+                            {{#unless isCurrentYearCompleted}}
+                                ${{allocatedMoney}}
+                            {{else}}
+                                ${{obj.investmentTotal}}
+                            {{/unless}}
                         {{else}}
                             {{#if obj.investmentTotal}}
                                 ${{obj.investmentTotal}}

@@ -75,6 +75,8 @@ export default Em.ObjectController.extend({
     moves: Em.computed.alias('gameState.moves'),
 
     /**
+     * getTableRowData :: object
+     * General function for getting row data for the progress table.
      * 'type' is either 'Wet', 'Normal', or 'Dry'.
      */
     getTableRowData: function(
@@ -135,11 +137,19 @@ export default Em.ObjectController.extend({
         return this.getTableRowData(
             item, idx, 'Dry', this.get('isCurrentYearCompleted'));
     }),
-    tableTotalData: Em.computed.map('tableYearData', function(item) {
-        return {
-            invReturnTotal: 600,
+    tableTotalData: Em.computed.map('tableYearData', function(item, idx) {
+        var o = {
+            invReturnTotal: null,
+            investmentTotal: null,
             isCurrentYear: this.get('currentYear') === item.get('year')
         };
+        var move = this.get('moves').objectAt(idx);
+        if (move) {
+            o.investmentTotal =
+                move.get('hats') + move.get('shirts') + move.get('umbrellas');
+            o.invReturnTotal = '$$$';
+        }
+        return o;
     }),
 
     currentInventoryObserver: function() {
