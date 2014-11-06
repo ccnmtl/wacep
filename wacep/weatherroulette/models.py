@@ -117,4 +117,4 @@ class PuzzleRound(models.Model):
         ordering = ['year']
 
     def __unicode__(self):
-        return unicode(self.year)
+        return unicode(str(self.puzzle) + ': ' + str(self.year))
