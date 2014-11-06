@@ -110,9 +110,9 @@
             "puzzle": 4,
             "year": 1998,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 20,
+            "normal_forecast": 45,
+            "above_forecast": 35,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -124,9 +124,9 @@
             "puzzle": 4,
             "year": 1999,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 20,
+            "normal_forecast": 45,
+            "above_forecast": 35,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -138,9 +138,9 @@
             "puzzle": 4,
             "year": 2000,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 30,
+            "normal_forecast": 45,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -152,9 +152,9 @@
             "puzzle": 4,
             "year": 2001,
             "rainfall_observation": "Dry",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 40,
+            "normal_forecast": 35,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -166,9 +166,9 @@
             "puzzle": 4,
             "year": 2002,
             "rainfall_observation": "Normal",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 30,
+            "normal_forecast": 45,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -180,9 +180,9 @@
             "puzzle": 4,
             "year": 2003,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 20,
+            "normal_forecast": 40,
+            "above_forecast": 40,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -194,9 +194,9 @@
             "puzzle": 4,
             "year": 2004,
             "rainfall_observation": "Normal",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 35,
+            "normal_forecast": 40,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -208,9 +208,9 @@
             "puzzle": 4,
             "year": 2005,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 20,
+            "normal_forecast": 45,
+            "above_forecast": 35,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -222,9 +222,9 @@
             "puzzle": 4,
             "year": 2006,
             "rainfall_observation": "Wet",
-            "below_forecast": 10,
-            "normal_forecast": 80,
-            "above_forecast": 10,
+            "below_forecast": 30,
+            "normal_forecast": 45,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
@@ -236,9 +236,9 @@
             "puzzle": 4,
             "year": 2007,
             "rainfall_observation": "Dry",
-            "below_forecast": 10,
-            "normal_forecast": 10,
-            "above_forecast": 80,
+            "below_forecast": 30,
+            "normal_forecast": 45,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }

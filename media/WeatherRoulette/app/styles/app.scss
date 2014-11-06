@@ -240,7 +240,8 @@ ul.roulette-puzzle-list {
             }
             &.roulette-actual {
                 .roulette-table-forecast {
-                    margin-left: 18px;
+                    /* Messes up a 10-year game */
+                    /*margin-left: 18px;*/
                 }
             }
             .roulette-table-forecast {
