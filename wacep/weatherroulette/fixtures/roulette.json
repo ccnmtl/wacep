@@ -46,6 +46,19 @@
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
     },
+    {
+        "model": "weatherroulette.puzzle",
+        "pk": 5,
+        "fields": {
+            "display_name": "Casey's Game",
+            "slug": "caseys-game",
+            "lessons_learned": "",
+            "is_locked": false,
+            "has_secret_player": false,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
 
     {
         "model": "weatherroulette.puzzleround",
@@ -367,6 +380,189 @@
             "below_forecast": 10,
             "normal_forecast": 10,
             "above_forecast": 80,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 24,
+        "fields": {
+            "puzzle": 5,
+            "year": 2002,
+            "rainfall_observation": "Dry",
+            "below_forecast": 20,
+            "normal_forecast": 35,
+            "above_forecast": 45,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 25,
+        "fields": {
+            "puzzle": 5,
+            "year": 2003,
+            "rainfall_observation": "Normal",
+            "below_forecast": 40,
+            "normal_forecast": 35,
+            "above_forecast": 25,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 26,
+        "fields": {
+            "puzzle": 5,
+            "year": 2004,
+            "rainfall_observation": "Normal",
+            "below_forecast": 20,
+            "normal_forecast": 35,
+            "above_forecast": 45,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 27,
+        "fields": {
+            "puzzle": 5,
+            "year": 2005,
+            "rainfall_observation": "Wet",
+            "below_forecast": 20,
+            "normal_forecast": 35,
+            "above_forecast": 45,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 28,
+        "fields": {
+            "puzzle": 5,
+            "year": 2006,
+            "rainfall_observation": "Wet",
+            "below_forecast": 25,
+            "normal_forecast": 35,
+            "above_forecast": 40,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 29,
+        "fields": {
+            "puzzle": 5,
+            "year": 2007,
+            "rainfall_observation": "Wet",
+            "below_forecast": 25,
+            "normal_forecast": 35,
+            "above_forecast": 40,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 30,
+        "fields": {
+            "puzzle": 5,
+            "year": 2008,
+            "rainfall_observation": "Normal",
+            "below_forecast": 33,
+            "normal_forecast": 33,
+            "above_forecast": 33,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 31,
+        "fields": {
+            "puzzle": 5,
+            "year": 2009,
+            "rainfall_observation": "Normal",
+            "below_forecast": 33,
+            "normal_forecast": 33,
+            "above_forecast": 33,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 32,
+        "fields": {
+            "puzzle": 5,
+            "year": 2010,
+            "rainfall_observation": "Wet",
+            "below_forecast": 20,
+            "normal_forecast": 35,
+            "above_forecast": 45,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 33,
+        "fields": {
+            "puzzle": 5,
+            "year": 2011,
+            "rainfall_observation": "Wet",
+            "below_forecast": 25,
+            "normal_forecast": 35,
+            "above_forecast": 40,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 34,
+        "fields": {
+            "puzzle": 5,
+            "year": 2012,
+            "rainfall_observation": "Normal",
+            "below_forecast": 33,
+            "normal_forecast": 33,
+            "above_forecast": 33,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 35,
+        "fields": {
+            "puzzle": 5,
+            "year": 2013,
+            "rainfall_observation": "Normal",
+            "below_forecast": 25,
+            "normal_forecast": 35,
+            "above_forecast": 40,
+            "created_at": "2014-10-07T15:43:59.807Z",
+            "updated_at": "2014-10-07T15:43:59.807Z"
+        }
+    },
+    {
+        "model": "weatherroulette.puzzleround",
+        "pk": 36,
+        "fields": {
+            "puzzle": 5,
+            "year": 2014,
+            "rainfall_observation": "Normal",
+            "below_forecast": 40,
+            "normal_forecast": 35,
+            "above_forecast": 25,
             "created_at": "2014-10-07T15:43:59.807Z",
             "updated_at": "2014-10-07T15:43:59.807Z"
         }
