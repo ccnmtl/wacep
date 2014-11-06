@@ -3,35 +3,38 @@
         <thead>
             <tr>
             {{#each year in years}}
-                <th colspan="3">{{year}}</th>
+                <th {{bind-attr title="year"}} colspan="3">{{year}}</th>
             {{/each}}
             </tr>
         </thead>
         <tbody>
             <tr class="roulette-legend-row">
                 {{#each tableYearData}}
-                    <td class="roulette-bg-medgrey">?</td>
-                    <td class="roulette-bg-medgrey">I</td>
-                    <td class="roulette-bg-medgrey roulette-return">$</td>
+                    <td title="Forecast" class="roulette-bg-medgrey">?</td>
+                    <td title="Investment" class="roulette-bg-medgrey">I</td>
+                    <td title="Return" class="roulette-bg-medgrey roulette-return">$</td>
                 {{/each}}
             </tr>
             <tr class="roulette-wet-row">
                 {{#each obj in tableWetData}}
-                    <td {{bind-attr
+                    <td title="Wet Forecast"
+                        {{bind-attr
                         class="obj.isActual:roulette-actual :roulette-bg-wet-light"}}>
                         {{obj.forecast}}%
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
                         {{/if}}
                     </td>
-                    <td class="roulette-investment">
+                    <td title="Investment in Umbrellas"
+                        class="roulette-investment">
                         {{#if obj.isCurrentYear}}
                             ${{umbrellasToBuy}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
                     </td>
-                    <td class="roulette-return">
+                    <td title="Return from Umbrellas Sold"
+                        class="roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -42,21 +45,24 @@
             </tr>
             <tr class="roulette-normal-row">
                 {{#each obj in tableNormalData}}
-                    <td {{bind-attr
+                    <td title="Normal Forecast"
+                        {{bind-attr
                         class="obj.isActual:roulette-actual :roulette-bg-normal-light"}}>
                         {{obj.forecast}}%
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
                         {{/if}}
                     </td>
-                    <td class="roulette-investment">
+                    <td title="Investment in Shirts"
+                        class="roulette-investment">
                         {{#if obj.isCurrentYear}}
                             ${{shirtsToBuy}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
                     </td>
-                    <td class="roulette-return">
+                    <td title="Return from Shirts Sold"
+                        class="roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -67,21 +73,24 @@
             </tr>
             <tr class="roulette-dry-row">
                 {{#each obj in tableDryData}}
-                    <td {{bind-attr
+                    <td title="Dry Forecast"
+                        {{bind-attr
                         class="obj.isActual:roulette-actual :roulette-bg-dry-light"}}>
                         {{obj.forecast}}%
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
                         {{/if}}
                     </td>
-                    <td class="roulette-investment">
+                    <td title="Investment in Sun Hats"
+                        class="roulette-investment">
                         {{#if obj.isCurrentYear}}
                             ${{hatsToBuy}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
                     </td>
-                    <td class="roulette-return">
+                    <td title="Return from Sun Hats Sold"
+                        class="roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -94,7 +103,8 @@
                 {{#each obj in tableTotalData}}
                     <td>
                     </td>
-                    <td class="roulette-investment roulette-bg-medgrey">
+                    <td title="Investment total"
+                        class="roulette-investment roulette-bg-medgrey">
                         {{#if obj.isCurrentYear}}
                             ${{allocatedMoney}}
                         {{else}}
@@ -103,7 +113,8 @@
                             {{/if}}
                         {{/if}}
                     </td>
-                    <td class="roulette-return roulette-bg-medgrey">
+                    <td title="End of round total inventory"
+                        class="roulette-return roulette-bg-medgrey">
                         {{#if obj.invReturnTotal}}
                             ${{obj.invReturnTotal}}
                         {{/if}}
