@@ -143,12 +143,27 @@ export default Em.ObjectController.extend({
             investmentTotal: null,
             isCurrentYear: this.get('currentYear') === item.get('year')
         };
+
         var move = this.get('moves').objectAt(idx);
         if (move) {
-            o.investmentTotal =
-                move.get('hats') + move.get('shirts') + move.get('umbrellas');
+            var hats = move.get('hats');
+            var shirts = move.get('shirts');
+            var umbrellas = move.get('umbrellas');
+            o.investmentTotal = hats + shirts + umbrellas;
             o.invReturnTotal = '$$';
+
+            var observation = this.get('allPuzzleObservations').objectAt(idx);
+            if (observation) {
+                if (observation === 'Wet') {
+                    o.invReturnTotal = umbrellas * 3;
+                } else if (observation === 'Normal') {
+                    o.invReturnTotal = shirts * 3;
+                } else if (observation === 'Dry') {
+                    o.invReturnTotal = hats * 3;
+                }
+            }
         }
+
         return o;
     }),
 
