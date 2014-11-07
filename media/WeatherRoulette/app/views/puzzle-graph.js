@@ -31,8 +31,14 @@ export default Em.View.extend({
             chart: {
                 animation: false
             },
+            colors: ['#000000'],
             credits: {
                 enabled: false
+            },
+            plotOptions: {
+                line: {
+                    lineWidth: 2
+                },
             },
             series: [{
                 name: 'Observation',
@@ -40,6 +46,17 @@ export default Em.View.extend({
             }],
             title: {
                 text: null
+            },
+            tooltip: {
+                formatter: function() {
+                    var vals = ['Dry', 'Normal', 'Wet'];
+                    var s = '';
+                    if (this.y >= 0 && this.y <= 2) {
+                        s = vals[this.y];
+                    }
+                    s = this.x + ': ' + s;
+                    return s;
+                }
             },
             xAxis: {
                 categories: this.get('controller.years')

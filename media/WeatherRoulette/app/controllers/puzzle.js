@@ -147,7 +147,7 @@ export default Em.ObjectController.extend({
         if (move) {
             o.investmentTotal =
                 move.get('hats') + move.get('shirts') + move.get('umbrellas');
-            o.invReturnTotal = '$$$';
+            o.invReturnTotal = '$$';
         }
         return o;
     }),
