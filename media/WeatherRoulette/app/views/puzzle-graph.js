@@ -35,6 +35,9 @@ export default Em.View.extend({
             credits: {
                 enabled: false
             },
+            legend: {
+                enabled: false
+            },
             plotOptions: {
                 line: {
                     lineWidth: 2
@@ -54,7 +57,7 @@ export default Em.View.extend({
                     if (this.y >= 0 && this.y <= 2) {
                         s = vals[this.y];
                     }
-                    s = this.x + ': ' + s;
+                    s = this.x + ' was <strong>' + s + '</strong>';
                     return s;
                 }
             },
