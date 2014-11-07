@@ -34,11 +34,11 @@ export default Em.ObjectController.extend({
 
         if (obs === 'Wet') {
             o.cssClass = 'roulette-wet';
-            o.text = 'rainy';
+            o.text = 'wet';
             o.soldItemType = 'umbrellas';
         } else if (obs === 'Normal') {
             o.cssClass = 'roulette-normal';
-            o.text = 'average';
+            o.text = 'normal';
             o.soldItemType = 'shirts';
         } else if (obs === 'Dry') {
             o.cssClass = 'roulette-dry';
@@ -150,7 +150,6 @@ export default Em.ObjectController.extend({
             var shirts = move.get('shirts');
             var umbrellas = move.get('umbrellas');
             o.investmentTotal = hats + shirts + umbrellas;
-            o.invReturnTotal = '$$';
 
             var observation = this.get('allPuzzleObservations').objectAt(idx);
             if (observation) {

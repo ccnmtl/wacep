@@ -36,7 +36,11 @@
                     <td title="Investment in Umbrellas"
                         class="roulette-investment">
                         {{#if obj.isCurrentYear}}
-                            ${{umbrellasToBuy}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.investment}}
+                            {{else}}
+                                ${{umbrellasToBuy}}
+                            {{/if}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
@@ -68,7 +72,11 @@
                     <td title="Investment in Shirts"
                         class="roulette-investment">
                         {{#if obj.isCurrentYear}}
-                            ${{shirtsToBuy}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.investment}}
+                            {{else}}
+                                ${{shirtsToBuy}}
+                            {{/if}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
@@ -100,7 +108,11 @@
                     <td title="Investment in Sun Hats"
                         class="roulette-investment">
                         {{#if obj.isCurrentYear}}
-                            ${{hatsToBuy}}
+                            {{#if isCurrentYearCompleted}}
+                                ${{obj.investment}}
+                            {{else}}
+                                ${{hatsToBuy}}
+                            {{/if}}
                         {{else}}
                             ${{obj.investment}}
                         {{/if}}
