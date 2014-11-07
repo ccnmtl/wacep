@@ -239,7 +239,6 @@ ul.roulette-puzzle-list {
         }
 
         th:not(:last-child) {
-            border-right: 1px solid white;
         }
 
         td {
@@ -247,7 +246,7 @@ ul.roulette-puzzle-list {
                 border-top: 1px solid black;
             }
             &.roulette-return {
-                border-right: 1px solid white;
+                border-right: 1px solid black;
             }
             &.roulette-actual {
                 .roulette-table-forecast {
