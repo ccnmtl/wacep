@@ -183,9 +183,21 @@ ul.roulette-puzzle-list {
         padding: 10px;
         height: 194px;
 
-        input {
+        .roulette-bet-desc {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .roulette-bet-area {
+            margin-top: 5px;
+            .roulette-percent {
+                font-size: 18px;
+            }
+        }
+
+        input[type=number] {
             text-align: center;
-            width: 80px;
+            width: 60px;
+            padding: 6px;
             display: inline-block;
         }
 

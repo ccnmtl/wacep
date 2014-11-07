@@ -48,35 +48,47 @@
         <div class="roulette-climage-img">
             <img src="img/umbrella.png" height="100" />
         </div>
-        <div>Umbrellas</div>
-        <div>Wet</div>
-        {{view "purchase-input"
+        <div class="roulette-bet-desc">
+            <span>Umbrellas</span> &bull;
+            <span><em>Wet</em></span>
+        </div>
+        <div class="roulette-bet-area">
+            {{view "purchase-input"
             value=umbrellasToBuyPercentage
             disabled=isCurrentYearCompleted
             content=inputSum
-            autofocus="autofocus"}} %
+            autofocus="autofocus"}} <span class="roulette-percent">%</span>
+        </div>
     </div>
     <div class="col-md-2 roulette-box roulette-bg-normal">
         <div class="roulette-climage-img">
             <img src="img/shirt.png" height="100" />
         </div>
-        <div>Shirts</div>
-        <div>Normal</div>
-        {{view "purchase-input"
+        <div class="roulette-bet-desc">
+            <span>Shirts</span> &bull;
+            <span><em>Normal</em></span>
+        </div>
+        <div class="roulette-bet-area">
+            {{view "purchase-input"
             value=shirtsToBuyPercentage
             disabled=isCurrentYearCompleted
-            content=inputSum}} %
+            content=inputSum}} <span class="roulette-percent">%</span>
+        </div>
     </div>
     <div class="col-md-2 roulette-box roulette-bg-dry">
         <div class="roulette-climage-img">
             <img src="img/hat.png" height="100" />
         </div>
-        <div>Hats</div>
-        <div>Dry</div>
-       {{view "purchase-input"
+        <div class="roulette-bet-desc">
+            <span>Hats</span> &bull;
+            <span><em>Dry</em></span>
+        </div>
+        <div class="roulette-bet-area">
+            {{view "purchase-input"
             value=hatsToBuyPercentage
             disabled=isCurrentYearCompleted
-            content=inputSum}} %
+            content=inputSum}} <span class="roulette-percent">%</span>
+        </div>
     </div>
     <div class="col-md-2 roulette-box roulette-box-info" id="right">
     
