@@ -37,7 +37,10 @@
                 <button
                     {{action 'goToYear' nextYear}}
                     type="button"
-                    class="btn btn-success">Next Round: {{nextYear}}</button>
+                    class="btn btn-success">
+                    Next Round: {{nextYear}}
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
             {{/unless}}
         {{/if}}
     </div></div>
@@ -79,13 +82,16 @@
     
         <div class="roulette-box-top">
             {{#if isCurrentYearCompleted}}
-                <div>Inventory invested in {{currentYear}}</div>
+                <div>Investment for {{currentYear}} complete.</div>
                 <div>New Total: ${{currentInventory}}</div>
             {{else}}
-                <div>Inventory in {{currentYear}}:</div>
-                <div>
+                <div class="roulette-inventory-title">
+                    Investments in {{currentYear}}:
+                </div>
+                <div class="roulette-allocated-money">
                     ${{allocatedMoney}} of ${{currentInventory}}
-                    <br />
+                </div>
+                <div class="roulette-allocated-percentage">
                     ({{allocatedPercentage}}% of 100%)
                 </div>
             {{/if}}
@@ -97,7 +103,10 @@
                     {{action 'invest'}}
                     {{bind-attr disabled=isEverythingNotAllocated}}
                     type="button"
-                    class="btn btn-success">Invest in {{currentYear}}</button>
+                    class="btn btn-success">
+                    Invest in {{currentYear}}
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
             {{/unless}}
         </div>
     </div>
