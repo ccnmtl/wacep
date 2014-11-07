@@ -237,10 +237,10 @@ ul.roulette-puzzle-list {
 
         tr {
             &.roulette-legend-row {
-                border-bottom: solid 2px black;
+                border-bottom: solid 1px black;
             }
             &.roulette-total-row {
-                border-top: solid 2px black;
+                border-top: solid 1px black;
             }
         }
 
@@ -272,6 +272,9 @@ ul.roulette-puzzle-list {
                 float: right;
                 font-size: 20px;
                 line-height: 16px;
+            }
+            &.roulette-money-cell {
+                text-align: right;
             }
         }
 

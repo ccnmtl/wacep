@@ -34,7 +34,7 @@
                         {{/if}}
                     </td>
                     <td title="Investment in Umbrellas"
-                        class="roulette-investment">
+                        class="roulette-money-cell roulette-investment">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.investment}}
@@ -46,7 +46,7 @@
                         {{/if}}
                     </td>
                     <td title="Return from Umbrellas Sold"
-                        class="roulette-return">
+                        class="roulette-money-cell roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -70,7 +70,7 @@
                         {{/if}}
                     </td>
                     <td title="Investment in Shirts"
-                        class="roulette-investment">
+                        class="roulette-money-cell roulette-investment">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.investment}}
@@ -82,7 +82,7 @@
                         {{/if}}
                     </td>
                     <td title="Return from Shirts Sold"
-                        class="roulette-return">
+                        class="roulette-money-cell roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -106,7 +106,7 @@
                         {{/if}}
                     </td>
                     <td title="Investment in Sun Hats"
-                        class="roulette-investment">
+                        class="roulette-money-cell roulette-investment">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.investment}}
@@ -118,7 +118,7 @@
                         {{/if}}
                     </td>
                     <td title="Return from Sun Hats Sold"
-                        class="roulette-return">
+                        class="roulette-money-cell roulette-return">
                         {{#if obj.isCurrentYear}}
                             {{#if isCurrentYearCompleted}}
                                 ${{obj.invReturn}}
@@ -134,7 +134,7 @@
                     <td>
                     </td>
                     <td title="Investment total"
-                        class="roulette-investment">
+                        class="roulette-money-cell roulette-investment">
                         {{#if obj.isCurrentYear}}
                             {{#unless isCurrentYearCompleted}}
                                 ${{allocatedMoney}}
@@ -147,7 +147,8 @@
                             {{/if}}
                         {{/if}}
                     </td>
-                    <td title="End of round total inventory">
+                    <td class="roulette-money-cell"
+                        title="End of round total inventory">
                         {{#if obj.invReturnTotal}}
                             ${{obj.invReturnTotal}}
                         {{/if}}
