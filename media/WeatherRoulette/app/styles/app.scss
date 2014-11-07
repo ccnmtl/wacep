@@ -261,6 +261,7 @@ ul.roulette-puzzle-list {
                 border-right: 1px solid black;
             }
             &.roulette-actual {
+                position: relative;
                 .roulette-table-forecast {
                     /* Messes up a 10-year game */
                     /*margin-left: 18px;*/
@@ -269,7 +270,8 @@ ul.roulette-puzzle-list {
             .roulette-table-forecast {
             }
             .roulette-actual-check {
-                float: right;
+                position: absolute;
+                right: 2px;
                 font-size: 20px;
                 line-height: 16px;
             }

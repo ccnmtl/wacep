@@ -25,9 +25,7 @@
                 {{#each obj in tableWetData}}
                     <td title="Wet Forecast"
                         {{bind-attr
-                        class="obj.isActual:roulette-actual
-                        obj.isActual:roulette-bg-wet-light
-                        obj.isActual::roulette-bg-wet"}}>
+                        class="obj.isActual:roulette-actual :roulette-bg-wet"}}
                         <span class="roulette-table-forecast">{{obj.forecast}}%</span>
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
@@ -61,9 +59,7 @@
                 {{#each obj in tableNormalData}}
                     <td title="Normal Forecast"
                         {{bind-attr
-                        class="obj.isActual:roulette-actual
-                        obj.isActual:roulette-bg-normal-light
-                        obj.isActual::roulette-bg-normal"}}>
+                        class="obj.isActual:roulette-actual :roulette-bg-normal"}}
                         <span class="roulette-table-forecast">{{obj.forecast}}%</span>
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
@@ -97,9 +93,7 @@
                 {{#each obj in tableDryData}}
                     <td title="Dry Forecast"
                         {{bind-attr
-                        class="obj.isActual:roulette-actual
-                        obj.isActual:roulette-bg-dry-light
-                        obj.isActual::roulette-bg-dry"}}>
+                        class="obj.isActual:roulette-actual :roulette-bg-dry"}}
                         <span class="roulette-table-forecast">{{obj.forecast}}%</span>
                         {{#if obj.isActual}}
                             <span class="roulette-actual-check">✓</span>
