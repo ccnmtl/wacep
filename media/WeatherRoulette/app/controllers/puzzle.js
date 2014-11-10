@@ -169,6 +169,14 @@ export default Em.ObjectController.extend({
         return o;
     }),
 
+    currentNumberSold: function() {
+        return Math.round(
+            this.get('tableTotalData.lastObject').invReturnTotal / 3);
+    }.property('tableTotalData.@each'),
+    currentInventoryDelta: function() {
+        return this.get('tableTotalData.lastObject').invReturnTotal;
+    }.property('tableTotalData.@each'),
+
     currentInventoryObserver: function() {
         if (this.get('currentInventory') <= 0) {
             Em.debug('controller:puzzle currentInventoryObserver - bankrupt!');
