@@ -418,9 +418,6 @@ export default Em.ObjectController.extend({
             }
             if (me.showAlertIfBankrupt(me.get('currentInventory'))) {
                 return false;
-            } else if (me.get('isPuzzleCompleted')) {
-                Em.debug('puzzle is done!');
-                me.send('showPuzzleFinishedModal');
             }
         });
     },

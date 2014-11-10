@@ -41,6 +41,14 @@
                     Next Round: {{nextYear}}
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </button>
+            {{else}}
+                <button
+                    {{action showPuzzleFinishedModal}}
+                    type="button"
+                    class="btn btn-success">
+                    More Info
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </button>
             {{/unless}}
         {{/if}}
     </div></div>
