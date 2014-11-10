@@ -14,6 +14,10 @@ var Puzzle = DS.Model.extend({
     puzzleRounds: DS.hasMany('puzzle-round', {async: true}),
 
     isPracticeGame: Em.computed.equal('displayName', 'WACEP Practice Game'),
+    isCaseysGame: function() {
+        var name = this.get('displayName')
+        return !!name.match(/^Casey\'s Game/gi);
+    }.property('displayName'),
 
     // Spreadsheet properties
     years: Em.computed.mapBy('puzzleRounds', 'year'),
