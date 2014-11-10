@@ -49,6 +49,14 @@
                     class="btn btn-success">
                     Lessons Learned
                 </button>
+                {{#if isPracticeGame}}
+                    <button
+                        {{action 'playPuzzle' model}}
+                        type="button"
+                        class="btn btn-primary">
+                        Play Again
+                    </button>
+                {{/if}}
             {{/unless}}
         {{/if}}
     </div></div>

@@ -13,7 +13,7 @@ var Puzzle = DS.Model.extend({
     updatedAt: DS.attr('date'),
     puzzleRounds: DS.hasMany('puzzle-round', {async: true}),
 
-    isPracticeGame: Em.computed.equal('displayName', 'Practice Game'),
+    isPracticeGame: Em.computed.equal('displayName', 'WACEP Practice Game'),
 
     // Spreadsheet properties
     years: Em.computed.mapBy('puzzleRounds', 'year'),
