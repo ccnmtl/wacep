@@ -20,6 +20,7 @@ export default Em.ObjectController.extend({
     },
 
     gameState: Em.computed.alias('controllers.application.model'),
+    moves: Em.computed.alias('gameState.moves'),
     currentRound: Em.computed.alias('gameState.currentRound'),
     currentYear: Em.computed.alias('currentRound.year'),
 
@@ -72,7 +73,6 @@ export default Em.ObjectController.extend({
     }.property('hasSecretPlayer', 'isPuzzleCompleted'),
 
     currentInventory: Em.computed.alias('gameState.currentInventory'),
-    moves: Em.computed.alias('gameState.moves'),
 
     /**
      * getTableRowData :: object
@@ -279,7 +279,7 @@ export default Em.ObjectController.extend({
     isCurrentYearCompleted: function() {
         var moves = this.get('moves');
         if (!moves || !moves.get('firstObject.year')) {
-            Em.debug('no moves, returning false');
+            Em.debug('no moves - isCurrentYearCompleted is false');
             return false;
         }
         return !!moves.findBy('year', this.get('currentYear'));
@@ -344,6 +344,11 @@ export default Em.ObjectController.extend({
         }
     },
 
+    /**
+     * Go to a new year.
+     *
+     * Returns a promise.
+     */
     goToYear: function(newYear) {
         if (this.showAlertIfBankrupt(this.get('currentInventory'))) {
             return false;
@@ -366,6 +371,11 @@ export default Em.ObjectController.extend({
             });
     },
 
+    /**
+     * Make an investment.
+     *
+     * Returns a promise.
+     */
     invest: function() {
         Em.debug('controller:puzzle invest');
         if (this.showAlertIfBankrupt(this.get('currentInventory'))) {
@@ -397,13 +407,11 @@ export default Em.ObjectController.extend({
                 me.set('currentInventory', move.get('endingInventory'));
                 return me.get('gameState').save();
             }, function(reason) {
-                // failure
-                console.error('rejected', reason);
                 me.setProperties({
                     alertTrigger: true,
                     alertContent: 'Error making move: ' +
-                    reason.status + ' ' +
-                    reason.responseText,
+                        reason.status + ' ' +
+                        reason.responseText,
                     alertType: 'danger'
                 });
                 return move.deleteRecord();
@@ -418,6 +426,11 @@ export default Em.ObjectController.extend({
         });
     },
 
+    /**
+     * resetItems
+     *
+     * Reset the investment allocations in the betting area.
+     */
     resetItems: function() {
         Em.debug('controller:puzzle resetItems');
         return this.setProperties({
@@ -430,7 +443,7 @@ export default Em.ObjectController.extend({
     /**
      * deleteMoves
      *
-     * Delete all the moves in the gameState.
+     * Delete all the moves in the gameState. Returns a promise.
      */
     deleteMoves: function() {
         Em.debug('controller:puzzle deleteMoves');
@@ -443,22 +456,66 @@ export default Em.ObjectController.extend({
                 puzzleRounds.sortBy('year').get('firstObject'));
         }
 
+        // Don't delete moves that aren't related to the current puzzle
+        var me = this;
+        Em.debug('all moves ' + this.get('moves.length'));
+        var moves = this.get('moves');
+        var deletedMoves = moves.filter(function(move) {
+            var movePuzzleId = move.get('puzzleRound.puzzle.id');
+            var puzzleId = me.get('id');
 
-        return this.get('moves').forEach(function(move) {
+            Em.debug('in deleteMoves: ' + movePuzzleId + ' ' + puzzleId);
+
+            var deleteMe = typeof movePuzzleId === 'undefined' ||
+                movePuzzleId === puzzleId;
+
+            if (!deleteMe) {
+                Em.debug('leaving move ' + move.get('id'));
+            } else {
+                Em.debug('deleting move ' + move.get('id'));
+            }
+
+            return deleteMe;
+        });
+        Em.debug('deleted moves ' + deletedMoves.get('length'));
+
+        // Find all the moves that aren't going to be deleted. We'll need
+        // to unload all these from the store.
+        var savedMoves = moves.filter(function(move) {
+            return !deletedMoves.contains(move);
+        });
+        Em.debug('saved moves ' + savedMoves.get('length'));
+
+
+        var promises = [];
+        deletedMoves.forEach(function(move) {
             Em.run.once(this, function() {
                 if (move.get('isLoading')) {
                     Em.debug(
                         'Woops! Couldn\'t delete move from loading state.');
                     return;
                 }
-                move.destroyRecord()
+                var promise = move.destroyRecord()
                     .catch(function(error) {
                         console.error('move destroy() failed', error);
                     });
+                promises.push(promise);
             });
         });
+        savedMoves.forEach(function(move) {
+            // Unload the saved moves from the store.
+            var promise = me.get('store').unloadRecord(move);
+            promises.push(promise);
+        });
+
+        return Em.RSVP.all(promises);
     },
 
+    /**
+     * Reset the game state.
+     *
+     * Returns a promise.
+     */
     resetGame: function() {
         Em.debug('controller:puzzle resetGame');
         this.resetItems();
@@ -475,9 +532,9 @@ export default Em.ObjectController.extend({
                 this.get('puzzleRounds').sortBy('year').get('firstObject'));
         }
 
-        return Em.RSVP.all([
-            this.deleteMoves(),
-            gameState.save()
-        ]);
+        return this.deleteMoves()
+            .then(function() {
+                return gameState.save();
+            });
     }
 });

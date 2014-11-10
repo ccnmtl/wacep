@@ -15,7 +15,7 @@ flake8==1.7.0
 lxml==3.2.3
 fuzzywuzzy==0.1
 sure==1.1.7
-ipython==0.13.1
+ipython==1.2.1
 ipdb==0.8
 extras==0.0.3
 python-mimeparse==0.1.4
@@ -35,6 +35,7 @@ BeautifulSoup==3.2.1
 Pillow==2.3.0
 factory_boy==2.4.1
 sqlparse==0.1.11
+unicodecsv==0.9.4
 
 djangowind==0.13.2
 sorl==3.1
@@ -51,6 +52,7 @@ django_compressor==1.4
 django-statsd-mozilla==0.3.11
 raven==4.0.3
 django-bootstrap-form==2.0.3
+django-bootstrap3==4.11.0
 django-debug-toolbar==1.1
 django-waffle==0.9.0
 django-jenkins==0.16.3
@@ -64,5 +66,5 @@ django-pagetree==1.0.1
 django-pageblocks==1.0.0
 django-quizblock==1.0.0
 django-pagetree_export==0.4
-djangorestframework==2.4.3
+djangorestframework==2.4.4
 numpy==1.7.1

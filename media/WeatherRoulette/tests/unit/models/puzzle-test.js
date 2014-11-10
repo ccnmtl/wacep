@@ -11,6 +11,7 @@ moduleForModel('puzzle', 'Puzzle', {
 
 test('it exists', function() {
     var model = this.subject();
-    // var store = this.store();
+    var store = this.store();
     ok(!!model);
+    ok(!!store);
 });

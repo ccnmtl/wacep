@@ -27,20 +27,30 @@ export default Em.Route.extend({
     },
 
     model: function(params, transition) {
+        Em.debug('route:puzzle model');
         var applicationController = this.controllerFor('application');
-        if (applicationController.get('isAuthorized')) {
-            return this._super(params, transition);
+        if (!applicationController.get('isAuthorized')) {
+            return Em.RSVP.reject();
         }
+
+        return this._super(params, transition)
+            .then(function(model) {
+                // Don't return the puzzle if it's locked
+                if (model.get('isLocked')) {
+                    return Em.RSVP.reject();
+                }
+                return model;
+            });
     },
 
     setupController: function(controller, model) {
         Em.debug('route:puzzle setupController');
         this._super(controller, model);
 
+        var allPromises = [];
+
         var applicationController = this.controllerFor('application');
         applicationController.set('currentPuzzle', model);
-
-        var promises = [];
 
         // When setting up the puzzle controller, we'll need the puzzle rounds
         // and the moves. The puzzle rounds are tied to the puzzle, and the
@@ -56,13 +66,15 @@ export default Em.Route.extend({
                 puzzleRounds: model.get('puzzleRounds'),
                 moves: gameState.get('moves')
             };
-            promises.push(Em.RSVP.hash(myPromises)
+            var promise = Em.RSVP.hash(myPromises)
                 .then(function(results) {
                     var currentYear = gameState.get('currentRound.year');
                     var firstYear = results.puzzleRounds.sortBy('year')
                         .get('firstObject.year');
+
                     Em.debug('currentYear is ' + currentYear);
                     Em.debug('firstYear is ' + firstYear);
+
                     var difference = currentYear - firstYear;
                     Em.debug('difference is ' + difference);
                     if (
@@ -71,42 +83,36 @@ export default Em.Route.extend({
                         Em.debug('resetting');
                         controller.resetGame();
                     }
-                })
-            );
+                });
+            allPromises.push(promise);
         }
 
-
-        promises.push(model.get('puzzleRounds')
-            .then(function(puzzleRounds) {
-                // Initialize game state when opening a new puzzle
-                if (!gameState.get('currentRound.year')) {
-                    var firstRound = puzzleRounds.sortBy('year')
-                        .get('firstObject');
-                    gameState.set('currentRound', firstRound);
-                }
-            })
-        );
-
-        return Em.RSVP.all(promises)
+        return Em.RSVP.all(allPromises)
             .then(function() {
-                gameState.get('moves')
-                    .then(function(moves) {
-                        if (moves.get('length') === 0) {
-                            Em.debug('no moves! setting inventory to ' +
-                                model.get('startingInventory'));
-                            gameState.set('currentInventory',
-                                model.get('startingInventory'));
-                        } else {
-                            // Make sure the moves match up with the puzzle
-                            var moveRoundId = moves.get('firstObject')._data.puzzle_round;
-                            if (!model.get('puzzleRounds.@each.id').contains(moveRoundId+'')) {
-                                Em.debug('puzzle id mismatch. resetting.');
-                                Em.debug(model.get('puzzleRounds.@each.id').toArray());
-                                controller.resetGame();
-                            }
-                        }
-                    });
+                gameState.get('moves');
+            })
+            .then(function() {
+                return model.get('puzzleRounds');
+            })
+            .then(function(puzzleRounds) {
+                controller.resetGame();
+                Em.debug('Setting up a new game.');
+                var startingInventory = model.get('startingInventory');
+
+                // Set currentRound to first round in puzzle
+                var firstRound = puzzleRounds
+                    .sortBy('year').get('firstObject');
+
+                gameState.setProperties({
+                    currentRound: firstRound,
+                    currentInventory: startingInventory
                 });
+
+                return gameState.save();
+            })
+            .then(function() {
+                return gameState.reload();
+            });
     },
 
     renderTemplate: function(controller, model) {

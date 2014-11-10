@@ -1,0 +1,49 @@
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>WACEP Weather Roulette Administration</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% bootstrap_css %}
+        <link rel="stylesheet" href="/media/css/weather_roulette_admin.css">
+        <script src="/site_media/jquery/js/jquery.min.js"></script>
+        <script src="/site_media/js/underscore-min.js"></script>
+        <script src="/site_media/js/highcharts4.min.js"></script>
+        <script src="/site_media/WeatherRouletteAdmin/main.js"></script>
+    </head>
+    <body>
+        {% block topnavbar %}
+        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse"
+             role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="ember-view navbar-brand"
+                       href="/site_media/WeatherRoulette/dist/index.html"
+                       >WACEP Weather Roulette</a>
+                    <span class="navbar-brand disabled" style="color:#777;"
+                         >–</span>
+                    <a class="ember-view navbar-brand active" href="#/">Administration</a>
+                </div>
+            </div>
+        </nav>
+        {% endblock %}
+        <div class="container" id="outer-container">
+            <div class="container-fluid" id="content">
+                <div class="row-fluid">
+                    {% block all-content %}
+                    <div class="span12">
+                        {% block pagetitle %}{% endblock %}
+                        {% block content %}{% endblock %}
+                        {% block content-nav %}{% endblock %}
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

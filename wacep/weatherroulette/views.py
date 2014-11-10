@@ -1,8 +1,12 @@
 import json
 from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView, View
 from rest_framework import pagination, serializers, status, views, viewsets
 from rest_framework.response import Response
+
+from .mixins import AdminRequiredMixin
 from .models import GameState, Move, Puzzle, PuzzleRound
+from .utils import Utils, ReportFileGenerator
 
 
 class GameStateSerializer(serializers.ModelSerializer):
@@ -20,7 +24,27 @@ class GameStateView(views.APIView):
         gs, created = GameState.objects.get_or_create(user=current_user)
         serializer = GameStateSerializer(gs)
         serializer.data['current_round_id'] = serializer.data['current_round']
-        #serializer.data['id'] = 'mine'
+        serializer.data['is_admin'] = Utils.is_admin(current_user)
+
+        # The API only gives the front-end application a limited view of the
+        # moves - we only want to expose moves that are related to the current
+        # puzzle. This is because the front-end deletes all the moves that it
+        # knows about when the user if any of the moves don't make sense for
+        # current puzzle. That tends to happen when a new puzzle is started.
+        #
+        # Remove the moves that don't belong to current_round.puzzle.
+        if serializer.data['current_round_id']:
+            round = PuzzleRound.objects.get(
+                pk=serializer.data['current_round_id'])
+
+            filtered_move_ids = []
+            for move_id in serializer.data['move_ids']:
+                move = Move.objects.get(pk=move_id)
+                if move.puzzle_round.puzzle == round.puzzle:
+                    filtered_move_ids.append(move.id)
+
+            serializer.data['move_ids'] = filtered_move_ids
+
         return Response(serializer.data)
 
     def put(self, request, pk=None):
@@ -111,3 +135,77 @@ class PuzzleViewSet(viewsets.ModelViewSet):
     root = 'puzzle'
     serializer_class = PuzzleSerializer
     pagination_serializer_class = PuzzlePaginationSerializer
+
+
+class AdminView(AdminRequiredMixin, TemplateView):
+    template_name = 'weatherroulette/admin.html'
+
+    def post(self, request, **kwargs):
+        # Handle POST data
+        for action in request.POST:
+            value = request.POST[action]
+            puzzle = get_object_or_404(Puzzle, pk=value)
+            if action == 'delete':
+                puzzle.delete()
+            elif action == 'unlock':
+                puzzle.is_locked = False
+                puzzle.save()
+            elif action == 'lock':
+                puzzle.is_locked = True
+                puzzle.save()
+            elif action == 'export':
+                pass
+
+        return self.get(request, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super(AdminView, self).get_context_data(**kwargs)
+
+        ctx['participants'] = GameState.active_participants()
+
+        all_puzzles = Puzzle.objects.all()
+        ctx['puzzles'] = []
+        for puzzle in all_puzzles:
+            el = {
+                'puzzle': puzzle,
+                'participants': puzzle.active_participants(
+                    ctx['participants']
+                )
+            }
+            ctx['puzzles'].append(el)
+
+        ctx['participant_moves'] = GameState.participant_moves(
+            all_puzzles,
+            ctx['participants']
+        )
+
+        ctx['participant_moves_json'] = json.dumps(ctx['participant_moves'])
+
+        return ctx
+
+
+class AdminExportParticipantDataView(AdminRequiredMixin, View):
+    def get(self, request, **kwargs):
+        participant_moves = GameState.participant_moves(
+            Puzzle.objects.all(),
+            GameState.active_participants()
+        )
+        generator = ReportFileGenerator()
+        filename = 'weatherroulette-participant-data'
+        return generator.generate(
+            participant_moves,
+            [[1, 2, 3], [4, 5, 6]],
+            filename
+        )
+
+
+class AdminExportPuzzleView(AdminRequiredMixin, View):
+    def get(self, request, **kwargs):
+        puzzle = get_object_or_404(Puzzle, pk=kwargs['pk'])
+        generator = ReportFileGenerator()
+        filename = 'weatherroulette-' + puzzle.slug
+        return generator.generate(
+            ['col 1', 'col 2', 'col n'],
+            [[1, 2, 3], [4, 5, 6]],
+            filename
+        )

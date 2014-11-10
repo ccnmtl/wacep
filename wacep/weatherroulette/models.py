@@ -22,6 +22,54 @@ class GameState(models.Model):
     def __unicode__(self):
         return unicode('Game state for user: %s' % self.user)
 
+    # Here's some static methods that don't have anything to do with any
+    # GameState object, but they do have to do with the game's "state".
+    @staticmethod
+    def active_participants():
+        """
+        Get a list of all the participants who are playing, or have played,
+        any puzzles.
+        """
+        return [x for x in User.objects.all()
+                if Move.objects.filter(game_state__user=x).exists()]
+
+    @staticmethod
+    def moves_for_participant(participant, puzzle):
+        """
+        Find all the moves for the given participant, in the given puzzle.
+        """
+        return Move.objects.filter(
+            game_state__user=participant,
+            puzzle_round__puzzle=puzzle)
+
+    @staticmethod
+    def participant_moves(puzzles, participants):
+        """
+        Given a list of puzzles and a list of participants, generate a list
+        that contains useful Move data relating to how those participants
+        performed in the given puzzles.
+        """
+        participant_moves = []
+
+        for puzzle in puzzles:
+            for participant in puzzle.active_participants(participants):
+                moves = GameState.moves_for_participant(
+                    participant, puzzle)
+
+                el = {
+                    'puzzle_id': puzzle.id,
+                    'puzzle_name': puzzle.display_name,
+                    'participant_id': participant.id,
+                    'participant_name': participant.username,
+                    'moves': [{
+                        'year': move.puzzle_round.year,
+                        'ending_inventory': move.ending_inventory
+                    } for move in moves]
+                }
+                participant_moves.append(el)
+
+        return participant_moves
+
 
 class Move(models.Model):
     """
@@ -42,7 +90,8 @@ class Move(models.Model):
         unique_together = ('game_state', 'puzzle_round')
 
     def __unicode__(self):
-        return unicode('Move for %s' % (self.year))
+        return unicode('Move for %s, player: %s, puzzle: %s' % (
+            self.year, self.game_state.user, self.puzzle_round.puzzle))
 
     # Calculates the ending inventory for this move, given a puzzle round.
     # Sets self.ending_inventory and returns the value
@@ -88,6 +137,15 @@ class Puzzle(models.Model):
 
     def __unicode__(self):
         return unicode(self.display_name)
+
+    def active_participants(self, all_active_participants):
+        """
+        Find all participants who have moves in this puzzle.
+        """
+        return [x for x in all_active_participants
+                if Move.objects.filter(
+                    game_state__user=x,
+                    puzzle_round__puzzle=self).exists()]
 
 
 class PuzzleRound(models.Model):

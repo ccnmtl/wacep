@@ -6,6 +6,9 @@ test: ./node_modules ./bower_components
 dist: ./node_modules ./bower_components
 	${EMBER} build --environment=production
 
+runserver: ./node_modules ./bower_components
+	${EMBER} serve --proxy http://127.0.0.1:8000
+
 clean:
 	rm -rf node_modules bower_components dist tmp
 	npm cache clear
@@ -16,3 +19,5 @@ clean:
 
 ./bower_components:
 	bower install
+
+.PHONY: test dist runserver clean
