@@ -2,9 +2,15 @@
     <table class="table">
         <thead>
             <tr>
-            {{#each year in years}}
-                <th {{bind-attr title="year"}} colspan="3">{{year}}</th>
-            {{/each}}
+            {{#if tableYearData.length}}
+                {{#each obj in tableYearData}}
+                    <th {{bind-attr title="obj.year"}}
+                        colspan="3">{{obj.year}}</th>
+                {{/each}}
+            {{else}}
+            <th {{bind-attr title="puzzleRounds.firstObject.year"}}
+                colspan="3">{{puzzleRounds.firstObject.year}}</th>
+            {{/if}}
             </tr>
         </thead>
         <tbody>

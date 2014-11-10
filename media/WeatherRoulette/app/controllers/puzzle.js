@@ -119,11 +119,14 @@ export default Em.ObjectController.extend({
 
     tableYearData: function() {
         var movesLength = this.get('moves.length');
+        var puzzleRounds = this.get('puzzleRounds');
+
         var length = movesLength;
         if (!this.get('isCurrentYearCompleted')) {
             length += 1;
         }
-        return this.get('puzzleRounds').slice(0, length);
+
+        return puzzleRounds.slice(0, length);
     }.property('puzzleRounds', 'isCurrentYearCompleted', 'moves.length'),
     tableWetData: Em.computed.map('tableYearData', function(item, idx) {
         return this.getTableRowData(
@@ -291,44 +294,7 @@ export default Em.ObjectController.extend({
     }.property('moves.@each.umbrellas'),
 
 
-    observationGraphValues: function() {
-        var totalLength = this.get('puzzleRounds.length');
-        var values = this.get('endingInventories');
-
-        var a = this.padArrayForAllRounds(values, totalLength);
-        return a;
-    }.property('endingInventories.@each', 'puzzleRounds.length'),
-
-    /**
-     * Pad the input array with nulls, for the remaining slots up to
-     * totalLength
-     *
-     * array: An Ember array
-     * totalLength: an integer
-     */
-    padArrayForAllRounds: function(a, totalLength) {
-        var currentLength = a.get('length');
-        var paddedArray = [];
-
-        a.forEach(function(item) {
-            if (typeof item !== 'undefined') {
-                paddedArray.push(item);
-            }
-        });
-
-        for (
-            var i = 0; i < totalLength - currentLength; i++
-        ) {
-            paddedArray.push(null);
-        }
-
-        return paddedArray;
-    },
-
-    hideFutureRounds: function(dataForAllRounds, nRoundsToShow) {
-        var a = dataForAllRounds.slice(0, nRoundsToShow);
-        return this.padArrayForAllRounds(a, dataForAllRounds.get('length'));
-    },
+    observationGraphValues: Em.computed.alias('endingInventories'),
 
     /**
      * showAlertIfBankrupt
