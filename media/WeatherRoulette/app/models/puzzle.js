@@ -18,9 +18,6 @@ var Puzzle = DS.Model.extend({
     // Spreadsheet properties
     years: Em.computed.mapBy('puzzleRounds', 'year'),
 
-    allObservationGraphValues: Em.computed.mapBy(
-        'puzzleRounds', 'observationGraphValue'),
-
     allDryForecasts: Em.computed.mapBy('puzzleRounds', 'belowForecast'),
     allNormalForecasts: Em.computed.mapBy('puzzleRounds', 'normalForecast'),
     allWetForecasts: Em.computed.mapBy('puzzleRounds', 'aboveForecast'),

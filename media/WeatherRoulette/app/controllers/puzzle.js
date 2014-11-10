@@ -290,15 +290,14 @@ export default Em.ObjectController.extend({
         return a;
     }.property('moves.@each.umbrellas'),
 
-    observationGraphValues: function() {
-        var movesLength = this.get('moves.length');
-        var totalLength = this.get('puzzleRounds.length');
-        var values =
-            this.get('allObservationGraphValues').slice(0, movesLength);
 
-        return this.padArrayForAllRounds(values, totalLength);
-    }.property(
-        'allObservationGraphValues', 'moves.length', 'puzzleRounds.length'),
+    observationGraphValues: function() {
+        var totalLength = this.get('puzzleRounds.length');
+        var values = this.get('endingInventories');
+
+        var a = this.padArrayForAllRounds(values, totalLength);
+        return a;
+    }.property('endingInventories.@each', 'puzzleRounds.length'),
 
     /**
      * Pad the input array with nulls, for the remaining slots up to
@@ -312,7 +311,9 @@ export default Em.ObjectController.extend({
         var paddedArray = [];
 
         a.forEach(function(item) {
-            paddedArray.push(item);
+            if (typeof item !== 'undefined') {
+                paddedArray.push(item);
+            }
         });
 
         for (

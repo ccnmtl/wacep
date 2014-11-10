@@ -52,13 +52,8 @@ export default Em.View.extend({
             },
             tooltip: {
                 formatter: function() {
-                    var vals = ['Dry', 'Normal', 'Wet'];
-                    var s = '';
-                    if (this.y >= 0 && this.y <= 2) {
-                        s = vals[this.y];
-                    }
-                    s = this.x + ' was <strong>' + s + '</strong>';
-                    return s;
+                    return 'Inventory in ' + this.x +
+                        ': <strong>$' + this.y + '</strong>';
                 }
             },
             xAxis: {
@@ -67,21 +62,9 @@ export default Em.View.extend({
             yAxis: {
                 floor: 0,
                 min: 0,
-                ceiling: 2,
-                max: 2,
                 labels: {
                     formatter: function() {
-                        var s = '';
-
-                        if (this.value === 0) {
-                            s = 'Dry';
-                        } else if (this.value === 1) {
-                            s = 'Norm.';
-                        } else if (this.value === 2) {
-                            s = 'Wet';
-                        }
-
-                        return s;
+                        return this.value;
                     },
                     step: 1
                 },
