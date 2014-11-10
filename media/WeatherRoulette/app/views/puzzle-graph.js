@@ -63,9 +63,6 @@ export default Em.View.extend({
                 floor: 0,
                 min: 0,
                 labels: {
-                    formatter: function() {
-                        return this.value;
-                    },
                     step: 1
                 },
                 title: {
