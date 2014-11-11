@@ -5,11 +5,16 @@
     <div class="roulette-modal-body">
         <div class="roulette-puzzle-list">
             {{#each puzzle in arrangedContent}}
-                <div class="radio">
+                <div {{bind-attr class=":radio puzzle.isLocked:disabled"}}>
                     <label>
                         {{radio-button name='roulette-game-button' value=puzzle
-                            groupValue=selectedPuzzle}}
+                        groupValue=selectedPuzzle
+                        disabled=puzzle.isLocked}}
                             <strong>{{puzzle.displayName}}</strong>
+                            {{#if puzzle.isLocked}}
+                                <span class="glyphicon glyphicon-lock"
+                                    ></span>
+                            {{/if}}
                             {{#if puzzle.description}}
                                 &ndash; {{puzzle.description}}
                             {{/if}}

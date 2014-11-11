@@ -130,17 +130,11 @@ a {
     color: black;
 }
 
-ul.roulette-puzzle-list {
-    list-style: none;
-
-    li {
-        &.active {
-            background-color: yellow;
-        }
-
-        a {
-            font-weight: bold;
-            text-decoration: underline;
+.roulette-puzzle-list {
+    .disabled label {
+        color: #777;
+        .glyphicon {
+            margin-left: 4px;
         }
     }
 }
