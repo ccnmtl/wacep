@@ -174,8 +174,30 @@ export default Em.ObjectController.extend({
             this.get('tableTotalData.lastObject').invReturnTotal / 3);
     }.property('tableTotalData.@each'),
     currentInventoryDelta: function() {
-        return this.get('tableTotalData.lastObject').invReturnTotal;
+        var length = this.get('tableTotalData.length');
+        var n = 0;
+        if (length === 0) {
+            n = null;
+        } else if (length === 1) {
+            n = this.get('tableTotalData.lastObject').invReturnTotal;
+        } else {
+            var last = this.get('tableTotalData.lastObject').invReturnTotal;
+            var nextLast = this.get('tableTotalData')
+                .objectAt(length-2).invReturnTotal;
+            n = last - nextLast;
+        }
+        return n;
     }.property('tableTotalData.@each'),
+    currentInventoryDeltaVerb: function() {
+        var verb = 'made';
+        if (this.get('currentInventoryDelta') < 0) {
+            verb = 'lost';
+        }
+        return verb;
+    }.property('currentInventoryDelta'),
+    currentInventoryDeltaAbs: function() {
+        return Math.abs(this.get('currentInventoryDelta'));
+    }.property('currentInventoryDelta'),
 
     currentInventoryObserver: function() {
         if (this.get('currentInventory') <= 0) {
