@@ -15,7 +15,7 @@ var Puzzle = DS.Model.extend({
 
     isPracticeGame: Em.computed.equal('displayName', 'WACEP Practice Game'),
     isCaseysGame: function() {
-        var name = this.get('displayName')
+        var name = this.get('displayName');
         return !!name.match(/^Casey\'s Game/gi);
     }.property('displayName'),
 

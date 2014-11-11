@@ -15,6 +15,10 @@
         {{/if}}
     </div>
     <div class="roulette-modal-footer">
-        <a class="btn btn-primary" {{action "playPuzzle" model}}>Play Again</a>
+        {{#if isCaseysGame}}
+            <a class="btn btn-primary" {{action "closeModal"}}>OK</a>
+        {{else}}
+            <a class="btn btn-primary" {{action "playPuzzle" model}}>Play Again</a>
+        {{/if}}
     </div>
 {{/modal-dialog}}
