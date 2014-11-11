@@ -38,7 +38,5 @@ app.import(
     });
 app.import('bower_components/bootstrap/dist/css/bootstrap.min.css');
 app.import('bower_components/highcharts/highcharts.js');
-app.import('bower_components/jquery-ui/ui/minified/effect.min.js');
-app.import('bower_components/jquery-ui/ui/minified/effect-shake.min.js');
 
 module.exports = app.toTree();

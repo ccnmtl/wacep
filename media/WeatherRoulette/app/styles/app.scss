@@ -294,3 +294,18 @@ ul.roulette-puzzle-list {
     .roulette-observed {
     }
 }
+
+a.roulette-tooltip-me {
+    cursor: help;
+    border-bottom: 1px dotted #777;
+    position: relative;
+}
+
+a.roulette-tooltip-me:hover:after {
+    background-color: #eee;
+    padding: 10px;
+    content: attr(data-title);
+    position: absolute;
+    right: 95px;
+    top: -50px;
+}

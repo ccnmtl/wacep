@@ -356,7 +356,6 @@ export default Em.ObjectController.extend({
         this.resetItems();
         gameState.set('currentRound', newRound);
 
-        Em.$('.roulette-forecast-now').effect('shake');
         Em.run.schedule('afterRender', this, function() {
             Em.$('.roulette-betting-area input:first').focus();
         });
