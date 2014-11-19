@@ -1,5 +1,5 @@
+from json import loads
 from django.core.management.base import BaseCommand
-from django.utils.simplejson import loads
 from django.conf import settings
 from pagetree.models import Hierarchy
 from restclient import GET

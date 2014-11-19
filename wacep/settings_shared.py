@@ -33,7 +33,6 @@ if 'test' in sys.argv or 'jenkins' in sys.argv:
     }
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-SOUTH_TESTS_MIGRATE = False
 
 NOSE_ARGS = [
     '--with-coverage',
@@ -112,12 +111,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'tagging',
     'typogrify',
-    'south',
     'django_nose',
     'compressor',
     'django_statsd',
     'bootstrapform',
-    'lettuce.django',
     'debug_toolbar',
     'waffle',
     'django_jenkins',
@@ -149,23 +146,7 @@ PAGEBLOCKS = [
     'figure_viewer.FigureViewerBlock',
 ]
 
-LETTUCE_APPS = (
-    'wacep.main',
-)
-LETTUCE_SERVER_PORT = 7000
 INTERNAL_IPS = ('0.0.0.0', )
-
-if 'harvest' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'lettuce.db',
-            'HOST': '',
-            'PORT': '',
-            'USER': '',
-            'PASSWORD': '',
-        }
-    }
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',

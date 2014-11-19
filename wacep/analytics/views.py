@@ -145,7 +145,7 @@ def export_csv(request, section_id):
         questions = find_questions(section)
     all_users = User.objects.filter(is_staff=False)
 
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = (
         'attachment; filename=wacep_responses.csv')
     writer = csv.writer(response)
