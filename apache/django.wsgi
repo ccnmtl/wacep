@@ -1,4 +1,6 @@
 import os, sys, site
+import django
+django.setup()
 
 # enable the virtualenv
 site.addsitedir('/var/www/wacep/wacep/ve/lib/python2.7/site-packages')

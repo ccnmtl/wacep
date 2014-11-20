@@ -1,8 +1,8 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from wacep.timescale.models import YearInput, GraphingModeInput
 from wacep.timescale.models import SeasonInput, InputCombination, ActivityState
-from django.utils import simplejson
 
 
 @login_required
@@ -18,5 +18,5 @@ def settings(request):
     }
 
     return HttpResponse(
-        simplejson.dumps(the_settings, indent=2),
-        mimetype="application/json")
+        json.dumps(the_settings, indent=2),
+        content_type="application/json")

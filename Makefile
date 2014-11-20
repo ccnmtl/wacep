@@ -11,7 +11,7 @@ test: ./ve/bin/python
 	$(MANAGE) jenkins --pep8-exclude=.git,migrations
 
 flake8: ./ve/bin/python
-	$(FLAKE8) $(APP) --max-complexity=10
+	$(FLAKE8) $(APP) --exclude=migrations --max-complexity=10
 
 runserver: ./ve/bin/python validate
 	$(MANAGE) runserver
