@@ -1,6 +1,4 @@
 import os, sys, site
-import django
-django.setup()
 
 # enable the virtualenv
 site.addsitedir('/var/www/wacep/wacep/ve/lib/python2.7/site-packages')
@@ -9,6 +7,9 @@ site.addsitedir('/var/www/wacep/wacep/ve/lib/python2.7/site-packages')
 sys.path.append('/var/www/wacep/wacep/')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'wacep.settings_production'
+
+import django
+django.setup()
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
