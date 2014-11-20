@@ -9,6 +9,9 @@ jenkins: ./ve/bin/python validate test flake8
 
 test: ./ve/bin/python
 	$(MANAGE) jenkins --pep8-exclude=.git,migrations
+	cd media/WeatherRoulette/ && npm install && \
+		./node_modules/.bin/bower install && \
+		npm test
 
 flake8: ./ve/bin/python
 	$(FLAKE8) $(APP) --exclude=migrations --max-complexity=10

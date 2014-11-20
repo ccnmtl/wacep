@@ -1,7 +1,7 @@
 EMBER=./node_modules/.bin/ember
 
 test: ./node_modules ./bower_components
-	${EMBER} test
+	npm test
 
 dist: ./node_modules ./bower_components
 	${EMBER} build --environment=production
@@ -17,7 +17,10 @@ clean:
 ./node_modules:
 	npm install
 
+./node_modules/.bin/bower:
+	npm install
+
 ./bower_components:
-	bower install
+	./node_modules/.bin/bower install
 
 .PHONY: test dist runserver clean
