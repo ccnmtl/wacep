@@ -10,6 +10,5 @@ sys.path.append('/var/www/wacep/wacep/')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'wacep.settings_staging'
 
-import django.core.handlers.wsgi
-
-application = django.core.handlers.wsgi.WSGIHandler()
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
