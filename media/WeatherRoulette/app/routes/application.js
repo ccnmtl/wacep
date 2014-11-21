@@ -36,22 +36,25 @@ export default Em.Route.extend({
             });
         },
 
+        /**
+         * playPuzzle
+         *
+         * Returns a promise.
+         */
         playPuzzle: function(puzzle) {
             Em.debug('route:application playPuzzle');
             Em.debug('playing puzzle ' + puzzle.get('slug'));
 
             var puzzleController = this.controllerFor('puzzle');
+            puzzleController.resetGame();
+
             var gameState = puzzleController.get('gameState');
 
             var me = this;
-            // Delete the global GameState's moves
-            return puzzleController.resetGame().then(function() {
-                // Set the new inventory
+            return new Em.RSVP.Promise(function() {
                 gameState.set(
                     'currentInventory', puzzle.get('startingInventory'));
-
-                me.transitionTo('puzzle', puzzle);
-                me.send('closeModal');
+                return me.transitionTo('puzzle', puzzle);
             });
         }
     },

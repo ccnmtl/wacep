@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 
 var Move = DS.Model.extend({
-    gameState: DS.belongsTo('game-state'),
-    puzzleRound: DS.belongsTo('puzzle-round'),
+    gameState: DS.belongsTo('game-state', {async: true}),
+    puzzleRound: DS.belongsTo('puzzle-round', {async: true}),
     year: DS.attr('number'),
     hats: DS.attr('number'),
     shirts: DS.attr('number'),

@@ -133,6 +133,7 @@ INSTALLED_APPS = [
     'wacep.forecaster',
     'wacep.weatherroulette',
     'django_markwhat',
+    'bootstrap3',
 ]
 
 PAGEBLOCKS = [

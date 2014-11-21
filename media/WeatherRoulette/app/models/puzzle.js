@@ -41,8 +41,7 @@ Puzzle.reopenClass({
             startingInventory: 100,
             createdAt: new Date().toString(),
             updatedAt: new Date().toString(),
-            puzzleRounds: [1,2,3,4,5,6],
-            secretMoves: []
+            puzzleRounds: [1,2,3,4,5,6]
         },
         {
             id: 2,
@@ -54,8 +53,7 @@ Puzzle.reopenClass({
             hasSecretPlayer: true,
             createdAt: new Date().toString(),
             updatedAt: new Date().toString(),
-            puzzleRounds: [7,8,9,10,11],
-            secretMoves: []
+            puzzleRounds: [7,8,9,10,11]
         }
     ]
 });

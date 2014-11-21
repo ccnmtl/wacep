@@ -32,11 +32,11 @@
                     Games
                 </a>
             </li>
-            <li class="disabled">
-                <a>
-                    Manage
-                </a>
-            </li>
+            {{#if isAdmin}}
+                <li>
+                    <a href="/weatherroulette/admin/">Manage</a>
+                </li>
+            {{/if}}
         </ul>
     </div>
 </nav>

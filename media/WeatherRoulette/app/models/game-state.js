@@ -5,7 +5,8 @@ var GameState = DS.Model.extend({
     currentInventory: DS.attr('number'),
     moves: DS.hasMany('move', {async: true}),
     createdAt: DS.attr('date'),
-    updatedAt: DS.attr('date')
+    updatedAt: DS.attr('date'),
+    isAdmin: DS.attr('boolean')
 });
 
 GameState.reopenClass({
@@ -15,7 +16,8 @@ GameState.reopenClass({
         currentInventory: 300,
         moves: [1, 2],
         createdAt: new Date().toString(),
-        updatedAt: new Date().toString()
+        updatedAt: new Date().toString(),
+        isAdmin: false
     }]
 });
 

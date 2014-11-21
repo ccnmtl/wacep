@@ -1,0 +1,118 @@
+{% extends 'weatherroulette/admin_base.html' %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block content %}
+
+<div class="wr-admin-section">
+    <h1>Participant Progress</h1>
+<script>
+    var collection = {{ participant_moves_json|safe }};
+    var adminPuzzleGraphs = [];
+</script>
+
+{% for puzzle in puzzles %}
+{% if puzzle.participants %}
+<div class="wr-admin-puzzle">
+    <h2 class="wr-admin-puzzle-title">
+        {{puzzle.puzzle.display_name}}
+        {% if puzzle.puzzle.is_locked %}
+        <span class="glyphicon glyphicon-lock" title="Locked"></span>
+        {% endif %}
+    </h2>
+
+    {% for participant in puzzle.participants %}
+    <h3>{{ participant }}</h3>
+
+    <div class="wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}"></div>
+    <script>
+        (function() {
+
+        var moves = _.find(collection, function(e) {
+            return e.puzzle_id === {{puzzle.puzzle.id}} &&
+                e.participant_id === {{participant.id}};
+        }).moves;
+        moves = _.pluck(moves, 'ending_inventory');
+
+        var graph = new AdminPuzzleGraph(
+            moves,
+            '{{participant.fullname}}',
+            '.wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}'
+        );
+        adminPuzzleGraphs.push(graph);
+
+        })();
+    </script>
+
+    {% empty %}
+    <p>There's no participant data for this game yet.</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+
+<form action="{% url 'weatherroulette-admin-export-participant-data' %}"
+      role="form">
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-save"></span> Save all participant data
+        </button>
+    </div>
+</form>
+</div>
+
+<div class="wr-admin-section">
+    <h1>Manage Games</h1>
+    <form action="{% url 'weatherroulette-admin' %}" role="form" method="post">
+        <div class="form-group">
+            <button type="submit" class="btn btn-default" name="import">
+                <span class="glyphicon glyphicon-open"></span>
+                Import new game from CSV file
+            </button>
+        </div>
+        <table class="table table-striped table-condensed"></tbody>
+        {% for puzzle in puzzles %}
+        <tr>
+            <td>
+                <strong>{{puzzle.puzzle.display_name}}</strong>
+                {% if puzzle.puzzle.is_locked %}
+                <span class="glyphicon glyphicon-lock" title="Locked"></span>
+                {% endif %}
+            </td>
+            <td>
+
+                {% if puzzle.puzzle.is_locked %}
+                <button type="submit" class="btn btn-xs btn-default"
+                        title="Unlock '{{puzzle.puzzle.display_name}}'"
+                        name="unlock" value="{{puzzle.puzzle.id}}">
+                    <strong>Unlock</strong>
+                </button>
+                {% else %}
+                <button type="submit" class="btn btn-xs btn-default"
+                        title="Lock '{{puzzle.puzzle.display_name}}'"
+                        name="lock" value="{{puzzle.puzzle.id}}">
+                    <strong>Lock</strong>
+                    <span class="glyphicon glyphicon-lock"></span>
+                </button>
+                {% endif %}
+
+                <a class="btn btn-xs btn-primary"
+                   href="{% url 'weatherroulette-admin-export-puzzle' puzzle.puzzle.id %}"
+                   title="Export '{{puzzle.puzzle.display_name}}' as CSV"
+                   name="export" value="{{puzzle.puzzle.id}}">
+                    <strong>Export</strong>
+                    <span class="glyphicon glyphicon-save"></span>
+                </a>
+                <button type="submit" class="btn btn-xs btn-danger"
+                        title="Delete '{{puzzle.puzzle.display_name}}'"
+                        name="delete" value="{{puzzle.puzzle.id}}">
+                    <strong>Delete</strong>
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+        <tbody></table>
+    </form>
+</div>
+{% endblock %}
