@@ -20,13 +20,48 @@ class ReportFileGenerator(object):
         response['Content-Disposition'] = \
             "attachment; filename=\"%s\"" % (filename)
 
-        writer = unicodecsv.writer(response, encoding='utf-8')
-        writer.writerow(self.column_names)
-        writer.writerows(self.rows)
+        if (self.formatted_data is not None):
+            response.content = self.formatted_data
+        else:
+            writer = unicodecsv.writer(response, encoding='utf-8')
+            writer.writerow(self.column_names)
+            writer.writerows(self.rows)
 
         return response
 
-    def generate(self, column_names, rows, filename):
+    def _gen_json(self):
+        """
+        Generates the report as JSON. Returns an HttpResponse.
+        """
+        import json
+
+        filename = self.filename + '.json'
+        response = HttpResponse(content_type='application/json')
+        response['Content-Disposition'] = \
+            "attachment; filename=\"%s\"" % (filename)
+
+        if (self.formatted_data is not None):
+            try:
+                # Attempt to pretty-print the json, by decoding it and
+                # re-encoding it.
+                my_json = json.dumps(json.loads(self.formatted_data), indent=4)
+            except:
+                my_json = self.formatted_data
+
+            response.content = my_json
+        else:
+            response.content = 'NOT IMPLEMENTED'
+
+        return response
+
+    def generate(
+        self,
+        filename='export',
+        column_names=[],
+        rows=[],
+        formatted_data=None,
+        fileformat='csv'
+    ):
         """
         Make a report.
 
@@ -37,12 +72,21 @@ class ReportFileGenerator(object):
           rows (2d list)
             Rows of data.
 
+          formatted_data (string)
+            If this param is present, then this is used as the data instead of
+            generating it from 'column_names' and 'rows'.
+
           filename (string)
             The filename to use, without the extension.
         """
+
         self.column_names = column_names
         self.rows = rows
         self.filename = filename
+        self.formatted_data = formatted_data
+
+        if fileformat == 'json':
+            return self._gen_json()
 
         return self._gen_csv()
 

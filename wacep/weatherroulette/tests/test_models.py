@@ -7,7 +7,7 @@ from .factories import (
 
 class TestGameState(TestCase):
     def setUp(self):
-        self.u = UserFactory()
+        self.u = UserFactory(username='test_user')
         self.gs = GameStateFactory(user=self.u)
 
     def test_is_valid_from_factory(self):
@@ -19,6 +19,45 @@ class TestGameState(TestCase):
 
     def test_participant_moves_empty(self):
         self.assertEqual(self.gs.participant_moves([], []), [])
+
+    def test_participant_moves_for_csv_empty(self):
+        self.assertEqual(self.gs.participant_moves_for_csv([], []), [])
+
+    def test_participant_moves_for_csv(self):
+        puzzle_a = PuzzleFactory(display_name='puzzle a')
+        puzzleround_a_first = PuzzleRoundFactory(puzzle=puzzle_a, year='1998')
+        PuzzleRoundFactory(puzzle=puzzle_a, year='1999')
+        PuzzleRoundFactory(puzzle=puzzle_a, year='2000')
+
+        puzzle_b = PuzzleFactory(display_name='puzzle b')
+
+        puzzle_c = PuzzleFactory(display_name='puzzle c')
+
+        puzzles = [puzzle_a, puzzle_b, puzzle_c]
+
+        self.assertEqual(
+            self.gs.participant_moves_for_csv(puzzles, [self.u]),
+            [
+                ['puzzle a', 1998, 1999, 2000], [],
+                ['puzzle b'], [],
+                ['puzzle c'], []
+            ]
+        )
+
+        # Now add some moves
+        MoveFactory(
+            game_state=self.gs, puzzle_round=puzzleround_a_first, hats=100)
+
+        self.assertEqual(
+            self.gs.participant_moves_for_csv(puzzles, [self.u]),
+            [
+                ['puzzle a', 1998, 1999, 2000],
+                ['test_user', 210],
+                [],
+                ['puzzle b'], [],
+                ['puzzle c'], []
+            ]
+        )
 
 
 class TestMove(TestCase):

@@ -134,62 +134,20 @@ class TestPuzzleUnAuthedGET(APITestCase):
 
 class TestAdminView(AdminLoginTestMixin, TestCase):
     def test_empty_admin_index(self):
-        resp = self.client.get(reverse('weatherroulette-admin'))
+        resp = self.client.get(reverse('weatherroulette-admin-players'))
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.context['participants'], [])
         self.assertEqual(resp.context['puzzles'], [])
         self.assertEqual(resp.context['participant_moves'], [])
 
-    def test_admin_post(self):
-        resp = self.client.post(reverse('weatherroulette-admin'))
-        self.assertEqual(resp.status_code, 200)
-
-    def test_admin_post_lock_puzzle(self):
-        puzzle = PuzzleFactory(is_locked=False)
-        self.assertFalse(puzzle.is_locked)
-
-        resp = self.client.post(
-            reverse('weatherroulette-admin'),
-            dict(lock=puzzle.id)
-        )
-
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue(Puzzle.objects.get(pk=puzzle.id).is_locked)
-
-    def test_admin_post_unlock_puzzle(self):
-        puzzle = PuzzleFactory(is_locked=True)
-        self.assertTrue(puzzle.is_locked)
-
-        resp = self.client.post(
-            reverse('weatherroulette-admin'),
-            dict(unlock=puzzle.id)
-        )
-
-        self.assertEqual(resp.status_code, 200)
-        self.assertFalse(Puzzle.objects.get(pk=puzzle.id).is_locked)
-
-    def test_admin_post_delete_puzzle(self):
-        puzzle = PuzzleFactory()
-        puzzle_id = puzzle.id
-
-        resp = self.client.post(
-            reverse('weatherroulette-admin'),
-            dict(delete=puzzle_id)
-        )
-
-        self.assertEqual(resp.status_code, 200)
-
-        with self.assertRaises(Puzzle.DoesNotExist):
-            Puzzle.objects.get(pk=puzzle_id)
-
 
 class TestAdminViewUnAuthed(TestCase):
     def test_admin_get(self):
-        resp = self.client.get(reverse('weatherroulette-admin'))
+        resp = self.client.get(reverse('weatherroulette-admin-players'))
         self.assertEqual(resp.status_code, 302)
 
     def test_admin_post(self):
-        resp = self.client.post(reverse('weatherroulette-admin'))
+        resp = self.client.post(reverse('weatherroulette-admin-players'))
         self.assertEqual(resp.status_code, 302)
 
     def test_admin_post_lock_puzzle(self):
@@ -197,7 +155,7 @@ class TestAdminViewUnAuthed(TestCase):
         self.assertFalse(puzzle.is_locked)
 
         resp = self.client.post(
-            reverse('weatherroulette-admin'),
+            reverse('weatherroulette-admin-players'),
             dict(lock=puzzle.id)
         )
 
@@ -209,7 +167,7 @@ class TestAdminViewUnAuthed(TestCase):
         puzzle_id = puzzle.id
 
         resp = self.client.post(
-            reverse('weatherroulette-admin'),
+            reverse('weatherroulette-admin-players'),
             dict(delete=puzzle_id)
         )
 

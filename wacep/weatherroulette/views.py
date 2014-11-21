@@ -1,4 +1,6 @@
+import datetime
 import json
+from django.core import serializers as django_serializers
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, View
 from rest_framework import pagination, serializers, status, views, viewsets
@@ -137,29 +139,11 @@ class PuzzleViewSet(viewsets.ModelViewSet):
     pagination_serializer_class = PuzzlePaginationSerializer
 
 
-class AdminView(AdminRequiredMixin, TemplateView):
-    template_name = 'weatherroulette/admin.html'
-
-    def post(self, request, **kwargs):
-        # Handle POST data
-        for action in request.POST:
-            value = request.POST[action]
-            puzzle = get_object_or_404(Puzzle, pk=value)
-            if action == 'delete':
-                puzzle.delete()
-            elif action == 'unlock':
-                puzzle.is_locked = False
-                puzzle.save()
-            elif action == 'lock':
-                puzzle.is_locked = True
-                puzzle.save()
-            elif action == 'export':
-                pass
-
-        return self.get(request, **kwargs)
+class AdminPlayersView(AdminRequiredMixin, TemplateView):
+    template_name = 'weatherroulette/players.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super(AdminView, self).get_context_data(**kwargs)
+        ctx = super(AdminPlayersView, self).get_context_data(**kwargs)
 
         ctx['participants'] = GameState.active_participants()
 
@@ -186,16 +170,19 @@ class AdminView(AdminRequiredMixin, TemplateView):
 
 class AdminExportParticipantDataView(AdminRequiredMixin, View):
     def get(self, request, **kwargs):
-        participant_moves = GameState.participant_moves(
+        participant_moves = GameState.participant_moves_for_csv(
             Puzzle.objects.all(),
             GameState.active_participants()
         )
         generator = ReportFileGenerator()
         filename = 'weatherroulette-participant-data'
+        data = [[]] + participant_moves
         return generator.generate(
-            participant_moves,
-            [[1, 2, 3], [4, 5, 6]],
-            filename
+            filename=filename,
+            column_names=['Weather Roulette Participant Progress',
+                          datetime.datetime.now().strftime('%B %d, %Y')],
+            rows=data,
+            fileformat='csv'
         )
 
 
@@ -204,8 +191,21 @@ class AdminExportPuzzleView(AdminRequiredMixin, View):
         puzzle = get_object_or_404(Puzzle, pk=kwargs['pk'])
         generator = ReportFileGenerator()
         filename = 'weatherroulette-' + puzzle.slug
+        json = django_serializers.serialize(
+            'json',
+            [puzzle],
+            fields=(
+                'lessons_learned',
+                'description',
+                'is_locked',
+                'starting_inventory',
+                'has_secret_player',
+                'display_name'
+            ),
+            indent=True
+        )
         return generator.generate(
-            ['col 1', 'col 2', 'col n'],
-            [[1, 2, 3], [4, 5, 6]],
-            filename
+            filename=filename,
+            formatted_data=json,
+            fileformat='json'
         )
