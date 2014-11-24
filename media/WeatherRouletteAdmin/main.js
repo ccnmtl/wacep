@@ -21,9 +21,19 @@ var AdminPuzzleGraph = function(moves, playerName, selector) {
             name: 'Inventory',
             data: this.moves
         }],
-        title: playerName,
+        title: {
+            text: null
+        },
+        tooltip: {
+            valuePrefix: '$'
+        },
         xAxis: {
             categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'Inventory ($)'
+            }
         }
     };
 };
