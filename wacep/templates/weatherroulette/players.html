@@ -1,0 +1,63 @@
+{% extends 'weatherroulette/customized_admin_base.html' %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block content %}
+
+<div class="wr-admin-section">
+    <h1>Participant Progress</h1>
+<script>
+    var collection = {{ participant_moves_json|safe }};
+    var adminPuzzleGraphs = [];
+</script>
+
+<form action="{% url 'weatherroulette-admin-export-participant-data' %}"
+      role="form">
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-save"></span> Export participant data to CSV
+        </button>
+    </div>
+</form>
+
+{% for puzzle in puzzles %}
+{% if puzzle.participants %}
+<div class="wr-admin-puzzle">
+    <h2 class="wr-admin-puzzle-title">
+        {{puzzle.puzzle.display_name}}
+        {% if puzzle.puzzle.is_locked %}
+        <span class="glyphicon glyphicon-lock" title="Locked"></span>
+        {% endif %}
+    </h2>
+
+    {% for participant in puzzle.participants %}
+    <h3>{{ participant }}</h3>
+
+    <div class="wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}"></div>
+    <script>
+        (function() {
+
+        var moves = _.find(collection, function(e) {
+            return e.puzzle_id === {{puzzle.puzzle.id}} &&
+                e.participant_id === {{participant.id}};
+        }).moves;
+        moves = _.pluck(moves, 'ending_inventory');
+
+        var graph = new AdminPuzzleGraph(
+            moves,
+            '{{participant.fullname}}',
+            '.wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}'
+        );
+        adminPuzzleGraphs.push(graph);
+
+        })();
+    </script>
+
+    {% empty %}
+    <p>There's no participant data for this game yet.</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+</div>
+{% endblock %}

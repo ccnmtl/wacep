@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
-from wacep.weatherroulette.views import (
-    AdminView,
+from .admin import wr_admin_site
+from .views import (
+    AdminPlayersView,
     AdminExportPuzzleView,
     AdminExportParticipantDataView,
     GameStateView, MoveViewSet, PuzzleViewSet,
@@ -20,11 +21,14 @@ urlpatterns = patterns(
     url(r'^api/game_state', GameStateView.as_view(), name='game-state'),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
-    url(r'^admin/?$', AdminView.as_view(), name='weatherroulette-admin'),
-    url(r'^admin/export-game/(?P<pk>\d+)/?$',
+    #url(r'^admin/?$', AdminView.as_view(), name='weatherroulette-admin'),
+    url(r'^admin/', include(wr_admin_site.urls)),
+    url(r'^admin/players/$', AdminPlayersView.as_view(),
+        name='weatherroulette-admin-players'),
+    url(r'^admin/export_game/(?P<pk>\d+)/?$',
         AdminExportPuzzleView.as_view(),
         name='weatherroulette-admin-export-puzzle'),
-    url(r'^admin/export-participant-data/?$',
+    url(r'^admin/export_participant_data/?$',
         AdminExportParticipantDataView.as_view(),
-        name='weatherroulette-admin-export-participant-data')
+        name='weatherroulette-admin-export-participant-data'),
 )

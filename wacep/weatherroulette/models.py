@@ -70,6 +70,36 @@ class GameState(models.Model):
 
         return participant_moves
 
+    @staticmethod
+    def participant_moves_for_csv(puzzles, participants):
+        """
+        Gets participant_moves in a format that can be in a put in a CSV.
+
+        Returns a 2d list.
+        """
+        participant_moves = GameState.participant_moves(puzzles, participants)
+        output = []
+
+        for puzzle in puzzles:
+            puzzle_data = []
+            puzzle_data.append(
+                [puzzle.display_name] +
+                [pr.year
+                 for pr in PuzzleRound.objects.filter(puzzle=puzzle)]
+            )
+            my_participants = [p for p in participant_moves
+                               if p['puzzle_id'] == puzzle.id]
+            for participant in my_participants:
+                puzzle_data.append(
+                    [participant['participant_name']] +
+                    [m['ending_inventory'] for m in participant['moves']]
+                )
+
+            puzzle_data.append([])
+            output = output + puzzle_data
+
+        return output
+
 
 class Move(models.Model):
     """

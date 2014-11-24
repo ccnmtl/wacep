@@ -1,7 +1,30 @@
 from django.contrib import admin
-from wacep.weatherroulette.models import GameState, Move, Puzzle, PuzzleRound
+from .forms import PuzzleAdminForm
+from .models import GameState, Move, Puzzle, PuzzleRound
 
 admin.site.register(GameState)
 admin.site.register(Move)
-admin.site.register(Puzzle)
-admin.site.register(PuzzleRound)
+
+
+class WeatherRouletteAdminSite(admin.AdminSite):
+    site_header = 'Weather Roulette admin'
+    site_title = 'Weather Roulette admin'
+    index_title = ''
+    index_template = 'weatherroulette/index.html'
+    app_index_template = 'weatherroulette/app_index.html'
+
+
+wr_admin_site = WeatherRouletteAdminSite(name='wradmin')
+
+
+class PuzzleRoundInline(admin.TabularInline):
+    model = PuzzleRound
+
+
+class PuzzleAdmin(admin.ModelAdmin):
+    inlines = [PuzzleRoundInline]
+    exclude = ['description']
+    form = PuzzleAdminForm
+
+
+wr_admin_site.register(Puzzle, PuzzleAdmin)
