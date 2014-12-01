@@ -9,16 +9,4 @@ var GameState = DS.Model.extend({
     isAdmin: DS.attr('boolean')
 });
 
-GameState.reopenClass({
-    FIXTURES: [{
-        id: 'mine',
-        currentRound: null,
-        currentInventory: 300,
-        moves: [1, 2],
-        createdAt: new Date().toString(),
-        updatedAt: new Date().toString(),
-        isAdmin: false
-    }]
-});
-
 export default GameState;
