@@ -9,6 +9,7 @@ var AdminPuzzleGraph = function(moves, selector, type) {
         type = 'totals';
     }
 
+    this.type = type;
     this.moves = moves;
     this.config = {
         credits: {
@@ -38,12 +39,11 @@ var AdminPuzzleGraph = function(moves, selector, type) {
             categories: _.pluck(this.moves, 'year')
         },
         yAxis: {
-            min: 0,
-
+            min: 0
         }
     };
 
-    if (type === 'totals') {
+    if (this.type === 'totals') {
         this.selector = selector + ' .wr-admin-totals';
 
         this.config = _.extend(this.config, {
@@ -59,9 +59,12 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                 }
             }
         });
-    } else if (type === 'allocations') {
+    } else if (this.type === 'allocations') {
         this.selector = selector + ' .wr-admin-allocations';
         this.config = _.extend(this.config, {
+            legend: {
+                enabled: true
+            },
             series: [
                 {
                     name: 'Umbrellas',
@@ -80,7 +83,10 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                 }
             ],
             tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                pointFormat: '<span style="color:{series.color}">' +
+                    '{series.name}</span>: ' +
+                    '<strong>{point.y}</strong> ' +
+                    '({point.percentage:.0f}%)<br/>',
                 shared: true,
                 valuePrefix: '$'
             },
@@ -98,7 +104,12 @@ AdminPuzzleGraph.prototype.render = function() {
         return;
     }
 
-    $(this.selector).width('100%').height('120px').highcharts(this.config);
+    var height = '120px';
+    if (this.type === 'allocations') {
+        height = '150px';
+    }
+
+    $(this.selector).width('100%').height(height).highcharts(this.config);
 };
 
 

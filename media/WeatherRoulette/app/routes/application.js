@@ -46,16 +46,20 @@ export default Em.Route.extend({
             Em.debug('playing puzzle ' + puzzle.get('slug'));
 
             var puzzleController = this.controllerFor('puzzle');
-            puzzleController.resetGame();
-
-            var gameState = puzzleController.get('gameState');
-
             var me = this;
-            return new Em.RSVP.Promise(function() {
-                gameState.set(
-                    'currentInventory', puzzle.get('startingInventory'));
-                return me.transitionTo('puzzle', puzzle);
-            });
+            return puzzleController.resetGame()
+                .then(function() {
+                    return puzzleController.deleteMoves();
+                })
+                .then(function() {
+                    return puzzleController.get('gameState');
+                })
+                .then(function(gameState) {
+                    gameState.set(
+                        'currentInventory', puzzle.get('startingInventory'));
+                    me.send('closeModal');
+                    return me.transitionTo('puzzle', puzzle);
+                });
         }
     },
 

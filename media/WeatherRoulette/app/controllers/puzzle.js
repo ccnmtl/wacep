@@ -423,6 +423,7 @@ export default Em.ObjectController.extend({
             if (me.showAlertIfBankrupt(me.get('currentInventory'))) {
                 return false;
             }
+            Em.$('.wr-next-round').focus();
         });
     },
 
@@ -479,14 +480,6 @@ export default Em.ObjectController.extend({
         });
         Em.debug('deleted moves ' + deletedMoves.get('length'));
 
-        // Find all the moves that aren't going to be deleted. We'll need
-        // to unload all these from the store.
-        var savedMoves = moves.filter(function(move) {
-            return !deletedMoves.contains(move);
-        });
-        Em.debug('saved moves ' + savedMoves.get('length'));
-
-
         var promises = [];
         deletedMoves.forEach(function(move) {
             Em.run.once(this, function() {
@@ -501,11 +494,6 @@ export default Em.ObjectController.extend({
                     });
                 promises.push(promise);
             });
-        });
-        savedMoves.forEach(function(move) {
-            // Unload the saved moves from the store.
-            var promise = me.get('store').unloadRecord(move);
-            promises.push(promise);
         });
 
         return Em.RSVP.all(promises);
@@ -532,9 +520,6 @@ export default Em.ObjectController.extend({
                 this.get('puzzleRounds').sortBy('year').get('firstObject'));
         }
 
-        return this.deleteMoves()
-            .then(function() {
-                return gameState.save();
-            });
+        return gameState.save();
     }
 });
