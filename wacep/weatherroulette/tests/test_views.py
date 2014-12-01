@@ -31,7 +31,7 @@ class TestGameState(APITestCase):
     def test_game_state_is_created_on_get(self):
         resp = self.client.get(reverse('game-state'))
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(resp.data['user'], self.u.id)
+        self.assertEqual(resp.data['current_round_id'], None)
         self.assertEqual(resp.data['is_admin'], False)
 
     def test_game_state_is_updated_on_put(self):
