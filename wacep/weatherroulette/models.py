@@ -63,6 +63,11 @@ class GameState(models.Model):
                     'participant_name': participant.username,
                     'moves': [{
                         'year': move.puzzle_round.year,
+                        'umbrellas': move.umbrellas,
+                        'shirts': move.shirts,
+                        'hats': move.hats,
+                        'rainfall_observation':
+                            move.puzzle_round.rainfall_observation,
                         'ending_inventory': move.ending_inventory
                     } for move in moves]
                 }

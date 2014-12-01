@@ -21,7 +21,6 @@ urlpatterns = patterns(
     url(r'^api/game_state', GameStateView.as_view(), name='game-state'),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
-    #url(r'^admin/?$', AdminView.as_view(), name='weatherroulette-admin'),
     url(r'^admin/', include(wr_admin_site.urls)),
     url(r'^admin/players/$', AdminPlayersView.as_view(),
         name='weatherroulette-admin-players'),

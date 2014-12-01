@@ -140,6 +140,9 @@ class PuzzleViewSet(viewsets.ModelViewSet):
 
 
 class AdminPlayersView(AdminRequiredMixin, TemplateView):
+    """
+    This view displays a list of charts to visualize participants' progress.
+    """
     template_name = 'weatherroulette/players.html'
 
     def get_context_data(self, **kwargs):
