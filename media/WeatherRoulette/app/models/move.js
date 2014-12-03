@@ -13,33 +13,4 @@ var Move = DS.Model.extend({
     updatedAt: DS.attr('date')
 });
 
-Move.reopenClass({
-    FIXTURES: [
-        {
-            id: 1,
-            year: 1997,
-            hats: 80,
-            shirts: 10,
-            umbrellas: 10,
-            startingInventory: 300,
-            endingInventory: 100,
-            puzzle: 1,
-            createdAt: new Date().toString(),
-            updatedAt: new Date().toString()
-        },
-        {
-            id: 2,
-            year: 1998,
-            hats: 10,
-            shirts: 80,
-            umbrellas: 10,
-            startingInventory: 300,
-            endingInventory: 100,
-            puzzle: 1,
-            createdAt: new Date().toString(),
-            updatedAt: new Date().toString()
-        }
-    ]
-});
-
 export default Move;

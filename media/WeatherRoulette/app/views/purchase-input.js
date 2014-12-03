@@ -39,5 +39,12 @@ export default Em.TextField.extend({
         Em.run.schedule('afterRender', this, function() {
             Em.$(e.target).select();
         });
+    },
+
+    keyUp: function(e) {
+        if (e.keyCode === 13) {
+            // Return key was pressed. Submit this form.
+            this.get('parentView.controller').send('invest');
+        }
     }
 });

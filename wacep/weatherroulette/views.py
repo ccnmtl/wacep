@@ -25,8 +25,10 @@ class GameStateView(views.APIView):
         current_user = request.user
         gs, created = GameState.objects.get_or_create(user=current_user)
         serializer = GameStateSerializer(gs)
-        serializer.data['current_round_id'] = serializer.data['current_round']
+        serializer.data['current_round_id'] = serializer.data.pop(
+            'current_round', None)
         serializer.data['is_admin'] = Utils.is_admin(current_user)
+        serializer.data.pop('user', None)
 
         # The API only gives the front-end application a limited view of the
         # moves - we only want to expose moves that are related to the current
@@ -79,8 +81,8 @@ class MoveSerializer(serializers.ModelSerializer):
         root = 'move'
         if data is not None and root in data:
             data = data[root]
-            data['game_state'] = data['game_state_id']
-            data['puzzle_round'] = data['puzzle_round_id']
+            data['game_state'] = data.pop('game_state_id', None)
+            data['puzzle_round'] = data.pop('puzzle_round_id', None)
 
         return super(MoveSerializer, self).from_native(data, files)
 
@@ -140,6 +142,9 @@ class PuzzleViewSet(viewsets.ModelViewSet):
 
 
 class AdminPlayersView(AdminRequiredMixin, TemplateView):
+    """
+    This view displays a list of charts to visualize participants' progress.
+    """
     template_name = 'weatherroulette/players.html'
 
     def get_context_data(self, **kwargs):

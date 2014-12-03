@@ -63,6 +63,14 @@ class GameState(models.Model):
                     'participant_name': participant.username,
                     'moves': [{
                         'year': move.puzzle_round.year,
+                        'above_forecast': move.puzzle_round.above_forecast,
+                        'normal_forecast': move.puzzle_round.normal_forecast,
+                        'below_forecast': move.puzzle_round.below_forecast,
+                        'umbrellas': move.umbrellas,
+                        'shirts': move.shirts,
+                        'hats': move.hats,
+                        'rainfall_observation':
+                        move.puzzle_round.rainfall_observation,
                         'ending_inventory': move.ending_inventory
                     } for move in moves]
                 }

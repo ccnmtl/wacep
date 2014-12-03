@@ -29,33 +29,4 @@ var Puzzle = DS.Model.extend({
         'puzzleRounds', 'rainfallObservation')
 });
 
-Puzzle.reopenClass({
-    FIXTURES: [
-        {
-            id: 1,
-            displayName: 'Practice Game',
-            slug: 'practice-game',
-            description: 'desc',
-            isLocked: false,
-            hasSecretPlayer: false,
-            startingInventory: 100,
-            createdAt: new Date().toString(),
-            updatedAt: new Date().toString(),
-            puzzleRounds: [1,2,3,4,5,6]
-        },
-        {
-            id: 2,
-            displayName: 'Simon\'s Game',
-            slug: 'simons-game',
-            description: 'desc',
-            startingInventory: 100,
-            isLocked: false,
-            hasSecretPlayer: true,
-            createdAt: new Date().toString(),
-            updatedAt: new Date().toString(),
-            puzzleRounds: [7,8,9,10,11]
-        }
-    ]
-});
-
 export default Puzzle;
