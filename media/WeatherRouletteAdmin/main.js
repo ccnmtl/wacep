@@ -80,13 +80,50 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                     name: 'Hats',
                     type: 'column',
                     data: _.pluck(this.moves, 'hats')
+                },
+                {
+                    name: 'Extra',
+                    data: this.moves
                 }
             ],
             tooltip: {
-                pointFormat: '<span style="color:{series.color}">' +
-                    '{series.name}</span>: ' +
-                    '<strong>{point.y}</strong> ' +
-                    '({point.percentage:.0f}%)<br/>',
+                formatter: function() {
+                    var str = '<strong style="text-decoration:underline;">' +
+                        this.x + '</strong><br />';
+
+                    _.each(this.points, function(p) {
+                        if (p.series.name === 'Extra') {
+                            str += 'Observation: ';
+                            str += '<strong>' + p.point.rainfall_observation +
+                                '</strong><br />';
+
+                            str += 'Wet forecast: ';
+                            str += '<strong>' + p.point.above_forecast +
+                                '%</strong><br />';
+
+                            str += 'Normal forecast: ';
+                            str += '<strong>' + p.point.normal_forecast +
+                                '%</strong><br />';
+
+                            str += 'Dry forecast: ';
+                            str += '<strong>' + p.point.below_forecast +
+                                '%</strong><br />';
+                        } else {
+                            // It's just normal graph data - the player's
+                            // betting allocation
+                            str += '<span style="font-weight: bold; color: ' +
+                            p.series.color + '">';
+                            str += p.series.name;
+                            str += '</span>: ';
+                            str += '<strong>' + Math.round(p.percentage) +
+                                '%</strong>';
+                        }
+
+                        str += '<br />';
+                    });
+
+                    return str;
+                },
                 shared: true,
                 valuePrefix: '$'
             },
