@@ -13,7 +13,7 @@ class Utils(object):
         """
         return user.groups.filter(name='WeatherRoulette Admins').exists()
 
-    # Here's some static methods that have to do with the game's state.
+    # Here's some methods that have to do with the game's state.
     @staticmethod
     def active_participants():
         """
@@ -34,10 +34,17 @@ class Utils(object):
 
     @staticmethod
     def participant_moves(puzzles, participants):
-        """
+        """Generate all game data.
+
         Given a list of puzzles and a list of participants, generate a list
         that contains useful Move data relating to how those participants
         performed in the given puzzles.
+
+        This method is used to render both the Highcharts graphs and the
+        CSV file for the "Participant Progress" section of the Weather
+        Roulette admin.
+
+        Returns a list.
         """
         participant_moves = []
 
@@ -81,17 +88,53 @@ class Utils(object):
         for puzzle in puzzles:
             puzzle_data = []
             puzzle_data.append(
-                [puzzle.display_name] +
+                [puzzle.display_name, None] +
                 [pr.year
                  for pr in PuzzleRound.objects.filter(puzzle=puzzle)]
             )
+
+            puzzle_rounds = PuzzleRound.objects.filter(puzzle=puzzle)
+
+            # Add forecast data
+            puzzle_data.append(
+                ['Forecast', 'Above'] +
+                [pr.above_forecast for pr in puzzle_rounds])
+            puzzle_data.append(
+                [None, 'Normal'] +
+                [pr.normal_forecast for pr in puzzle_rounds])
+            puzzle_data.append(
+                [None, 'Below'] +
+                [pr.below_forecast for pr in puzzle_rounds])
+
+            # Add observation data
+            puzzle_data.append(
+                ['Observation', None] +
+                [pr.rainfall_observation for pr in puzzle_rounds])
+
             my_participants = [p for p in participant_moves
                                if p['puzzle_id'] == puzzle.id]
             for participant in my_participants:
                 puzzle_data.append(
-                    [participant['participant_name']] +
-                    [m['ending_inventory'] for m in participant['moves']]
+                    ['Player: ' + participant['participant_name']])
+
+                # Add investment data
+                puzzle_data.append(
+                    ['Investment', 'Above'] +
+                    [m['umbrellas'] for m in participant['moves']]
                 )
+                puzzle_data.append(
+                    [None, 'Normal'] +
+                    [m['shirts'] for m in participant['moves']]
+                )
+                puzzle_data.append(
+                    [None, 'Below'] +
+                    [m['hats'] for m in participant['moves']]
+                )
+
+                # Add money at end of round
+                puzzle_data.append(
+                    ['Money at end of round', None] +
+                    [m['ending_inventory'] for m in participant['moves']])
 
             puzzle_data.append([])
             output = output + puzzle_data

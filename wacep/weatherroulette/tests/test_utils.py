@@ -35,11 +35,24 @@ class TestUtils(TestCase):
 
         self.assertEqual(
             Utils.participant_moves_for_csv(puzzles, [self.u]),
-            [
-                ['puzzle a', 1998, 1999, 2000], [],
-                ['puzzle b'], [],
-                ['puzzle c'], []
-            ]
+            [['puzzle a', None, 1998, 1999, 2000],
+             ['Forecast', 'Above', 60, 60, 60],
+             [None, 'Normal', 20, 20, 20],
+             [None, 'Below', 20, 20, 20],
+             ['Observation', None, u'Wet', u'Wet', u'Wet'],
+             [],
+             ['puzzle b', None],
+             ['Forecast', 'Above'],
+             [None, 'Normal'],
+             [None, 'Below'],
+             ['Observation', None],
+             [],
+             ['puzzle c', None],
+             ['Forecast', 'Above'],
+             [None, 'Normal'],
+             [None, 'Below'],
+             ['Observation', None],
+             []]
         )
 
         # Now add some moves
@@ -48,11 +61,27 @@ class TestUtils(TestCase):
 
         self.assertEqual(
             Utils.participant_moves_for_csv(puzzles, [self.u]),
-            [
-                ['puzzle a', 1998, 1999, 2000],
-                ['test_user', 210],
-                [],
-                ['puzzle b'], [],
-                ['puzzle c'], []
-            ]
+            [['puzzle a', None, 1998, 1999, 2000],
+             ['Forecast', 'Above', 60, 60, 60],
+             [None, 'Normal', 20, 20, 20],
+             [None, 'Below', 20, 20, 20],
+             ['Observation', None, u'Wet', u'Wet', u'Wet'],
+             ['Player: test_user'],
+             ['Investment', 'Above', 10],
+             [None, 'Normal', 10],
+             [None, 'Below', 100],
+             ['Money at end of round', None, 210],
+             [],
+             ['puzzle b', None],
+             ['Forecast', 'Above'],
+             [None, 'Normal'],
+             [None, 'Below'],
+             ['Observation', None],
+             [],
+             ['puzzle c', None],
+             ['Forecast', 'Above'],
+             [None, 'Normal'],
+             [None, 'Below'],
+             ['Observation', None],
+             []]
         )
