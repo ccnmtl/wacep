@@ -62,6 +62,7 @@ var AdminPuzzleGraph = function(moves, selector, type) {
     } else if (this.type === 'allocations') {
         this.selector = selector + ' .wr-admin-allocations';
         this.config = _.extend(this.config, {
+            colors: ['green', 'grey', 'saddlebrown'],
             legend: {
                 enabled: true
             },
