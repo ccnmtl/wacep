@@ -22,9 +22,6 @@ var AdminPuzzleGraph = function(moves, selector, type) {
             column: {
                 stacking: 'percent'
             },
-            line: {
-                lineWidth: 2
-            },
             series: {
                 animation: false
             }
@@ -83,7 +80,8 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                 },
                 {
                     name: 'Extra',
-                    data: this.moves
+                    data: this.moves,
+                    showInLegend: false
                 }
             ],
             tooltip: {
