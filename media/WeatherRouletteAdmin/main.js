@@ -146,12 +146,16 @@ AdminPuzzleGraph.prototype.render = function() {
         height = '150px';
     }
 
-    $(this.selector).width('100%').height(height).highcharts(this.config);
+    $(this.selector).width('98%').height(height).highcharts(this.config);
 };
 
 
 $(document).ready(function() {
     _.each(adminPuzzleGraphs, function(graph) {
         graph.render();
+    });
+
+    $('#wr-admin-accordion').accordion({
+        animate: 200
     });
 });

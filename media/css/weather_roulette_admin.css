@@ -8,3 +8,11 @@ nav.navbar {
 .wr-admin-section {
     margin-bottom: 20px;
 }
+
+#wr-admin-accordion .wr-admin-accordion-content {
+    padding: 0;
+}
+
+#wr-admin-accordion .wr-admin-accordion-content h3 {
+    margin-left: 10px;
+}
