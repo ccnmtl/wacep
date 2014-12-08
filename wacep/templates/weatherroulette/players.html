@@ -21,9 +21,9 @@
     </div>
 </form>
 
+<div id="wr-admin-accordion">
 {% for puzzle in puzzles %}
 {% if puzzle.participants %}
-<div class="wr-admin-puzzle">
     <h2 class="wr-admin-puzzle-title">
         {{puzzle.puzzle.display_name}}
         {% if puzzle.puzzle.is_locked %}
@@ -31,40 +31,45 @@
         {% endif %}
     </h2>
 
-    {% for participant in puzzle.participants %}
-    <h3>{{ participant }}</h3>
+    <div class="wr-admin-accordion-content">
+        {% for participant in puzzle.participants %}
+        <h3>{{ participant }}</h3>
 
-    <div class="wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}">
-        <div class="wr-admin-totals"></div>
-        <div class="wr-admin-allocations"></div>
-    </div>
-    <script>
-        (function() {
+        <div class="wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}">
+            <div class="wr-admin-totals"></div>
+            <div class="wr-admin-allocations"></div>
+        </div>
+        <script>
+            (function() {
 
-        var moves = _.find(collection, function(e) {
+            var moves = _.find(collection, function(e) {
             return e.puzzle_id === {{puzzle.puzzle.id}} &&
-                e.participant_id === {{participant.id}};
-        }).moves;
+            e.participant_id === {{participant.id}};
+            }).moves;
 
-        var baseSelector =
-            '.wr-admin-puzzle-graph-{{puzzle.puzzle.id}}-{{participant.id}}';
+            var baseSelector =
+            '.wr-admin-puzzle-graph-' +
+            '{{puzzle.puzzle.id}}-{{participant.id}}';
 
-        var allocationGraph = new AdminPuzzleGraph(
+            var allocationGraph = new AdminPuzzleGraph(
             moves, baseSelector, 'allocations');
-        var totalGraph = new AdminPuzzleGraph(
+            var totalGraph = new AdminPuzzleGraph(
             moves, baseSelector, 'totals');
 
-        adminPuzzleGraphs.push(allocationGraph);
-        adminPuzzleGraphs.push(totalGraph);
+            adminPuzzleGraphs.push(allocationGraph);
+            adminPuzzleGraphs.push(totalGraph);
 
-        })();
-    </script>
+            })();
+        </script>
 
-    {% empty %}
-    <p>There's no participant data for this game yet.</p>
-    {% endfor %}
-</div>
+        {% empty %}
+        <p>There's no participant data for this game yet.</p>
+        {% endfor %}
+    </div> <!-- end .wr-admin-accordion-content -->
 {% endif %}
 {% endfor %}
+
+</div> <!-- end #wr-admin-accordion -->
+
 </div>
 {% endblock %}
