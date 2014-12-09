@@ -27,8 +27,7 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                     enabled: true,
                     format: '${y}',
                     y: -24
-                },
-                lineWidth: 2
+                }
             },
             series: {
                 animation: false
