@@ -150,7 +150,7 @@ class AdminPlayersView(AdminRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super(AdminPlayersView, self).get_context_data(**kwargs)
 
-        ctx['participants'] = GameState.active_participants()
+        ctx['participants'] = Utils.active_participants()
 
         all_puzzles = Puzzle.objects.all()
         ctx['puzzles'] = []
@@ -163,7 +163,7 @@ class AdminPlayersView(AdminRequiredMixin, TemplateView):
             }
             ctx['puzzles'].append(el)
 
-        ctx['participant_moves'] = GameState.participant_moves(
+        ctx['participant_moves'] = Utils.participant_moves(
             all_puzzles,
             ctx['participants']
         )
@@ -175,9 +175,9 @@ class AdminPlayersView(AdminRequiredMixin, TemplateView):
 
 class AdminExportParticipantDataView(AdminRequiredMixin, View):
     def get(self, request, **kwargs):
-        participant_moves = GameState.participant_moves_for_csv(
+        participant_moves = Utils.participant_moves_for_csv(
             Puzzle.objects.all(),
-            GameState.active_participants()
+            Utils.active_participants()
         )
         generator = ReportFileGenerator()
         filename = 'weatherroulette-participant-data'
