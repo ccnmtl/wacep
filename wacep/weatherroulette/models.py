@@ -172,6 +172,7 @@ class Puzzle(models.Model):
 
     class Meta:
         ordering = ['id']
+        verbose_name = 'game'
 
     def __unicode__(self):
         return unicode(self.display_name)
@@ -211,6 +212,7 @@ class PuzzleRound(models.Model):
 
     class Meta:
         ordering = ['year']
+        verbose_name = 'game round'
 
     def __unicode__(self):
         return unicode(str(self.puzzle) + ': ' + str(self.year))
