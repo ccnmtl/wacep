@@ -23,6 +23,11 @@ var AdminPuzzleGraph = function(moves, selector, type) {
                 stacking: 'percent'
             },
             line: {
+                dataLabels: {
+                    enabled: true,
+                    format: '${y}',
+                    y: -24
+                },
                 lineWidth: 2
             },
             series: {
