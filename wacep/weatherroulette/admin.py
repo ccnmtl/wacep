@@ -7,8 +7,8 @@ admin.site.register(Move)
 
 
 class WeatherRouletteAdminSite(admin.AdminSite):
-    site_header = 'Weather Roulette admin'
-    site_title = 'Weather Roulette admin'
+    site_header = 'Weather Roulette | Manage'
+    site_title = 'Weather Roulette | Manage'
     index_title = ''
     index_template = 'weatherroulette/index.html'
     app_index_template = 'weatherroulette/app_index.html'

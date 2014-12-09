@@ -22,6 +22,14 @@ var AdminPuzzleGraph = function(moves, selector, type) {
             column: {
                 stacking: 'percent'
             },
+            line: {
+                dataLabels: {
+                    enabled: true,
+                    format: '${y}',
+                    y: -24
+                },
+                lineWidth: 2
+            },
             series: {
                 animation: false
             }
@@ -59,6 +67,7 @@ var AdminPuzzleGraph = function(moves, selector, type) {
     } else if (this.type === 'allocations') {
         this.selector = selector + ' .wr-admin-allocations';
         this.config = _.extend(this.config, {
+            colors: ['green', 'grey', 'saddlebrown'],
             legend: {
                 enabled: true
             },
