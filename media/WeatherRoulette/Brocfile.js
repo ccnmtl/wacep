@@ -38,5 +38,6 @@ app.import(
     });
 app.import('bower_components/bootstrap/dist/css/bootstrap.min.css');
 app.import('bower_components/highcharts/highcharts.js');
+app.import('bower_components/jquery-numeric/dist/jquery-numeric.js');
 
 module.exports = app.toTree();
