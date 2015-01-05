@@ -32,7 +32,7 @@ pylint==0.26.0
 six==1.2.0
 cssselect==0.8
 BeautifulSoup==3.2.1
-Pillow==2.3.0
+Pillow==2.7.0
 factory_boy==2.4.1
 sqlparse==0.1.11
 unicodecsv==0.9.4
