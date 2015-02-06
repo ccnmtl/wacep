@@ -21,7 +21,7 @@ if ret:
 
 ret = subprocess.call(
     [os.path.join(vedir, 'bin', 'pip'), "install",
-     "--index-url=http://pypi.ccnmtl.columbia.edu/",
+     "--index-url=https://pypi.ccnmtl.columbia.edu/",
      "wheel==0.24.0"])
 
 if ret:
@@ -29,7 +29,8 @@ if ret:
 
 ret = subprocess.call([os.path.join(vedir, 'bin', 'pip'), "install",
                        "--use-wheel",
-                       "--index-url=http://pypi.ccnmtl.columbia.edu/",
+                       "--no-deps",
+                       "--index-url=https://pypi.ccnmtl.columbia.edu/",
                        "--requirement", os.path.join(pwd, "requirements.txt")])
 if ret:
     exit(ret)
