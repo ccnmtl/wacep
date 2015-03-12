@@ -59,7 +59,7 @@ django-jenkins==0.16.3
 django-smoketest==0.3.0
 django-extensions==1.1.0
 django-stagingcontext==0.1.0
-django-impersonate==0.8.0
+django-impersonate==0.9
 django-treebeard==2.0b2
 django-markwhat==2014.9.20
 django-pagetree==1.0.1
