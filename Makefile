@@ -8,7 +8,7 @@ jenkins: ./ve/bin/python validate test flake8
 	./bootstrap.py
 
 test: ./ve/bin/python
-	$(MANAGE) jenkins --pep8-exclude=.git,migrations
+	$(MANAGE) jenkins --pep8-exclude=.git,migrations --enable-coverage --coverage-rcfile=.coveragerc
 
 	# FIXME
 	#cd media/WeatherRoulette/ && npm install && \
