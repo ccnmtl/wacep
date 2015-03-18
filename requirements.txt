@@ -65,6 +65,5 @@ django-markwhat==2014.9.20
 django-pagetree==1.0.1
 django-pageblocks==1.0.0
 django-quizblock==1.0.0
-django-pagetree_export==0.4
 djangorestframework==2.4.4
 numpy==1.7.1
