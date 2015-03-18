@@ -52,7 +52,7 @@ django_compressor==1.4
 django-statsd-mozilla==0.3.11
 raven==5.1.1
 django-bootstrap-form==2.0.3
-django-bootstrap3==5.0.1
+django-bootstrap3==5.1.1
 django-debug-toolbar==1.1
 django-waffle==0.10.1
 django-jenkins==0.16.3
