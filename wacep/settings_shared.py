@@ -108,7 +108,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',  # maybe?
     'sorl.thumbnail',
     'django.contrib.admin',
-    'tagging',
     'typogrify',
     'django_nose',
     'compressor',
