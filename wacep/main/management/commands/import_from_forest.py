@@ -1,8 +1,7 @@
-from json import loads
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from pagetree.models import Hierarchy
-from restclient import GET
+import requests
 import os.path
 
 
@@ -11,7 +10,7 @@ class Command(BaseCommand):
         print "fetching content from forest..."
         url = "http://wacep2.forest.ccnmtl.columbia.edu/pagetree/export/"
         url = url + "?hierarchy=" + "wacep2.forest.ccnmtl.columbia.edu"
-        d = loads(GET(url))
+        d = requests.get(url).json()
         print "removing old pagetree hierarchy..."
         Hierarchy.objects.all().delete()
         print "importing the new one..."
@@ -34,5 +33,5 @@ class Command(BaseCommand):
             with open(os.path.join(settings.MEDIA_ROOT,
                                    relative_path), "w") as f:
                 print "  writing %s to %s" % (upload, relative_path)
-                f.write(GET(upload))
+                f.write(requests.get(upload).text)
         print "done"
