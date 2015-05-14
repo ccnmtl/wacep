@@ -32,12 +32,7 @@ if 'test' in sys.argv or 'jenkins' in sys.argv:
         }
     }
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=wacep',
-]
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pep8',
@@ -109,7 +104,6 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'django.contrib.admin',
     'typogrify',
-    'django_nose',
     'compressor',
     'django_statsd',
     'bootstrapform',
