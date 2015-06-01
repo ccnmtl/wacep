@@ -35,7 +35,7 @@ factory_boy==2.4.1
 sqlparse==0.1.14
 unicodecsv==0.9.4
 
-djangowind==0.13.2
+djangowind==0.13.3
 sorl==3.1
 typogrify==1.0
 django-autoslug==1.7.2
