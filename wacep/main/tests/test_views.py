@@ -72,3 +72,8 @@ class LoggedInTest(TestCase):
         make_test_hierarchy()
         response = self.c.get("/courses/")
         self.assertEquals(response.status_code, 200)
+
+    def test_change_password(self):
+        self.c.login(username=self.u.username, password="test")
+        r = self.c.get("/password/change/")
+        self.assertEqual(r.status_code, 200)
