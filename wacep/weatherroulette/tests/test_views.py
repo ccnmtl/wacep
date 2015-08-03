@@ -84,7 +84,6 @@ class TestMove(APITestCase):
             'umbrellas': 10
         }
         self.client.post(url, data)
-        #self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
     def test_move_delete(self):
         m = MoveFactory()

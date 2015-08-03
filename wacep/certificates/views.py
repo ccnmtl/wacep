@@ -92,7 +92,7 @@ def update_roster(request):
 @render_to('certificates/student_certificates.html')
 def student_certificates(request):
     """ A list of all the certificates earned by a student."""
-    #need to get the courses that the student is enfolled in
+    # need to get the courses that the student is enfolled in
     user = request.user
     user_certs = Certificate.objects.filter(user=user)
     graduated = False
@@ -123,7 +123,7 @@ def get_oldest(set_of_certs, user):
     return date
 
 
-#this is not authenticated: the certificates themselves are public.
+# this is not authenticated: the certificates themselves are public.
 @render_to('certificates/certificate.html')
 def certificate(request, certificate_id):
     """ Show a nice certificate two whomever wants."""
