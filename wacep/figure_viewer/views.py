@@ -9,8 +9,6 @@ from .models import FigureViewerTopic
 
 @login_required
 def settings(request, topic_slug):
-    #if not request.is_ajax() or request.method != "POST":
-    #    return HttpResponseForbidden()
     class_map = {
         'graphing_mode_inputs': GraphingModeInput,
         'animation_inputs': AnimationInput,

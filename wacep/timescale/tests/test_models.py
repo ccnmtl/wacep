@@ -78,7 +78,6 @@ class TestTimescaleModel(TestCase):
             {'name': self.activitystate.name,
              'id': self.activitystate.id,
              'image_path': '',
-             #'%s/%s' % ('/_timescale/media/img', ) if (fn != '') else '',
              'legend_path': '',
              'absolute_url': self.activitystate.get_absolute_url(),
              'text': self.activitystate.text,
