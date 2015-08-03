@@ -56,7 +56,7 @@ class LoggedInTest(TestCase):
         make_test_hierarchy()
         response = self.c.get("/welcome/")
         self.assertEquals(response.status_code, 404)
-        #this is caught by the flatpages middleware
+        # this is caught by the flatpages middleware
 
     def test_page(self):
         make_test_hierarchy()

@@ -92,8 +92,8 @@ def pagetree_page(request, path):
     module = get_module(section)
     submodule = get_submodule(section)
     sub_submodule_index = get_sub_submodule_index(section)
-    #using this number in the accordion settings
-    #for  the left nav.
+    # using this number in the accordion settings
+    # for  the left nav.
 
     if section.id == root.id:
         # trying to visit the root page
