@@ -10,3 +10,4 @@ class PuzzleAdminForm(forms.ModelForm):
         widgets = {
             'display_name': admin.widgets.AdminTextInputWidget
         }
+        exclude = []

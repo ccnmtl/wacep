@@ -335,3 +335,4 @@ class FigureViewerBlock(models.Model):
 class FigureViewerBlockForm(forms.ModelForm):
     class Meta:
         model = FigureViewerBlock
+        exclude = []
