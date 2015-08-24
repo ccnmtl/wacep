@@ -206,3 +206,4 @@ class TimescaleBlock(models.Model):
 class TimescaleBlockForm(forms.ModelForm):
     class Meta:
         model = TimescaleBlock
+        exclude = []
