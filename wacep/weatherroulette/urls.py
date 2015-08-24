@@ -11,9 +11,11 @@ from .views import (
 
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'moves', MoveViewSet)
-router.register(r'puzzles', PuzzleViewSet)
-router.register(r'puzzle_rounds', PuzzleRoundViewSet)
+router.register(r'moves', MoveViewSet, base_name='moves')
+router.register(r'puzzles', PuzzleViewSet, base_name='puzzles')
+router.register(r'puzzle_rounds',
+                PuzzleRoundViewSet,
+                base_name='puzzle_rounds')
 
 urlpatterns = patterns(
     '',

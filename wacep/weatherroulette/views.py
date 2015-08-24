@@ -3,7 +3,7 @@ import json
 from django.core import serializers as django_serializers
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, View
-from rest_framework import pagination, serializers, status, views, viewsets
+from rest_framework import serializers, status, views, viewsets
 from rest_framework.response import Response
 
 from .mixins import AdminRequiredMixin
@@ -15,7 +15,7 @@ class GameStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameState
 
-    move_ids = serializers.PrimaryKeyRelatedField(many=True)
+    move_ids = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 
 class GameStateView(views.APIView):
@@ -70,7 +70,7 @@ class GameStateView(views.APIView):
 
 
 class MoveSerializer(serializers.ModelSerializer):
-    game_state = serializers.PrimaryKeyRelatedField(many=False)
+    game_state = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 
     class Meta:
         model = Move
@@ -87,18 +87,10 @@ class MoveSerializer(serializers.ModelSerializer):
         return super(MoveSerializer, self).from_native(data, files)
 
 
-class MovePaginationSerializer(pagination.BasePaginationSerializer):
-    class Meta:
-        object_serializer_class = MoveSerializer
-
-    results_field = 'moves'
-
-
 class MoveViewSet(viewsets.ModelViewSet):
     model = Move
     root = 'move'
     serializer_class = MoveSerializer
-    pagination_serializer_class = MovePaginationSerializer
 
 
 class PuzzleRoundSerializer(serializers.ModelSerializer):
@@ -106,39 +98,24 @@ class PuzzleRoundSerializer(serializers.ModelSerializer):
         model = PuzzleRound
 
 
-class PuzzleRoundPaginationSerializer(pagination.BasePaginationSerializer):
-    results_field = 'puzzle_rounds'
-
-    class Meta:
-        object_serializer_class = PuzzleRoundSerializer
-
-
 class PuzzleRoundViewSet(viewsets.ModelViewSet):
     model = PuzzleRound
     root = 'puzzle_round'
     serializer_class = PuzzleRoundSerializer
-    pagination_serializer_class = PuzzleRoundPaginationSerializer
 
 
 class PuzzleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Puzzle
 
-    puzzle_round_ids = serializers.PrimaryKeyRelatedField(many=True)
-
-
-class PuzzlePaginationSerializer(pagination.BasePaginationSerializer):
-    results_field = 'puzzles'
-
-    class Meta:
-        object_serializer_class = PuzzleSerializer
+    puzzle_round_ids = serializers.PrimaryKeyRelatedField(many=True,
+                                                          read_only=True)
 
 
 class PuzzleViewSet(viewsets.ModelViewSet):
     model = Puzzle
     root = 'puzzle'
     serializer_class = PuzzleSerializer
-    pagination_serializer_class = PuzzlePaginationSerializer
 
 
 class AdminPlayersView(AdminRequiredMixin, TemplateView):

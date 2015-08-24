@@ -7,7 +7,7 @@ from wacep.forecaster.views import LinearRegressionView
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'hurricane', HurricaneYearViewSet)
+router.register(r'hurricane', HurricaneYearViewSet, base_name='hurricane')
 
 
 urlpatterns = patterns(

@@ -63,6 +63,6 @@ django-treebeard==3.0
 django-markwhat==1.4
 django-pagetree==1.1.7
 django-pageblocks==1.0.3
-djangorestframework==2.4.5
+djangorestframework==3.2.3
 django-quizblock==1.1.2
 numpy==1.9.2
