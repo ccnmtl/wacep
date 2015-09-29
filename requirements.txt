@@ -12,7 +12,7 @@ pyflakes==0.9.2
 flake8==1.7.0
 lxml==3.4.4
 sure==1.2.12
-fuzzywuzzy==0.6.0
+fuzzywuzzy==0.6.1
 ipython==1.2.1
 ipdb==0.8.1
 extras==0.0.3
