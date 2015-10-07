@@ -42,8 +42,8 @@ cssselect==0.9.1
 BeautifulSoup==3.2.1
 Pillow==2.8.1
 factory_boy==2.4.1
-sqlparse==0.1.14
 unicodecsv==0.14.1
+sqlparse==0.1.16
 
 djangowind==0.13.3
 sorl==3.1
