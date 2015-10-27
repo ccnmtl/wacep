@@ -102,7 +102,8 @@ class TestTimescaleModel(TestCase):
 # class TimescaleBlock is a PageTree block - adding tests
 # similar to those from factories in nepi (think Susan wrote?)
 class HierarchyFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Hierarchy
+    class Meta:
+        model = Hierarchy
     name = "main"
     base_url = "/"
 
