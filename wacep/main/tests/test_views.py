@@ -22,12 +22,14 @@ def random_string(length=10):
 
 
 class UserFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = User
+    class Meta:
+        model = User
     username = factory.LazyAttribute(lambda t: random_string())
 
 
 class HierarchyFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Hierarchy
+    class Meta:
+        model = Hierarchy
     name = "main"
     base_url = ""
 
