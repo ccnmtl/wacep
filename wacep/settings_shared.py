@@ -220,7 +220,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',),
     'DEFAULT_RENDERER_CLASSES': (
         'wacep.weatherroulette.renderers.EmberJSONRenderer',
-        #'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'PAGINATE_BY': 10,
