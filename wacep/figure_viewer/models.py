@@ -126,12 +126,12 @@ class InputCombination (models.Model):
     activity_state = models.ForeignKey('ActivityState')
 
     def is_default(self):
-        if (self.season_input
-            or self.climate_variable_input
-            or self.animation_input
-            or self.year_input
-            or self.mode_of_variability_input
-                or self.graphing_mode_input):
+        if (self.season_input or
+            self.climate_variable_input or
+            self.animation_input or
+            self.year_input or
+            self.mode_of_variability_input or
+                self.graphing_mode_input):
                 return False
         return True
 
@@ -141,6 +141,7 @@ class InputCombination (models.Model):
         if self.is_default():
             return False
         else:
+            movi = self.mode_of_variability_input.id
             tmp = InputCombination.objects
             tmp = tmp.filter(topic__id=self.topic.id)if self.topic else tmp
             tmp = (tmp.filter(season_input__id=self.season_input.id)
@@ -153,8 +154,7 @@ class InputCombination (models.Model):
                 year_input__id=self.year_input.id) if self.year_input else tmp
             tmp = (
                 tmp.filter(
-                    mode_of_variability_input__id=
-                    self.mode_of_variability_input.id)
+                    mode_of_variability_input__id=movi)
                 if self.mode_of_variability_input else tmp)
             tmp = (
                 tmp.filter(
