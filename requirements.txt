@@ -74,4 +74,4 @@ django-pagetree==1.1.7
 django-pageblocks==1.0.3
 djangorestframework==2.4.8
 django-quizblock==1.1.4
-numpy==1.9.2
+numpy==1.10.1
