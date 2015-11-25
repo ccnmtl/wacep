@@ -2,7 +2,7 @@ MANAGE=./manage.py
 APP=wacep
 FLAKE8=./ve/bin/flake8
 
-jenkins: ./ve/bin/python check test flake8
+jenkins: ./ve/bin/python check flake8 jshint jscs test
 
 ./ve/bin/python: requirements.txt bootstrap.py virtualenv.py
 	./bootstrap.py
@@ -29,6 +29,18 @@ check: ./ve/bin/python
 
 shell: ./ve/bin/python
 	$(MANAGE) shell_plus
+
+jshint: node_modules/jshint/bin/jshint media/js/scrolling_table.js media/forecaster/ media/WeatherRoulette/ media/WeatherRouletteAdmin
+	./node_modules/jshint/bin/jshint
+
+jscs: node_modules/jscs/bin/jscs
+	./node_modules/jscs/bin/jscs media/js/scrolling_table.js media/forecaster/ media/WeatherRoulette/app/ media/WeatherRoulette/tests/ media/WeatherRouletteAdmin/
+
+node_modules/jshint/bin/jshint:
+	npm install jshint --prefix .
+
+node_modules/jscs/bin/jscs:
+	npm install jscs --prefix .
 
 clean:
 	rm -rf ve

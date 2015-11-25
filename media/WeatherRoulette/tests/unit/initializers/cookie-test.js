@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import { initialize } from 'weather-roulette/initializers/cookie';
 
-var container, application;
+var container;
+var application;
 
 module('CookieInitializer', {
     setup: function() {

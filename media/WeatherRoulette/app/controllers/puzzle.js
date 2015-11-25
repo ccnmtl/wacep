@@ -92,7 +92,7 @@ export default Em.ObjectController.extend({
         }
 
         var o = {
-            forecast: this.get('all'+type+'Forecasts').objectAt(idx),
+            forecast: this.get('all' + type + 'Forecasts').objectAt(idx),
             isActual: false,
             investment: null,
             invReturn: null,
@@ -183,7 +183,7 @@ export default Em.ObjectController.extend({
         } else {
             var last = this.get('tableTotalData.lastObject').invReturnTotal;
             var nextLast = this.get('tableTotalData')
-                .objectAt(length-2).invReturnTotal;
+                .objectAt(length - 2).invReturnTotal;
             n = last - nextLast;
         }
         return n;
@@ -322,7 +322,6 @@ export default Em.ObjectController.extend({
         });
         return a;
     }.property('moves.@each.umbrellas'),
-
 
     observationGraphValues: Em.computed.alias('endingInventories'),
 

@@ -42,7 +42,7 @@ export default Em.TextField.extend({
         var newValue = parseInt(value, 10);
         if (newValue > 100) {
             $target.trigger('change');
-         }
+        }
     },
 
     keyUp: function(e) {

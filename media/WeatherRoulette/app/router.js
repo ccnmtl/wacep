@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.resource('puzzle', { path: '/puzzle/:puzzle_id' });
+    this.resource('puzzle', {path: '/puzzle/:puzzle_id'});
 });
 
 export default Router;

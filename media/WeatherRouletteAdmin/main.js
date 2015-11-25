@@ -1,9 +1,9 @@
-/**
- * @class AdminPuzzleGraph
- *
- * @param {Object} moves - All the data to be rendered.
- * @param {String} selector - Element to attach to when rendering.
- */
+//
+// @class AdminPuzzleGraph
+//
+// @param {Object} moves - All the data to be rendered.
+// @param {String} selector - Element to attach to when rendering.
+//
 var AdminPuzzleGraph = function(moves, selector, type) {
     if (typeof type === 'undefined') {
         type = 'totals';
@@ -154,7 +154,6 @@ AdminPuzzleGraph.prototype.render = function() {
 
     $(this.selector).width('98%').height(height).highcharts(this.config);
 };
-
 
 $(document).ready(function() {
     _.each(adminPuzzleGraphs, function(graph) {
