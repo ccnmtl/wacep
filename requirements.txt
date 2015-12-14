@@ -75,3 +75,7 @@ django-pageblocks==1.0.3
 djangorestframework==2.4.8
 django-quizblock==1.1.4
 numpy==1.10.1
+gunicorn==19.3.0
+django-ga-context==0.1.0
+
+ccnmtlsettings==0.1.0
