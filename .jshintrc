@@ -3,20 +3,20 @@
     "white": true,
     "trailing": true,
     "undef": true,
-		"eqeqeq": true,
+    "eqeqeq": true,
     "browser": true,
     "predef": [
         "$",
         "define",
         "jQuery",
-				"jStat",
-				"adminPuzzleGraphs",
-	"Backbone",
-	"alert",
-	"_",
-	"google",
-	"YT",
-	"onPlayerReady",
-	"onPlayerStateChange"
+        "jStat",
+        "adminPuzzleGraphs",
+        "Backbone",
+        "alert",
+        "_",
+        "google",
+        "YT",
+        "onPlayerReady",
+        "onPlayerStateChange"
     ]
 }
