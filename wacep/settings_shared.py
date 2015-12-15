@@ -1,5 +1,6 @@
 # Django settings for wacep project.
 import os.path
+import sys
 from ccnmtlsettings.shared import common
 
 project = 'wacep'
@@ -50,9 +51,10 @@ PAGEBLOCKS = [
 
 THUMBNAIL_SUBDIR = "thumbs"
 
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
+if 'test' not in sys.argv and 'jenkins' not in sys.argv:
+    COMPRESS_PRECOMPILERS = (
+        ('text/less', 'lessc {infile} {outfile}'),
+    )
 
 LOGIN_REDIRECT_URL = "/"
 
