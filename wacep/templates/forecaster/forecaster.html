@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load compress %}
+{% load staticfiles %}
 
 {% block title %}Forecaster{% endblock %}
 
 {% block extrahead %}
-    <link rel="stylesheet" href="/site_media/css/tablesort.default.css" />
-    <link rel="stylesheet" href="/site_media/jquery/css/jquery-ui-1.9.1.custom.min.css" />
+    <link rel="stylesheet" href="{% static 'css/tablesort.default.css' %}" />
+    <link rel="stylesheet" href="{% static 'jquery/css/jquery-ui-1.9.1.custom.min.css' %}" />
     
     <script type="text/template" id="overview-template">
         <h2>Overview</h2>
@@ -52,7 +53,7 @@
                 </p>
                 
                  <div class="row-fluid" style="text-align: center;">
-                 <img style="width: 369px;" src="/site_media/img/dam.jpg" />
+                 <img style="width: 369px;" src="{% static 'img/dam.jpg' %}" />
                 </div>
                 <p style="text-align: center;">
                 <i>Impacts of Hurricane Tomas on the John Compton Dam in 2010 (<a href="http://www.stlucianewsonline.com/wp-content/uploads/2014/03/dam.jpg" target="_blank">Source</a>) </i>
@@ -78,7 +79,7 @@
                 </p>
                 
                  <div class="row-fluid" style="text-align: center;">
-                 <img src="/site_media/img/hurricanemap.jpg" />
+                 <img src="{% static 'img/hurricanemap.jpg' %}" />
                 </div>
                 <p></p>
                 
@@ -670,16 +671,16 @@ Graph - The plot below shows a curve centered on the predicted number of storms.
 {% endblock %}
 
 {% block js %}
-    <script src="/site_media/js/underscore-min.js" type="text/javascript"></script>
-    <script src="/site_media/js/backbone-min.js" type="text/javascript"></script>
-    <script src="/site_media/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-    <script src="/site_media/js/highcharts-min.js" type="text/javascript"></script>
-    <script src="/site_media/js/highcharts-more-min.js" type="text/javascript"></script>
-    <script src="/site_media/js/jstat.min.js" type="text/javascript"></script>
+    <script src="{% static 'js/underscore-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/backbone-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.tablesorter.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/highcharts-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/highcharts-more-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jstat.min.js' %}" type="text/javascript"></script>
     
     
     {% compress js %}
-        <script src="/site_media/forecaster/forecast.js" type="text/javascript" ></script>
-        <script src="/site_media/jquery/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+        <script src="{% static 'forecaster/forecast.js' %}" type="text/javascript" ></script>
+        <script src="{% static 'jquery/js/jquery.ui.touch-punch.min.js' %}" type="text/javascript"></script>
     {% endcompress %}
 {% endblock %}

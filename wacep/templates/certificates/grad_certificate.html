@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block css %}
 	<link href="/_certificates/media/css/certificates.css" rel="stylesheet" type="text/css">
@@ -10,7 +11,7 @@
   <div class = "certificate-div">
     
 		<div class="certificate-art">
-			<img src="/site_media/img/background_certificate.jpg" />
+			<img src="{% static 'img/background_certificate.jpg' %}" />
 		</div>
 	
 		<div class="certificate-text">
