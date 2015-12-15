@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html>
@@ -10,13 +11,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% bootstrap_css %}
-        <link rel="stylesheet" href="/site_media/css/weather_roulette_admin.css">
-        <link rel="stylesheet" href="/site_media/jquery/css/jquery-ui-1.11.2.css">
-        <script src="/site_media/jquery/js/jquery.min.js"></script>
-        <script src="/site_media/jquery/js/jquery-ui-1.11.2.min.js"></script>
-        <script src="/site_media/js/underscore-min.js"></script>
-        <script src="/site_media/js/highcharts4.min.js"></script>
-        <script src="/site_media/WeatherRouletteAdmin/main.js"></script>
+        <link rel="stylesheet" href="{% static 'css/weather_roulette_admin.css' %}">
+        <link rel="stylesheet" href="{% static 'jquery/css/jquery-ui-1.11.2.css' %}">
+        <script src="{% static 'jquery/js/jquery.min.js' %}"></script>
+        <script src="{% static 'jquery/js/jquery-ui-1.11.2.min.js' %}"></script>
+        <script src="{% static 'js/underscore-min.js' %}"></script>
+        <script src="{% static 'js/highcharts4.min.js' %}"></script>
+        <script src="{% static 'WeatherRouletteAdmin/main.js' %}"></script>
     </head>
     <body>
         {% block topnavbar %}
@@ -25,7 +26,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="ember-view navbar-brand"
-                       href="/site_media/WeatherRoulette/dist/index.html"
+                       href="{% static 'WeatherRoulette/dist/index.html' %}"
                        >WACEP Weather Roulette</a>
                     <span class="navbar-brand disabled" style="color:#777;"
                          >–</span>

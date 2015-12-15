@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Log Out{% endblock %}
 
@@ -20,7 +21,7 @@
 	</div>
 	</div>
 <div class="span8">
-	<img class="img-polaroid" src="/site_media/img/gazebo.jpg"/>
+	<img class="img-polaroid" src="{% static 'img/gazebo.jpg' %}"/>
 	
 </div>
 </div>

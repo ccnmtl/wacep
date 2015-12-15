@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}Courses{% endblock %}
 
@@ -46,13 +47,13 @@ Once you have finished a course and the instructor has granted you a passing gra
 			
 		    <div class="span3">
 				{%if c.course.section.id == 211 %}
-					<img class ="course_thumbnail" src="/site_media/img/course1_thumb.jpg" />
+					<img class ="course_thumbnail" src="{% static 'img/course1_thumb.jpg' %}" />
 				{%elif  c.course.section.id  == 78 %}
-					<img class ="course_thumbnail" src="/site_media/img/course2_thumb.jpg" />
+					<img class ="course_thumbnail" src="{% static 'img/course2_thumb.jpg' %}" />
 				{%elif c.course.section.id == 141 %}
-					<img class ="course_thumbnail" src="/site_media/img/course3_thumb.jpg" />
+					<img class ="course_thumbnail" src="{% static 'img/course3_thumb.jpg' %}" />
 				{%elif  c.course.section.id  == 142 %}
-					<img class ="course_thumbnail" src="/site_media/img/course4_thumb.jpg" />
+					<img class ="course_thumbnail" src="{% static 'img/course4_thumb.jpg' %}" />
 				{% else %}
 					<em>No image associated with course id {{c.course.section.id }}</em>
 				{%endif%}
