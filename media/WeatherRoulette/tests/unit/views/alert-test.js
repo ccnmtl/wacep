@@ -1,12 +1,12 @@
 import {
-  moduleFor,
-  test
+    moduleFor,
+    test
 } from 'ember-qunit';
 
 moduleFor('view:alert', 'AlertView');
 
 // Replace this with your real tests.
 test('it exists', function() {
-  var view = this.subject();
-  ok(view);
+    var view = this.subject();
+    ok(view);
 });

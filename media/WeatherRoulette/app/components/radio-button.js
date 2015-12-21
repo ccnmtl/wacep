@@ -7,11 +7,11 @@ export default Ember.Component.extend({
         'checked', 'name', 'type', 'value', 'disabled'
     ],
 
-    checked: function () {
+    checked: function() {
         return this.get('value') === this.get('groupValue');
     }.property('value', 'groupValue'),
 
-    change: function () {
+    change: function() {
         this.set('groupValue', this.get('value'));
     }
 });

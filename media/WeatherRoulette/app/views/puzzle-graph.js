@@ -26,7 +26,7 @@ export default Em.View.extend({
 
     // Highcharts configuration
     // http://api.highcharts.com/highcharts
-    graphConfig: function () {
+    graphConfig: function() {
         return {
             chart: {
                 animation: false
