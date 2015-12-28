@@ -3,7 +3,7 @@ import config from './config/environment';
 
 var Router = Ember.Router.extend({
     location: config.locationType,
-    rootURL: '/site_media/WeatherRoulette/dist/'
+    rootURL: '/media/WeatherRoulette/dist/'
 });
 
 Router.map(function() {

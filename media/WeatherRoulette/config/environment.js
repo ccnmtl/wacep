@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'weather-roulette',
     environment: environment,
-    baseURL: '/site_media/WeatherRoulette/dist/',
+    baseURL: '/media/WeatherRoulette/dist/',
     locationType: 'hash',
     contentSecurityPolicy: {
       'default-src': "'none'",
