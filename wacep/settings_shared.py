@@ -73,6 +73,3 @@ REST_FRAMEWORK = {
     'PAGINATE_BY_PARAM': 'page_size',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
-
-COMPRESS_URL = '/site_media/'
-STATIC_URL = '/site_media/'
