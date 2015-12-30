@@ -680,7 +680,7 @@ Graph - The plot below shows a curve centered on the predicted number of storms.
     
     
     {% compress js %}
-        <script src="{% static 'forecaster/forecast.js' %}" type="text/javascript" ></script>
-        <script src="{% static 'jquery/js/jquery.ui.touch-punch.min.js' %}" type="text/javascript"></script>
+        <script src="{{STATIC_URL}}forecaster/forecast.js" type="text/javascript" ></script>
+        <script src="{{STATIC_URL}}jquery/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
     {% endcompress %}
 {% endblock %}
