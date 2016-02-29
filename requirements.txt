@@ -44,7 +44,7 @@ cssselect==0.9.1
 BeautifulSoup==3.2.1
 Pillow==3.0.0
 fake-factory==0.5.3
-factory_boy==2.6.0
+factory_boy==2.6.1
 unicodecsv==0.14.1
 sqlparse==0.1.18
 contextlib2==0.5.1
