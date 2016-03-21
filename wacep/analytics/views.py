@@ -3,9 +3,9 @@ from wacep.certificates.models import CertificateCourse, CourseAccess
 from wacep.main.views import get_submodule
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.shortcuts import render
 from pagetree.models import Section
 
 
@@ -19,7 +19,6 @@ def responses_for(user):
 
 @login_required
 @staff_member_required
-@render_to('analytics/the_table.html')
 def course_table(request, section_id):
     questions = []
     section = Section.objects.get(pk=section_id)
@@ -43,8 +42,9 @@ def course_table(request, section_id):
         the_table.append(generate_row(the_user, section,
                                       questions))
 
-    return {'heading': heading, 'the_table': the_table,
-            'section_id': section_id}
+    return render(request, 'analytics/the_table.html',
+                  {'heading': heading, 'the_table': the_table,
+                   'section_id': section_id})
 
 
 def find_questions(sections):

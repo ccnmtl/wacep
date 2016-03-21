@@ -1,8 +1,8 @@
-from annoying.decorators import render_to
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from pagetree.helpers import get_section_from_path
 from pagetree.helpers import get_module, needs_submit, submitted
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.template import RequestContext, loader
 from wacep.certificates.models import CertificateCourse
 
@@ -81,7 +81,6 @@ def check_course_enrollment(user, section):
 
 
 @login_required
-@render_to('main/page.html')
 def pagetree_page(request, path):
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
@@ -113,24 +112,27 @@ def pagetree_page(request, path):
             # giving them feedback before they proceed
             return HttpResponseRedirect(section.get_absolute_url())
     else:
-        return dict(section=section,
-                    module=module,
-                    submodule=submodule,
-                    sub_submodule_index=sub_submodule_index,
-                    needs_submit=needs_submit(section),
-                    is_submitted=submitted(section, request.user),
-                    modules=root.get_children(),
-                    root=section.hierarchy.get_root(),
-                    )
+        return render(
+            request, 'main/page.html',
+            dict(
+                section=section,
+                module=module,
+                submodule=submodule,
+                sub_submodule_index=sub_submodule_index,
+                needs_submit=needs_submit(section),
+                is_submitted=submitted(section, request.user),
+                modules=root.get_children(),
+                root=section.hierarchy.get_root(),
+            ))
 
 
 @login_required
-@render_to('main/edit_page.html')
 def edit_page(request, path):
     section = get_section_from_path(path)
     root = section.hierarchy.get_root()
 
-    return dict(section=section,
-                module=get_module(section),
-                modules=root.get_children(),
-                root=section.hierarchy.get_root())
+    return render(request, 'main/edit_page.html',
+                  dict(section=section,
+                       module=get_module(section),
+                       modules=root.get_children(),
+                       root=section.hierarchy.get_root()))
