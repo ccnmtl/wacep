@@ -1,7 +1,6 @@
-from annoying.decorators import render_to
+from django.shortcuts import render
 
 
-@render_to('weather_dj/weather_dj.html')
 def weather_dj(request):
     """keep the code in here to a minimum"""
-    return {}
+    return render(request, 'weather_dj/weather_dj.html', {})

@@ -1,8 +1,8 @@
-from annoying.decorators import render_to
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
+from django.shortcuts import render
 from wacep.certificates.models import Certificate, CertificateCourse
 from wacep.certificates.models import CourseAccess
 from datetime import datetime
@@ -11,7 +11,6 @@ from django.db.models import Max
 
 
 @staff_member_required
-@render_to('certificates/certificates_admin.html')
 def certificates_admin(request):
     """ Where the staff go to award certificates to students. """
     all_students = User.objects.filter(is_staff=False)
@@ -23,13 +22,13 @@ def certificates_admin(request):
         c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
 
-    return {'the_students': the_students,
-            'the_courses': the_courses,
-            'saved': request.GET.get('saved', None)}
+    return render(request, 'certificates/certificates_admin.html',
+                  {'the_students': the_students,
+                   'the_courses': the_courses,
+                   'saved': request.GET.get('saved', None)})
 
 
 @staff_member_required
-@render_to('certificates/certificates_admin.html')
 def update_certificates_admin(request):
     courses_by_id = dict((c.id, c) for c in CertificateCourse.objects.all())
     certificates_to_keep = []
@@ -51,7 +50,6 @@ def update_certificates_admin(request):
 
 
 @staff_member_required
-@render_to('certificates/roster.html')
 def roster(request):
     """ Where the staff go to grant course access to students. """
     the_students = User.objects.filter(is_staff=False)
@@ -59,13 +57,13 @@ def roster(request):
     for c in the_courses:
         c.cached_student_user_ids = c.student_user_ids()
         c.cached_graduate_user_ids = c.graduate_user_ids()
-    return {'the_students': the_students,
-            'the_courses': the_courses,
-            'saved': request.GET.get('saved', None)}
+    return render(request, 'certificates/roster.html',
+                  {'the_students': the_students,
+                   'the_courses': the_courses,
+                   'saved': request.GET.get('saved', None)})
 
 
 @staff_member_required
-@render_to('certificates/roster.html')
 def update_roster(request):
     """ update the roster of each course. """
     courses_by_id = dict((c.id, c) for c in CertificateCourse.objects.all())
@@ -89,7 +87,6 @@ def update_roster(request):
 
 
 @login_required
-@render_to('certificates/student_certificates.html')
 def student_certificates(request):
     """ A list of all the certificates earned by a student."""
     # need to get the courses that the student is enfolled in
@@ -98,10 +95,10 @@ def student_certificates(request):
     graduated = False
     if user_certs.count() == CertificateCourse.objects.all().count():
         graduated = True
-    return {'the_courses': user_certs, 'graduated': graduated}
+    return render(request, 'certificates/student_certificates.html',
+                  {'the_courses': user_certs, 'graduated': graduated})
 
 
-@render_to('certificates/grad_certificate.html')
 def show_graduation(request, user_id):
     '''Double checks that the user with the appropriate id did
     graduate, link is public to those they wish to share.'''
@@ -110,7 +107,8 @@ def show_graduation(request, user_id):
     user_certs = Certificate.objects.filter(user=user).count()
     if total_courses == user_certs:
         date = get_oldest(user_certs, user)
-        return {'date': date['date__max'], 'user': user}
+        return render(request, 'certificates/grad_certificate.html',
+                      {'date': date['date__max'], 'user': user})
     else:
         raise Http404
 
@@ -124,10 +122,11 @@ def get_oldest(set_of_certs, user):
 
 
 # this is not authenticated: the certificates themselves are public.
-@render_to('certificates/certificate.html')
 def certificate(request, certificate_id):
     """ Show a nice certificate two whomever wants."""
     try:
-        return {'certificate': Certificate.objects.get(pk=certificate_id)}
+        return render(
+            request, 'certificates/certificate.html',
+            {'certificate': Certificate.objects.get(pk=certificate_id)})
     except Certificate.DoesNotExist:
         raise Http404
