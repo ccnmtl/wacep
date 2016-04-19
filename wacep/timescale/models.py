@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericRelation
 from pagetree.models import PageBlock
 from django import forms
 
@@ -165,7 +165,7 @@ class ActivityState (models.Model):
 
 
 class TimescaleBlock(models.Model):
-    pageblocks = generic.GenericRelation(PageBlock)
+    pageblocks = GenericRelation(PageBlock)
     template_file = "timescale/timescale.html"
     js_template_file = "timescale/block_js.html"
     css_template_file = "timescale/block_css.html"

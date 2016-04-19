@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericRelation
 from pagetree.models import PageBlock
 from django import forms
 
@@ -293,7 +293,7 @@ class FigureViewerTopic (models.Model):
 
 
 class FigureViewerBlock(models.Model):
-    pageblocks = generic.GenericRelation(PageBlock)
+    pageblocks = GenericRelation(PageBlock)
     topic = models.ForeignKey('FigureViewerTopic', null=True, blank=True)
     template_file = "figure_viewer/figure_viewer.html"
     js_template_file = "figure_viewer/block_js.html"

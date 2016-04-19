@@ -24,4 +24,5 @@ class HurricaneYearSerializer(serializers.HyperlinkedModelSerializer):
 # ViewSets define the view behavior.
 class HurricaneYearViewSet(viewsets.ModelViewSet):
     model = HurricaneYear
+    queryset = HurricaneYear.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
