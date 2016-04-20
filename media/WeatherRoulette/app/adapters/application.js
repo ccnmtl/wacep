@@ -9,7 +9,7 @@ export default DS.ActiveModelAdapter.extend({
     // template, and it's always available as a cookie.
     // see: https://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ajax
     headers: {
-        'X-CSRFToken': Ember.$.cookie('csrftoken')
+        'X-CSRFToken': Cookies.get('csrftoken')
     }
 });
 
