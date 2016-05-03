@@ -42,7 +42,7 @@ pylint==1.5.5
 six==1.10.0
 cssselect==0.9.1
 BeautifulSoup==3.2.1
-Pillow==3.0.0
+Pillow==3.2.0
 fake-factory==0.5.3
 factory_boy==2.6.1
 unicodecsv==0.14.1
