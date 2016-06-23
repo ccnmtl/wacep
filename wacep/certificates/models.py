@@ -9,10 +9,10 @@ class CertificateCourse (models.Model):
     name = models.CharField(max_length=256, default='')
     order_rank = models.IntegerField(default=0, null=True, blank=True)
 
-    section = models.ForeignKey(
+    section = models.OneToOneField(
         Section, null=True, blank=True,
         help_text="The section corresponding to this course.",
-        unique=True, limit_choices_to={'depth': 2})
+        limit_choices_to={'depth': 2})
 
     description = models.TextField(
         blank=True, default='',
