@@ -9,7 +9,7 @@ class GameState(models.Model):
     """
     A GameState holds all the data needed for a user's game.
     """
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
 
     current_round = models.ForeignKey('PuzzleRound', null=True)
 
