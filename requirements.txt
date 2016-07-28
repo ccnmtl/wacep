@@ -15,7 +15,7 @@ pycodestyle==2.0.0
 enum34==1.1.6
 configparser==3.5.0
 flake8==3.0.2
-lxml==3.6.0
+lxml==3.6.1
 sure==1.4.0
 fuzzywuzzy==0.11.0
 traitlets==4.2.2
@@ -23,12 +23,12 @@ ipython_genutils==0.1.0
 decorator==4.0.10
 ptyprocess==0.5.1
 pexpect==4.2.0
-pickleshare==0.7.2
+pickleshare==0.7.3
 simplegeneric==0.8.1
 path.py==8.2.1
 ipdb==0.10.1
 backports.shutil_get_terminal_size==1.0.0
-ipython==4.2.0
+ipython==5.0.0
 extras==1.0.0
 python-mimeparse==1.5.2
 fixtures==3.0.0
@@ -67,7 +67,7 @@ rcssmin==1.0.6  # django-compressor
 rjsmin==1.0.12  # django-compressor
 django-compressor==2.0
 django-statsd-mozilla==0.3.16
-raven==5.22.0
+raven==5.23.0
 django-bootstrap-form==3.2.1
 django-bootstrap3==7.0.1
 django-debug-toolbar==1.5
