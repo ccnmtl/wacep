@@ -1,15 +1,13 @@
-from django.conf.urls import patterns, url
+import django.views.static
 import os.path
+
+from django.conf.urls import url
+from .views import settings
 
 media_root = os.path.join(os.path.dirname(__file__), "media")
 
-urlpatterns = patterns(
-    '',
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-     {'document_root': media_root}),
-
-
-    url(r'^settings/(?P<topic_slug>.*)/$',
-        'wacep.figure_viewer.views.settings',
-        name='settings'),
-)
+urlpatterns = [
+    url(r'^media/(?P<path>.*)$', django.views.static.serve,
+        {'document_root': media_root}),
+    url(r'^settings/(?P<topic_slug>.*)/$', settings, name='settings'),
+]

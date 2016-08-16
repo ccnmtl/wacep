@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from rest_framework import routers
 from .admin import wr_admin_site
 from .views import (
@@ -15,8 +15,7 @@ router.register(r'moves', MoveViewSet)
 router.register(r'puzzles', PuzzleViewSet)
 router.register(r'puzzle_rounds', PuzzleRoundViewSet)
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/game_state', GameStateView.as_view(), name='game-state'),
     url(r'^api-auth/', include('rest_framework.urls',
@@ -30,4 +29,4 @@ urlpatterns = patterns(
     url(r'^admin/export_participant_data/?$',
         AdminExportParticipantDataView.as_view(),
         name='weatherroulette-admin-export-participant-data'),
-)
+]
