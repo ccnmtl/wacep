@@ -71,3 +71,7 @@ urlpatterns = [
     url(r'^weatherroulette/', include('wacep.weatherroulette.urls')),
     url(r'^(?P<path>.*)$', page)
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [url(r'^__debug__/', include(debug_toolbar.urls))]
