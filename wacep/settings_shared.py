@@ -53,7 +53,7 @@ THUMBNAIL_SUBDIR = "thumbs"
 
 if 'test' not in sys.argv and 'jenkins' not in sys.argv:
     COMPRESS_PRECOMPILERS = (
-        ('text/less', 'lessc {infile} {outfile}'),
+        ('text/less', 'node_modules/less/bin/lessc {infile} {outfile}'),
     )
 
 LOGIN_REDIRECT_URL = "/"

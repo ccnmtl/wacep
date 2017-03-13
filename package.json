@@ -19,5 +19,8 @@
     "eslint": "~3.17.1",
     "jshint": "~2.9.1",
     "jscs": "~2.8.0"
+  },
+  "dependencies": {
+    "less": "^2.7.1"
   }
 }
