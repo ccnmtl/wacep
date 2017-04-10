@@ -54,7 +54,7 @@ cssselect==1.0.1
 BeautifulSoup==3.2.1
 Pillow==4.1.0
 ipaddress==1.0.18
-Faker==0.7.10
+Faker==0.7.11
 factory_boy==2.8.1
 unicodecsv==0.14.1
 sqlparse==0.2.3
