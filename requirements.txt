@@ -52,7 +52,7 @@ pylint==1.7.1
 six==1.10.0
 cssselect==1.0.1
 BeautifulSoup==3.2.1
-Pillow==4.1.0
+Pillow==4.1.1
 ipaddress==1.0.18
 Faker==0.7.11
 factory_boy==2.8.1
