@@ -233,14 +233,16 @@
                     predictand.push(observation.get('predictand'));
                 });
 
-                jQuery.post('/forecast/regression/',
-                            {predictor: predictor,
-                             predictand: predictand},
-                            function(data) {
-                                 self.apply_model(data.slope,
-                                     data.intercept, data.r_value);
-                                 view.trigger('render');
-                             });
+                jQuery.post(
+                    '/forecast/regression/', {
+                        predictor: predictor,
+                        predictand: predictand
+                    }, function(data) {
+                        self.apply_model(
+                            data.slope,
+                            data.intercept, data.r_value);
+                        view.trigger('render');
+                    });
             }
         },
         get_model_context: function() {
@@ -340,13 +342,26 @@
             jQuery('#nino-graph').highcharts({
                 chart: {type: 'line'},
                 title: {text: 'NINO 3.4 (ASO)'},
-                xAxis: {categories: context.years,
-                        tickInterval: Math.round(context.years.length / 8),
-                        title: {text: 'Year'}},
-                yAxis: {title: {text: 'Anomalies'}},
-                series: [{name: 'ASO NINO3.4 SST anomalies',
-                          color: window.ForecastApp.Colors.nino_sst_anomalies,
-                          showInLegend: false, data: context.nino}]
+                xAxis: {
+                    categories: context.years,
+                    tickInterval: Math.round(context.years.length / 8),
+                    title: {
+                        text: 'Year'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Anomalies'
+                    }
+                },
+                series: [
+                    {
+                        name: 'ASO NINO3.4 SST anomalies',
+                        color: window.ForecastApp.Colors.nino_sst_anomalies,
+                        showInLegend: false,
+                        data: context.nino
+                    }
+                ]
             });
 
             var series1 = [{name: 'Named Storms', data: context.storms,
@@ -360,14 +375,16 @@
                             color: window.ForecastApp.Colors.hurricanes}];
 
             if (window.ForecastApp.inst.hurricanes.custom_name) {
-                series1.push(
-                    {name: window.ForecastApp.inst.hurricanes.custom_name,
-                     data: context.custom,
-                     color: window.ForecastApp.Colors.custom});
-                series2.push(
-                    {name: window.ForecastApp.inst.hurricanes.custom_name,
-                     data: context.nino_vs_custom,
-                     color: window.ForecastApp.Colors.custom});
+                series1.push({
+                    name: window.ForecastApp.inst.hurricanes.custom_name,
+                    data: context.custom,
+                    color: window.ForecastApp.Colors.custom
+                });
+                series2.push({
+                    name: window.ForecastApp.inst.hurricanes.custom_name,
+                    data: context.nino_vs_custom,
+                    color: window.ForecastApp.Colors.custom
+                });
             }
 
             jQuery('#predictand-graph').highcharts({
@@ -563,10 +580,18 @@
                         tickInterval: Math.round(ctx.years.length / 8),
                         title: {text: 'Year'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{name: 'Observed', data: ctx.predictand,
-                          color: ctx.predictand_color},
-                         {name: 'Estimated', data: ctx.predicted_y,
-                          color: window.ForecastApp.Colors.estimated}]
+                series: [
+                    {
+                        name: 'Observed',
+                        data: ctx.predictand,
+                        color: ctx.predictand_color
+                    },
+                    {
+                        name: 'Estimated',
+                        data: ctx.predicted_y,
+                        color: window.ForecastApp.Colors.estimated
+                    }
+                ]
             });
 
             jQuery('#residuals-graph').highcharts({
@@ -575,13 +600,26 @@
                 xAxis: {categories: ctx.years,
                     tickInterval: Math.round(ctx.years.length / 8),
                     title: {text: 'Year'}},
-                yAxis: {plotLines: [{color: '#000000',
-                                     width: 1,
-                                     value: 0}],
-                        title: {text: 'Count'}},
-                series: [{name: 'Residuals', showInLegend: false,
-                    data: ctx.residuals_vs_year,
-                    color: window.ForecastApp.Colors.residuals}]
+                yAxis: {
+                    plotLines: [
+                        {
+                            color: '#000000',
+                            width: 1,
+                            value: 0
+                        }
+                    ],
+                    title: {
+                        text: 'Count'
+                    }
+                },
+                series: [
+                    {
+                        name: 'Residuals',
+                        showInLegend: false,
+                        data: ctx.residuals_vs_year,
+                        color: window.ForecastApp.Colors.residuals
+                    }
+                ]
             });
 
             jQuery('#actualandpredicted-v-observed-graph').highcharts({
@@ -589,10 +627,18 @@
                 title: {text: 'Observed and Estimated vs Predictor'},
                 xAxis: {title: {text: 'Predictor'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{name: 'Observed', data: ctx.predictor_vs_predictand,
-                          color: ctx.predictand_color},
-                         {name: 'Estimated', data: ctx.predictor_vs_predicted_y,
-                          color: window.ForecastApp.Colors.estimated}]
+                series: [
+                    {
+                        name: 'Observed',
+                        data: ctx.predictor_vs_predictand,
+                        color: ctx.predictand_color
+                    },
+                    {
+                        name: 'Estimated',
+                        data: ctx.predictor_vs_predicted_y,
+                        color: window.ForecastApp.Colors.estimated
+                    }
+                ]
             });
         }
     });
@@ -655,14 +701,25 @@
                 title: {text: 'Observed vs. Estimated with Uncertainty'},
                 xAxis: {categories: years, title: {text: 'Years'}},
                 yAxis: {title: {text: 'Count'}},
-                series: [{name: 'Uncertainty', type: 'boxplot',
-                         data: boxplot_data,
-                         color: window.ForecastApp.Colors.uncertainty},
-                         {name: 'Observed', type: 'scatter',
-                          data: ctx.predictand, color: ctx.predictand_color},
-                         {name: 'Estimated', type: 'line',
-                          data: ctx.predicted_y,
-                          color: window.ForecastApp.Colors.estimated}]
+                series: [
+                    {
+                        name: 'Uncertainty',
+                        type: 'boxplot',
+                        data: boxplot_data,
+                        color: window.ForecastApp.Colors.uncertainty},
+                    {
+                        name: 'Observed',
+                        type: 'scatter',
+                        data: ctx.predictand,
+                        color: ctx.predictand_color
+                    },
+                    {
+                        name: 'Estimated',
+                        type: 'line',
+                        data: ctx.predicted_y,
+                        color: window.ForecastApp.Colors.estimated
+                    }
+                ]
             });
         }
     });
@@ -810,10 +867,20 @@
                         title: {text: 'Count'},
                         tickInterval: 2,
                         plotLines: [{color: '#C0C0C0', width: 1, value: 0}]},
-                    yAxis: {min: 0, max: 0.2,
-                            title: {text: 'Probability Density'}},
-                    series: [{name: 'Prediction Range', data: data,
-                              color: window.ForecastApp.Colors.estimated}]
+                    yAxis: {
+                        min: 0,
+                        max: 0.2,
+                        title: {
+                            text: 'Probability Density'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Prediction Range',
+                            data: data,
+                            color: window.ForecastApp.Colors.estimated
+                        }
+                    ]
                 });
                 this.graph = jQuery('#custom-forecast-graph').highcharts();
             } else {
